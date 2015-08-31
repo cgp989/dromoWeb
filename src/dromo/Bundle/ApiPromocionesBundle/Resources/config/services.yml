@@ -1,0 +1,4 @@
+services:
+#    dromo_api_promociones.example:
+#        class: Dromo\Bundle\ApiPromocionesBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

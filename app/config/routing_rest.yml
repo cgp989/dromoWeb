@@ -1,0 +1,3 @@
+Rest_Promocion : 
+  type : rest
+  resource: "@DromoApiPromocionesBundle/Resources/config/routing_rest.yml"

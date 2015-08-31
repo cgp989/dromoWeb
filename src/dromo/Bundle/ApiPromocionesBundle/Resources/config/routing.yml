@@ -1,0 +1,3 @@
+dromo_api_promociones_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: DromoApiPromocionesBundle:Default:index }
