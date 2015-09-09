@@ -1,4 +1,5 @@
 promociones : 
   type: rest
   resource:     "DromoApiPromocionesBundle:PromocionesRest"
-  name_prefix:  api_
+  name_prefix:  api_promociones_
+  prefix: /promociones

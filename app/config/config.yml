@@ -96,3 +96,7 @@ fos_rest:
         default_engine: twig
     routing_loader:
         default_format: json
+        
+services:
+    jms_serializer.naming_strategy:
+        class: 'JMS\Serializer\Naming\IdenticalPropertyNamingStrategy'
