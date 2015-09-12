@@ -77,9 +77,6 @@ class PromocionEnDia
     private $validez;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="distanciaALocalComercial", type="string", length=255)
      */
     private $distanciaALocalComercial;
 
