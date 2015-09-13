@@ -11,10 +11,14 @@ class PromocionesRestController extends Controller
      * 
      */
     public function getLatitudLongitudIdusaurioNropaginaAction($latitud, $longitud, $idUsuario, $nroPagina){
-        $repository = $this->getDoctrine()
+        if($this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuario)){
+            $repository = $this->getDoctrine()
                         ->getRepository('AppBundle:PromocionEnDia');
-        // obtiene todas las promociones
-        $promociones = $repository->findAll();
-        return $promociones;
+            // obtiene todas las promociones
+            $promociones = $repository->findAll();
+            return $promociones;
+        }else{
+            return array('error' => 'no existe el usuario');
+        }
     }
 }
