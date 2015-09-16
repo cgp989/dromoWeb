@@ -15,11 +15,11 @@ class Usuario
     /**
      * @var integer
      *
-     * @ORM\Column(name="idUsuario", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idUsuario;
+    private $id;
 
     /**
      * @var string
@@ -41,33 +41,15 @@ class Usuario
     private $usuarioMovil;
     
     /**
+     * @ORM\OneToOne(targetEntity="LocalComercial", mappedBy="usuario")
+     */
+    private $localComercial;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Rol", inversedBy="usuarios")
-     * @ORM\JoinColumn(name="idRol", referencedColumnName="idRol")
+     * @ORM\JoinColumn(name="idRol", referencedColumnName="id")
      */
     protected $rol;
-
-    /**
-     * Set idUsuario
-     *
-     * @param integer $idUsuario
-     * @return Usuario
-     */
-    public function setIdUsuario($idUsuario)
-    {
-        $this->idUsuario = $idUsuario;
-
-        return $this;
-    }
-
-    /**
-     * Get idUsuario
-     *
-     * @return integer 
-     */
-    public function getIdUsuario()
-    {
-        return $this->idUsuario;
-    }
 
     /**
      * Set password
@@ -159,5 +141,38 @@ class Usuario
     public function getRol()
     {
         return $this->rol;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set localComercial
+     *
+     * @param \AppBundle\Entity\LocalComercial $localComercial
+     * @return Usuario
+     */
+    public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null)
+    {
+        $this->localComercial = $localComercial;
+
+        return $this;
+    }
+
+    /**
+     * Get localComercial
+     *
+     * @return \AppBundle\Entity\LocalComercial 
+     */
+    public function getLocalComercial()
+    {
+        return $this->localComercial;
     }
 }

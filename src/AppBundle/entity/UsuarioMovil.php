@@ -15,11 +15,11 @@ class UsuarioMovil
     /**
      * @var integer
      *
-     * @ORM\Column(name="idUsuarioMovil", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idUsuarioMovil;
+    private $id;
 
     /* mapear cuando este la entidad Cupon
     private $cupon;
@@ -74,33 +74,10 @@ class UsuarioMovil
     
     /**
     * @ORM\OneToOne(targetEntity="Usuario", inversedBy="usuarioMovil")
-    * @ORM\JoinColumn(name="idUsuario", referencedColumnName="idUsuario")
+    * @ORM\JoinColumn(name="idUsuario", referencedColumnName="id")
     */
     private $usuario;
 
-
-    /**
-     * Set idUsuarioMovil
-     *
-     * @param integer $idUsuarioMovil
-     * @return UsuarioMovil
-     */
-    public function setIdUsuarioMovil($idUsuarioMovil)
-    {
-        $this->idUsuarioMovil = $idUsuarioMovil;
-
-        return $this;
-    }
-
-    /**
-     * Get idUsuarioMovil
-     *
-     * @return integer 
-     */
-    public function getIdUsuarioMovil()
-    {
-        return $this->idUsuarioMovil;
-    }
 
     /**
      * Set fechaNacimiento
@@ -262,5 +239,15 @@ class UsuarioMovil
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

@@ -16,11 +16,11 @@ class Rol
     /**
      * @var integer
      *
-     * @ORM\Column(name="idRol", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idRol;
+    private $id;
 
     /**
      * @var string
@@ -49,28 +49,6 @@ class Rol
         return $this->id;
     }
 
-    /**
-     * Set idRol
-     *
-     * @param integer $idRol
-     * @return Rol
-     */
-    public function setIdRol($idRol)
-    {
-        $this->idRol = $idRol;
-
-        return $this;
-    }
-
-    /**
-     * Get idRol
-     *
-     * @return integer 
-     */
-    public function getIdRol()
-    {
-        return $this->idRol;
-    }
 
     /**
      * Set descripcion
