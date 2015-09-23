@@ -70,4 +70,37 @@ class Provincia
     {
         return $this->nombre;
     }
+
+    /**
+     * Add localidades
+     *
+     * @param \AppBundle\Entity\Localidad $localidades
+     * @return Provincia
+     */
+    public function addLocalidade(\AppBundle\Entity\Localidad $localidades)
+    {
+        $this->localidades[] = $localidades;
+
+        return $this;
+    }
+
+    /**
+     * Remove localidades
+     *
+     * @param \AppBundle\Entity\Localidad $localidades
+     */
+    public function removeLocalidade(\AppBundle\Entity\Localidad $localidades)
+    {
+        $this->localidades->removeElement($localidades);
+    }
+
+    /**
+     * Get localidades
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLocalidades()
+    {
+        return $this->localidades;
+    }
 }

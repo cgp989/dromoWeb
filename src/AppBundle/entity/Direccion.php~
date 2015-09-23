@@ -131,4 +131,50 @@ class Direccion
     {
         return $this->longitud;
     }
+
+    /**
+     * Set sucursal
+     *
+     * @param \AppBundle\Entity\Sucursal $sucursal
+     * @return Direccion
+     */
+    public function setSucursal(\AppBundle\Entity\Sucursal $sucursal = null)
+    {
+        $this->sucursal = $sucursal;
+
+        return $this;
+    }
+
+    /**
+     * Get sucursal
+     *
+     * @return \AppBundle\Entity\Sucursal 
+     */
+    public function getSucursal()
+    {
+        return $this->sucursal;
+    }
+
+    /**
+     * Set localidad
+     *
+     * @param \AppBundle\Entity\Localidad $localidad
+     * @return Direccion
+     */
+    public function setLocalidad(\AppBundle\Entity\Localidad $localidad = null)
+    {
+        $this->localidad = $localidad;
+
+        return $this;
+    }
+
+    /**
+     * Get localidad
+     *
+     * @return \AppBundle\Entity\Localidad 
+     */
+    public function getLocalidad()
+    {
+        return $this->localidad;
+    }
 }

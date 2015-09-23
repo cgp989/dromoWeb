@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Localidad
  *
@@ -37,11 +37,11 @@ class Localidad
     /**
      * @ORM\OneToMany(targetEntity="Direccion", mappedBy="localidad")
      */
-    protected $direcciones;
+    private $direcciones;
 
     public function __construct()
     {
-        $this->$direcciones = new ArrayCollection();
+        $this->direcciones = new ArrayCollection();
     }
 
     /**
@@ -53,7 +53,20 @@ class Localidad
     {
         return $this->id;
     }
+    
+    /**
+     * Set id
+     * 
+     * @param integer $id
+     * @return Localidad
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
+        return $this;
+    }
+    
     /**
      * Set nombre
      *
@@ -106,7 +119,7 @@ class Localidad
      * @param \AppBundle\Entity\Direccion $direcciones
      * @return Localidad
      */
-    public function addDireccione(\AppBundle\Entity\Direccion $direcciones)
+    public function addDirecciones(\AppBundle\Entity\Direccion $direcciones)
     {
         $this->direcciones[] = $direcciones;
 
@@ -118,7 +131,7 @@ class Localidad
      *
      * @param \AppBundle\Entity\Direccion $direcciones
      */
-    public function removeDireccione(\AppBundle\Entity\Direccion $direcciones)
+    public function removeDirecciones(\AppBundle\Entity\Direccion $direcciones)
     {
         $this->direcciones->removeElement($direcciones);
     }

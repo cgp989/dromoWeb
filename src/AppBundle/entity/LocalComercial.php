@@ -3,7 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use JeroenDesloovere\Distance\Distance;
 /**
  * LocalComercial
  *
@@ -86,11 +87,11 @@ class LocalComercial
     /**
      * @ORM\OneToMany(targetEntity="Sucursal", mappedBy="localComercial")
      */
-    protected $sucursales;
+    private $sucursales;
 
     public function __construct()
     {
-        $this->$sucursales = new ArrayCollection();
+        $this->sucursales = new ArrayCollection();
     }
 
     /**
@@ -341,5 +342,27 @@ class LocalComercial
     public function getSucursales()
     {
         return $this->sucursales;
+    }
+    
+    /**
+     * 
+     * @param decimal $latitudUsuario
+     * @param decimal $longitudUsuario
+     * 
+     * @return array [title][distance]
+     */
+    public function getSucursalMinimaDistancia($latitudUsuario, $longitudUsuario){
+        $arraySucursales;
+        foreach ($this->getSucursales() as $sucursal) {
+            $arraySucursales[] =
+                    array(
+                        'title' => $sucursal->getId(),
+                        'latitude' => $sucursal->getDireccion()->getLatitud(),
+                        'longitude' => $sucursal->getDireccion()->getLogitud()
+                    );
+        }
+        
+        $distance = Distance::getClosest($latitudUsuario, $longitudUsuario, $arraySucursales, 3);
+        return $distance;
     }
 }

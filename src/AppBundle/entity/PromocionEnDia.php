@@ -42,6 +42,13 @@ class PromocionEnDia
      * @ORM\Column(name="tipoPromocion", type="string", length=50)
      */
     private $tipoPromocion;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255)
+     */
+    private $titulo;
 
     /**
      * @var string
@@ -329,4 +336,43 @@ class PromocionEnDia
     {
         return $this->distanciaALocalComercial;
     }
+
+    /**
+     * Set titulo
+     *
+     * @param string $titulo
+     * @return PromocionEnDia
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
+
+        return $this;
+    }
+
+    /**
+     * Get titulo
+     *
+     * @return string 
+     */
+    public function getTitulo()
+    {
+        return $this->titulo;
+    }
+    
+    /**
+     * compareTo
+     *
+     * @param PromocionEnDia $otraPromocion
+     * @return integer
+     */
+    public function compareTo(PromocionEnDia $otraPromocion) {
+        if($this ->getDistanciaALocalComercial() == $otraPromocion ->getDistanciaALocalComercial())
+            return 0;
+        else if($this ->getDistanciaALocalComercial() > $otraPromocion ->getDistanciaALocalComercial())
+            return 1;
+        else if($this ->getDistanciaALocalComercial() < $otraPromocion ->getDistanciaALocalComercial())
+            return -1;
+    }
+    
 }

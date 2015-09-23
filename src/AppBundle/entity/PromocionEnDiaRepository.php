@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class PromocionEnDiaRepository extends EntityRepository
 {
+    /**
+     * @param type $array
+     * @return boolean
+     */
+    public function ordenarPorDistanciaALocal(&$array){
+        return uasort($array, 
+                    function(PromocionEnDia $a, PromocionEnDia $b) {
+                        return $a->compareTo($b);
+                    }
+                );
+    }
 }

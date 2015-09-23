@@ -72,4 +72,50 @@ class Sucursal
     {
         return $this->telefono;
     }
+
+    /**
+     * Set direccion
+     *
+     * @param \AppBundle\Entity\Direccion $direccion
+     * @return Sucursal
+     */
+    public function setDireccion(\AppBundle\Entity\Direccion $direccion = null)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return \AppBundle\Entity\Direccion 
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set LocalComercial
+     *
+     * @param \AppBundle\Entity\LocalComercial $localComercial
+     * @return Sucursal
+     */
+    public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null)
+    {
+        $this->LocalComercial = $localComercial;
+
+        return $this;
+    }
+
+    /**
+     * Get LocalComercial
+     *
+     * @return \AppBundle\Entity\LocalComercial 
+     */
+    public function getLocalComercial()
+    {
+        return $this->LocalComercial;
+    }
 }

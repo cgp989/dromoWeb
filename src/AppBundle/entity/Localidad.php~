@@ -76,4 +76,60 @@ class Localidad
     {
         return $this->nombre;
     }
+
+    /**
+     * Set provincia
+     *
+     * @param \AppBundle\Entity\Provincia $provincia
+     * @return Localidad
+     */
+    public function setProvincia(\AppBundle\Entity\Provincia $provincia = null)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia
+     *
+     * @return \AppBundle\Entity\Provincia 
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Add direcciones
+     *
+     * @param \AppBundle\Entity\Direccion $direcciones
+     * @return Localidad
+     */
+    public function addDireccione(\AppBundle\Entity\Direccion $direcciones)
+    {
+        $this->direcciones[] = $direcciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove direcciones
+     *
+     * @param \AppBundle\Entity\Direccion $direcciones
+     */
+    public function removeDireccione(\AppBundle\Entity\Direccion $direcciones)
+    {
+        $this->direcciones->removeElement($direcciones);
+    }
+
+    /**
+     * Get direcciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDirecciones()
+    {
+        return $this->direcciones;
+    }
 }

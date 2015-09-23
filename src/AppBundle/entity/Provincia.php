@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Provincia
  *
@@ -31,11 +31,11 @@ class Provincia
     /**
      * @ORM\OneToMany(targetEntity="Localidad", mappedBy="provincia")
      */
-    protected $localidades;
+    private $localidades;
 
     public function __construct()
     {
-        $this->$localidades = new ArrayCollection();
+        $this->localidades = new ArrayCollection();
     }
 
     /**

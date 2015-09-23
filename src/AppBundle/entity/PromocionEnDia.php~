@@ -42,6 +42,13 @@ class PromocionEnDia
      * @ORM\Column(name="tipoPromocion", type="string", length=50)
      */
     private $tipoPromocion;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255)
+     */
+    private $titulo;
 
     /**
      * @var string
