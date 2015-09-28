@@ -358,11 +358,11 @@ class LocalComercial
                     array(
                         'title' => $sucursal->getId(),
                         'latitude' => $sucursal->getDireccion()->getLatitud(),
-                        'longitude' => $sucursal->getDireccion()->getLogitud()
+                        'longitude' => $sucursal->getDireccion()->getLongitud()
                     );
         }
-        
         $distance = Distance::getClosest($latitudUsuario, $longitudUsuario, $arraySucursales, 3);
+        //print_r($distance);
         return $distance;
     }
 }

@@ -20,24 +20,46 @@ use AppBundle\Entity\Direccion;
 
 class LoadDireccionData extends AbstractFixture implements OrderedFixtureInterface{
     public function load(ObjectManager $manager) {
-        $direccion;
         $localidadCordoba = $manager->find('AppBundle:Localidad', 543);
         
-        $direccion = new Direccion();
-        $direccion->setDescripcion("Bv San Juan 6, Nueva Cordoba");
-        $direccion->setLocalidad($localidadCordoba);
-        $direccion->setLatitud(-31.420660);
-        $direccion->setLongitud(-64.186125);
-        $manager->persist($direccion);
-        $this->addReference('direccion-mostachys-bvSanJuan', $direccion);
+        $arrayDirecciones = array(
+            'direccion-mostachys-bvSanJuan' => array(
+                'descripcion' => 'Bv San Juan 6, Nueva Cordoba',
+                'localidad' => $localidadCordoba,
+                'latitud' => -31.420660,
+                'longitud' => -64.186125,
+            ),
+            'direccion-mostachys-Chacabuco1166' => array(
+                'descripcion' => 'Boulevard Chacabuco 1166',
+                'localidad' => $localidadCordoba,
+                'latitud' => -31.422399,
+                'longitud' => -64.182692,
+            ),
+            'direccion-laCocina-independencia465' => array(
+                'descripcion' => 'Independencia 465',
+                'localidad' => $localidadCordoba,
+                'latitud' => -31.421725,
+                'longitud' => -64.186360,
+            ),
+            'direccion-laCocina-buenosAires1160' => array(
+                'descripcion' => 'Buenos Aires 1160',
+                'localidad' => $localidadCordoba,
+                'latitud' => -31.429753,
+                'longitud' => -64.188440,
+            ),
+        );
         
-        $direccion = new Direccion();
-        $direccion->setDescripcion("Boulevard Chacabuco 1166 ");
-        $direccion->setLocalidad($localidadCordoba);
-        $direccion->setLatitud(-31.422399);
-        $direccion->setLongitud(-64.182692);
-        $manager->persist($direccion);
-        $this->addReference('direccion-mostachys-Chacabuco1166', $direccion);
+        $direccionEntity;
+        foreach ($arrayDirecciones as $referencia => $direccion) {
+            $direccionEntity = new Direccion();
+            $direccionEntity->setDescripcion($direccion['descripcion']);
+            $direccionEntity->setLocalidad($direccion['localidad']);
+            $direccionEntity->setLatitud($direccion['latitud']);
+            $direccionEntity->setLongitud($direccion['longitud']);
+            $manager->persist($direccionEntity);
+            $this->addReference($referencia, $direccionEntity);
+        }
+        
         
         $manager->flush();
         

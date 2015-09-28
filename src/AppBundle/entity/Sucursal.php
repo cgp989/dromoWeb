@@ -38,7 +38,7 @@ class Sucursal
      * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="sucursal")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
      */
-    private $LocalComercial;
+    private $localComercial;
 
     /**
      * Get id

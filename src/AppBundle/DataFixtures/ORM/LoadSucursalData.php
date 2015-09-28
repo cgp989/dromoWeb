@@ -18,20 +18,37 @@ use AppBundle\Entity\Sucursal;
  */
 class LoadSucursalData extends AbstractFixture implements OrderedFixtureInterface{
     public function load(ObjectManager $manager) {
-        $sucursal;
+        $arraySucursales = array(
+            array(
+              'direccion' => $this->getReference('direccion-mostachys-bvSanJuan'),
+              'localComercial' => $this->getReference('localComercial-mostachys'),
+              'telefono' => '351635432'
+            ),
+            array(
+              'direccion' => $this->getReference('direccion-mostachys-Chacabuco1166'),
+              'localComercial' => $this->getReference('localComercial-mostachys'),
+              'telefono' => '351985412'
+            ),
+            array(
+              'direccion' => $this->getReference('direccion-laCocina-independencia465'),
+              'localComercial' => $this->getReference('localComercial-laCocina'),
+              'telefono' => '351432423'
+            ),
+            array(
+              'direccion' => $this->getReference('direccion-laCocina-buenosAires1160'),
+              'localComercial' => $this->getReference('localComercial-laCocina'),
+              'telefono' => '35123466'
+            ),
+        );
         
-        $sucursal = new Sucursal();
-        $sucursal->setDireccion($this->getReference('direccion-mostachys-bvSanJuan'));
-        $sucursal->setLocalComercial($this->getReference('localComercial-mostachys'));
-        $sucursal->setTelefono('351635432');
-        $manager->persist($sucursal);
-        
-        $sucursal = new Sucursal();
-        $sucursal->setDireccion($this->getReference('direccion-mostachys-Chacabuco1166'));
-        $sucursal->setLocalComercial($this->getReference('localComercial-mostachys'));
-        $sucursal->setTelefono('351985412');
-        $manager->persist($sucursal);
-        
+        $sucursalEntity;
+        foreach ($arraySucursales as $referencia => $sucursal) {
+            $sucursalEntity = new Sucursal();
+            $sucursalEntity->setDireccion($sucursal['direccion']);
+            $sucursalEntity->setLocalComercial($sucursal['localComercial']);
+            $sucursalEntity->setTelefono($sucursal['telefono']);
+            $manager->persist($sucursalEntity);
+        }
         $manager->flush();
     }
 

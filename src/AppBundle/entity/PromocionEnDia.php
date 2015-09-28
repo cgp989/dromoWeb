@@ -35,6 +35,13 @@ class PromocionEnDia
      * @ORM\Column(name="idLocalComercial", type="integer")
      */
     private $idLocalComercial;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idSucursal", type="integer")
+     */
+    private $idSucursal;
 
     /**
      * @var string
@@ -151,6 +158,29 @@ class PromocionEnDia
     public function getIdLocalComercial()
     {
         return $this->idLocalComercial;
+    }
+    
+    /**
+     * Set setIdSucursal
+     *
+     * @param integer $idSucursal
+     * @return PromocionEnDia
+     */
+    public function setIdSucursal($idSucursal)
+    {
+        $this->idSucursal = $idSucursal;
+
+        return $this;
+    }
+
+    /**
+     * Get getIdSucursal
+     *
+     * @return integer 
+     */
+    public function getIdSucursal()
+    {
+        return $this->idSucursal;
     }
 
     /**
