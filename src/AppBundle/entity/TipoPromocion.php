@@ -4,12 +4,18 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * TipoPromocion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TipoPromocionRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class TipoPromocion
 {
@@ -26,6 +32,8 @@ class TipoPromocion
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=50)
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $nombre;
 

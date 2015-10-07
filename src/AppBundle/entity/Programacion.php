@@ -3,12 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Programacion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ProgramacionRepository")
+ * @ExclusionPolicy("all")
  */
 class Programacion
 {
@@ -18,6 +23,9 @@ class Programacion
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $id;
 
@@ -115,6 +123,8 @@ class Programacion
     /**
      * @ORM\ManyToOne(targetEntity="Promocion", inversedBy="programaciones")
      * @ORM\JoinColumn(name="idPromocion", referencedColumnName="id")
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $promocion;
 

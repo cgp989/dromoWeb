@@ -4,12 +4,18 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Promocion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\PromocionRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Promocion
 {
@@ -21,11 +27,22 @@ class Promocion
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255)
+     * @Expose
+     * @Groups({"serviceUSS013"})
+     */
+    private $titulo;
 
     /**
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=500)
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $descripcion;
 
@@ -33,15 +50,10 @@ class Promocion
      * @var float
      *
      * @ORM\Column(name="precio", type="float")
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $precio;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titulo", type="string", length=255)
-     */
-    private $titulo;
 
     /**
      * @var boolean
@@ -60,12 +72,18 @@ class Promocion
     /**
      * @ORM\ManyToOne(targetEntity="EstadoPromocion", inversedBy="promociones")
      * @ORM\JoinColumn(name="idEstadoPromocion", referencedColumnName="id")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $estadoPromocion;
 
     /**
      * @ORM\ManyToOne(targetEntity="TipoPromocion", inversedBy="promociones")
      * @ORM\JoinColumn(name="idTipoPromocion", referencedColumnName="id")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $tipoPromocion;
     

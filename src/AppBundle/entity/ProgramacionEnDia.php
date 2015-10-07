@@ -31,6 +31,7 @@ class ProgramacionEnDia
      *
      * @ORM\Column(name="cantidadDisponible", type="integer")
      * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $cantidadDisponible;
 
@@ -39,27 +40,36 @@ class ProgramacionEnDia
      *
      * @ORM\Column(name="validez", type="string", length=255)
      * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $validez;
 
     /**
      * @ORM\ManyToOne(targetEntity="EstadoProgramacionEnDia", inversedBy="programacionesEnDia")
      * @ORM\JoinColumn(name="idEstadoProgramacionEnDia", referencedColumnName="id")
-     * @Expose
      */
     private $estadoProgramacionEnDia;
+    
+    /**
+     *
+     * @Expose
+     * @Groups({"serviceUSS013"})
+     */
+    private $distanciaALocalComercial;
+    
+    /**
+     * @Expose
+     * @Groups({"serviceUSS013"})
+     */
+    private $sucursalMasCercana;
 
     /**
      * @ORM\ManyToOne(targetEntity="Programacion")
      * @ORM\JoinColumn(name="idProgramacion", referencedColumnName="id")
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $programacion;
-
-    /**
-     *
-     * @Expose
-     */
-    private $distanciaALocalComercial;
 
     /**
      * Get id
@@ -170,7 +180,16 @@ class ProgramacionEnDia
     function setDistanciaALocalComercial($distanciaALocalComercial) {
         $this->distanciaALocalComercial = $distanciaALocalComercial;
     }
+    
+    function getSucursalMasCercana() {
+        return $this->sucursalMasCercana;
+    }
 
+    function setSucursalMasCercana($sucursalMasCercana) {
+        $this->sucursalMasCercana = $sucursalMasCercana;
+    }
+
+    
     /**
      * compareTo
      *

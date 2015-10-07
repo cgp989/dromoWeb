@@ -5,11 +5,17 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JeroenDesloovere\Distance\Distance;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 /**
  * LocalComercial
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\LocalComercialRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class LocalComercial
 {
@@ -19,6 +25,9 @@ class LocalComercial
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $id;
 
@@ -68,6 +77,9 @@ class LocalComercial
      * @var integer
      *
      * @ORM\Column(name="version", type="integer")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $version;
 
@@ -362,7 +374,7 @@ class LocalComercial
         foreach ($this->getSucursales() as $sucursal) {
             $arraySucursales[] =
                     array(
-                        'title' => $sucursal->getId(),
+                        'title' => $sucursal,
                         'latitude' => $sucursal->getDireccion()->getLatitud(),
                         'longitude' => $sucursal->getDireccion()->getLongitud()
                     );

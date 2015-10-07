@@ -4,11 +4,18 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
+
 /**
  * Localidad
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\LocalidadRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Localidad
 {
@@ -25,6 +32,9 @@ class Localidad
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $nombre;
     

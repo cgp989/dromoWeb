@@ -15,6 +15,8 @@ class PromocionesRestController extends Controller
      * @param decimal $longitud
      * @param integer $idUsuario
      * @param integer $nroPagina
+     * 
+     * @View(serializerGroups={"serviceUSS013"})
      */
     public function getLatitudLongitudIdusaurioNropaginaAction($latitud, $longitud, $idUsuario, $nroPagina){
         $cantidadPorPagina = 5;
@@ -32,6 +34,7 @@ class PromocionesRestController extends Controller
                                             getLocalComercial();
                 $distance = $localComercial -> getSucursalMinimaDistancia($latitud, $longitud);
                 $programacion->setDistanciaALocalComercial($distance['distance']);
+                $programacion->setSucursalMasCercana($distance['title']);
             }
             
             $repositoryProgramacion->ordenarPorDistanciaALocal($programaciones);
