@@ -4,13 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
- * Provincia
+ * EstadoPromocion
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\ProvinciaRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\EstadoPromocionRepository")
  */
-class Provincia
+class EstadoPromocion
 {
     /**
      * @var integer
@@ -24,19 +25,19 @@ class Provincia
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=50)
      */
     private $nombre;
-
+    
     /**
-     * @ORM\OneToMany(targetEntity="Localidad", mappedBy="provincia")
+     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="estadoPromocion")
      */
-    private $localidades;
-
-    public function __construct()
-    {
-        $this->localidades = new ArrayCollection();
+    private $promociones;
+    
+    public function __construct() {
+        $this->promociones = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -52,7 +53,7 @@ class Provincia
      * Set nombre
      *
      * @param string $nombre
-     * @return Provincia
+     * @return EstadoPromocion
      */
     public function setNombre($nombre)
     {
@@ -72,35 +73,35 @@ class Provincia
     }
 
     /**
-     * Add localidades
+     * Add promociones
      *
-     * @param \AppBundle\Entity\Localidad $localidades
-     * @return Provincia
+     * @param \AppBundle\Entity\Promocion $promociones
+     * @return EstadoPromocion
      */
-    public function addLocalidade(\AppBundle\Entity\Localidad $localidades)
+    public function addPromocione(\AppBundle\Entity\Promocion $promociones)
     {
-        $this->localidades[] = $localidades;
+        $this->promociones[] = $promociones;
 
         return $this;
     }
 
     /**
-     * Remove localidades
+     * Remove promociones
      *
-     * @param \AppBundle\Entity\Localidad $localidades
+     * @param \AppBundle\Entity\Promocion $promociones
      */
-    public function removeLocalidade(\AppBundle\Entity\Localidad $localidades)
+    public function removePromocione(\AppBundle\Entity\Promocion $promociones)
     {
-        $this->localidades->removeElement($localidades);
+        $this->promociones->removeElement($promociones);
     }
 
     /**
-     * Get localidades
+     * Get promociones
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getLocalidades()
+    public function getPromociones()
     {
-        return $this->localidades;
+        return $this->promociones;
     }
 }

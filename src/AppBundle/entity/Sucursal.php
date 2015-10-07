@@ -35,7 +35,7 @@ class Sucursal
     private $direccion;
     
     /**
-     * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="sucursal")
+     * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="sucursales")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
      */
     private $localComercial;
@@ -104,7 +104,7 @@ class Sucursal
      */
     public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null)
     {
-        $this->LocalComercial = $localComercial;
+        $this->localComercial = $localComercial;
 
         return $this;
     }
@@ -116,6 +116,6 @@ class Sucursal
      */
     public function getLocalComercial()
     {
-        return $this->LocalComercial;
+        return $this->localComercial;
     }
 }

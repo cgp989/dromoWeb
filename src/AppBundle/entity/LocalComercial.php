@@ -88,10 +88,16 @@ class LocalComercial
      * @ORM\OneToMany(targetEntity="Sucursal", mappedBy="localComercial")
      */
     private $sucursales;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="localComercial")
+     */
+    private $promociones;
 
     public function __construct()
     {
         $this->sucursales = new ArrayCollection();
+        $this->promociones = new ArrayCollection();
     }
 
     /**
@@ -364,5 +370,38 @@ class LocalComercial
         $distance = Distance::getClosest($latitudUsuario, $longitudUsuario, $arraySucursales, 3);
         //print_r($distance);
         return $distance;
+    }
+
+    /**
+     * Add promociones
+     *
+     * @param \AppBundle\Entity\Promocion $promociones
+     * @return LocalComercial
+     */
+    public function addPromocione(\AppBundle\Entity\Promocion $promociones)
+    {
+        $this->promociones[] = $promociones;
+
+        return $this;
+    }
+
+    /**
+     * Remove promociones
+     *
+     * @param \AppBundle\Entity\Promocion $promociones
+     */
+    public function removePromocione(\AppBundle\Entity\Promocion $promociones)
+    {
+        $this->promociones->removeElement($promociones);
+    }
+
+    /**
+     * Get promociones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPromociones()
+    {
+        return $this->promociones;
     }
 }

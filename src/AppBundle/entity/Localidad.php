@@ -145,4 +145,27 @@ class Localidad
     {
         return $this->direcciones;
     }
+
+    /**
+     * Add direcciones
+     *
+     * @param \AppBundle\Entity\Direccion $direcciones
+     * @return Localidad
+     */
+    public function addDireccione(\AppBundle\Entity\Direccion $direcciones)
+    {
+        $this->direcciones[] = $direcciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove direcciones
+     *
+     * @param \AppBundle\Entity\Direccion $direcciones
+     */
+    public function removeDireccione(\AppBundle\Entity\Direccion $direcciones)
+    {
+        $this->direcciones->removeElement($direcciones);
+    }
 }

@@ -35,10 +35,10 @@ class Sucursal
     private $direccion;
     
     /**
-     * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="sucursal")
+     * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="sucursales")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
      */
-    private $LocalComercial;
+    private $localComercial;
 
     /**
      * Get id

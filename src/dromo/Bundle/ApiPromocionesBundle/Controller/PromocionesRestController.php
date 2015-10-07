@@ -18,24 +18,35 @@ class PromocionesRestController extends Controller
      */
     public function getLatitudLongitudIdusaurioNropaginaAction($latitud, $longitud, $idUsuario, $nroPagina){
         $cantidadPorPagina = 5;
+        $error;
         if($this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuario)){
             
-            $repositoryPromocion = $this->getDoctrine()->getRepository('AppBundle:PromocionEnDia');
-            $promociones = $repositoryPromocion->findAll();
+            $repositoryProgramacion = $this->getDoctrine()->getRepository('AppBundle:ProgramacionEnDia');
+            $programaciones = $repositoryProgramacion->findAll();
             
-            $repositoryLocalComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
-            foreach ($promociones as $promocion) {
-                $localComercial = $repositoryLocalComercial ->find($promocion -> getIdLocalComercial());
+            //$repositoryLocalComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
+            foreach ($programaciones as $programacion) {
+                $localComercial = $programacion -> 
+                                    getProgramacion() -> 
+                                        getPromocion() -> 
+                                            getLocalComercial();
                 $distance = $localComercial -> getSucursalMinimaDistancia($latitud, $longitud);
-                $promocion->setDistanciaALocalComercial($distance['distance']);
+                $programacion->setDistanciaALocalComercial($distance['distance']);
             }
             
-            $repositoryPromocion->ordenarPorDistanciaALocal($promociones);
+            $repositoryProgramacion->ordenarPorDistanciaALocal($programaciones);
             
             $inicio = $cantidadPorPagina * ($nroPagina -1);
-            return array_slice ($promociones, $inicio, $cantidadPorPagina);
+            $arrayPaginaPromociones = array_slice ($programaciones, $inicio, $cantidadPorPagina);
         }else{
-            return array('error' => 'no existe el usuario');
+            $error[] = array('codigo' => '',
+                'mensaje' => 'El usuario no existe',
+                'descripcion' => 'El id del usuario no existe en la base de datos');
         }
+        
+        if(!isset($error))
+            return $arrayPaginaPromociones;
+        else
+            return $error;
     }
 }
