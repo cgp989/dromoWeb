@@ -20,30 +20,36 @@ use AppBundle\Entity\ProgramacionEnDia;
 
 class LoadProgramacionEnDiaData extends AbstractFixture implements OrderedFixtureInterface{
     public function load(ObjectManager $manager) {
+        $fechaActual = new \DateTime('now');
+        $fechaActual->add(new \DateInterval('PT3H'));
         $arrayEntity = array(
             array(
                 'cantidadDisponible' => '10',
-                'validez' => '9:00 - 12:00',
+                'validez' => '09:00 - 12:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-2x1-lomito-mostachys'),
+                'vencimiento' => $fechaActual
             ),
             array(
                 'cantidadDisponible' => '15',
                 'validez' => '9:00 - 12:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-3x2-lomito-mostachys'),
+                'vencimiento' => $fechaActual
             ),
             array(
                 'cantidadDisponible' => '40',
                 'validez' => '10:00 - 15:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-50%-milanesas-laCocina'),
+                'vencimiento' => $fechaActual
             ),
             array(
                 'cantidadDisponible' => '40',
                 'validez' => '10:00 - 16:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-30%-pastas-laCocina'),
+                'vencimiento' => $fechaActual
             ),
         );
         
@@ -54,6 +60,7 @@ class LoadProgramacionEnDiaData extends AbstractFixture implements OrderedFixtur
             $programacionEnDia->setValidez($entity['validez']);
             $programacionEnDia->setEstadoProgramacionEnDia($entity['estadoProgramacionEndia']);
             $programacionEnDia->setProgramacion($entity['programacion']);
+            $programacionEnDia->setVencimiento($entity['vencimiento']);
             $this->addReference($referenciaEntity, $programacionEnDia);
             $manager->persist($programacionEnDia);
         }

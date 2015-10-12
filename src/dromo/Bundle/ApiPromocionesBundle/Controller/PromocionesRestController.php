@@ -19,14 +19,13 @@ class PromocionesRestController extends Controller
      * @View(serializerGroups={"serviceUSS013"})
      */
     public function getLatitudLongitudIdusaurioNropaginaAction($latitud, $longitud, $idUsuario, $nroPagina){
-        $cantidadPorPagina = 5;
+        $cantidadPorPagina = 2;
         $error;
         if($this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuario)){
             
             $repositoryProgramacion = $this->getDoctrine()->getRepository('AppBundle:ProgramacionEnDia');
             $programaciones = $repositoryProgramacion->findAll();
             
-            //$repositoryLocalComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
             foreach ($programaciones as $programacion) {
                 $localComercial = $programacion -> 
                                     getProgramacion() -> 
@@ -47,9 +46,9 @@ class PromocionesRestController extends Controller
                 'descripcion' => 'El id del usuario no existe en la base de datos');
         }
         
-        if(!isset($error))
-            return $arrayPaginaPromociones;
-        else
+        if (!isset($error)) {
+            return array('promociones' => $arrayPaginaPromociones);
+        } else
             return $error;
     }
     

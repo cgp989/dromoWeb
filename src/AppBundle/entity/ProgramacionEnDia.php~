@@ -43,6 +43,13 @@ class ProgramacionEnDia
      * @Groups({"serviceUSS013"})
      */
     private $validez;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="vencimiento", type="datetime")
+     */
+    private $vencimiento;
 
     /**
      * @ORM\ManyToOne(targetEntity="EstadoProgramacionEnDia", inversedBy="programacionesEnDia")

@@ -44,20 +44,16 @@ class Cupon
      *
      * @ORM\Column(name="fecha", type="date")
      * 
-     * @Expose
-     * @Groups({"serviceUSS21"})
      */
     private $fecha;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaVencimiento", type="date")
+     * @ORM\Column(name="vencimiento", type="datetime")
      * 
-     * @Expose
-     * @Groups({"serviceUSS21"})
      */
-    private $fechaVencimiento;
+    private $vencimiento;
 
     /**
      * @var integer
@@ -270,25 +266,24 @@ class Cupon
     }
 
     /**
-     * Set fechaVencimiento
-     *
-     * @param \DateTime $fechaVencimiento
-     * @return Cupon
+     * Retorna la fecha formateada
+     * 
+     * @return String
+     * @VirtualProperty 
+     * @Groups({"serviceUSS21"})
      */
-    public function setFechaVencimiento($fechaVencimiento)
-    {
-        $this->fechaVencimiento = $fechaVencimiento;
-
-        return $this;
+    public function getFecha_(){
+        return $this->fecha->format("y-m-d");
     }
-
+    
     /**
-     * Get fechaVencimiento
-     *
-     * @return \DateTime 
+     * Retorna la fecha vencimiento formateada
+     * 
+     * @return String
+     * @VirtualProperty 
+     * @Groups({"serviceUSS21"})
      */
-    public function getFechaVencimiento()
-    {
-        return $this->fechaVencimiento;
-    }
+    public function getFechaVencimiento_(){
+        return $this->vencimiento->format("y-m-d");
+    }   
 }

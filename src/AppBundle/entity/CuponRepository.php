@@ -13,16 +13,13 @@ use Doctrine\ORM\EntityRepository;
 class CuponRepository extends EntityRepository
 {
     public function crearNuevoCupon(ProgramacionEnDia $programacionEnDia, UsuarioMovil $usuarioMovil){
-        /*
-         * calcular la fecha de vencimiento
-         */
         $cupon = new Cupon();
         $cupon->setCodigo(uniqid());
         $cupon->setEstadoCupon(
                 $this->getEntityManager()->getRepository('AppBundle:EstadoCupon')->findOneByNombre('porCanjear')
             );
         $cupon->setFecha(new \DateTime("now"));
-        $cupon->setFechaVencimiento(new \DateTime("now")); //CALCULAR BIEN ESTA FECHA!!!!!!!
+        $cupon->setVencimiento($programacionEnDia->getVencimiento());
         $cupon->setProgramacion($programacionEnDia->getProgramacion());
         $cupon->setTipoCupon(
                 $this->getEntityManager()->getRepository('AppBundle:TipoCupon')->findOneByNombre('promocion')

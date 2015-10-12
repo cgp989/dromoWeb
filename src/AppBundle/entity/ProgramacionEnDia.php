@@ -43,6 +43,13 @@ class ProgramacionEnDia
      * @Groups({"serviceUSS013"})
      */
     private $validez;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="vencimiento", type="datetime")
+     */
+    private $vencimiento;
 
     /**
      * @ORM\ManyToOne(targetEntity="EstadoProgramacionEnDia", inversedBy="programacionesEnDia")
@@ -203,5 +210,28 @@ class ProgramacionEnDia
             return 1;
         else if ($this->getDistanciaALocalComercial() < $otraProgramacionEnDia->getDistanciaALocalComercial())
             return -1;
+    }
+
+    /**
+     * Set vencimiento
+     *
+     * @param \DateTime $vencimiento
+     * @return ProgramacionEnDia
+     */
+    public function setVencimiento($vencimiento)
+    {
+        $this->vencimiento = $vencimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get vencimiento
+     *
+     * @return \DateTime 
+     */
+    public function getVencimiento()
+    {
+        return $this->vencimiento;
     }
 }

@@ -50,10 +50,10 @@ class Cupon
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaVencimiento", type="date")
+     * @ORM\Column(name="vencimiento", type="datetime")
      * 
      */
-    private $fechaVencimiento;
+    private $vencimiento;
 
     /**
      * @var integer
@@ -266,29 +266,6 @@ class Cupon
     }
 
     /**
-     * Set fechaVencimiento
-     *
-     * @param \DateTime $fechaVencimiento
-     * @return Cupon
-     */
-    public function setFechaVencimiento($fechaVencimiento)
-    {
-        $this->fechaVencimiento = $fechaVencimiento;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaVencimiento
-     *
-     * @return \String 
-     */
-    public function getFechaVencimiento()
-    {
-        return $this->fechaVencimiento;
-    }
-    
-    /**
      * Retorna la fecha formateada
      * 
      * @return String
@@ -306,7 +283,30 @@ class Cupon
      * @VirtualProperty 
      * @Groups({"serviceUSS21"})
      */
-    public function getFechaVencimiento_(){
-        return $this->fechaVencimiento->format("y-m-d");
+    public function getVencimiento_(){
+        return $this->vencimiento->format("y-m-d h:m:s");
     }   
+
+    /**
+     * Set vencimiento
+     *
+     * @param \DateTime $vencimiento
+     * @return Cupon
+     */
+    public function setVencimiento($vencimiento)
+    {
+        $this->vencimiento = $vencimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get vencimiento
+     *
+     * @return \DateTime 
+     */
+    public function getVencimiento()
+    {
+        return $this->vencimiento;
+    }
 }
