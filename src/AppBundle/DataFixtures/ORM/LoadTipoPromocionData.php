@@ -26,20 +26,65 @@ class LoadTipoPromocionData extends AbstractFixture implements OrderedFixtureInt
             'tipoPromocion-3x2' => array(
                 'nombre' => '3x2' 
             ),
-            'tipoPromocion-10%' => array(
-                'nombre' => '10%' 
+            'tipoPromocion-4x3' => array(
+                'nombre' => '4x3' 
             ),
-            'tipoPromocion-20%' => array(
-                'nombre' => '20%' 
+            'tipoPromocion-10' => array(
+                'nombre' => '10' 
             ),
-            'tipoPromocion-30%' => array(
-                'nombre' => '30%' 
+            'tipoPromocion-15' => array(
+                'nombre' => '15' 
             ),
-            'tipoPromocion-40%' => array(
-                'nombre' => '40%' 
+            'tipoPromocion-20' => array(
+                'nombre' => '20' 
             ),
-            'tipoPromocion-50%' => array(
-                'nombre' => '50%' 
+            'tipoPromocion-25' => array(
+                'nombre' => '25' 
+            ),
+            'tipoPromocion-30' => array(
+                'nombre' => '30' 
+            ),
+            'tipoPromocion-35' => array(
+                'nombre' => '35' 
+            ),
+            'tipoPromocion-40' => array(
+                'nombre' => '40' 
+            ),
+            'tipoPromocion-45' => array(
+                'nombre' => '45' 
+            ),
+            'tipoPromocion-50' => array(
+                'nombre' => '50' 
+            ),
+            'tipoPromocion-55' => array(
+                'nombre' => '55' 
+            ),
+            'tipoPromocion-60' => array(
+                'nombre' => '60' 
+            ),
+            'tipoPromocion-65' => array(
+                'nombre' => '65' 
+            ),
+            'tipoPromocion-70' => array(
+                'nombre' => '70' 
+            ),
+            'tipoPromocion-75' => array(
+                'nombre' => '75' 
+            ),
+            'tipoPromocion-80' => array(
+                'nombre' => '80' 
+            ),
+            'tipoPromocion-85' => array(
+                'nombre' => '85' 
+            ),
+            'tipoPromocion-90' => array(
+                'nombre' => '90' 
+            ),
+            'tipoPromocion-95' => array(
+                'nombre' => '95' 
+            ),
+            'tipoPromocion-free' => array(
+                'nombre' => 'free' 
             ),
         );
         

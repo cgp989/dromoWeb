@@ -143,7 +143,7 @@ class ProgramacionEnDia
     /**
      * Get estadoProgramacionEnDia
      *
-     * @return \stdClass 
+     * @return \AppBundle\Entity\EstadoProgramacionEnDia
      */
     public function getEstadoProgramacionEnDia()
     {
@@ -204,5 +204,4 @@ class ProgramacionEnDia
         else if ($this->getDistanciaALocalComercial() < $otraProgramacionEnDia->getDistanciaALocalComercial())
             return -1;
     }
-
 }

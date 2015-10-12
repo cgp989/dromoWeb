@@ -36,11 +36,6 @@ class Usuario
     private $usuario;
     
     /**
-    * @ORM\OneToOne(targetEntity="UsuarioMovil", mappedBy="usuario")
-    */
-    private $usuarioMovil;
-    
-    /**
      * @ORM\OneToOne(targetEntity="LocalComercial", mappedBy="usuario")
      */
     private $localComercial;
@@ -95,29 +90,6 @@ class Usuario
     public function getUsuario()
     {
         return $this->usuario;
-    }
-
-    /**
-     * Set usuarioMovil
-     *
-     * @param \AppBundle\Entity\UsuarioMovil $usuarioMovil
-     * @return Usuario
-     */
-    public function setUsuarioMovil(\AppBundle\Entity\UsuarioMovil $usuarioMovil = null)
-    {
-        $this->usuarioMovil = $usuarioMovil;
-
-        return $this;
-    }
-
-    /**
-     * Get usuarioMovil
-     *
-     * @return \AppBundle\Entity\UsuarioMovil 
-     */
-    public function getUsuarioMovil()
-    {
-        return $this->usuarioMovil;
     }
 
     /**

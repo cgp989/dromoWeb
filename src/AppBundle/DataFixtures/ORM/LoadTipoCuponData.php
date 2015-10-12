@@ -11,31 +11,28 @@ namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\EstadoPromocion;
+use AppBundle\Entity\TipoCupon;
 /**
- * Description of LoadEstadoPromocionData
+ * Description of LoadTipoCuponData
  *
  * @author CRISTIANGILBERTO
  */
-class LoadEstadoPromocionData extends AbstractFixture implements OrderedFixtureInterface{
+class LoadTipoCuponData extends AbstractFixture implements OrderedFixtureInterface{
     public function load(ObjectManager $manager) {
         $arrayEntity = array(
-            'estadoPromocion-activada' => array(
-                'nombre' => 'activada' 
+            'tipoCupon-promocion' => array(
+                'nombre' => 'promocion' 
             ),
-            'estadoPromocion-desactivada' => array(
-                'nombre' => 'desactivada' 
-            ),
-            'estadoPromocion-eliminada' => array(
-                'nombre' => 'eliminada' 
-            ),
+            'tipoCupon-premio' => array(
+                'nombre' => 'premio' 
+            )
         );
         
         foreach ($arrayEntity as $referenciaEntity => $entity) {
-            $estadoPromocion = new EstadoPromocion();
-            $estadoPromocion->setNombre($entity['nombre']);
-            $this->addReference($referenciaEntity, $estadoPromocion);
-            $manager->persist($estadoPromocion);
+            $tipoCupon = new TipoCupon();
+            $tipoCupon->setNombre($entity['nombre']);
+            $this->addReference($referenciaEntity, $tipoCupon);
+            $manager->persist($tipoCupon);
         }
         $manager->flush();
     }

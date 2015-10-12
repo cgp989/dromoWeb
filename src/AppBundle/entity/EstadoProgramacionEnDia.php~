@@ -4,12 +4,17 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * EstadoProgramacionEnDia
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\EstadoProgramacionEnDiaRepository")
+ * @ExclusionPolicy("all")
  */
 class EstadoProgramacionEnDia
 {
@@ -26,6 +31,7 @@ class EstadoProgramacionEnDia
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=50)
+     * @Expose
      */
     private $nombre;
 

@@ -22,5 +22,30 @@ class ProgramacionEnDiaRepository extends EntityRepository
         }
         );
     }
-
+    
+    /**
+     * 
+     * @param integer $idProgramacion
+     */
+    public function findByIdProgramacion($idProgramacion){
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "select pd
+                from AppBundle:ProgramacionEnDia pd
+                    join pd.programacion p
+                where p.id=:idProgramacion")
+            ->setParameter('idProgramacion', $idProgramacion);
+        
+        return $query->getOneOrNullResult();
+    }
+    
+    public function descontarCantidadDisponible(ProgramacionEnDia $programacionEnDia){
+        $programacionEnDia->setCantidadDisponible($programacionEnDia->getCantidadDisponible()-1);
+            if($programacionEnDia->getCantidadDisponible() == 0){
+                $programacionEnDia->setEstadoProgramacionEnDia(
+                        $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('agotada')
+                    );
+            }
+            $this->getEntityManager()->flush();
+    }
 }

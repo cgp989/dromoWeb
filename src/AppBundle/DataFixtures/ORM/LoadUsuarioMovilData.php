@@ -28,7 +28,8 @@ class LoadUsuarioMovilData extends AbstractFixture implements OrderedFixtureInte
                 'puntos' => 15,
                 'fechaNacimiento' => new \DateTime('1989-11-06'),
                 'foto' => 'cristian.jpg',
-                'usuario' => $this->getReference('usuario-cgp989'),
+                'usuario' => 'cgp989',
+                'password' => '12345',
             ),
             'usuarioMovil-rodrigo' => array(
                 'nombre' => 'Rodrigo',
@@ -37,11 +38,11 @@ class LoadUsuarioMovilData extends AbstractFixture implements OrderedFixtureInte
                 'puntos' => 20,
                 'fechaNacimiento' => new \DateTime('1991-11-04'),
                 'foto' => 'rodrigo.jpg',
-                'usuario' => $this->getReference('usuario-rodrisas'),
+                'usuario' => 'rodrisas',
+                'password' => 'rodri',
             ),
         );
         
-        $usuarioMovilEntity;
         foreach ($arrayUsuarioMovil as $referencia => $usuario) {
             $usuarioMovilEntity = new UsuarioMovil();
             $usuarioMovilEntity->setNombre($usuario['nombre']);
@@ -51,6 +52,7 @@ class LoadUsuarioMovilData extends AbstractFixture implements OrderedFixtureInte
             $usuarioMovilEntity->setFechaNacimiento($usuario['fechaNacimiento']);
             $usuarioMovilEntity->setFoto($usuario['foto']);
             $usuarioMovilEntity->setUsuario($usuario['usuario']);
+            $usuarioMovilEntity->setPassword($usuario['password']);
             $manager->persist($usuarioMovilEntity);
             $this->addReference($referencia, $usuarioMovilEntity);
         }

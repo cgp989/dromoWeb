@@ -3,12 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Direccion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\DireccionRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Direccion
 {
@@ -25,6 +31,9 @@ class Direccion
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $descripcion;
 
@@ -50,6 +59,9 @@ class Direccion
     /**
      * @ORM\ManyToOne(targetEntity="Localidad", inversedBy="direcciones")
      * @ORM\JoinColumn(name="idLocalidad", referencedColumnName="id")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $localidad;
     

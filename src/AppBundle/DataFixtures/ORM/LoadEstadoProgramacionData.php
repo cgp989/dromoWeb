@@ -26,6 +26,9 @@ class LoadEstadoProgramacionData extends AbstractFixture implements OrderedFixtu
             'estadoProgramacion-desactivada' => array(
                 'nombre' => 'desactivada' 
             ),
+            'estadoProgramacion-eliminada' => array(
+                'nombre' => 'eliminada' 
+            ),
         );
         
         foreach ($arrayEntity as $referenciaEntity => $entity) {

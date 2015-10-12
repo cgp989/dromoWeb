@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use JeroenDesloovere\Distance\Distance;
-
+use AppBundle\Entity\ProgramacionEnDia;
 class PromocionesRestController extends Controller
 {
     /**
@@ -51,5 +51,61 @@ class PromocionesRestController extends Controller
             return $arrayPaginaPromociones;
         else
             return $error;
+    }
+    
+    /**
+     * 
+     * @param integer $idProgramacion
+     * @param integer $idUsuario
+     * @View(serializerGroups={"serviceUSS21"})
+     */
+    public function getId_programacionId_usuario_movilAction($idProgramacion , $idUsuarioMovil){
+        $repositoryProgramacionEnDia = $this->getDoctrine()->getRepository('AppBundle:ProgramacionEnDia');
+        $repositoryUsuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil');
+        $repositoryCupon = $this->getDoctrine()->getRepository('AppBundle:Cupon');
+        /* @var $programacionEnDia ProgramacionEnDia */
+        $programacionEnDia = $repositoryProgramacionEnDia->findByIdProgramacion($idProgramacion);
+        $usuarioMovil = $repositoryUsuarioMovil->findOneById($idUsuarioMovil);
+
+        if (is_null($programacionEnDia)){
+            $error[] = array('codigo' => '',
+                'mensaje' => 'La programacion no existe',
+                'descripcion' => 'El id de la programacion en dia no existe');
+        } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'agotada') {
+            $error[] = array('codigo' => '',
+                'mensaje' => 'La programacion se agoto',
+                'descripcion' => 'el estado de la programacion es agotada');
+        } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'noVigente') {
+            $error[] = array('codigo' => '',
+                'mensaje' => 'La programacion aun no esta vigente',
+                'descripcion' => 'el estado de la programacion no es noVigente');
+        } elseif (!is_object($usuarioMovil)){
+            $error[] = array('codigo' => '',
+                'mensaje' => 'El usuario no existe',
+                'descripcion' => 'El id del usuario movil no existe');
+        } else {
+            //INICIO TRANSACCION
+           $this->getDoctrine()->getConnection()->beginTransaction();
+
+           try {
+               $nuevoCupon = $repositoryCupon->crearNuevoCupon($programacionEnDia, $usuarioMovil);
+               $repositoryProgramacionEnDia->descontarCantidadDisponible($programacionEnDia);
+               //FINALIZO TRANSACCION
+               $this->getDoctrine()->getConnection()->commit();
+
+           } catch (Exception $e) {
+               //VUELVO CAMBIOS ATRAS 
+               $this->getDoctrine()->getConnection()->rollback();
+               $error[] = array('codigo' => '',
+                       'mensaje' => 'Ocurrio un error al crear el nuevo cupon',
+                       'descripcion' => 'fallo alguna de las consutlas a la base de datos y se lanzo una excepcion');
+           }
+        }
+        
+        if(isset($error)){
+            return $error;
+        }elseif (isset ($nuevoCupon)) {
+            return array("cupon" => $nuevoCupon);
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
@@ -25,7 +26,7 @@ class Programacion
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS21"})
      */
     private $id;
 
@@ -134,6 +135,14 @@ class Programacion
      */
     private $estadoProgramacion;
 
+    /*
+     * @ORM\OneToMany(targetEntity="Cupon", mappedBy="programacion")
+     */
+    private $cupones;
+    
+    public function __construct() {
+        $this->cupones = new ArrayCollection();
+    }
 
     /**
      * Get id

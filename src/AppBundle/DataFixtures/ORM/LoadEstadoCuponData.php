@@ -11,31 +11,31 @@ namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\EstadoPromocion;
+use AppBundle\Entity\EstadoCupon;
 /**
- * Description of LoadEstadoPromocionData
+ * Description of LoadEstadoCuponData
  *
  * @author CRISTIANGILBERTO
  */
-class LoadEstadoPromocionData extends AbstractFixture implements OrderedFixtureInterface{
+class LoadEstadoCuponData extends AbstractFixture implements OrderedFixtureInterface{
     public function load(ObjectManager $manager) {
         $arrayEntity = array(
-            'estadoPromocion-activada' => array(
-                'nombre' => 'activada' 
+            'estadoCupon-pendiente' => array(
+                'nombre' => 'porCanjear' 
             ),
-            'estadoPromocion-desactivada' => array(
-                'nombre' => 'desactivada' 
+            'estadoCupon-validado' => array(
+                'nombre' => 'canjeado' 
             ),
-            'estadoPromocion-eliminada' => array(
-                'nombre' => 'eliminada' 
+            'estadoCupon-cobrado' => array(
+                'nombre' => 'vencido' 
             ),
         );
         
         foreach ($arrayEntity as $referenciaEntity => $entity) {
-            $estadoPromocion = new EstadoPromocion();
-            $estadoPromocion->setNombre($entity['nombre']);
-            $this->addReference($referenciaEntity, $estadoPromocion);
-            $manager->persist($estadoPromocion);
+            $estadoCupon = new EstadoCupon();
+            $estadoCupon->setNombre($entity['nombre']);
+            $this->addReference($referenciaEntity, $estadoCupon);
+            $manager->persist($estadoCupon);
         }
         $manager->flush();
     }

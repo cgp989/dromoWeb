@@ -47,7 +47,7 @@ class LoadPromocionData extends AbstractFixture implements OrderedFixtureInterfa
                 'estaModerada' => true,
                 'puntajePremio' => '',
                 'estadoPromocion' => $this->getReference('estadoPromocion-activada'),
-                'tipoPromocion' => $this->getReference('tipoPromocion-30%'),
+                'tipoPromocion' => $this->getReference('tipoPromocion-30'),
                 'localComercial' => $this->getReference('localComercial-laCocina')
             ),
             'promocion-50%-milanesas-laCocina' => array(
@@ -57,7 +57,7 @@ class LoadPromocionData extends AbstractFixture implements OrderedFixtureInterfa
                 'estaModerada' => true,
                 'puntajePremio' => '',
                 'estadoPromocion' => $this->getReference('estadoPromocion-activada'),
-                'tipoPromocion' => $this->getReference('tipoPromocion-50%'),
+                'tipoPromocion' => $this->getReference('tipoPromocion-50'),
                 'localComercial' => $this->getReference('localComercial-laCocina')
             ),
         );

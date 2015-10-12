@@ -20,11 +20,14 @@ use AppBundle\Entity\EstadoProgramacionEnDia;
 class LoadEstadoProgramacionEnDiaData extends AbstractFixture implements OrderedFixtureInterface{
     public function load(ObjectManager $manager) {
         $arrayEntity = array(
-            'estadoProgramacionEnDia-activada' => array(
-                'nombre' => 'activada' 
+            'estadoProgramacionEnDia-vigente' => array(
+                'nombre' => 'vigente' 
             ),
-            'estadoProgramacionEnDia-desactivada' => array(
-                'nombre' => 'desactivada' 
+            'estadoProgramacionEnDia-noVigente' => array(
+                'nombre' => 'noVigente' 
+            ),
+            'estadoProgramacionEnDia-agotada' => array(
+                'nombre' => 'agotada' 
             ),
         );
         

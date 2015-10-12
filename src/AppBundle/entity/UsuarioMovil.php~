@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * UsuarioMovil
@@ -21,9 +22,11 @@ class UsuarioMovil
      */
     private $id;
 
-    /* mapear cuando este la entidad Cupon
-    private $cupon;
-    */
+    /**
+     * @ORM\OneToMany(targetEntity="Cupon", mappedBy="usuarioMovil")
+     */
+    private $cupones;
+    
     
     /**
      * @var \DateTime
@@ -66,20 +69,27 @@ class UsuarioMovil
      * @ORM\Column(name="sexo", type="string", length=10)
      */
     private $sexo;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usuario", type="string", length=255)
+     */
+    private $usuario;
 
     /*
      * mapear cuando este la entidad Suscripcion
     private $suscripciones;
 |   */
-    
-    /**
-    * @ORM\OneToOne(targetEntity="Usuario", inversedBy="usuarioMovil")
-    * @ORM\JoinColumn(name="idUsuario", referencedColumnName="id")
-    */
-    private $usuario;
 
-
-    /**
+        /**
      * Set fechaNacimiento
      *
      * @param \DateTime $fechaNacimiento
@@ -219,12 +229,85 @@ class UsuarioMovil
     }
 
     /**
-     * Set usuario
+     * Get id
      *
-     * @param \AppBundle\Entity\Usuario $usuario
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add cupones
+     *
+     * @param \AppBundle\Entity\Cupon $cupones
      * @return UsuarioMovil
      */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    public function addCupone(\AppBundle\Entity\Cupon $cupones)
+    {
+        $this->cupones[] = $cupones;
+
+        return $this;
+    }
+
+    /**
+     * Remove cupones
+     *
+     * @param \AppBundle\Entity\Cupon $cupones
+     */
+    public function removeCupone(\AppBundle\Entity\Cupon $cupones)
+    {
+        $this->cupones->removeElement($cupones);
+    }
+
+    /**
+     * Get cupones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCupones()
+    {
+        return $this->cupones;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cupones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return UsuarioMovil
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param string $usuario
+     * @return UsuarioMovil
+     */
+    public function setUsuario($usuario)
     {
         $this->usuario = $usuario;
 
@@ -234,20 +317,10 @@ class UsuarioMovil
     /**
      * Get usuario
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return string 
      */
     public function getUsuario()
     {
         return $this->usuario;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 }
