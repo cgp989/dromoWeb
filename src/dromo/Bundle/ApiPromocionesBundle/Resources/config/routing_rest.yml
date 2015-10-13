@@ -1,5 +1,23 @@
 promociones : 
   type: rest
-  resource:     "DromoApiPromocionesBundle:PromocionesRest"
-  name_prefix:  api_promociones_
+  resource: "DromoApiPromocionesBundle:PromocionesRest"
+  name_prefix: api_promociones_
   prefix: /promociones
+  
+locales : 
+  type: rest
+  resource: "DromoApiPromocionesBundle:LocalesRest"
+  name_prefix: api_locales_
+  prefix: /locales
+  
+sucursales : 
+  type: rest
+  resource: "DromoApiPromocionesBundle:SucursalesRest"
+  name_prefix: api_sucursales_
+  prefix: /sucursales
+  
+comentarios : 
+  type: rest
+  resource: "DromoApiPromocionesBundle:ComentariosRest"
+  name_prefix: api_comentarios_
+  prefix: /comentarios

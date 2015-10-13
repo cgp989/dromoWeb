@@ -26,10 +26,9 @@ class LoadLocalComercialData extends AbstractFixture implements OrderedFixtureIn
                 'emailContacto' => 'mostachys@mostachys.com',
                 'nombreContacto' => 'Raul',
                 'telefonoContacto' => '351653453',
-                'imagen' => 'mostachys.jpg',
-                'logo' => 'mostachys-logo.jpg',
                 'version' => 1,
                 'usuario' => $this->getReference('usuario-pabloc'),
+                'valoracion' => 4.5,
             ),
             'localComercial-laCocina' => array(
                 'nombre' => 'La cocina',
@@ -37,10 +36,9 @@ class LoadLocalComercialData extends AbstractFixture implements OrderedFixtureIn
                 'emailContacto' => 'lacocinacomedor@gmail.com',
                 'nombreContacto' => 'Cristian',
                 'telefonoContacto' => '351654453',
-                'imagen' => 'laCocina.jpg',
-                'logo' => 'laCocina-logo.jpg',
                 'version' => 1,
                 'usuario' => $this->getReference('usuario-Raul'),
+                'valoracion' => 6.5,
             ),
         );
         
@@ -52,10 +50,9 @@ class LoadLocalComercialData extends AbstractFixture implements OrderedFixtureIn
             $localComercial->setEmailContacto($local['emailContacto']);
             $localComercial->setNombreContacto($local['nombreContacto']);
             $localComercial->setTelefonoContacto($local['telefonoContacto']);
-            $localComercial->setImagen($local['imagen']);
-            $localComercial->setLogo($local['nombreContacto']);
             $localComercial->setVersion($local['version']);
             $localComercial->setUsuario($local['usuario']);
+            $localComercial->setValoracion($local['valoracion']);
             $this->addReference($referenciaLocal, $localComercial);
             $manager->persist($localComercial);
         }

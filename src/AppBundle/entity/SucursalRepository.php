@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class SucursalRepository extends EntityRepository
 {
+    public function getListSucursalesPorDistancia($arraySucursales, $latitudUM, $longitudUM){
+        //return $arraySucursales;
+        foreach ($arraySucursales as $sucursal) {
+            /* @var $sucursal Sucursal */
+            $sucursal->calcularDistanciaAUsuarioMovil($latitudUM, $longitudUM);
+        }
+        
+        uasort($arraySucursales, 
+                function(Sucursal $a, Sucursal $b) {
+                    return $a->compareTo($b);
+                }
+        );
+        
+        return $arraySucursales;
+    }
 }

@@ -33,7 +33,7 @@ class Direccion
      * @ORM\Column(name="descripcion", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales"})
      */
     private $descripcion;
 
@@ -61,7 +61,7 @@ class Direccion
      * @ORM\JoinColumn(name="idLocalidad", referencedColumnName="id")
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales"})
      */
     private $localidad;
     

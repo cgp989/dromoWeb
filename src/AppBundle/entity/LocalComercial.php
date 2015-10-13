@@ -27,7 +27,7 @@ class LocalComercial
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS23"})
      */
     private $id;
 
@@ -37,7 +37,7 @@ class LocalComercial
      * @ORM\Column(name="nombre", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS23"})
      */
     private $nombre;
 
@@ -45,6 +45,8 @@ class LocalComercial
      * @var string
      *
      * @ORM\Column(name="descripcion", type="text")
+     * @Expose
+     * @Groups({"serviceUSS23"})
      */
     private $descripcion;
 
@@ -68,13 +70,6 @@ class LocalComercial
      * @ORM\Column(name="telefonoContacto", type="string", length=255)
      */
     private $telefonoContacto;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="logo", type="string", length=255)
-     */
-    private $logo;
     
     /**
      * @var integer
@@ -82,7 +77,7 @@ class LocalComercial
      * @ORM\Column(name="version", type="integer")
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS23"})
      */
     private $version;
 
@@ -101,11 +96,25 @@ class LocalComercial
      * @ORM\OneToMany(targetEntity="Promocion", mappedBy="localComercial")
      */
     private $promociones;
+    
+    /**
+     * @ORM\Column(name="valoracion", type="float")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23"})
+     */
+    private $valoracion;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="localComercial")
+     */
+    private $comentarios;
 
     public function __construct()
     {
         $this->sucursales = new ArrayCollection();
         $this->promociones = new ArrayCollection();
+        $this->comentarios = new ArrayCollection();
     }
 
     /**
@@ -231,29 +240,6 @@ class LocalComercial
     public function getTelefonoContacto()
     {
         return $this->telefonoContacto;
-    }
-
-    /**
-     * Set logo
-     *
-     * @param string $logo
-     * @return LocalComercial
-     */
-    public function setLogo($logo)
-    {
-        $this->logo = $logo;
-
-        return $this;
-    }
-
-    /**
-     * Get logo
-     *
-     * @return string 
-     */
-    public function getLogo()
-    {
-        return $this->logo;
     }
 
     /**
@@ -388,5 +374,61 @@ class LocalComercial
     public function getPromociones()
     {
         return $this->promociones;
+    }
+
+    /**
+     * Set valoracion
+     *
+     * @param float $valoracion
+     * @return LocalComercial
+     */
+    public function setValoracion($valoracion)
+    {
+        $this->valoracion = $valoracion;
+
+        return $this;
+    }
+
+    /**
+     * Get valoracion
+     *
+     * @return float 
+     */
+    public function getValoracion()
+    {
+        return $this->valoracion;
+    }
+
+    /**
+     * Add comentarios
+     *
+     * @param \AppBundle\Entity\Comentario $comentarios
+     * @return LocalComercial
+     */
+    public function addComentario(\AppBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios[] = $comentarios;
+
+        return $this;
+    }
+
+    /**
+     * Remove comentarios
+     *
+     * @param \AppBundle\Entity\Comentario $comentarios
+     */
+    public function removeComentario(\AppBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios->removeElement($comentarios);
+    }
+
+    /**
+     * Get comentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
     }
 }

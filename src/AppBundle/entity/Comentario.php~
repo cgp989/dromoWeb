@@ -1,0 +1,141 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Comentario
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ComentarioRepository")
+ */
+class Comentario
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    private $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="string", length=255)
+     */
+    private $comentario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="valoracion", type="integer")
+     */
+    private $valoracion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="EstadoComentario", inversedBy="comentarios")
+     * @ORM\JoinColumn(name="idEstadoComentario", referencedColumnName="id")
+     */
+    private $estadoComentario;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UsuarioMovil", inversedBy="comentarios")
+     * @ORM\JoinColumn(name="idUsuarioMovil", referencedColumnName="id")
+     */
+    private $usuarioMovil;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="comentarios")
+     * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
+     */
+    private $localComercial;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     * @return Comentario
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime 
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    /**
+     * Set comentario
+     *
+     * @param string $comentario
+     * @return Comentario
+     */
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    /**
+     * Get comentario
+     *
+     * @return string 
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
+
+    /**
+     * Set valoracion
+     *
+     * @param integer $valoracion
+     * @return Comentario
+     */
+    public function setValoracion($valoracion)
+    {
+        $this->valoracion = $valoracion;
+
+        return $this;
+    }
+
+    /**
+     * Get valoracion
+     *
+     * @return integer 
+     */
+    public function getValoracion()
+    {
+        return $this->valoracion;
+    }
+}

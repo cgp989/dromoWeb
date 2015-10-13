@@ -83,6 +83,16 @@ class UsuarioMovil
      * @ORM\Column(name="usuario", type="string", length=255)
      */
     private $usuario;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="usuarioMovil")
+     */
+    private $comentarios;
+    
+    public function __construct() {
+        $this->comentarios = new ArrayCollection();
+        $this->cupones = new ArrayCollection();
+    }
 
     /*
      * mapear cuando este la entidad Suscripcion
@@ -270,13 +280,6 @@ class UsuarioMovil
     {
         return $this->cupones;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->cupones = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set password
@@ -322,5 +325,38 @@ class UsuarioMovil
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Add comentarios
+     *
+     * @param \AppBundle\Entity\Comentario $comentarios
+     * @return UsuarioMovil
+     */
+    public function addComentario(\AppBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios[] = $comentarios;
+
+        return $this;
+    }
+
+    /**
+     * Remove comentarios
+     *
+     * @param \AppBundle\Entity\Comentario $comentarios
+     */
+    public function removeComentario(\AppBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios->removeElement($comentarios);
+    }
+
+    /**
+     * Get comentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
     }
 }

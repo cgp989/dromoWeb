@@ -7,12 +7,15 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
+use JeroenDesloovere\Distance\Distance;
 
 /**
  * Sucursal
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\SucursalRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Sucursal
 {
@@ -24,7 +27,7 @@ class Sucursal
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales"})
      */
     private $id;
 
@@ -32,6 +35,8 @@ class Sucursal
      * @var string
      *
      * @ORM\Column(name="telefono", type="string", length=255)
+     * @Expose
+     * @Groups({"serviceUSS013-sucursales"})
      */
     private $telefono;
     
@@ -40,7 +45,7 @@ class Sucursal
      * @ORM\JoinColumn(name="idDireccion", referencedColumnName="id")
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales"})
      */
     private $direccion;
     
@@ -52,6 +57,12 @@ class Sucursal
      * @Groups({"serviceUSS013"})
      */
     private $localComercial;
+    
+    /**
+     * @Expose
+     * @Groups({"serviceUSS013-sucursales"})
+     */
+    private $distanciaUsuarioMovil;
 
     /**
      * Get id
@@ -130,5 +141,38 @@ class Sucursal
     public function getLocalComercial()
     {
         return $this->localComercial;
+    }
+    
+    public function getDistanciaUsuarioMovil() {
+        return $this->distanciaUsuarioMovil;
+    }
+
+    public function setDistanciaUsuarioMovil($distanciaUsuarioMovil) {
+        $this->distanciaUsuarioMovil = $distanciaUsuarioMovil;
+    }
+    
+    public function calcularDistanciaAUsuarioMovil($latitud, $longitud){
+        $distancia = Distance::between(
+                $latitud, 
+                $longitud, 
+                $this->getDireccion()->getLatitud(),
+                $this->getDireccion()->getLongitud(), 
+                3);
+        $this->setDistanciaUsuarioMovil($distancia);
+    }
+    
+    /**
+     * compareTo
+     *
+     * @param Sucursal $otraSucursal
+     * @return integer
+     */
+    public function compareTo(Sucursal $otraSucursal) {
+        if ($this->getDistanciaUsuarioMovil() == $otraSucursal->getDistanciaUsuarioMovil())
+            return 0;
+        else if ($this->getDistanciaUsuarioMovil() > $otraSucursal->getDistanciaUsuarioMovil())
+            return 1;
+        else if ($this->getDistanciaUsuarioMovil() < $otraSucursal->getDistanciaUsuarioMovil())
+            return -1;
     }
 }

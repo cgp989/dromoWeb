@@ -34,7 +34,7 @@ class Localidad
      * @ORM\Column(name="nombre", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales"})
      */
     private $nombre;
     
