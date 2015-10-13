@@ -35,6 +35,9 @@ class LocalComercial
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $nombre;
 
@@ -82,13 +85,6 @@ class LocalComercial
      * @Groups({"serviceUSS013"})
      */
     private $version;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="imagen", type="string", length=255)
-     */
-    private $imagen;
 
     /**
      * @ORM\OneToOne(targetEntity="Usuario", inversedBy="localComercial")
@@ -258,29 +254,6 @@ class LocalComercial
     public function getLogo()
     {
         return $this->logo;
-    }
-
-    /**
-     * Set imagen
-     *
-     * @param string $imagen
-     * @return LocalComercial
-     */
-    public function setImagen($imagen)
-    {
-        $this->imagen = $imagen;
-
-        return $this;
-    }
-
-    /**
-     * Get imagen
-     *
-     * @return string 
-     */
-    public function getImagen()
-    {
-        return $this->imagen;
     }
 
     /**
