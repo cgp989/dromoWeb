@@ -4,12 +4,18 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * UsuarioMovil
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UsuarioMovilRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class UsuarioMovil
 {
@@ -46,6 +52,9 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios"})
      */
     private $nombre;
     
@@ -53,6 +62,9 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="apellido", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios"})
      */
     private $apellido;
 

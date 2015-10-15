@@ -32,6 +32,7 @@ class EstadoProgramacionEnDia
      *
      * @ORM\Column(name="nombre", type="string", length=50)
      * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $nombre;
 

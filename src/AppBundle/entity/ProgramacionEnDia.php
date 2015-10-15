@@ -34,15 +34,6 @@ class ProgramacionEnDia
      * @Groups({"serviceUSS013"})
      */
     private $cantidadDisponible;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="validez", type="string", length=255)
-     * @Expose
-     * @Groups({"serviceUSS013"})
-     */
-    private $validez;
     
     /**
      * @var \DateTime
@@ -54,6 +45,8 @@ class ProgramacionEnDia
     /**
      * @ORM\ManyToOne(targetEntity="EstadoProgramacionEnDia", inversedBy="programacionesEnDia")
      * @ORM\JoinColumn(name="idEstadoProgramacionEnDia", referencedColumnName="id")
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $estadoProgramacionEnDia;
     
@@ -109,29 +102,6 @@ class ProgramacionEnDia
     public function getCantidadDisponible()
     {
         return $this->cantidadDisponible;
-    }
-
-    /**
-     * Set validez
-     *
-     * @param string $validez
-     * @return ProgramacionEnDia
-     */
-    public function setValidez($validez)
-    {
-        $this->validez = $validez;
-
-        return $this;
-    }
-
-    /**
-     * Get validez
-     *
-     * @return string 
-     */
-    public function getValidez()
-    {
-        return $this->validez;
     }
 
     /**
@@ -234,4 +204,5 @@ class ProgramacionEnDia
     {
         return $this->vencimiento;
     }
+     
 }

@@ -25,28 +25,24 @@ class LoadProgramacionEnDiaData extends AbstractFixture implements OrderedFixtur
         $arrayEntity = array(
             array(
                 'cantidadDisponible' => '10',
-                'validez' => '09:00 - 12:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-2x1-lomito-mostachys'),
                 'vencimiento' => $fechaActual
             ),
             array(
                 'cantidadDisponible' => '15',
-                'validez' => '9:00 - 12:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-3x2-lomito-mostachys'),
                 'vencimiento' => $fechaActual
             ),
             array(
                 'cantidadDisponible' => '40',
-                'validez' => '10:00 - 15:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-50%-milanesas-laCocina'),
                 'vencimiento' => $fechaActual
             ),
             array(
                 'cantidadDisponible' => '40',
-                'validez' => '10:00 - 16:00',
                 'estadoProgramacionEndia' => $this->getReference('estadoProgramacionEnDia-vigente'),
                 'programacion' => $this->getReference('programacion-30%-pastas-laCocina'),
                 'vencimiento' => $fechaActual

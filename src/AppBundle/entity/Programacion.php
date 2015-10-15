@@ -41,6 +41,8 @@ class Programacion
      * @var integer
      *
      * @ORM\Column(name="duracion", type="integer")
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $duracion;
 
@@ -498,4 +500,16 @@ class Programacion
     {
         return $this->estadoProgramacion;
     }
+    
+    
+    /**
+     * Retorna la fecha hora de inicio formateada
+     * 
+     * @return String
+     * @VirtualProperty 
+     * @Groups({"serviceUSS013"})
+     */
+    public function getHoraInicio_(){
+        return $this->horaInicio->format("H:i");
+    } 
 }
