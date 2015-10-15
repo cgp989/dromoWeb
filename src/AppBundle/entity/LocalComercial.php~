@@ -398,4 +398,37 @@ class LocalComercial
     {
         return $this->valoracion;
     }
+
+    /**
+     * Add comentarios
+     *
+     * @param \AppBundle\Entity\Comentario $comentarios
+     * @return LocalComercial
+     */
+    public function addComentario(\AppBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios[] = $comentarios;
+
+        return $this;
+    }
+
+    /**
+     * Remove comentarios
+     *
+     * @param \AppBundle\Entity\Comentario $comentarios
+     */
+    public function removeComentario(\AppBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios->removeElement($comentarios);
+    }
+
+    /**
+     * Get comentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
 }

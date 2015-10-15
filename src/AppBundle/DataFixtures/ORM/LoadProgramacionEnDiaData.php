@@ -53,7 +53,6 @@ class LoadProgramacionEnDiaData extends AbstractFixture implements OrderedFixtur
         foreach ($arrayEntity as $referenciaEntity => $entity) {
             $programacionEnDia = new ProgramacionEnDia();
             $programacionEnDia->setCantidadDisponible($entity['cantidadDisponible']);
-            $programacionEnDia->setValidez($entity['validez']);
             $programacionEnDia->setEstadoProgramacionEnDia($entity['estadoProgramacionEndia']);
             $programacionEnDia->setProgramacion($entity['programacion']);
             $programacionEnDia->setVencimiento($entity['vencimiento']);

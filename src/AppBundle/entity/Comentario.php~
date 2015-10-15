@@ -3,12 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Comentario
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ComentarioRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Comentario
 {
@@ -18,6 +24,9 @@ class Comentario
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $id;
 
@@ -32,6 +41,9 @@ class Comentario
      * @var string
      *
      * @ORM\Column(name="comentario", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios"})
      */
     private $comentario;
 
@@ -39,6 +51,9 @@ class Comentario
      * @var integer
      *
      * @ORM\Column(name="valoracion", type="integer")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios"})
      */
     private $valoracion;
 
@@ -51,6 +66,9 @@ class Comentario
     /**
      * @ORM\ManyToOne(targetEntity="UsuarioMovil", inversedBy="comentarios")
      * @ORM\JoinColumn(name="idUsuarioMovil", referencedColumnName="id")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios"})
      */
     private $usuarioMovil;
 
@@ -138,4 +156,84 @@ class Comentario
     {
         return $this->valoracion;
     }
+
+    /**
+     * Set estadoComentario
+     *
+     * @param \AppBundle\Entity\EstadoComentario $estadoComentario
+     * @return Comentario
+     */
+    public function setEstadoComentario(\AppBundle\Entity\EstadoComentario $estadoComentario = null)
+    {
+        $this->estadoComentario = $estadoComentario;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoComentario
+     *
+     * @return \AppBundle\Entity\EstadoComentario 
+     */
+    public function getEstadoComentario()
+    {
+        return $this->estadoComentario;
+    }
+
+    /**
+     * Set usuarioMovil
+     *
+     * @param \AppBundle\Entity\UsuarioMovil $usuarioMovil
+     * @return Comentario
+     */
+    public function setUsuarioMovil(\AppBundle\Entity\UsuarioMovil $usuarioMovil = null)
+    {
+        $this->usuarioMovil = $usuarioMovil;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarioMovil
+     *
+     * @return \AppBundle\Entity\UsuarioMovil 
+     */
+    public function getUsuarioMovil()
+    {
+        return $this->usuarioMovil;
+    }
+
+    /**
+     * Set localComercial
+     *
+     * @param \AppBundle\Entity\LocalComercial $localComercial
+     * @return Comentario
+     */
+    public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null)
+    {
+        $this->localComercial = $localComercial;
+
+        return $this;
+    }
+
+    /**
+     * Get localComercial
+     *
+     * @return \AppBundle\Entity\LocalComercial 
+     */
+    public function getLocalComercial()
+    {
+        return $this->localComercial;
+    }
+    
+    /**
+     * Retorna la fecha formateada
+     * 
+     * @return String
+     * @VirtualProperty 
+     * @Groups({"serviceUSS23-comentarios"})
+     */
+    public function getFecha_(){
+        return $this->fecha->format("Y-m-d H:m:s");
+    } 
 }

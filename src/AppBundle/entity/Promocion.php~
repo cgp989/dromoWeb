@@ -73,8 +73,6 @@ class Promocion
      * @ORM\ManyToOne(targetEntity="EstadoPromocion", inversedBy="promociones")
      * @ORM\JoinColumn(name="idEstadoPromocion", referencedColumnName="id")
      * 
-     * @Expose
-     * @Groups({"serviceUSS013"})
      */
     private $estadoPromocion;
 

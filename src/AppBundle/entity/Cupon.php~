@@ -273,7 +273,7 @@ class Cupon
      * @Groups({"serviceUSS21"})
      */
     public function getFecha_(){
-        return $this->fecha->format("y-m-d");
+        return $this->fecha->format("Y-m-d");
     }
     
     /**
@@ -284,7 +284,7 @@ class Cupon
      * @Groups({"serviceUSS21"})
      */
     public function getVencimiento_(){
-        return $this->vencimiento->format("y-m-d h:m:s");
+        return $this->vencimiento->format("Y-m-d H:i:s");
     }   
 
     /**
