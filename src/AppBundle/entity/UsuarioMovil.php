@@ -101,9 +101,15 @@ class UsuarioMovil
      */
     private $comentarios;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="usuarioMovil")
+     */
+    private $suscripciones;
+    
     public function __construct() {
         $this->comentarios = new ArrayCollection();
         $this->cupones = new ArrayCollection();
+        $this->suscripciones = new ArrayCollection();
     }
 
     /*
@@ -370,5 +376,38 @@ class UsuarioMovil
     public function getComentarios()
     {
         return $this->comentarios;
+    }
+
+    /**
+     * Add suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     * @return UsuarioMovil
+     */
+    public function addSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones[] = $suscripciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     */
+    public function removeSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones->removeElement($suscripciones);
+    }
+
+    /**
+     * Get suscripciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSuscripciones()
+    {
+        return $this->suscripciones;
     }
 }

@@ -27,9 +27,60 @@ class LocalesRestController extends Controller
         }
         
         if(isset($error)){
-            return $error;
+            return array('error' => $error);
         }elseif (isset ($localComercial)) {
             return array("localComercial" => $localComercial);
+        }
+    }
+    
+    /**
+     * 
+     * @param integer $idLocalComercial
+     * @param integer $idUsuarioMovil
+     * @param booleam $suscripcion
+     * @param booleam $notificacion
+     */
+    public function getId_local_comercialId_usuario_movilSuscripcionNotificacionAction($idLocalComercial, $idUsuarioMovil, $suscripcion, $notificacion){
+        $notificacion = filter_var($notificacion, FILTER_VALIDATE_BOOLEAN);
+        $suscripcion = filter_var($suscripcion, FILTER_VALIDATE_BOOLEAN);
+        $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
+        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->find($idUsuarioMovil);
+        if(!is_object($usuarioMovil)){
+            $error[] = array('codigo' => '',
+                'mensaje' => 'El usuario no existe',
+                'descripcion' => 'El id del usuario no existe en la base de datos');
+        }elseif(!is_object($localComercial)){
+            $error[] = array('codigo' => '',
+                'mensaje' => 'El local comercial no existe',
+                'descripcion' => 'El id del local comercial no existe');
+        }
+        $suscripcionEntity = $this->getDoctrine()->getRepository('AppBundle:Suscripcion')->findOneBy(
+                    array('localComercial' => $localComercial, 'usuarioMovil' => $usuarioMovil));
+        if($suscripcion){
+            if(!is_object($suscripcionEntity)){
+                $suscripcionEntity = new \AppBundle\Entity\Suscripcion();
+                $suscripcionEntity->setLocalComercial($localComercial);
+                $suscripcionEntity->setUsuarioMovil($usuarioMovil);
+                $suscripcionEntity->setNotificaciones((boolean)$notificacion);
+            }else{
+                $suscripcionEntity->setNotificaciones((boolean)$notificacion);
+            }
+            $this->getDoctrine()->getManager()->persist($suscripcionEntity);
+        }else{
+            if(is_object($suscripcionEntity)){
+                $this->getDoctrine()->getManager()->remove($suscripcionEntity);
+            }else{
+                $error[] = array('codigo' => '',
+                'mensaje' => 'La suscripcion no existe',
+                'descripcion' => 'No existe una suscripcion con el id del local y el id del usuario');
+            }
+        }
+        
+        if(isset($error)){
+            return array('error' => $error);
+        }else{
+            $this->getDoctrine()->getManager()->flush();
+            return true;
         }
     }
 }

@@ -109,12 +109,18 @@ class LocalComercial
      * @ORM\OneToMany(targetEntity="Comentario", mappedBy="localComercial")
      */
     private $comentarios;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="localComercial")
+     */
+    private $suscripciones;
 
     public function __construct()
     {
         $this->sucursales = new ArrayCollection();
         $this->promociones = new ArrayCollection();
         $this->comentarios = new ArrayCollection();
+        $this->suscripciones = new ArrayCollection();
     }
 
     /**

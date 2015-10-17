@@ -101,9 +101,15 @@ class UsuarioMovil
      */
     private $comentarios;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="usuarioMovil")
+     */
+    private $suscripciones;
+    
     public function __construct() {
         $this->comentarios = new ArrayCollection();
         $this->cupones = new ArrayCollection();
+        $this->suscripciones = new ArrayCollection();
     }
 
     /*

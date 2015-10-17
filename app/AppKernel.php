@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Dromo\Bundle\ApiPromocionesBundle\DromoApiPromocionesBundle(),
+            new dromo\Bundle\AppLocalBundle\dromoAppLocalBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

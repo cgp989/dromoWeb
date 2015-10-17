@@ -49,7 +49,7 @@ class PromocionesRestController extends Controller
         if (!isset($error)) {
             return array('promociones' => $arrayPaginaPromociones);
         } else
-            return $error;
+            return array('error' => $error);
     }
     
     /**
@@ -102,7 +102,7 @@ class PromocionesRestController extends Controller
         }
         
         if(isset($error)){
-            return $error;
+            return array('error' => $error);
         }elseif (isset ($nuevoCupon)) {
             return array("cupon" => $nuevoCupon);
         }

@@ -38,7 +38,7 @@ class SucursalesRestController extends Controller
         }
         
         if(isset($error)){
-            return $error;
+            return array('error' => $error);
         }elseif (isset ($arraySucursalesOrdenadas)) {
             return array("sucursales" => array_values($arraySucursalesOrdenadas));
         }

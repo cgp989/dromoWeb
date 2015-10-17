@@ -109,12 +109,18 @@ class LocalComercial
      * @ORM\OneToMany(targetEntity="Comentario", mappedBy="localComercial")
      */
     private $comentarios;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="localComercial")
+     */
+    private $suscripciones;
 
     public function __construct()
     {
         $this->sucursales = new ArrayCollection();
         $this->promociones = new ArrayCollection();
         $this->comentarios = new ArrayCollection();
+        $this->suscripciones = new ArrayCollection();
     }
 
     /**
@@ -430,5 +436,38 @@ class LocalComercial
     public function getComentarios()
     {
         return $this->comentarios;
+    }
+
+    /**
+     * Add suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     * @return LocalComercial
+     */
+    public function addSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones[] = $suscripciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     */
+    public function removeSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones->removeElement($suscripciones);
+    }
+
+    /**
+     * Get suscripciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSuscripciones()
+    {
+        return $this->suscripciones;
     }
 }

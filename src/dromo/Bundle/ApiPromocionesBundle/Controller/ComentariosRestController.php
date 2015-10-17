@@ -40,7 +40,7 @@ class ComentariosRestController extends Controller
         }
         
         if(isset($error)){
-            return $error;
+            return array('error' => $error);
         }elseif(is_array($arrayComentarios)){
             return array("comentarios" => $arrayComentarios);
         }
