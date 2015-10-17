@@ -68,15 +68,15 @@ class PromocionesRestController extends Controller
 
         if (is_null($programacionEnDia)){
             $error[] = array('codigo' => '',
-                'mensaje' => 'La programacion no existe',
+                'mensaje' => 'La promoción ya no está disponible.',
                 'descripcion' => 'El id de la programacion en dia no existe');
         } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'agotada') {
             $error[] = array('codigo' => '',
-                'mensaje' => 'La programacion se agoto',
+                'mensaje' => 'La promoción se ha agotado.',
                 'descripcion' => 'el estado de la programacion es agotada');
         } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'noVigente') {
             $error[] = array('codigo' => '',
-                'mensaje' => 'La programacion aun no esta vigente',
+                'mensaje' => 'La promoción aún no está vigente.',
                 'descripcion' => 'el estado de la programacion no es noVigente');
         } elseif (!is_object($usuarioMovil)){
             $error[] = array('codigo' => '',
@@ -96,7 +96,7 @@ class PromocionesRestController extends Controller
                //VUELVO CAMBIOS ATRAS 
                $this->getDoctrine()->getConnection()->rollback();
                $error[] = array('codigo' => '',
-                       'mensaje' => 'Ocurrio un error al crear el nuevo cupon',
+                       'mensaje' => 'No se ha popido generar el nuevo cupón. Intente de nuevo más tarde.',
                        'descripcion' => 'fallo alguna de las consutlas a la base de datos y se lanzo una excepcion');
            }
         }
