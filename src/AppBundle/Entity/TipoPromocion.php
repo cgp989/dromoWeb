@@ -10,14 +10,14 @@ use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
- * EstadoPromocion
+ * TipoPromocion
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\EstadoPromocionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\TipoPromocionRepository")
  * 
  * @ExclusionPolicy("all")
  */
-class EstadoPromocion
+class TipoPromocion
 {
     /**
      * @var integer
@@ -36,16 +36,15 @@ class EstadoPromocion
      * @Groups({"serviceUSS013"})
      */
     private $nombre;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="estadoPromocion")
+     * ORM\OneToMany(targetEntity="Promocion", mappedBy="tipoPromocion")
      */
     private $promociones;
     
     public function __construct() {
         $this->promociones = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -61,7 +60,7 @@ class EstadoPromocion
      * Set nombre
      *
      * @param string $nombre
-     * @return EstadoPromocion
+     * @return TipoPromocion
      */
     public function setNombre($nombre)
     {
@@ -79,37 +78,8 @@ class EstadoPromocion
     {
         return $this->nombre;
     }
-
-    /**
-     * Add promociones
-     *
-     * @param \AppBundle\Entity\Promocion $promociones
-     * @return EstadoPromocion
-     */
-    public function addPromocione(\AppBundle\Entity\Promocion $promociones)
-    {
-        $this->promociones[] = $promociones;
-
-        return $this;
-    }
-
-    /**
-     * Remove promociones
-     *
-     * @param \AppBundle\Entity\Promocion $promociones
-     */
-    public function removePromocione(\AppBundle\Entity\Promocion $promociones)
-    {
-        $this->promociones->removeElement($promociones);
-    }
-
-    /**
-     * Get promociones
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPromociones()
-    {
-        return $this->promociones;
+    
+    public function __toString() {
+        return $this->getNombre();
     }
 }

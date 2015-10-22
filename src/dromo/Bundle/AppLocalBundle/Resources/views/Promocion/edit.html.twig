@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% block body -%}
+    <h2 class="sub-header">Editar promoci&oacute;n</h2>
+
+    {{ form(edit_form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('promocion') }}">
+            Volver
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -470,4 +470,8 @@ class LocalComercial
     {
         return $this->suscripciones;
     }
+    
+    public function __toString() {
+        return $this->getNombre();
+    }
 }

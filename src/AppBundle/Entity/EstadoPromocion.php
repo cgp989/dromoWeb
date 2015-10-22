@@ -10,14 +10,14 @@ use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
- * TipoPromocion
+ * EstadoPromocion
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\TipoPromocionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\EstadoPromocionRepository")
  * 
  * @ExclusionPolicy("all")
  */
-class TipoPromocion
+class EstadoPromocion
 {
     /**
      * @var integer
@@ -36,15 +36,16 @@ class TipoPromocion
      * @Groups({"serviceUSS013"})
      */
     private $nombre;
-
+    
     /**
-     * ORM\OneToMany(targetEntity="Promocion", mappedBy="tipoPromocion")
+     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="estadoPromocion")
      */
     private $promociones;
     
     public function __construct() {
         $this->promociones = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -60,7 +61,7 @@ class TipoPromocion
      * Set nombre
      *
      * @param string $nombre
-     * @return TipoPromocion
+     * @return EstadoPromocion
      */
     public function setNombre($nombre)
     {
@@ -77,5 +78,42 @@ class TipoPromocion
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Add promociones
+     *
+     * @param \AppBundle\Entity\Promocion $promociones
+     * @return EstadoPromocion
+     */
+    public function addPromocione(\AppBundle\Entity\Promocion $promociones)
+    {
+        $this->promociones[] = $promociones;
+
+        return $this;
+    }
+
+    /**
+     * Remove promociones
+     *
+     * @param \AppBundle\Entity\Promocion $promociones
+     */
+    public function removePromocione(\AppBundle\Entity\Promocion $promociones)
+    {
+        $this->promociones->removeElement($promociones);
+    }
+
+    /**
+     * Get promociones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPromociones()
+    {
+        return $this->promociones;
+    }
+    
+    public function __toString() {
+        return $this->getNombre();
     }
 }
