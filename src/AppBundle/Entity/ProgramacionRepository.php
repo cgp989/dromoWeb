@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProgramacionRepository extends EntityRepository
 {
+    /**
+    * Retorna un array con las programaciones de el local pasado por id y que no esten eliminadas
+    * @param integer $idLocal
+    * @return array
+    */
+    function getProgramacionesLocal($idLocal){
+        $promociones = $this->getEntityManager()
+                ->createQuery('SELECT pr FROM AppBundle:Programacion pr '
+                        . 'LEFT JOIN pr.promocion p '
+                        . 'LEFT JOIN p.localComercial l '
+                        . 'LEFT JOIN pr.estadoProgramacion epr '
+                        . 'LEFT JOIN p.estadoPromocion e '
+                        . 'WHERE l.id = :idLocal AND epr.nombre != :nombreEstadoPr AND e.nombre != :nombreEstadoP')
+                    ->setParameters(array(
+                        'idLocal' => $idLocal,
+                        'nombreEstadoPr' => 'eliminada',
+                        'nombreEstadoP' => 'eliminada'))
+                    ->getResult();
+        return $promociones;
+    }
 }

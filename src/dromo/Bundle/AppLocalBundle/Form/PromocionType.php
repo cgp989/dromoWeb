@@ -16,7 +16,9 @@ class PromocionType extends AbstractType
         $builder
             ->add('titulo')
             ->add('descripcion', 'textarea')
-            ->add('precio')
+            ->add('precio', null, array(
+                'label' => 'Precio ($)'
+            ))
             ->add('estadoPromocion', 'entity', array(
                 'class' => 'AppBundle:EstadoPromocion',
                 'query_builder' =>
@@ -26,7 +28,6 @@ class PromocionType extends AbstractType
                                 ->setParameter('nombreEstado', 'eliminada');
                     },
                 'label' => 'Estado'
-                
                 )
             )
             ->add('tipoPromocion', null, array(

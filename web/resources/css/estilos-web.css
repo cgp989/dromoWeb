@@ -51,10 +51,21 @@ body{
     background-color: #161616;
 }
 
-a.new-entity span{
+.btn-action-top .glyphicon{
     font-size: 30px;
 }
 
 .table.table-show tr > td, .table.table-show tr > th{
     border: none;
+}
+
+.btn-action-top button.glyphicon{
+    background-color: transparent;
+    color: #337AB7;
+    padding: 0;
+    line-height: 1;
+}
+
+.btn-action-top button.glyphicon:hover{
+    color: #23527C;
 }

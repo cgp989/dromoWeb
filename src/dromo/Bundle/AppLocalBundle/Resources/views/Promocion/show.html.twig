@@ -2,15 +2,27 @@
 
 {% block body -%}
     <h2 class="sub-header">Ver promoci&oacute;n</h2>
-
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="editar" href="{{ path('promocion_edit', { 'id': entity.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('promocion') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
     <table class="table table-show">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>Tipo</th>
+                <td>{{ entity.tipoPromocion }}</td>
             </tr>
             <tr>
-                <th>Titulo</th>
+                <th class="col-xs-1">Titulo</th>
                 <td>{{ entity.titulo }}</td>
             </tr>
             <tr>
@@ -19,30 +31,12 @@
             </tr>
             <tr>
                 <th>Precio</th>
-                <td>{{ entity.precio }}</td>
+                <td>${{ entity.precio }}</td>
             </tr>
             <tr>
-                <th>Estamoderada</th>
-                <td>{{ entity.estaModerada }}</td>
-            </tr>
-            <tr>
-                <th>Puntajepremio</th>
-                <td>{{ entity.puntajePremio }}</td>
+                <th>Esatdo</th>
+                <td>{{ entity.estadoPromocion }}</td>
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('promocion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('promocion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}

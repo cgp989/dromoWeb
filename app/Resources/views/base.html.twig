@@ -36,7 +36,9 @@
                         <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
                             <a href="{{ path('promocion') }}">Promociones</a>
                         </li>
-                        <li><a href="#">Programaciones</a></li>
+                        <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
+                            <a href="{{ path('programacion') }}">Programaciones</a>
+                        </li>
                     </ul>
                     <ul class="nav nav-sidebar">
                         <li><a href="">Estad&iacute;sticas</a></li>

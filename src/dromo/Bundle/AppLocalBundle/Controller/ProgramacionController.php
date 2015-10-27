@@ -5,74 +5,68 @@ namespace dromo\Bundle\AppLocalBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use AppBundle\Entity\Promocion;
-use dromo\Bundle\AppLocalBundle\Form\PromocionType;
+use AppBundle\Entity\Programacion;
+use dromo\Bundle\AppLocalBundle\Form\ProgramacionType;
 
 /**
- * Promocion controller.
+ * Programacion controller.
  *
  */
-class PromocionController extends Controller
+class ProgramacionController extends Controller
 {
-    
     private $idLocalLogueado = 76;
 
     /**
-     * Lists all Promocion entities.
+     * Lists all Programacion entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $repoPromociones = $em->getRepository('AppBundle:Promocion');
-        $entities = $repoPromociones->getPromocionesLocal($this->idLocalLogueado);
+        $repoProgramaciones = $em->getRepository('AppBundle:Programacion');
+        $entities = $repoProgramaciones->getProgramacionesLocal($this->idLocalLogueado);
 
-        return $this->render('dromoAppLocalBundle:Promocion:index.html.twig', array(
+        return $this->render('dromoAppLocalBundle:Programacion:index.html.twig', array(
             'entities' => $entities,
         ));
     }
     /**
-     * Creates a new Promocion entity.
+     * Creates a new Programacion entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new Promocion();
+        $entity = new Programacion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $repositoryLocal = $em->getRepository('AppBundle:LocalComercial');
-            $local = $repositoryLocal->find($this->idLocalLogueado);
-            $entity->setEstaModerada(0);
-            $entity->setLocalComercial($local);
-            $entity->setPuntajePremio(0);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('promocion_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('programacion_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('dromoAppLocalBundle:Promocion:new.html.twig', array(
+        return $this->render('dromoAppLocalBundle:Programacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a Promocion entity.
+     * Creates a form to create a Programacion entity.
      *
-     * @param Promocion $entity The entity
+     * @param Programacion $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Promocion $entity)
+    private function createCreateForm(Programacion $entity)
     {
-        $form = $this->createForm(new PromocionType(), $entity, array(
-            'action' => $this->generateUrl('promocion_create'),
-            'method' => 'POST',
+        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->idLocalLogueado)), $entity, array(
+            'action' => $this->generateUrl('programacion_create'),
+            'method' => 'POST'
         ));
 
         $form->add('crear', 'submit', array('label' => 'Crear', 'attr' => ['class' => 'btn btn-primary']));
@@ -81,60 +75,60 @@ class PromocionController extends Controller
     }
 
     /**
-     * Displays a form to create a new Promocion entity.
+     * Displays a form to create a new Programacion entity.
      *
      */
     public function newAction()
     {
-        $entity = new Promocion();
+        $entity = new Programacion();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('dromoAppLocalBundle:Promocion:new.html.twig', array(
+        return $this->render('dromoAppLocalBundle:Programacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Promocion entity.
+     * Finds and displays a Programacion entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+        $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Promocion entity.');
+            throw $this->createNotFoundException('Unable to find Programacion entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('dromoAppLocalBundle:Promocion:show.html.twig', array(
+        return $this->render('dromoAppLocalBundle:Programacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing Promocion entity.
+     * Displays a form to edit an existing Programacion entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+        $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Promocion entity.');
+            throw $this->createNotFoundException('Unable to find Programacion entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('dromoAppLocalBundle:Promocion:edit.html.twig', array(
+        return $this->render('dromoAppLocalBundle:Programacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -142,16 +136,16 @@ class PromocionController extends Controller
     }
 
     /**
-    * Creates a form to edit a Promocion entity.
+    * Creates a form to edit a Programacion entity.
     *
-    * @param Promocion $entity The entity
+    * @param Programacion $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Promocion $entity)
+    private function createEditForm(Programacion $entity)
     {
-        $form = $this->createForm(new PromocionType(), $entity, array(
-            'action' => $this->generateUrl('promocion_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->idLocalLogueado)), $entity, array(
+            'action' => $this->generateUrl('programacion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -160,17 +154,17 @@ class PromocionController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Promocion entity.
+     * Edits an existing Programacion entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+        $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Promocion entity.');
+            throw $this->createNotFoundException('Unable to find Programacion entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -180,42 +174,41 @@ class PromocionController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('promocion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
         }
 
-        return $this->render('dromoAppLocalBundle:Promocion:edit.html.twig', array(
+        return $this->render('dromoAppLocalBundle:Programacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a Promocion entity.
+     * Deletes a Programacion entity.
      *
      */
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+            $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Promocion entity.');
+                throw $this->createNotFoundException('Unable to find Programacion entity.');
             }
-            
-            $estadoEliminada=$em->getRepository('AppBundle:EstadoPromocion')->findOneByNombre('eliminada');
-            $entity->setEstadoPromocion($estadoEliminada);
-            $em->persist($entity);
+
+            $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('promocion'));
+        return $this->redirect($this->generateUrl('programacion'));
     }
 
     /**
-     * Creates a form to delete a Promocion entity by id.
+     * Creates a form to delete a Programacion entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -224,13 +217,13 @@ class PromocionController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('promocion_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('programacion_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('eliminar', 'submit', 
+            ->add('submit', 'submit', 
                     array('label' => ' ',
                         'attr' => 
                             ['class' => 'glyphicon glyphicon-trash', 
-                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta promoción?")',
+                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta porgramción?")',
                             'title' => 'eliminar']
                     ))
             ->getForm()

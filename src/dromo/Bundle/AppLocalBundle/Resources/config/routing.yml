@@ -1,3 +1,7 @@
 app_promocion:
     resource: "@dromoAppLocalBundle/Resources/config/routing/promocion.yml"
     prefix:   /promocion
+
+app_programacion:
+    resource: "@dromoAppLocalBundle/Resources/config/routing/programacion.yml"
+    prefix:   /programacion

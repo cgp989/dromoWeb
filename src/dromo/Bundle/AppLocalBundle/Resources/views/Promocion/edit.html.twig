@@ -1,16 +1,31 @@
 {% extends '::base.html.twig' %}
-{% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
 {% block body -%}
     <h2 class="sub-header">Editar promoci&oacute;n</h2>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('promocion') }}">
-            Volver
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('promocion') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        {{ form_start(edit_form) }}
+            <div class="row error-count">{{ form_errors(edit_form) }}</div>
+            <div class="row">
+                <div class="col-xs-12">{{ form_row(edit_form.titulo) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">{{ form_row(edit_form.descripcion) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">{{ form_row(edit_form.precio) }}</div>
+                <div class="col-xs-4 col-xs-offset-1">{{ form_row(edit_form.tipoPromocion) }}</div>
+                <div class="col-xs-4 col-xs-offset-1">{{ form_row(edit_form.estadoPromocion) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 pull-right text-right">{{ form_row(edit_form.actualizar) }}</div>
+            </div>
+        {{ form_end(edit_form) }}
+    </div>
 {% endblock %}

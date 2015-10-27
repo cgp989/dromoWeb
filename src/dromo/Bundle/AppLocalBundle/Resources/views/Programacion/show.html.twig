@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h2 class="sub-header">Ver programaci&oacute;n</h2>
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="editar" href="{{ path('programacion_edit', { 'id': entity.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('programacion') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <table class="table table-show">
+        <tbody>
+            <tr>
+                <th class="col-xs-1">Promoci&oacute;n</th>
+                <td>{{ entity.promocion }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ entity.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>Fechainicio</th>
+                <td>{{ entity.fechaInicio|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Fechafin</th>
+                <td>{{ entity.fechaFin|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Horainicio</th>
+                <td>{{ entity.horaInicio|date('H:i') }}</td>
+            </tr>
+            <tr>
+                <th>Duracion</th>
+                <td>{{ entity.duracion_ }}</td>
+            </tr>
+            <tr>
+                <th>D&iacute;as</th>
+                <td>{{ entity.getDias}}</td>
+            </tr>
+            <tr>
+                <th>Observaci&oacute;n</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
