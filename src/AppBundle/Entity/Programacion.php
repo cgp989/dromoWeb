@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Programacion
@@ -558,5 +559,17 @@ class Programacion
            $this->setEsSabado (0);
        if(is_null($this->getEsDomingo()))
            $this->setEsDomingo (0);
+    }
+    
+    /**
+     * verifica que al menos un dia sea insertado como true
+     * 
+     * @param ExecutionContextInterface $context
+     */
+    public function isValidDays(ExecutionContextInterface $context)
+    {
+        if(!$this->getEsLunes() && !$this->getEsMartes() && !$this->getEsMiercoles() && !$this->getEsJueves() && !$this->getEsViernes() && !$this->getEsSabado() && !$this->getEsDomingo()){
+            $context->addViolation("Debe seleccionar al menos un día");
+        }    
     }
 }
