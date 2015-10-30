@@ -100,7 +100,7 @@ class ProgramacionController extends Controller
         $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Programacion entity.');
+            throw $this->createNotFoundException('No existe la programacion.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -122,7 +122,7 @@ class ProgramacionController extends Controller
         $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Programacion entity.');
+            throw $this->createNotFoundException('No existe la programacion.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -144,11 +144,10 @@ class ProgramacionController extends Controller
     */
     private function createEditForm(Programacion $entity)
     {
-        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->idLocalLogueado)), $entity, array(
+        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->idLocalLogueado, 'edit' => true)), $entity, array(
             'action' => $this->generateUrl('programacion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
         $form->add('actualizar', 'submit', array('label' => 'Actualizar', 'attr' => ['class' => 'btn btn-primary']));
 
         return $form;
@@ -164,7 +163,7 @@ class ProgramacionController extends Controller
         $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Programacion entity.');
+            throw $this->createNotFoundException('No existe la programacion.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -197,10 +196,12 @@ class ProgramacionController extends Controller
             $entity = $em->getRepository('AppBundle:Programacion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Programacion entity.');
+                throw $this->createNotFoundException('No existe la programacion.');
             }
 
-            $em->remove($entity);
+            $estadoEliminada=$em->getRepository('AppBundle:EstadoProgramacion')->findOneByNombre('eliminada');
+            $entity->setEstadoProgramacion($estadoEliminada);
+            $em->persist($entity);
             $em->flush();
         }
 

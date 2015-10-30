@@ -14,7 +14,10 @@
         {{ form_start(edit_form) }}
             <div class="row error-count">{{ form_errors(edit_form) }}</div>
             <div class="row">
-                <div class="col-xs-6">{{ form_row(edit_form.promocion) }}</div>
+                <div class="col-xs-6">
+                    {{ form_row(edit_form.promocion) }}
+                    <span class="help-block">No se puede editar por cuestiones estadísticas</span>
+                </div>
                 <div class="col-xs-3">{{ form_row(edit_form.cantidad) }}</div>
             </div>
             <div class="row">

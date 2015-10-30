@@ -40,6 +40,11 @@
     background-color: transparent;
     color: #DDD;
 }
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+    background-color: #666;
+    color: #000;
+}
 /*fin cambios estilos bootstrap*/
 
 body{

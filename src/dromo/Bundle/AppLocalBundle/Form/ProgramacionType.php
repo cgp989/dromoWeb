@@ -10,7 +10,7 @@ class ProgramacionType extends AbstractType
 {
     private $opciones;
     
-    public function __construct(array $opciones) {
+    public function __construct(array $opciones = null) {
         $this->opciones = $opciones;
     }
     /**
@@ -22,11 +22,6 @@ class ProgramacionType extends AbstractType
         global $kernel;
         $repoPromocion = $kernel->getContainer()->get('doctrine')->getManager()->getRepository('AppBundle:Promocion');
         $builder
-            ->add('promocion', 'entity', array(
-                'class' => 'AppBundle:Promocion',
-                'choices' => $repoPromocion->getPromocionesLocal($this->opciones['idLocal']),
-                'label' => 'Promoción')
-            )
             ->add('fechaInicio')
             ->add('fechaFin')
             ->add('horaInicio')
@@ -129,6 +124,25 @@ class ProgramacionType extends AbstractType
                 'required' => false
             ))
         ;
+                    
+        if (isset($this->opciones['edit']) && $this->opciones['edit']) {
+            $builder
+                    ->add('promocion', 'entity', array(
+                        'class' => 'AppBundle:Promocion',
+                        'choices' => $repoPromocion->getPromocionesLocal($this->opciones['idLocal']),
+                        'label' => 'Promoción',
+                        'empty_value' => '',
+                        'disabled' => true)
+            );
+        } else {
+            $builder
+                    ->add('promocion', 'entity', array(
+                        'class' => 'AppBundle:Promocion',
+                        'choices' => $repoPromocion->getPromocionesLocal($this->opciones['idLocal']),
+                        'label' => 'Promoción',
+                        'empty_value' => '')
+            );
+        }
     }
     
     /**

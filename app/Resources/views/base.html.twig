@@ -32,7 +32,9 @@
                 {#MENU LATERAL IZQUIERDO#}
                 <div class="col-xs-3 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class=""><a href="#">Inicio <span class="sr-only">(current)</span></a></li>
+                        <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
+                            <a href="{{ path('app_index_local') }}">Inicio</a>
+                        </li>
                         <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
                             <a href="{{ path('promocion') }}">Promociones</a>
                         </li>

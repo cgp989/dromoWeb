@@ -7,6 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class PromocionType extends AbstractType
 {
+    private $opciones;
+    
+    public function __construct(array $opciones = null) {
+        $this->opciones = $opciones;
+    }
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -14,7 +19,6 @@ class PromocionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo')
             ->add('descripcion', 'textarea')
             ->add('precio', null, array(
                 'label' => 'Precio ($)'
@@ -30,12 +34,26 @@ class PromocionType extends AbstractType
                 'label' => 'Estado'
                 )
             )
-            ->add('tipoPromocion', null, array(
-                'label' => 'Tipo',
-                'empty_value' => null,
-                'empty_data' => null,
-            ))
         ;
+                    
+        if (isset($this->opciones['edit']) && $this->opciones['edit']) {
+            $builder
+                    ->add('titulo', null, array(
+                        'disabled' => true,
+                    ))
+                    ->add('tipoPromocion', null, array(
+                        'label' => 'Tipo',
+                        'disabled' => true,
+                        'empty_value' => '',
+            ));
+        } else {
+            $builder
+                    ->add('titulo')
+                    ->add('tipoPromocion', null, array(
+                        'label' => 'Tipo',
+                        'empty_value' => '',
+            ));
+        }
     }
     
     /**

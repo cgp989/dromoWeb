@@ -31,7 +31,7 @@ class Promocion
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=255)
+     * @ORM\Column(name="titulo", type="string", length=25)
      * @Expose
      * @Groups({"serviceUSS013"})
      */
@@ -49,7 +49,7 @@ class Promocion
     /**
      * @var float
      *
-     * @ORM\Column(name="precio", type="float")
+     * @ORM\Column(name="precio")
      * @Expose
      * @Groups({"serviceUSS013"})
      */

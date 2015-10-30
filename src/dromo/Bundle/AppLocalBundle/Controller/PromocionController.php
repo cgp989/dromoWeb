@@ -106,7 +106,7 @@ class PromocionController extends Controller
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Promocion entity.');
+            throw $this->createNotFoundException('No existe la promoción.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -128,7 +128,7 @@ class PromocionController extends Controller
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Promocion entity.');
+            throw $this->createNotFoundException('No existe la promoción.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -150,7 +150,7 @@ class PromocionController extends Controller
     */
     private function createEditForm(Promocion $entity)
     {
-        $form = $this->createForm(new PromocionType(), $entity, array(
+        $form = $this->createForm(new PromocionType(array('edit' => true)), $entity, array(
             'action' => $this->generateUrl('promocion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -170,7 +170,7 @@ class PromocionController extends Controller
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Promocion entity.');
+            throw $this->createNotFoundException('No existe la promoción.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -202,9 +202,11 @@ class PromocionController extends Controller
             $entity = $em->getRepository('AppBundle:Promocion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Promocion entity.');
+                throw $this->createNotFoundException('No existe la promoción.');
             }
             
+            $repositoryProgramacion = $em->getRepository('AppBundle:Programacion');
+            $repositoryProgramacion->eliminarProgramacionesConPromocion($entity); //elimino todas las programaciones de la promocion
             $estadoEliminada=$em->getRepository('AppBundle:EstadoPromocion')->findOneByNombre('eliminada');
             $entity->setEstadoPromocion($estadoEliminada);
             $em->persist($entity);
@@ -230,7 +232,8 @@ class PromocionController extends Controller
                     array('label' => ' ',
                         'attr' => 
                             ['class' => 'glyphicon glyphicon-trash', 
-                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta promoción?")',
+                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta promoción?.'
+                                . ' Tenga en cuenta que tambien se eliminaran todas las programaciones de la misma.")',
                             'title' => 'eliminar']
                     ))
             ->getForm()

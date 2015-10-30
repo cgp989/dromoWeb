@@ -32,4 +32,17 @@ class ProgramacionRepository extends EntityRepository
                     ->getResult();
         return $promociones;
     }
+    
+    function eliminarProgramacionesConPromocion(Promocion $promocion){
+        $programaciones = $this->findByPromocion($promocion);
+        $estadoEliminada = $this->getEntityManager()->
+                        getRepository('AppBundle:EstadoProgramacion')->findOneByNombre('eliminada');
+        if(!is_null($programaciones) && is_array($programaciones)){
+            foreach ($programaciones as $programacion) {
+                $programacion->setEstadoProgramacion($estadoEliminada);
+                $this->getEntityManager()->persist($programacion);
+            }
+            $this->getEntityManager()->flush();
+        }
+    }
 }

@@ -13,15 +13,21 @@
         {{ form_start(edit_form) }}
             <div class="row error-count">{{ form_errors(edit_form) }}</div>
             <div class="row">
-                <div class="col-xs-12">{{ form_row(edit_form.titulo) }}</div>
+                <div class="col-xs-3">
+                    {{ form_row(edit_form.titulo) }}
+                    <span class="help-block">No se puede editar por cuestiones estadísticas</span>
+                </div>
+                <div class="col-xs-3 col-xs-offset-1">
+                    {{ form_row(edit_form.tipoPromocion) }}
+                    <span class="help-block">No se puede editar por cuestiones estadísticas</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">{{ form_row(edit_form.precio) }}</div>
+                <div class="col-xs-3 col-xs-offset-1">{{ form_row(edit_form.estadoPromocion) }}</div>
             </div>
             <div class="row">
                 <div class="col-xs-12">{{ form_row(edit_form.descripcion) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2">{{ form_row(edit_form.precio) }}</div>
-                <div class="col-xs-4 col-xs-offset-1">{{ form_row(edit_form.tipoPromocion) }}</div>
-                <div class="col-xs-4 col-xs-offset-1">{{ form_row(edit_form.estadoPromocion) }}</div>
             </div>
             <div class="row">
                 <div class="col-xs-2 pull-right text-right">{{ form_row(edit_form.actualizar) }}</div>

@@ -1,4 +1,63 @@
 AppBundle\Entity\Programacion:
+    properties:
+        promocion:
+            - NotNull:
+                message: "Campo obligatorio"
+        cantidad:
+            - NotBlank:
+                message: "Campo obligatorio"
+            - Type:
+                type: integer
+                message: "El valor no es válido"
+        cantidad:
+            - NotBlank:
+                message: "Campo obligatorio"
+            - Type:
+                type: initeger
+                message: "El valor no es válido"
+        fechaInicio:
+            - NotNull:
+                message: "Campo obligatorio"
+        fechaFin:
+            - NotNull:
+                message: "Campo obligatorio"
+        horaInicio:
+            - NotNull:
+                message: "Campo obligatorio"
+        duracion:
+            - NotNull:
+                message: "Campo obligatorio"
     constraints:
         - Callback:
             methods:   [isValidDays]
+
+AppBundle\Entity\Promocion:
+    properties:
+        titulo:
+            - NotBlank:
+                    message: "Campo obligatorio"
+            - Length:
+                min: 3
+                max: 25
+                minMessage: "El campo debe tener minimo {{ limit }} caracteres"
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
+        tipoPromocion:
+            - NotNull:
+                message: "Campo obligatorio"
+        precio:
+            - NotBlank:
+                message: "Campo obligatorio"
+            - Type:
+                type: float
+                message: "El valor no es válido"
+        tipoPromocion:
+            - NotNull:
+                message: "Campo obligatorio"
+        descripcion:
+            - NotBlank:
+                    message: "Campo obligatorio"
+            - Length:
+                min: 5
+                max: 500
+                minMessage: "El campo debe tener minimo {{ limit }} caracteres"
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
