@@ -19,7 +19,7 @@ class PromocionesRestController extends Controller
      * @View(serializerGroups={"serviceUSS013"})
      */
     public function getLatitudLongitudIdusaurioNropaginaAction($latitud, $longitud, $idUsuario, $nroPagina){
-        $cantidadPorPagina = 5;
+        $cantidadPorPagina = 20;
         $error;
         if($this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuario)){
             
