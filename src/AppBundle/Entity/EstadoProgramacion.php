@@ -104,4 +104,8 @@ class EstadoProgramacion
     {
         return $this->programaciones;
     }
+    
+    public function __toString() {
+        return $this->getNombre();
+    }
 }

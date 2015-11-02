@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h2 class="sub-header">Ver promoci&oacute;n</h2>
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="editar" href="{{ path('promocion_edit', { 'id': entity.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('promocion') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <table class="table table-show">
+        <tbody>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ entity.tipoPromocion }}</td>
+            </tr>
+            <tr>
+                <th class="col-xs-1">Titulo</th>
+                <td>{{ entity.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>${{ entity.precio }}</td>
+            </tr>
+            <tr>
+                <th>Esatdo</th>
+                <td>{{ entity.estadoPromocion }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

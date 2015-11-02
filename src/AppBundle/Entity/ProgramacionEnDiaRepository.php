@@ -48,4 +48,32 @@ class ProgramacionEnDiaRepository extends EntityRepository
             }
             $this->getEntityManager()->flush();
     }
+    
+    public function insertProgramacion(Programacion $programacion){
+        //VERIFICO QUE LA PROGRAMACION NO EXISTA YA EN LA TABLA PROGRMACION EN DIA
+        $progEnDia = $this->findOneByProgramacion($programacion);
+        if(is_null($progEnDia)){
+            $estadoVigente = $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('vigente');
+
+            $progEnDia = new ProgramacionEnDia();
+            $progEnDia->setProgramacion($programacion);
+            $progEnDia->setCantidadDisponible($programacion->getCantidad());
+            $progEnDia->setEstadoProgramacionEnDia($estadoVigente);
+            $progEnDia->setVencimiento($programacion->getVencimientoDelDia());
+        }else{
+            $progEnDia->setVencimiento($programacion->getVencimientoDelDia());
+        }
+        
+        $this->getEntityManager()->persist($progEnDia);
+        $this->getEntityManager()->flush();
+    }
+    
+    public function deleteProgramacion(Programacion $programacion){
+        $progEnDia = $this->findOneByProgramacion($programacion);
+        if(!is_null($progEnDia)){
+            $em = $this->getEntityManager();
+            $em->remove($progEnDia);
+            $em->flush();
+        }
+    }
 }

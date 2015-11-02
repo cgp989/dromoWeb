@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h2 class="sub-header">Editar programaci&oacute;n</h2>
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('programacion') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        {{ form_start(edit_form) }}
+            <div class="row error-count">{{ form_errors(edit_form) }}</div>
+            <div class="row">
+                <div class="col-xs-6">
+                    {{ form_row(edit_form.promocion) }}
+                    <span class="help-block">No se puede editar por cuestiones estadísticas</span>
+                </div>
+                <div class="col-xs-3">{{ form_row(edit_form.cantidad) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">{{ form_row(edit_form.fechaInicio) }}</div>
+                <div class="col-xs-6">{{ form_row(edit_form.fechaFin) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">{{ form_row(edit_form.horaInicio) }}</div>
+                <div class="col-xs-2">{{ form_row(edit_form.duracion) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12"><label>D&iacute;as disponible</label></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    {{ form_row(edit_form.esLunes) }}
+                    {{ form_row(edit_form.esJueves) }}
+                    {{ form_row(edit_form.esDomingo) }}
+                </div>
+                <div class="col-xs-4">
+                    {{ form_row(edit_form.esMartes) }}
+                    {{ form_row(edit_form.esViernes) }}
+                </div>
+                <div class="col-xs-4">
+                    {{ form_row(edit_form.esMiercoles) }}
+                    {{ form_row(edit_form.esSabado) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">{{ form_row(edit_form.estadoProgramacion) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">{{ form_row(edit_form.descripcion) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 pull-right text-right">{{ form_row(edit_form.actualizar) }}</div>
+            </div>
+        {{ form_end(edit_form) }}
+    </div>
+{% endblock %}
