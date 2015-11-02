@@ -45,6 +45,9 @@ class ProgramacionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                $em->getRepository ('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
 
             return $this->redirect($this->generateUrl('programacion_show', array('id' => $entity->getId())));
         }
@@ -172,6 +175,9 @@ class ProgramacionController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            
+            if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                $em->getRepository ('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
 
             return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
         }
@@ -229,5 +235,5 @@ class ProgramacionController extends Controller
                     ))
             ->getForm()
         ;
-    }
+    } 
 }

@@ -48,4 +48,33 @@ class ProgramacionEnDiaRepository extends EntityRepository
             }
             $this->getEntityManager()->flush();
     }
+    
+    public function insertProgramacion(Programacion $programacion){
+        $arrayDistacia = $programacion->getPromocion()->getLocalComercial()->getSucursalMinimaDistancia();
+        $estadoVigente = $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('vigente');
+        
+        //calculo del vencimineto
+        $arrayHoraInicio = getdate($programacion->getHoraInicio()->getTimestamp());
+        $duracion = $programacion->getDuracion();
+        $horaD = (int) $duracion/2;
+        if($duracion%2)
+            $minutosD = 30;
+        else
+            $minutosD = 0;
+        
+        $fechaVencimiento = new \DateTime('now');
+        $fechaVencimiento->setTime($arrayHoraInicio['hours'], $arrayHoraInicio['minutes'], 0);
+        $fechaVencimiento->add('PT'.$horaD.'H'.$minutosD.'M');
+        
+        $progEnDia = new ProgramacionEnDia();
+        $progEnDia->setProgramacion($programacion);
+        $progEnDia->setCantidadDisponible($programacion->getCantidad());
+        $progEnDia->setDistanciaALocalComercial($arrayDistacia['distance']);
+        $progEnDia->setSucursalMasCercana($arrayDistacia['title']);
+        $progEnDia->setEstadoProgramacionEnDia($estadoVigente);
+        $progEnDia->setVencimiento($fechaVencimiento);
+        
+        $this->getEntityManager()->persist($progEnDia);
+        $this->getEntityManager()->flush();
+    }
 }

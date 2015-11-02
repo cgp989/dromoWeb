@@ -45,4 +45,9 @@ class ProgramacionRepository extends EntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    function estaEnDiaProgramacion(Programacion $programacion){
+        $fechaHoy = new \DateTime('now');
+        return ($programacion->getFechaInicio() <= $fechaHoy && $fechaHoy <= $programacion->getFechaFin());
+    }
 }
