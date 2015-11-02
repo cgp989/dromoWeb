@@ -572,4 +572,21 @@ class Programacion
             $context->addViolation("Debe seleccionar al menos un día");
         }    
     }
+    
+    public function getVencimientoDelDia(){
+        $arrayHoraInicio = getdate($this->getHoraInicio()->getTimestamp());
+        $duracion = $this->getDuracion();
+        $horaD = (int) $duracion/2;
+        if($duracion%2)
+            $minutosD = 30;
+        else
+            $minutosD = 0;
+
+        $fechaVencimiento = new \DateTime('now');
+        $fechaVencimiento->setTime($arrayHoraInicio['hours'], $arrayHoraInicio['minutes'], 0);
+            
+        $fechaVencimiento->add(new \DateInterval('PT'.(integer)$horaD.'H'.$minutosD.'M'));
+        
+        return $fechaVencimiento;
+    }
 }

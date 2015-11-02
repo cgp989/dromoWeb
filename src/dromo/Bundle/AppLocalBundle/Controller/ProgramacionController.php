@@ -178,7 +178,9 @@ class ProgramacionController extends Controller
             
             if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
                 $em->getRepository ('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
-
+            else
+                $em->getRepository ('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
+                
             return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
         }
 
@@ -205,6 +207,9 @@ class ProgramacionController extends Controller
                 throw $this->createNotFoundException('No existe la programacion.');
             }
 
+            if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                $em->getRepository ('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
+            
             $estadoEliminada=$em->getRepository('AppBundle:EstadoProgramacion')->findOneByNombre('eliminada');
             $entity->setEstadoProgramacion($estadoEliminada);
             $em->persist($entity);

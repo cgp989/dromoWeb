@@ -39,6 +39,9 @@ class ProgramacionRepository extends EntityRepository
                         getRepository('AppBundle:EstadoProgramacion')->findOneByNombre('eliminada');
         if(!is_null($programaciones) && is_array($programaciones)){
             foreach ($programaciones as $programacion) {
+                if($this->estaEnDiaProgramacion($programacion))
+                    $this->getEntityManager()->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($programacion);
+                
                 $programacion->setEstadoProgramacion($estadoEliminada);
                 $this->getEntityManager()->persist($programacion);
             }
@@ -48,6 +51,25 @@ class ProgramacionRepository extends EntityRepository
     
     function estaEnDiaProgramacion(Programacion $programacion){
         $fechaHoy = new \DateTime('now');
-        return ($programacion->getFechaInicio() <= $fechaHoy && $fechaHoy <= $programacion->getFechaFin());
+        if ($programacion->getFechaInicio() <= $fechaHoy && $fechaHoy <= $programacion->getFechaFin() && $programacion->getEstadoProgramacion()->getNombre() == 'activada'){
+            switch (date('w', $fechaHoy->getTimestamp())){
+                case 0:
+                    return $programacion->getEsDomingo();
+                case 1:
+                    return $programacion->getEsLunes();
+                case 2:
+                    return $programacion->getEsMartes();
+                case 3:
+                    return $programacion->getEsMiercoles();
+                case 4:
+                    return $programacion->getEsJueves();
+                case 5:
+                    return $programacion->getEsViernes();
+                case 6:
+                    return $programacion->getEsSabado();
+            }
+        }else{
+            return false;
+        }
     }
 }
