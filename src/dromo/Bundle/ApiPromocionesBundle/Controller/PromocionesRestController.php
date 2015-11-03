@@ -53,6 +53,7 @@ class PromocionesRestController extends Controller
     }
     
     /**
+     * Genera un nuevo codigo y crea un nuevo cupon 
      * 
      * @param integer $idProgramacion
      * @param integer $idUsuario
@@ -74,11 +75,7 @@ class PromocionesRestController extends Controller
             $error[] = array('codigo' => '',
                 'mensaje' => 'La promoción se ha agotado.',
                 'descripcion' => 'el estado de la programacion es agotada');
-        } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'noVigente') {
-            $error[] = array('codigo' => '',
-                'mensaje' => 'La promoción aún no está vigente.',
-                'descripcion' => 'el estado de la programacion no es noVigente');
-        } elseif (!is_object($usuarioMovil)){
+        }  elseif (!is_object($usuarioMovil)){
             $error[] = array('codigo' => '',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario movil no existe');
