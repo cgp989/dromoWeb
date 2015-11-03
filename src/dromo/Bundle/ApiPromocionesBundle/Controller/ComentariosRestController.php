@@ -17,7 +17,7 @@ class ComentariosRestController extends Controller
      * @View(serializerGroups={"serviceUSS23-comentarios"})
      */
     public function getId_local_comercialId_usuario_movilNro_paginaAction($idLocalComercial, $idUSuarioMovil, $nroPagina){
-       $cantidadPorPagina = 1;
+       $cantidadPorPagina = 5;
         /* @var $localComercial Entity\LocalComercial */
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
         
