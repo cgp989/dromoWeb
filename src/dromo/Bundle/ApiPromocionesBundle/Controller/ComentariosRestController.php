@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity;
 class ComentariosRestController extends Controller
 {
-    //COMETARIO
+    //COMETARIO agregue algo mas
     
     /**
      * 
