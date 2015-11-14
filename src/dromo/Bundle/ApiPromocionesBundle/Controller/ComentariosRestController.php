@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity;
 class ComentariosRestController extends Controller
 {
+    //COMETARIO
+    
     /**
      * 
      * @param integer $idLocalComercial
