@@ -3,12 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Suscripcion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\SuscripcionRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Suscripcion
 {
@@ -25,12 +31,16 @@ class Suscripcion
      * @var boolean
      *
      * @ORM\Column(name="notificaciones", type="boolean")
+     * @Expose
+     * @Groups({"serviceUSS02-login"})
      */
     private $notificaciones;
     
     /**
      * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="suscripciones")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
+     * @Expose
+     * @Groups({"serviceUSS02-login"})
      */
     private $localComercial;
     

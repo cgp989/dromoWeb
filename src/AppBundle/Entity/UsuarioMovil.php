@@ -25,11 +25,14 @@ class UsuarioMovil
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
+     * @Groups({"serviceUSS02-login"})
      */
     private $id;
 
     /**
      * @ORM\OneToMany(targetEntity="Cupon", mappedBy="usuarioMovil")
+     *      
      */
     private $cupones;
     
@@ -38,6 +41,8 @@ class UsuarioMovil
      * @var \DateTime
      *
      * @ORM\Column(name="fechaNacimiento", type="date")
+     * @Expose
+     * @Groups({"serviceUSS02-login"})
      */
     private $fechaNacimiento;
 
@@ -54,7 +59,7 @@ class UsuarioMovil
      * @ORM\Column(name="nombre", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS23-comentarios"})
+     * @Groups({"serviceUSS23-comentarios", "serviceUSS02-login"})
      */
     private $nombre;
     
@@ -64,7 +69,7 @@ class UsuarioMovil
      * @ORM\Column(name="apellido", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS23-comentarios"})
+     * @Groups({"serviceUSS23-comentarios", "serviceUSS02-login"})
      */
     private $apellido;
 
@@ -79,6 +84,8 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="sexo", type="string", length=10)
+     * @Expose
+     * @Groups({"serviceUSS02-login"})
      */
     private $sexo;
     
@@ -86,6 +93,7 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
+     * 
      */
     private $password;
 
@@ -103,6 +111,8 @@ class UsuarioMovil
     
     /**
      * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="usuarioMovil")
+     * @Expose
+     * @Groups({"serviceUSS02-login"})
      */
     private $suscripciones;
     

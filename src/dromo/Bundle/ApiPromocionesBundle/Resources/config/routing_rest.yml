@@ -21,3 +21,9 @@ comentarios :
   resource: "DromoApiPromocionesBundle:ComentariosRest"
   name_prefix: api_comentarios_
   prefix: /comentarios
+  
+usuarios : 
+  type: rest
+  resource: "DromoApiPromocionesBundle:UsuariosRest"
+  name_prefix: api_usuarios_
+  prefix: /usuarios
