@@ -35,7 +35,7 @@ class UsuariosRestController extends Controller{
                 'descripcion' => 'Password incorrecto! Usuario valido');
         }else{
             if($usuarioMovil != null){
-             $arrayUsuario = array($usuarioMovil, $usuarioMovil->getSuscripciones()->toArray());   
+             $arrayUsuario = array("usuario" => $usuarioMovil);   
             }else{
                  $error[] = array('codigo' => '',
                 'mensaje' => 'Acceso incorrecto',
@@ -47,7 +47,7 @@ class UsuariosRestController extends Controller{
         if(isset($error)){
             return array('error' => $error);
         }elseif(is_array($arrayUsuario)){
-            return array("usuario" => $arrayUsuario);
+            return $arrayUsuario;
         }
     }
 }
