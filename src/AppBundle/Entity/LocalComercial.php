@@ -77,13 +77,14 @@ class LocalComercial
      * @ORM\Column(name="version", type="integer")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login"})
      */
     private $version;
 
     /**
      * @ORM\OneToOne(targetEntity="Usuario", inversedBy="localComercial")
      * @ORM\JoinColumn(name="idUsuario", referencedColumnName="id")
+     * 
      */
     private $usuario;
     
