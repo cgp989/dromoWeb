@@ -1,0 +1,11 @@
+app_index_local:
+    path:     /
+    defaults: { _controller: "DromoAppLocalBundle:Default:index" }
+    
+app_promocion:
+    resource: "@DromoAppLocalBundle/Resources/config/routing/promocion.yml"
+    prefix:   /promocion
+
+app_programacion:
+    resource: "@DromoAppLocalBundle/Resources/config/routing/programacion.yml"
+    prefix:   /programacion

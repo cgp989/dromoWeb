@@ -1,0 +1,4 @@
+services:
+#    dromo_procedimientos.example:
+#        class: Dromo\Bundle\ProcedimientosBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,5 +1,5 @@
 dromo_app_local:
-    resource: "@dromoAppLocalBundle/Resources/config/routing.yml"
+    resource: "@DromoAppLocalBundle/Resources/config/routing.yml"
     prefix:   /local/admin/
 
 dromo_api_promociones:

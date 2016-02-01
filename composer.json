@@ -22,7 +22,8 @@
         "jms/serializer-bundle": "dev-master",
         "symfony/serializer": "^2.7",
         "jeroendesloovere/distance": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "^2.2"
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+        "symfony/console": "2.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
