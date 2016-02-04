@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use JeroenDesloovere\Distance\Distance;
 use AppBundle\Entity\ProgramacionEnDia;
+use APPBundle\Entity\VisitaPromocion;
 
 class PromocionesRestController extends Controller {
 
@@ -17,6 +18,7 @@ class PromocionesRestController extends Controller {
      * @param decimal $longitud
      * @param integer $idUsuario
      * @param integer $nroPagina
+     * @param integer $tipo
      * 
      * @View(serializerGroups={"serviceUSS013"})
      */
@@ -104,7 +106,7 @@ class PromocionesRestController extends Controller {
                 $this->getDoctrine()->getConnection()->rollback();
                 $error[] = array('codigo' => '',
                     'mensaje' => 'No se ha popido generar el nuevo cupón. Intente de nuevo más tarde.',
-                    'descripcion' => 'fallo alguna de las consutlas a la base de datos y se lanzo una excepcion');
+                    'descripcion' => 'fallo alguna de las consultaas a la base de datos y se lanzo una excepcion');
             }
         }
 
@@ -134,6 +136,7 @@ class PromocionesRestController extends Controller {
                 'mensaje' => 'Error',
                 'descripcion' => 'Usuario o programacion inexistentes!');
         } else {
+            
             /* @var $visitaPromocion Entity\VisitaPromocion */
             $visitaPromocion = new Entity\VisitaPromocion();
             $em = $this->getDoctrine()->getManager();

@@ -34,6 +34,8 @@ class Comentario
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios"})
      */
     private $fecha;
 
