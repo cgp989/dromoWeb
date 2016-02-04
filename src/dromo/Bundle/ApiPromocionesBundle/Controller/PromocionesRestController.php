@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use JeroenDesloovere\Distance\Distance;
 use AppBundle\Entity\ProgramacionEnDia;
 use APPBundle\Entity\VisitaPromocion;
+use AppBundle\Entity;
+
+;
 
 class PromocionesRestController extends Controller {
 
@@ -150,7 +153,7 @@ class PromocionesRestController extends Controller {
 
         if (isset($error)) {
             return false;
-        } elseif (is_array($arrayUsuario)) {
+        } else {
             return true;
         }
     }
