@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Programacion
@@ -15,6 +16,7 @@ use JMS\Serializer\Annotation\VirtualProperty;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ProgramacionRepository")
  * @ExclusionPolicy("all")
+ * @ORM\HasLifecycleCallbacks
  */
 class Programacion
 {
@@ -33,7 +35,7 @@ class Programacion
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=500)
+     * @ORM\Column(name="descripcion", type="string", length=500, nullable=true)
      */
     private $descripcion;
 
@@ -77,49 +79,49 @@ class Programacion
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esLunes", type="boolean")
+     * @ORM\Column(name="esLunes", type="boolean", options={"default" = 0})
      */
     private $esLunes;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esMartes", type="boolean")
+     * @ORM\Column(name="esMartes", type="boolean", options={"default" = 0})
      */
     private $esMartes;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esMiercoles", type="boolean")
+     * @ORM\Column(name="esMiercoles", type="boolean", options={"default" = 0})
      */
     private $esMiercoles;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esJueves", type="boolean")
+     * @ORM\Column(name="esJueves", type="boolean", options={"default" = 0})
      */
     private $esJueves;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esViernes", type="boolean")
+     * @ORM\Column(name="esViernes", type="boolean", options={"default" = 0})
      */
     private $esViernes;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esSabado", type="boolean")
+     * @ORM\Column(name="esSabado", type="boolean", options={"default" = 0})
      */
     private $esSabado;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="esDomingo", type="boolean")
+     * @ORM\Column(name="esDomingo", type="boolean", options={"default" = 0})
      */
     private $esDomingo;
 
@@ -142,8 +144,14 @@ class Programacion
      */
     private $cupones;
     
+    /**
+     * @ORM\OneToMany(targetEntity="VisitaPromocion", mappedBy="programacion")
+     */
+    private $visitasPromocion;
+    
     public function __construct() {
         $this->cupones = new ArrayCollection();
+        $this->visitasPromocion = new ArrayCollection();
     }
 
     /**
@@ -200,6 +208,12 @@ class Programacion
     public function getDuracion()
     {
         return $this->duracion;
+    }
+    
+    public function getDuracion_()
+    {
+        $arrayHoras = array(1 => '0:30', 2 => '1:00', 3 => '1:30', 4 => '2:00', 5 => '2:30', 6 => '3:00', 7 => '3:30', 8 => '4:00', 9 => '4:30',10 => '5:00',11 => '5:30',12 => '6:00',13 => '6:30',14 => '7:00',15 => '7:30',16 => '8:00',17 => '8:30',18 => '9:00',19 => '9:30',20 => '10:00',21 => '10:30',22 => '11:00',23 => '11:30',24 => '12:00',25 => '12:30',26 => '13:00',27 => '13:30',28 => '14:00',29 => '14:30',30 => '15:00',31 => '15:30',32 => '16:00',33 => '16:30',34 => '17:00',35 => '17:30',36 => '18:00',37 => '18:30',38 => '19:00',39 => '19:30',40 => '20:00',41 => '20:30',42 => '21:00',43 => '21:30',44 => '22:00',45 => '22:30',46 => '23:00',47 => '23:30',48 => '24:00');
+        return $arrayHoras[$this->duracion];
     }
 
     /**
@@ -512,4 +526,106 @@ class Programacion
     public function getHoraInicio_(){
         return $this->horaInicio->format("H:i");
     } 
+    
+    public function getDias(){
+        $str = [];
+        if($this->getEsLunes())
+            $str[] = 'Lunes';
+        if($this->getEsMartes())
+            $str[] = 'Martes';
+        if($this->getEsMiercoles())
+            $str[] = 'Miercoles';
+        if($this->getEsJueves())
+            $str[] = 'Jueves';
+        if($this->getEsViernes())
+            $str[] = 'Viernes';
+        if($this->getEsSabado())
+            $str[] = 'Sabado';
+        if($this->getEsDomingo())
+            $str[] = 'Domingo';
+        
+        return implode(', ', $str);
+    }
+    
+    /**
+    * @ORM\PrePersist
+    */
+    function onPrePersist() {
+       if(is_null($this->getEsLunes()))
+           $this->setEsLunes (0);
+       if(is_null($this->getEsMartes()))
+           $this->setEsMartes (0);
+       if(is_null($this->getEsMiercoles()))
+           $this->setEsMiercoles (0);
+       if(is_null($this->getEsJueves()))
+           $this->setEsJueves (0);
+       if(is_null($this->getEsViernes()))
+           $this->setEsViernes (0);
+       if(is_null($this->getEsSabado()))
+           $this->setEsSabado (0);
+       if(is_null($this->getEsDomingo()))
+           $this->setEsDomingo (0);
+    }
+    
+    /**
+     * verifica que al menos un dia sea insertado como true
+     * 
+     * @param ExecutionContextInterface $context
+     */
+    public function isValidDays(ExecutionContextInterface $context)
+    {
+        if(!$this->getEsLunes() && !$this->getEsMartes() && !$this->getEsMiercoles() && !$this->getEsJueves() && !$this->getEsViernes() && !$this->getEsSabado() && !$this->getEsDomingo()){
+            $context->addViolation("Debe seleccionar al menos un día");
+        }    
+    }
+    
+    public function getVencimientoDelDia(){
+        $arrayHoraInicio = getdate($this->getHoraInicio()->getTimestamp());
+        $duracion = $this->getDuracion();
+        $horaD = (int) $duracion/2;
+        if($duracion%2)
+            $minutosD = 30;
+        else
+            $minutosD = 0;
+
+        $fechaVencimiento = new \DateTime('now');
+        $fechaVencimiento->setTime($arrayHoraInicio['hours'], $arrayHoraInicio['minutes'], 0);
+            
+        $fechaVencimiento->add(new \DateInterval('PT'.(integer)$horaD.'H'.$minutosD.'M'));
+        
+        return $fechaVencimiento;
+    }
+
+    /**
+     * Add visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     * @return Programacion
+     */
+    public function addVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion[] = $visitasPromocion;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     */
+    public function removeVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion->removeElement($visitasPromocion);
+    }
+
+    /**
+     * Get visitasPromocion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasPromocion()
+    {
+        return $this->visitasPromocion;
+    }
 }

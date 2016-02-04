@@ -120,10 +120,22 @@ class UsuarioMovil
      */
     private $suscripciones;
     
+    /**
+     * @ORM\OneToMany(targetEntity="VisitaPromocion", mappedBy="usuarioMovil")
+     */
+    private $visitasPromocion;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="VisitaLocalComercial", mappedBy="usuarioMovil")
+     */
+    private $visitasLocalComercial;
+    
     public function __construct() {
         $this->comentarios = new ArrayCollection();
         $this->cupones = new ArrayCollection();
         $this->suscripciones = new ArrayCollection();
+        $this->visitasPromocion = new ArrayCollection();
+        $this->visitasLocalComercial = new ArrayCollection();
     }
 
     /*
@@ -423,5 +435,71 @@ class UsuarioMovil
     public function getSuscripciones()
     {
         return $this->suscripciones;
+    }
+
+    /**
+     * Add visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     * @return UsuarioMovil
+     */
+    public function addVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion[] = $visitasPromocion;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     */
+    public function removeVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion->removeElement($visitasPromocion);
+    }
+
+    /**
+     * Get visitasPromocion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasPromocion()
+    {
+        return $this->visitasPromocion;
+    }
+
+    /**
+     * Add visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     * @return UsuarioMovil
+     */
+    public function addVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial[] = $visitasLocalComercial;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     */
+    public function removeVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial->removeElement($visitasLocalComercial);
+    }
+
+    /**
+     * Get visitasLocalComercial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasLocalComercial()
+    {
+        return $this->visitasLocalComercial;
     }
 }

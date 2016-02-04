@@ -112,4 +112,8 @@ class EstadoPromocion
     {
         return $this->promociones;
     }
+    
+    public function __toString() {
+        return $this->getNombre();
+    }
 }

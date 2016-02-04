@@ -115,6 +115,11 @@ class LocalComercial
      * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="localComercial")
      */
     private $suscripciones;
+    
+        /**
+     * @ORM\OneToMany(targetEntity="VisitaLocalComercial", mappedBy="localComercial")
+     */
+    private $visitasLocalComercial;
 
     public function __construct()
     {
@@ -122,6 +127,7 @@ class LocalComercial
         $this->promociones = new ArrayCollection();
         $this->comentarios = new ArrayCollection();
         $this->suscripciones = new ArrayCollection();
+        $this->visitasLocalComercial = new ArrayCollection();
     }
 
     /**
@@ -474,5 +480,38 @@ class LocalComercial
     
     public function __toString() {
         return $this->getNombre();
+    }
+
+    /**
+     * Add visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     * @return LocalComercial
+     */
+    public function addVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial[] = $visitasLocalComercial;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     */
+    public function removeVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial->removeElement($visitasLocalComercial);
+    }
+
+    /**
+     * Get visitasLocalComercial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasLocalComercial()
+    {
+        return $this->visitasLocalComercial;
     }
 }

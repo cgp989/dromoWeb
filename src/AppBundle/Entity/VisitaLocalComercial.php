@@ -3,20 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
- * Suscripcion
+ * VisitaLocalComercial
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SuscripcionRepository")
- * 
- * @ExclusionPolicy("all")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\VisitaLocalComercialRepository")
  */
-class Suscripcion
+class VisitaLocalComercial
 {
     /**
      * @var integer
@@ -28,25 +22,23 @@ class Suscripcion
     private $id;
 
     /**
-     * @var boolean
+     * @var \DateTime
      *
-     * @ORM\Column(name="notificaciones", type="boolean")
-     * @Expose
-     * @Groups({"serviceUSS02-login"})
+     * @ORM\Column(name="fecha", type="datetime")
      */
-    private $notificaciones;
+    private $fecha;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="suscripciones")
+        /**
+     * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="visitasLocalComercial")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
-     * @Expose
-     * @Groups({"serviceUSS02-login"})
+     * 
      */
     private $localComercial;
     
     /**
-     * @ORM\ManyToOne(targetEntity="UsuarioMovil", inversedBy="suscripciones")
+     * @ORM\ManyToOne(targetEntity="UsuarioMovil", inversedBy="visitasLocalComercial")
      * @ORM\JoinColumn(name="idUsuarioMovil", referencedColumnName="id")
+     * 
      */
     private $usuarioMovil;
 
@@ -62,33 +54,33 @@ class Suscripcion
     }
 
     /**
-     * Set notificaciones
+     * Set fecha
      *
-     * @param boolean $notificaciones
-     * @return Suscripcion
+     * @param \DateTime $fecha
+     * @return VisitaLocalComercial
      */
-    public function setNotificaciones($notificaciones)
+    public function setFecha($fecha)
     {
-        $this->notificaciones = $notificaciones;
-        
+        $this->fecha = $fecha;
+
         return $this;
     }
 
     /**
-     * Get notificaciones
+     * Get fecha
      *
-     * @return boolean 
+     * @return \DateTime 
      */
-    public function getNotificaciones()
+    public function getFecha()
     {
-        return $this->notificaciones;
+        return $this->fecha;
     }
 
     /**
      * Set localComercial
      *
      * @param \AppBundle\Entity\LocalComercial $localComercial
-     * @return Suscripcion
+     * @return VisitaLocalComercial
      */
     public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null)
     {
@@ -111,7 +103,7 @@ class Suscripcion
      * Set usuarioMovil
      *
      * @param \AppBundle\Entity\UsuarioMovil $usuarioMovil
-     * @return Suscripcion
+     * @return VisitaLocalComercial
      */
     public function setUsuarioMovil(\AppBundle\Entity\UsuarioMovil $usuarioMovil = null)
     {

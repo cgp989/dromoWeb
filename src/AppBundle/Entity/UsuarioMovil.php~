@@ -25,11 +25,14 @@ class UsuarioMovil
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $id;
 
     /**
      * @ORM\OneToMany(targetEntity="Cupon", mappedBy="usuarioMovil")
+     *      
      */
     private $cupones;
     
@@ -38,6 +41,8 @@ class UsuarioMovil
      * @var \DateTime
      *
      * @ORM\Column(name="fechaNacimiento", type="date")
+     * @Expose
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $fechaNacimiento;
 
@@ -54,7 +59,7 @@ class UsuarioMovil
      * @ORM\Column(name="nombre", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS23-comentarios"})
+     * @Groups({"serviceUSS23-comentarios", "serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $nombre;
     
@@ -64,7 +69,7 @@ class UsuarioMovil
      * @ORM\Column(name="apellido", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS23-comentarios"})
+     * @Groups({"serviceUSS23-comentarios", "serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $apellido;
 
@@ -79,6 +84,8 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="sexo", type="string", length=10)
+     * @Expose
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $sexo;
     
@@ -86,6 +93,8 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
+     * @Expose
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $password;
 
@@ -93,23 +102,40 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="usuario", type="string", length=255)
+     * @Expose
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $usuario;
     
     /**
      * @ORM\OneToMany(targetEntity="Comentario", mappedBy="usuarioMovil")
+     * 
      */
     private $comentarios;
     
     /**
      * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="usuarioMovil")
+     * @Expose
+     * @Groups({"serviceUSS02-login"})
      */
     private $suscripciones;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="VisitaPromocion", mappedBy="usuarioMovil")
+     */
+    private $visitasPromocion;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="VisitaLocalComercial", mappedBy="usuarioMovil")
+     */
+    private $visitasLocalComercial;
     
     public function __construct() {
         $this->comentarios = new ArrayCollection();
         $this->cupones = new ArrayCollection();
         $this->suscripciones = new ArrayCollection();
+        $this->visitasPromocion = new ArrayCollection();
+        $this->visitasLocalComercial = new ArrayCollection();
     }
 
     /*
@@ -376,5 +402,71 @@ class UsuarioMovil
     public function getComentarios()
     {
         return $this->comentarios;
+    }
+
+    /**
+     * Add suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     * @return UsuarioMovil
+     */
+    public function addSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones[] = $suscripciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     */
+    public function removeSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones->removeElement($suscripciones);
+    }
+
+    /**
+     * Get suscripciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSuscripciones()
+    {
+        return $this->suscripciones;
+    }
+
+    /**
+     * Add visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     * @return UsuarioMovil
+     */
+    public function addVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion[] = $visitasPromocion;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     */
+    public function removeVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion->removeElement($visitasPromocion);
+    }
+
+    /**
+     * Get visitasPromocion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasPromocion()
+    {
+        return $this->visitasPromocion;
     }
 }
