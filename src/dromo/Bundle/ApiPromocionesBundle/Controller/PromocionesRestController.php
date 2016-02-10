@@ -11,7 +11,7 @@ use AppBundle\Entity\ProgramacionEnDia;
 use APPBundle\Entity\VisitaPromocion;
 use AppBundle\Entity;
 
-;
+
 
 class PromocionesRestController extends Controller {
 

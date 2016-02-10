@@ -50,6 +50,9 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="foto", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios", "serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $foto;
 

@@ -62,15 +62,17 @@ class UsuariosRestController extends Controller {
      * @param String $apellido
      * @param String $fecha
      * @param String $sexo
+     * @param String $foto
      * 
      * 
      * @View(serializerGroups={"serviceUSS04-cuenta"})
      */
-    public function getUsuarioPasswordNombreApellidoFechaSexoTipoAction($usuario, $password, $nombre, $apellido, $fecha, $sexo, $tipo) {
+    public function getUsuarioPasswordNombreApellidoFechaSexoFotoTipoAction($usuario, $password, $nombre, $apellido, $fecha, $sexo, $foto, $tipo) {
         if ($tipo == "A") {
             //da de alta nuevo usuario
+            // el campo password es el id que devuelve google
             /* @var $usuarioMovil Entity\UsuarioMovil */
-            $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByUsuario($usuario);
+            $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
             if ($usuarioMovil != null) {
                 $error[] = array('codigo' => '',
                     'mensaje' => 'Usuario Existente',
@@ -85,14 +87,17 @@ class UsuariosRestController extends Controller {
                 $usuarioMovil->setApellido($apellido);
                 $usuarioMovil->setNombre($nombre);
                 $usuarioMovil->setSexo($sexo);
+                if($fecha == ""){
+                    $fecha = "2100-01-01";
+                }
                 $timestamp = new \DateTime($fecha);   //AAAA-MM-DD        
                 $usuarioMovil->setFechaNacimiento($timestamp);
-                $usuarioMovil->setFoto("");
+                $usuarioMovil->setFoto($foto);
                 $usuarioMovil->setPuntos(0);
                 $em->persist($usuarioMovil);
                 $em->flush();
 
-                $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByUsuario($usuario);
+                $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
                 if ($usuarioMovil != null) {
                     $arrayUsuario = array("usuario" => $usuarioMovil);
                 }
@@ -106,7 +111,7 @@ class UsuariosRestController extends Controller {
         } else if ($tipo == "B") {
             //baja
             /* @var $usuarioMovil Entity\UsuarioMovil */
-            $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByUsuario($usuario);
+            $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
             if ($usuarioMovil == null) {
                 return false;
             } else {
@@ -118,7 +123,7 @@ class UsuariosRestController extends Controller {
         } else if ($tipo == "M") {
             //modificar
             /* @var $usuarioMovil Entity\UsuarioMovil */
-            $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByUsuario($usuario);
+            $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
             if ($usuarioMovil == null) {
                 $error[] = array('codigo' => '',
                     'mensaje' => 'Usuario Inexistente',
@@ -126,26 +131,29 @@ class UsuariosRestController extends Controller {
             } else {
                 $em = $this->getDoctrine()->getManager();
                 //setear datos a um
-                if ($password != null && $password != "null") {
-                    $usuarioMovil->setPassword($password);
+                if ($usuario != null && $usuario != "null" && $usuario != "") {
+                    $usuarioMovil->setUsuario($usuario);
                 }
-                if ($apellido != null && $apellido != "null") {
+                if ($apellido != null && $apellido != "null" && $apellido != "") {
                     $usuarioMovil->setApellido($apellido);
                 }
-                if ($nombre != null && $nombre != "null") {
+                if ($nombre != null && $nombre != "null" && $nombre != "") {
                     $usuarioMovil->setNombre($nombre);
                 }
-                if ($sexo != null && $sexo != "null") {
+                if ($sexo != null && $sexo != "null" && sexo != "") {
                     $usuarioMovil->setSexo($sexo);
                 }
-                if ($fecha != null && $fecha != "null") {
+                if ($fecha != null && $fecha != "null" && fecha != "") {
                     $timestamp = new \DateTime($fecha); // 1990-11-21
                     $usuarioMovil->setFechaNacimiento($timestamp);
+                }
+                if ($foto != null && $foto != "null" && $foto != ""){
+                    $usuarioMovil->setFoto($foto);
                 }
                 $em->persist($usuarioMovil);
                 $em->flush();
 
-                $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByUsuario($usuario);
+                $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
                 if ($usuarioMovil != null) {
                     $arrayUsuario = array("usuario" => $usuarioMovil);
                 }
