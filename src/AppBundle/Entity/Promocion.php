@@ -66,6 +66,8 @@ class Promocion
      * @var integer
      *
      * @ORM\Column(name="puntajePremio", type="integer")
+     * @Expose
+     * @Groups({"serviceUSS013"})
      */
     private $puntajePremio;
 

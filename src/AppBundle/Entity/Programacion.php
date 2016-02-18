@@ -144,8 +144,14 @@ class Programacion
      */
     private $cupones;
     
+    /**
+     * @ORM\OneToMany(targetEntity="VisitaPromocion", mappedBy="programacion")
+     */
+    private $visitasPromocion;
+    
     public function __construct() {
         $this->cupones = new ArrayCollection();
+        $this->visitasPromocion = new ArrayCollection();
     }
 
     /**
@@ -588,5 +594,38 @@ class Programacion
         $fechaVencimiento->add(new \DateInterval('PT'.(integer)$horaD.'H'.$minutosD.'M'));
         
         return $fechaVencimiento;
+    }
+
+    /**
+     * Add visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     * @return Programacion
+     */
+    public function addVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion[] = $visitasPromocion;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasPromocion
+     *
+     * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
+     */
+    public function removeVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
+    {
+        $this->visitasPromocion->removeElement($visitasPromocion);
+    }
+
+    /**
+     * Get visitasPromocion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasPromocion()
+    {
+        return $this->visitasPromocion;
     }
 }

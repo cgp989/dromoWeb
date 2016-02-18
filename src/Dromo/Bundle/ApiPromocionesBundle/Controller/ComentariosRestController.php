@@ -1,13 +1,15 @@
 <?php
 
 namespace Dromo\Bundle\ApiPromocionesBundle\Controller;
+
 use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity;
-class ComentariosRestController extends Controller
-{
+
+class ComentariosRestController extends Controller {
+
     /**
      * 
      * @param integer $idLocalComercial
@@ -16,33 +18,79 @@ class ComentariosRestController extends Controller
      * 
      * @View(serializerGroups={"serviceUSS23-comentarios"})
      */
-    public function getId_local_comercialId_usuario_movilNro_paginaAction($idLocalComercial, $idUSuarioMovil, $nroPagina){
-       $cantidadPorPagina = 5;
+    public function getId_local_comercialId_usuario_movilNro_paginaAction($idLocalComercial, $idUSuarioMovil, $nroPagina) {
+        $cantidadPorPagina = 5;
         /* @var $localComercial Entity\LocalComercial */
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
-        
-        if(!$this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUSuarioMovil)){
+
+        if (!$this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUSuarioMovil)) {
             $error[] = array('codigo' => '',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario no existe en la base de datos');
-        }elseif(!is_object($localComercial)){
+        } elseif (!is_object($localComercial)) {
             $error[] = array('codigo' => '',
                 'mensaje' => 'El local comercial no existe',
                 'descripcion' => 'El id del local comercial no existe en la base de datos');
-        }elseif($localComercial->getComentarios()->isEmpty()){
+        } elseif ($localComercial->getComentarios()->isEmpty()) {
             $error[] = array('codigo' => '',
                 'mensaje' => 'No existen comentarios para este local',
                 'descripcion' => 'El local comercial no contiene comentarios');
-        }else{
+        } else {
             $cantComentarios = $localComercial->getComentarios()->count();
-            $inicio = $cantidadPorPagina*($nroPagina-1);
-            $arrayComentarios = array_slice ($localComercial->getComentarios()->toArray(), $inicio, $cantidadPorPagina);
+            $inicio = $cantidadPorPagina * ($nroPagina - 1);
+            $arrayComentarios = array_slice($localComercial->getComentarios()->toArray(), $inicio, $cantidadPorPagina);
         }
-        
-        if(isset($error)){
+
+        if (isset($error)) {
             return array('error' => $error);
-        }elseif(is_array($arrayComentarios)){
+        } elseif (is_array($arrayComentarios)) {
             return array("comentarios" => $arrayComentarios);
         }
     }
+
+    /**
+     * @param integer $idUSuarioMovil
+     * @param integer $idLocalComercial
+     * @param integer $valoracion
+     * @param String $comentario
+     * 
+     * @View(serializerGroups={"serviceUSS31-comentarios"})
+     */
+    public function getId_local_comercialId_usuario_movilValoracionComentarioAction($idLocalComercial, $idUsuarioMovil, $valoracion, $comentario) {
+        /* @var $localComercial Entity\LocalComercial */
+        $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
+        /* @var $usuarioMovil Entity\UsuarioMovil */
+        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->find($idUsuarioMovil);
+
+        if (!$this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuarioMovil)) {
+            $error[] = array('codigo' => '',
+                'mensaje' => 'El usuario no existe',
+                'descripcion' => 'El id del usuario no existe en la base de datos');
+        } elseif (!is_object($localComercial)) {
+            $error[] = array('codigo' => '',
+                'mensaje' => 'El local comercial no existe',
+                'descripcion' => 'El id del local comercial no existe en la base de datos');
+        } else {
+            /* @var $comen Entity\Comentario */
+            $comen = new Entity\Comentario();
+            $em = $this->getDoctrine()->getManager();
+
+            $comen->setComentario($comentario);
+            $comen->setValoracion($valoracion);
+            $comen->setLocalComercial($localComercial);
+            $comen->setUsuarioMovil($usuarioMovil);
+            $hoy = new \DateTime();
+            $comen->setFecha($hoy);
+            $estadoComentario = $this->getDoctrine()->getRepository('AppBundle:EstadoComentario')->find(1);
+            $comen->setEstadoComentario($estadoComentario);
+            $em->persist($comen);
+            $em->flush();
+        }
+        if (isset($error)) {
+            return array('error' => $error);
+        } else {
+            return array("resultado" => true, "idLocalComercial" => $idLocalComercial);
+        }
+    }
+
 }

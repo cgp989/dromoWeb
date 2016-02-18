@@ -27,7 +27,7 @@ class LocalComercial
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login"})
      */
     private $id;
 
@@ -77,13 +77,14 @@ class LocalComercial
      * @ORM\Column(name="version", type="integer")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login"})
      */
     private $version;
 
     /**
      * @ORM\OneToOne(targetEntity="Usuario", inversedBy="localComercial")
      * @ORM\JoinColumn(name="idUsuario", referencedColumnName="id")
+     * 
      */
     private $usuario;
     
@@ -114,6 +115,11 @@ class LocalComercial
      * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="localComercial")
      */
     private $suscripciones;
+    
+        /**
+     * @ORM\OneToMany(targetEntity="VisitaLocalComercial", mappedBy="localComercial")
+     */
+    private $visitasLocalComercial;
 
     public function __construct()
     {
@@ -121,6 +127,7 @@ class LocalComercial
         $this->promociones = new ArrayCollection();
         $this->comentarios = new ArrayCollection();
         $this->suscripciones = new ArrayCollection();
+        $this->visitasLocalComercial = new ArrayCollection();
     }
 
     /**
@@ -436,5 +443,42 @@ class LocalComercial
     public function getComentarios()
     {
         return $this->comentarios;
+    }
+
+    /**
+     * Add suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     * @return LocalComercial
+     */
+    public function addSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones[] = $suscripciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove suscripciones
+     *
+     * @param \AppBundle\Entity\Suscripcion $suscripciones
+     */
+    public function removeSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
+    {
+        $this->suscripciones->removeElement($suscripciones);
+    }
+
+    /**
+     * Get suscripciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSuscripciones()
+    {
+        return $this->suscripciones;
+    }
+    
+    public function __toString() {
+        return $this->getNombre();
     }
 }
