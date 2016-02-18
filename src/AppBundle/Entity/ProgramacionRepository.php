@@ -72,4 +72,23 @@ class ProgramacionRepository extends EntityRepository
             return false;
         }
     }
+    
+    function getProgramacionesEnDia (){
+        $arrayColumDias = array(0 => 'esDomingo', 1 => 'esLunes', 2 => 'esMartes', 3 => 'esMiercoles', 4 => 'esJueves', 5 => 'esViernes', 6 => 'esSabado');
+        $fechaHoy = new \DateTime('now');
+        $numeroDiaHoy = date('w', $fechaHoy->getTimestamp());
+        
+        $programaciones = $this->getEntityManager()
+                ->createQuery('SELECT pr FROM AppBundle:Programacion pr '
+                        . 'LEFT JOIN pr.promocion p '
+                        . 'LEFT JOIN pr.estadoProgramacion epr '
+                        . 'LEFT JOIN p.estadoPromocion ep '
+                        . 'WHERE pr.fechaInicio <= CURRENT_DATE() AND pr.fechaFin >= CURRENT_DATE() AND pr.'.$arrayColumDias[$numeroDiaHoy].' = 1'
+                        . ' AND epr.nombre != :nombreEstadoPr AND ep.nombre != :nombreEstadoP')
+                ->setParameters(array(
+                        'nombreEstadoPr' => 'activada',
+                        'nombreEstadoP' => 'activada'))
+                ->getResult();
+        return $programaciones;
+    }
 }

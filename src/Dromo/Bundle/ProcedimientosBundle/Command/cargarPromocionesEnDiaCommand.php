@@ -58,10 +58,10 @@ class cargarPromocionesEnDiaCommand extends ContainerAwareCommand {
         
         //get entity manager for queries
         /* @var $em EntityManager */
-         $em = $this->getContainer()->get('doctrine')->getEntityManager();
-        $repository = $em->getRepository('AppBundle:Promocion');
-        $all = $repository->findAll();
+        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $repositoryPr = $em->getRepository('AppBundle:Programacion');
+        $programaciones = $repositoryPr->getProgramacionesEnDia();
 
-        $output->writeln($all);
+        $output->writeln($programaciones);
     }
 }
