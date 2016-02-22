@@ -80,6 +80,9 @@ class UsuarioMovil
      * @var integer
      *
      * @ORM\Column(name="puntos", type="integer")
+     *      
+     * @Expose
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $puntos;
 

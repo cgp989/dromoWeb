@@ -20,11 +20,11 @@ class LocalesRestController extends Controller {
     public function getId_local_comercialId_usuario_movilAction($idLocalComercial, $idUsuarioMovil) {
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
         if (!$this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuarioMovil)) {
-            $error[] = array('codigo' => '',
+            $error[] = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario no existe en la base de datos');
         } elseif (!is_object($localComercial)) {
-            $error[] = array('codigo' => '',
+            $error[] = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
                 'mensaje' => 'El local comercial no existe',
                 'descripcion' => 'El id del local comercial no existe');
         }
@@ -49,11 +49,11 @@ class LocalesRestController extends Controller {
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
         $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->find($idUsuarioMovil);
         if (!is_object($usuarioMovil)) {
-            $error[] = array('codigo' => '',
+            $error[] = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario no existe en la base de datos');
         } elseif (!is_object($localComercial)) {
-            $error[] = array('codigo' => '',
+            $error[] = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
                 'mensaje' => 'El local comercial no existe',
                 'descripcion' => 'El id del local comercial no existe');
         }
@@ -73,7 +73,7 @@ class LocalesRestController extends Controller {
             if (is_object($suscripcionEntity)) {
                 $this->getDoctrine()->getManager()->remove($suscripcionEntity);
             } else {
-                $error[] = array('codigo' => '',
+                $error[] = array('idLocalComercial' => $idLocalComercial, 'codigo' => '7',
                     'mensaje' => 'La suscripcion no existe',
                     'descripcion' => 'No existe una suscripcion con el id del local y el id del usuario');
             }
@@ -102,11 +102,10 @@ class LocalesRestController extends Controller {
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
 
         if ($usuarioMovil == null || $localComercial == null) {
-            $error[] = array('codigo' => '',
+            $error[] = array('codigo' => '3',
                 'mensaje' => 'Error',
                 'descripcion' => 'Usuario o local inexistentes!');
         } else {
-
             /* @var $visitaLocalComercial Entity\VisitaLocalComercial */
             $visitaLocalComercial = new Entity\VisitaLocalComercial();
             $em = $this->getDoctrine()->getManager();
@@ -121,6 +120,34 @@ class LocalesRestController extends Controller {
             return false;
         } else {
             return true;
+        }
+    }
+
+    /**
+     * @param String $idLocalComercial
+     * @param int $version
+     * 
+     * @View(serializerGroups={"serviceUSS19-version"})
+     */
+    public function getId_local_comercialVersionAction($idLocalComercial, $version) {
+        /* @var $localComercial Entity\LocalComercial */
+        $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
+
+        if ($localComercial == null) {
+            $error[] = array('codigo' => '5',
+                'mensaje' => 'Error',
+                'descripcion' => 'Local inexistentes!');
+        } else {
+            if ($localComercial->getVersion() == $version) {
+                $res = true;
+            } else {
+                $res = false;
+            }
+        }
+        if (isset($error)) {
+            return array('idLocalComercial' => $idLocalComercial, 'error' => $error);
+        } else {
+            return  array('idLocalComercial' => $idLocalComercial, 'res' => $res);
         }
     }
 

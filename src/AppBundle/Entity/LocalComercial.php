@@ -27,7 +27,7 @@ class LocalComercial
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version"})
      */
     private $id;
 
@@ -77,7 +77,7 @@ class LocalComercial
      * @ORM\Column(name="version", type="integer")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version"})
      */
     private $version;
 
