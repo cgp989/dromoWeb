@@ -12,6 +12,7 @@ use AppBundle\Entity;
 class LocalesRestController extends Controller {
 
     /**
+     * Devuelvo un local comercial
      * 
      * @param integer $idLocalComercial
      * @param integer $idUsuarioMovil
@@ -37,7 +38,7 @@ class LocalesRestController extends Controller {
     }
 
     /**
-     * 
+     * Setea suscripcion y notificaciones a un local comercial
      * @param integer $idLocalComercial
      * @param integer $idUsuarioMovil
      * @param booleam $suscripcion
@@ -88,7 +89,7 @@ class LocalesRestController extends Controller {
     }
 
     /**
-     * 
+     * Registrar visita de un um a local comercial
      * @param String $idUsuario
      * @param String $idLocalComercial
      * 
@@ -124,6 +125,7 @@ class LocalesRestController extends Controller {
     }
 
     /**
+     * Valida version de local comercial
      * @param String $idLocalComercial
      * @param int $version
      * 
@@ -147,8 +149,31 @@ class LocalesRestController extends Controller {
         if (isset($error)) {
             return array('idLocalComercial' => $idLocalComercial, 'error' => $error);
         } else {
-            return  array('idLocalComercial' => $idLocalComercial, 'res' => $res);
+            return array('idLocalComercial' => $idLocalComercial, 'res' => $res);
         }
+    }
+
+    /**
+     * Listado de sucursales de locales segun posicion
+     * 
+     * @param decimal $latitud
+     * @param decimal $longitud
+     * @param integer $nroPagina
+     * 
+     * @View(serializerGroups={"serviceUSS06"})
+     */
+    public function getLatitudLongitudNropaginaAction($latitud, $longitud, $nroPagina) {
+        $cantidadPorPagina = 20;
+
+        $repositorySucursal = $this->getDoctrine()->getRepository('AppBundle:Sucursal');
+        $locales = $repositorySucursal->findAll();
+
+        $sucursales = $repositorySucursal->getListSucursalesPorDistancia($locales, $latitud, $longitud);
+
+        $inicio = $cantidadPorPagina * ($nroPagina - 1);
+        $arrayPaginaSucursales = array_slice($sucursales, $inicio, $cantidadPorPagina);
+
+        return array('sucursales' => $arrayPaginaSucursales);
     }
 
 }
