@@ -26,7 +26,7 @@ class UsuarioMovil
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
-     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta", "serviceUSS37"})
      */
     private $id;
 

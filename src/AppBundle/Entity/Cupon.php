@@ -13,6 +13,7 @@ use JMS\Serializer\Annotation\VirtualProperty;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\CuponRepository")
+ * 
  * @ExclusionPolicy("all")
  */
 class Cupon
@@ -25,7 +26,7 @@ class Cupon
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS21"})
+     * @Groups({"serviceUSS21", "serviceUSS37"})
      */
     private $id;
 
@@ -77,6 +78,9 @@ class Cupon
     /**
      * @ORM\ManyToOne(targetEntity="UsuarioMovil", inversedBy="cupones")
      * @ORM\JoinColumn(name="idUsuarioMovil", referencedColumnName="id")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS37"})
      */
     private $usuarioMovil;
     
@@ -89,6 +93,9 @@ class Cupon
     /**
      * @ORM\ManyToOne(targetEntity="EstadoCupon", inversedBy="cupones")
      * @ORM\JoinColumn(name="idEstadoCupon", referencedColumnName="id")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS21", "serviceUSS37"})
      */
     private $estadoCupon;
 

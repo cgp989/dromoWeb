@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use JeroenDesloovere\Distance\Distance;
 use AppBundle\Entity\ProgramacionEnDia;
 use APPBundle\Entity\VisitaPromocion;
+use APPBundle\Entity\Cupon;
 use AppBundle\Entity;
 
 class PromocionesRestController extends Controller {
@@ -123,8 +124,7 @@ class PromocionesRestController extends Controller {
      * Visita a programacion
      * 
      * @param String $idUsuario
-     * @param String $idProgramacion
-     * 
+     * @param String $idProgramacion     * 
      * 
      * @View(serializerGroups={"serviceUSS17-visita"})
      */
@@ -187,6 +187,40 @@ class PromocionesRestController extends Controller {
             return array('idProgramacion' => $idProgramacion, 'error' => $error);
         } else {
             return array('idProgramacion' => $idProgramacion, 'estado' => $estado, 'cantidadDisponible' => $cantidadDisponible);
+        }
+    }
+
+    /**
+     * Devuelve estado de un cupon
+     * 
+     * @param integer $idCupon
+     * @param integer $idUsuario     * 
+     * 
+     * @View(serializerGroups={"serviceUSS37"})
+     */
+    public function getId_cuponId_usuario_movilAction($idCupon, $idUsuario) {
+
+        /* @var $cupon Entity\Cupon */
+        $cupon = $this->getDoctrine()->getRepository('AppBundle:Cupon')->find($idCupon);
+        if (is_null($cupon)) {
+            $error[] = array('idCupon' => $idCupon, 'codigo' => '8',
+                'mensaje' => 'Cupon no existe',
+                'descripcion' => 'El cupon no existe');
+        } else {
+            /* @var $usuarioMovil Entity\UsuarioMovil */
+            $usuarioMovil = $cupon->getUsuarioMovil();
+            if ($usuarioMovil->getId() != $idUsuario) {
+                $error[] = array('idCupon' => $idCupon, 'codigo' => '9',
+                    'mensaje' => 'Cupon no corresponde al UM',
+                    'descripcion' => 'El cupon no corresponde a ese UM');
+            } else {
+                $estado = $cupon->getEstadoCupon()->getNombre();
+            }
+        }
+        if (isset($error)) {
+            return array('idCupon' => $idCupon, 'error' => $error);
+        } else {
+            return array('idCupon' => $idCupon, 'estado' => $estado);
         }
     }
 
