@@ -29,30 +29,30 @@ class UsuariosRestController extends Controller {
      * 
      * @View(serializerGroups={"serviceUSS02-login"})
      */
-    public function getUsuarioPasswordAction($usuario, $password) {
-        /* @var $usuarioMovil Entity\UsuarioMovil */
-        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByUsuario($usuario);
-
-        if ($usuarioMovil != null && $usuarioMovil->getPassword() != $password) {
-            $error[] = array('codigo' => '',
-                'mensaje' => 'Acceso incorrecto',
-                'descripcion' => 'Password incorrecto! Usuario valido');
-        } else {
-            if ($usuarioMovil != null) {
-                $arrayUsuario = array("usuario" => $usuarioMovil);
-            } else {
-                $error[] = array('codigo' => '',
-                    'mensaje' => 'Acceso incorrecto',
-                    'descripcion' => 'Usuario incorrecto');
-            }
-        }
-
-        if (isset($error)) {
-            return array('password' => $password, 'error' => $error);
-        } elseif (is_array($arrayUsuario)) {
-            return $arrayUsuario;
-        }
-    }
+//    public function getUsuarioPasswordAction($usuario, $password) {
+//        /* @var $usuarioMovil Entity\UsuarioMovil */
+//        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByUsuario($usuario);
+//
+//        if ($usuarioMovil != null && $usuarioMovil->getPassword() != $password) {
+//            $error[] = array('codigo' => '',
+//                'mensaje' => 'Acceso incorrecto',
+//                'descripcion' => 'Password incorrecto! Usuario valido');
+//        } else {
+//            if ($usuarioMovil != null) {
+//                $arrayUsuario = array("usuario" => $usuarioMovil);
+//            } else {
+//                $error[] = array('codigo' => '',
+//                    'mensaje' => 'Acceso incorrecto',
+//                    'descripcion' => 'Usuario incorrecto');
+//            }
+//        }
+//
+//        if (isset($error)) {
+//            return array('password' => $password, 'error' => $error);
+//        } elseif (is_array($arrayUsuario)) {
+//            return $arrayUsuario;
+//        }
+//    }
 
     /**
      * 
@@ -148,6 +148,9 @@ class UsuariosRestController extends Controller {
             $em = $this->getDoctrine()->getManager();
             //setear datos a um
             $usuarioMovil->setPassword("XX");
+            $usuarioMovil->setUsuario("XX");
+            $usuarioMovil->setNombre("XX");
+            $usuarioMovil->setApellido("XX");
             $em->persist($usuarioMovil);
             $em->flush();
 
