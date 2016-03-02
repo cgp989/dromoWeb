@@ -20,7 +20,6 @@ use AppBundle\Entity;
  * @author Pablo
  */
 class UsuariosRestController extends Controller {
-
     /**
      * 
      * @param String $usuario
@@ -55,7 +54,7 @@ class UsuariosRestController extends Controller {
 //    }
 
     /**
-     * 
+     * Login y alta d enuevo usuario
      * @param String $usuario
      * @param String $password
      * @param String $nombre
@@ -134,7 +133,7 @@ class UsuariosRestController extends Controller {
     }
 
     /**
-     * 
+     * Da de baja un UM
      * @param String $password
      * 
      * 
@@ -151,6 +150,11 @@ class UsuariosRestController extends Controller {
             $usuarioMovil->setUsuario("XX");
             $usuarioMovil->setNombre("XX");
             $usuarioMovil->setApellido("XX");
+            $comentarios = $usuarioMovil->getComentarios();
+            /* @var $comentario Entity\Comentario */
+            foreach ($comentario as $comentarios) {
+                $em->remove($comentario);
+            }
             $em->persist($usuarioMovil);
             $em->flush();
 
