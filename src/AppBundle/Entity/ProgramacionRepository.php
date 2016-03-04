@@ -84,7 +84,7 @@ class ProgramacionRepository extends EntityRepository
                         . 'LEFT JOIN pr.estadoProgramacion epr '
                         . 'LEFT JOIN p.estadoPromocion ep '
                         . 'WHERE pr.fechaInicio <= CURRENT_DATE() AND pr.fechaFin >= CURRENT_DATE() AND pr.'.$arrayColumDias[$numeroDiaHoy].' = 1'
-                        . ' AND epr.nombre != :nombreEstadoPr AND ep.nombre != :nombreEstadoP')
+                        . ' AND epr.nombre = :nombreEstadoPr AND ep.nombre = :nombreEstadoP')
                 ->setParameters(array(
                         'nombreEstadoPr' => 'activada',
                         'nombreEstadoP' => 'activada'))

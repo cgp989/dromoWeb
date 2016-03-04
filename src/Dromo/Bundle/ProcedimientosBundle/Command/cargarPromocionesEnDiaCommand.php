@@ -60,8 +60,12 @@ class cargarPromocionesEnDiaCommand extends ContainerAwareCommand {
         /* @var $em EntityManager */
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $repositoryPr = $em->getRepository('AppBundle:Programacion');
-        $programaciones = $repositoryPr->getProgramacionesEnDia();
-
-        $output->writeln($programaciones);
+        $repositoryPrED = $em->getRepository('AppBundle:ProgramacionEnDia');
+       
+        $programaciones = $repositoryPr->getProgramacionesEnDia(); //obtenego todas las porgramacion que estan en dia
+        $repositoryPrED->eliminarProgramacionesEnDia(); //elimino todas las programacion en dia de al tabla programacionEnDia
+        $result = $repositoryPrED->insertProgramaciones($programaciones);
+                
+        $output->writeln($result);
     }
 }

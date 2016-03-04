@@ -177,7 +177,7 @@ class ProgramacionController extends Controller
             $em->flush();
             
             if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                $em->getRepository ('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
+                $em->getRepository ('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
             else
                 $em->getRepository ('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
                 
