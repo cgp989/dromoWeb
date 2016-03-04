@@ -27,7 +27,7 @@ class LocalComercial
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06"})
      */
     private $id;
 
@@ -37,7 +37,7 @@ class LocalComercial
      * @ORM\Column(name="nombre", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS06"})
      */
     private $nombre;
 
@@ -46,7 +46,7 @@ class LocalComercial
      *
      * @ORM\Column(name="descripcion", type="text")
      * @Expose
-     * @Groups({"serviceUSS23"})
+     * @Groups({"serviceUSS23", "serviceUSS06"})
      */
     private $descripcion;
 
@@ -77,7 +77,7 @@ class LocalComercial
      * @ORM\Column(name="version", type="integer")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06"})
      */
     private $version;
 

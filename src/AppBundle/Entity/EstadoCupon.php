@@ -4,12 +4,18 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * EstadoCupon
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\EstadoCuponRepository")
+ * 
+ * @ExclusionPolicy("all")
  */
 class EstadoCupon
 {
@@ -19,6 +25,9 @@ class EstadoCupon
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS37"})
      */
     private $id;
 
@@ -26,11 +35,17 @@ class EstadoCupon
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=100)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS37"})
      */
     private $nombre;
     
     /**
      * @ORM\OneToMany(targetEntity="Cupon", mappedBy="estadoCupon")
+     * 
+     * @Expose
+     * @Groups({"serviceUSS37"})
      */
     private $cupones;
     

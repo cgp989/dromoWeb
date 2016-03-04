@@ -9,13 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use JeroenDesloovere\Distance\Distance;
 use AppBundle\Entity\ProgramacionEnDia;
 use APPBundle\Entity\VisitaPromocion;
+use APPBundle\Entity\Cupon;
 use AppBundle\Entity;
-
-
 
 class PromocionesRestController extends Controller {
 
     /**
+     * Listado de programaciones
      * 
      * @param decimal $latitud
      * @param decimal $longitud
@@ -57,7 +57,7 @@ class PromocionesRestController extends Controller {
             $inicio = $cantidadPorPagina * ($nroPagina - 1);
             $arrayPaginaPromociones = array_slice($programaciones, $inicio, $cantidadPorPagina);
         } else {
-            $error[] = array('codigo' => '',
+            $error[] = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario no existe en la base de datos');
         }
@@ -84,15 +84,15 @@ class PromocionesRestController extends Controller {
         $usuarioMovil = $repositoryUsuarioMovil->findOneById($idUsuarioMovil);
 
         if (is_null($programacionEnDia)) {
-            $error[] = array('codigo' => '',
+            $error[] = array('idProgramacion' => $idProgramacion, 'codigo' => '1',
                 'mensaje' => 'La promoción ya no está disponible.',
                 'descripcion' => 'El id de la programacion en dia no existe');
         } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'agotada') {
-            $error[] = array('codigo' => '',
+            $error[] = array('idProgramacion' => $idProgramacion, 'codigo' => '2',
                 'mensaje' => 'La promoción se ha agotado.',
                 'descripcion' => 'el estado de la programacion es agotada');
         } elseif (!is_object($usuarioMovil)) {
-            $error[] = array('codigo' => '',
+            $error[] = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario movil no existe');
         } else {
@@ -107,7 +107,7 @@ class PromocionesRestController extends Controller {
             } catch (Exception $e) {
                 //VUELVO CAMBIOS ATRAS 
                 $this->getDoctrine()->getConnection()->rollback();
-                $error[] = array('codigo' => '',
+                $error[] = array('codigo' => '0',
                     'mensaje' => 'No se ha popido generar el nuevo cupón. Intente de nuevo más tarde.',
                     'descripcion' => 'fallo alguna de las consultaas a la base de datos y se lanzo una excepcion');
             }
@@ -121,10 +121,10 @@ class PromocionesRestController extends Controller {
     }
 
     /**
+     * Visita a programacion
      * 
      * @param String $idUsuario
-     * @param String $idProgramacion
-     * 
+     * @param String $idProgramacion     * 
      * 
      * @View(serializerGroups={"serviceUSS17-visita"})
      */
@@ -134,12 +134,16 @@ class PromocionesRestController extends Controller {
         /* @var $programacion Entity\Programacion */
         $programacion = $this->getDoctrine()->getRepository('AppBundle:Programacion')->find($idProgramacion);
 
-        if ($usuarioMovil == null || $programacion == null) {
-            $error[] = array('codigo' => '',
+        if ($usuarioMovil == null) {
+            $error[] = array('codigo' => '3',
                 'mensaje' => 'Error',
-                'descripcion' => 'Usuario o programacion inexistentes!');
+                'descripcion' => 'Usuario inexistentes!');
+        } else if ($programacion == null) {
+            $error[] = array('codigo' => '4',
+                'mensaje' => 'Error',
+                'descripcion' => 'Programacion inexistentes!');
         } else {
-            
+
             /* @var $visitaPromocion Entity\VisitaPromocion */
             $visitaPromocion = new Entity\VisitaPromocion();
             $em = $this->getDoctrine()->getManager();
@@ -152,9 +156,71 @@ class PromocionesRestController extends Controller {
         }
 
         if (isset($error)) {
-            return false;
+            return array('res' => false);
         } else {
-            return true;
+            return array('res' => true);
+        }
+    }
+
+    /**
+     * Devuelve estado programacion y cantidad disponible 
+     * 
+     * @param integer $idProgramacion
+     * 
+     * @View(serializerGroups={"serviceUSS89"})
+     */
+    public function getId_programacionAction($idProgramacion) {
+        $repositoryProgramacionEnDia = $this->getDoctrine()->getRepository('AppBundle:ProgramacionEnDia');
+
+        /* @var $programacionEnDia ProgramacionEnDia */
+        $programacionEnDia = $repositoryProgramacionEnDia->findByIdProgramacion($idProgramacion);
+
+        if (is_null($programacionEnDia)) {
+            $error[] = array('idProgramacion' => $idProgramacion, 'codigo' => '1',
+                'mensaje' => 'La promoción ya no está disponible.',
+                'descripcion' => 'El id de la programacion en dia no existe');
+        } else {
+            $estado = $programacionEnDia->getEstadoProgramacionEnDia()->getNombre();
+            $cantidadDisponible = $programacionEnDia->getCantidadDisponible();
+        }
+        if (isset($error)) {
+            return array('idProgramacion' => $idProgramacion, 'error' => $error);
+        } else {
+            return array('idProgramacion' => $idProgramacion, 'estado' => $estado, 'cantidadDisponible' => $cantidadDisponible);
+        }
+    }
+
+    /**
+     * Devuelve estado de un cupon
+     * 
+     * @param integer $idCupon
+     * @param integer $idUsuario     * 
+     * 
+     * @View(serializerGroups={"serviceUSS37"})
+     */
+    public function getId_cuponId_usuario_movilAction($idCupon, $idUsuario) {
+
+        /* @var $cupon Entity\Cupon */
+        $cupon = $this->getDoctrine()->getRepository('AppBundle:Cupon')->find($idCupon);
+        if (is_null($cupon)) {
+            $error[] = array('idCupon' => $idCupon, 'codigo' => '8',
+                'mensaje' => 'Cupon no existe',
+                'descripcion' => 'El cupon no existe');
+        } else {
+            /* @var $usuarioMovil Entity\UsuarioMovil */
+            $usuarioMovil = $cupon->getUsuarioMovil();
+            if ($usuarioMovil->getId() != $idUsuario) {
+                $error[] = array('idCupon' => $idCupon, 'codigo' => '9',
+                    'mensaje' => 'Cupon no corresponde al UM',
+                    'descripcion' => 'El cupon no corresponde a ese UM');
+            } else {
+                $estado = $cupon->getEstadoCupon()->getNombre();
+            }
+        }
+        if (isset($error)) {
+            return array('idCupon' => $idCupon, 'error' => $error);
+        } else {
+            return array('idCupon' => $idCupon, 'estado' => $estado);
         }
     }
 

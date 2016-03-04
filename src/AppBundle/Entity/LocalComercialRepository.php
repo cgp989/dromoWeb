@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class LocalComercialRepository extends EntityRepository
 {
+    
+       /**
+     * @param type $array
+     * @return boolean
+     */ 
+    public function ordenarPorDistanciaALocal(&$array) {
+        return uasort($array, function(LocalComercial $a, LocalComercial $b) {
+            return $a->compareTo($b);
+        }
+        );
+    }
 }
