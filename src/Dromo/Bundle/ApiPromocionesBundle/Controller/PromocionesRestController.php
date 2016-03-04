@@ -156,9 +156,9 @@ class PromocionesRestController extends Controller {
         }
 
         if (isset($error)) {
-            return false;
+            return array('res' => false);
         } else {
-            return true;
+            return array('res' => true);
         }
     }
 

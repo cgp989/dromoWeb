@@ -84,7 +84,7 @@ class LocalesRestController extends Controller {
             return array('error' => $error);
         } else {
             $this->getDoctrine()->getManager()->flush();
-            return true;
+            return array('res' => true);
         }
     }
 

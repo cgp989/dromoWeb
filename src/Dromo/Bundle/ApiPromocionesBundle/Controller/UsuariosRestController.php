@@ -152,7 +152,8 @@ class UsuariosRestController extends Controller {
             $usuarioMovil->setApellido("XX");
             $comentarios = $usuarioMovil->getComentarios();
             /* @var $comentario Entity\Comentario */
-            foreach ($comentario as $comentarios) {
+            
+            foreach ($comentarios as $comentario) {
                 $em->remove($comentario);
             }
             $em->persist($usuarioMovil);
@@ -169,7 +170,7 @@ class UsuariosRestController extends Controller {
         }
         if (isset($error)) {
             return array('password' => $password, 'error' => $error);
-        } elseif (is_array($arrayUsuario)) {
+        } else{
             return $arrayUsuario;
         }
     }
