@@ -21,11 +21,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
-class cargarPromocionesEnDiaCommand extends ContainerAwareCommand {
+class cargarProgramacionesEnDiaCommand extends ContainerAwareCommand {
    protected function configure()
     {
         $this
-            ->setName('cronjob:cargarPromocionesEnDia')
+            ->setName('cronjob:cargarProgramacionesEnDia')
             ->setDescription('Esta tarea va a buscar en la base de datos las promociones que esten'
                     . ' programadas para la fecha actual y va a cargar las mismas en la tabla'
                     . ' programacionEnDia')
