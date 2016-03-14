@@ -127,7 +127,7 @@ class UsuariosRestController extends Controller {
 
         if (isset($error)) {
             return array('password' => $password, 'error' => $error);
-        } elseif (is_array($arrayUsuario)) {
+        } else {
             return $arrayUsuario;
         }
     }
@@ -171,7 +171,8 @@ class UsuariosRestController extends Controller {
         if (isset($error)) {
             return array('password' => $password, 'error' => $error);
         } else{
-            return $arrayUsuario;
+            return array('password' => $password,
+                'res' => true);
         }
     }
 
