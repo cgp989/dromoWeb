@@ -38,6 +38,13 @@ class ProgramacionEnDia
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="inicio", type="datetime")
+     */
+    private $inicio;
+    
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="vencimiento", type="datetime")
      */
     private $vencimiento;
@@ -205,4 +212,27 @@ class ProgramacionEnDia
         return $this->vencimiento;
     }
      
+
+    /**
+     * Set inicio
+     *
+     * @param \DateTime $inicio
+     * @return ProgramacionEnDia
+     */
+    public function setInicio($inicio)
+    {
+        $this->inicio = $inicio;
+
+        return $this;
+    }
+
+    /**
+     * Get inicio
+     *
+     * @return \DateTime 
+     */
+    public function getInicio()
+    {
+        return $this->inicio;
+    }
 }

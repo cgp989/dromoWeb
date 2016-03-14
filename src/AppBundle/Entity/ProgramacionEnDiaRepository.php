@@ -49,23 +49,59 @@ class ProgramacionEnDiaRepository extends EntityRepository
             $this->getEntityManager()->flush();
     }
     
-    public function insertProgramacion(Programacion $programacion){
-        //VERIFICO QUE LA PROGRAMACION NO EXISTA YA EN LA TABLA PROGRMACION EN DIA
-        $progEnDia = $this->findOneByProgramacion($programacion);
-        if(is_null($progEnDia)){
-            $estadoVigente = $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('vigente');
-
+    /**
+     * Recorre un array con Programaciones y las inserta en la tabla ProgramacionEnDia. 
+     * Luego llama a la funcion que actualiza las vigencias
+     * @param array $programaciones
+     */
+    public function insertProgramaciones(array $programaciones){
+        $arrayProgramacionesED = array();
+        $contadorInsersiones = 0;
+        foreach ($programaciones as $key => $programacion) {
             $progEnDia = new ProgramacionEnDia();
             $progEnDia->setProgramacion($programacion);
             $progEnDia->setCantidadDisponible($programacion->getCantidad());
-            $progEnDia->setEstadoProgramacionEnDia($estadoVigente);
-            $progEnDia->setVencimiento($programacion->getVencimientoDelDia());
-        }else{
-            $progEnDia->setVencimiento($programacion->getVencimientoDelDia());
+            $arrayValidez = $programacion->getValidezDelDia();
+            $progEnDia->setInicio($arrayValidez['inicioValidez']);
+            $progEnDia->setVencimiento($arrayValidez['finValidez']);
+            $arrayProgramacionesED[]=$progEnDia; //las meto a un array para luego actualizar sus estados.
+            $this->getEntityManager()->persist($progEnDia);
+            $contadorInsersiones++;
         }
-        
-        $this->getEntityManager()->persist($progEnDia);
+        $this->actualizarVigenciasProgramaciones($arrayProgramacionesED); //actualizo los estados de las programaciones en dia
         $this->getEntityManager()->flush();
+        return "se insertaron ".$contadorInsersiones." programaciones";
+    }
+    
+    /**
+     * Inserta una nueva programacion creada o editada desde el formulario y que esta en dia.
+     * 
+     * @param \AppBundle\Entity\Programacion $programacion
+     */
+    public function insertProgramacion(Programacion $programacion){
+        $this->insertProgramaciones(array($programacion));
+    }
+    
+    /**
+     * Verifica si la programacion a insertar se encuentra ya en la tabla programacionEnDia.
+     * Si no se encuentra la inserta.
+     * Si ya se encuentra, le actualiza LA VALIDEZ.
+     * 
+     * @param \AppBundle\Entity\Programacion $programacion
+     * 
+     */
+    public function verificarProgramacion(Programacion $programacion){
+        //VERIFICO QUE LA PROGRAMACION NO EXISTA YA EN LA TABLA PROGRMACION EN DIA
+        $progEnDia = $this->findOneByProgramacion($programacion);
+        if(is_null($progEnDia)){
+            $this->insertProgramacion($programacion);
+        }else{
+            $arrayValidez  = $programacion->getValidezDelDia();
+            $progEnDia->setInicio($arrayValidez['inicioValidez']);
+            $progEnDia->setVencimiento($arrayValidez['finValidez']);
+            $this->getEntityManager()->persist($progEnDia);
+            $this->getEntityManager()->flush();
+        }
     }
     
     public function deleteProgramacion(Programacion $programacion){
@@ -75,5 +111,47 @@ class ProgramacionEnDiaRepository extends EntityRepository
             $em->remove($progEnDia);
             $em->flush();
         }
+    }
+    
+    /**
+     * Recorre todas las programaciones del dia, verificando si se encentran en el rango horario
+     * o no para actualizar su vigencia
+     * 
+     * @return array $arrayInfoEstados con tres indices con informacion de cuantas promociones hay agotadas, vigentes o noVigentes.
+     */
+    public function actualizarVigenciasProgramaciones($programacionesED = null){
+        if(is_null($programacionesED)){
+            $programacionesED = $this->findAll();
+        }
+        
+        $estadoAgotada = $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('agotada');
+        $estadoVigente = $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('vigente');
+        $estadoNoVigente = $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('noVigente');
+        
+        /* @var $programacionED ProgramacionEnDia */
+        $programacionED;
+        $fechaActual = new \DateTime('now');
+        $arrayInfoEstados = array('agotadas' => 0, 'vigentes' => 0, 'noVigentes' => 0);
+        foreach ($programacionesED as $key => $value) {
+            $programacionED = $value;
+            if($programacionED->getCantidadDisponible() == 0){
+                $programacionED->setEstadoProgramacionEnDia($estadoAgotada);
+                $arrayInfoEstados['agotadas']++;
+            }elseif ($fechaActual >= $programacionED->getInicio() && $fechaActual <= $programacionED->getVencimiento()){
+                $programacionED->setEstadoProgramacionEnDia($estadoVigente);
+                $arrayInfoEstados['vigentes']++;
+            }else{
+                $programacionED->setEstadoProgramacionEnDia($estadoNoVigente);
+                $arrayInfoEstados['noVigentes']++;
+            }
+            $this->getEntityManager()->persist($programacionED);
+        }
+        $this->getEntityManager()->flush();
+        return $arrayInfoEstados;
+    }
+    
+    public function eliminarProgramacionesEnDia(){
+        $this->getEntityManager()->createQuery('DELETE FROM AppBundle:ProgramacionEnDia')->execute();
+        $this->getEntityManager()->flush();
     }
 }

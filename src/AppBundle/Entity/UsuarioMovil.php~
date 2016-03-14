@@ -50,6 +50,9 @@ class UsuarioMovil
      * @var string
      *
      * @ORM\Column(name="foto", type="string", length=255)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS23-comentarios", "serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $foto;
 
@@ -468,5 +471,38 @@ class UsuarioMovil
     public function getVisitasPromocion()
     {
         return $this->visitasPromocion;
+    }
+
+    /**
+     * Add visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     * @return UsuarioMovil
+     */
+    public function addVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial[] = $visitasLocalComercial;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     */
+    public function removeVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial->removeElement($visitasLocalComercial);
+    }
+
+    /**
+     * Get visitasLocalComercial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasLocalComercial()
+    {
+        return $this->visitasLocalComercial;
     }
 }

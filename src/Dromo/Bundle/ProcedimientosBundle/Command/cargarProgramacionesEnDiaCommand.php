@@ -21,11 +21,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
-class cargarPromocionesEnDiaCommand extends ContainerAwareCommand {
+class cargarProgramacionesEnDiaCommand extends ContainerAwareCommand {
    protected function configure()
     {
         $this
-            ->setName('cronjob:cargarPromocionesEnDia')
+            ->setName('cronjob:cargarProgramacionesEnDia')
             ->setDescription('Esta tarea va a buscar en la base de datos las promociones que esten'
                     . ' programadas para la fecha actual y va a cargar las mismas en la tabla'
                     . ' programacionEnDia')
@@ -60,8 +60,12 @@ class cargarPromocionesEnDiaCommand extends ContainerAwareCommand {
         /* @var $em EntityManager */
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $repositoryPr = $em->getRepository('AppBundle:Programacion');
-        $programaciones = $repositoryPr->getProgramacionesEnDia();
-
-        $output->writeln($programaciones);
+        $repositoryPrED = $em->getRepository('AppBundle:ProgramacionEnDia');
+       
+        $programaciones = $repositoryPr->getProgramacionesEnDia(); //obtenego todas las porgramacion que estan en dia
+        $repositoryPrED->eliminarProgramacionesEnDia(); //elimino todas las programacion en dia de al tabla programacionEnDia
+        $result = $repositoryPrED->insertProgramaciones($programaciones);
+                
+        $output->writeln($result);
     }
 }

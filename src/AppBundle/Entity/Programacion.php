@@ -579,7 +579,11 @@ class Programacion
         }    
     }
     
-    public function getVencimientoDelDia(){
+    /**
+     * Calcula para el dia actual el DateTime de inicio y el DateTime de vencimiento y lo retorna en un array
+     * @return array: fechaInicio => \DateTime, fechaFin => \DateTime
+     */
+    public function getValidezDelDia(){
         $arrayHoraInicio = getdate($this->getHoraInicio()->getTimestamp());
         $duracion = $this->getDuracion();
         $horaD = (int) $duracion/2;
@@ -588,12 +592,12 @@ class Programacion
         else
             $minutosD = 0;
 
-        $fechaVencimiento = new \DateTime('now');
-        $fechaVencimiento->setTime($arrayHoraInicio['hours'], $arrayHoraInicio['minutes'], 0);
-            
-        $fechaVencimiento->add(new \DateInterval('PT'.(integer)$horaD.'H'.$minutosD.'M'));
+        $inicioValidez = new \DateTime('now');
+        $inicioValidez->setTime($arrayHoraInicio['hours'], $arrayHoraInicio['minutes'], 0);
+        $finValidez = clone $inicioValidez;
+        $finValidez->add(new \DateInterval('PT'.(integer)$horaD.'H'.$minutosD.'M'));
         
-        return $fechaVencimiento;
+        return array('inicioValidez' => $inicioValidez, 'finValidez' => $finValidez);
     }
 
     /**

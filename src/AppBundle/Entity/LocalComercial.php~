@@ -481,4 +481,37 @@ class LocalComercial
     public function __toString() {
         return $this->getNombre();
     }
+
+    /**
+     * Add visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     * @return LocalComercial
+     */
+    public function addVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial[] = $visitasLocalComercial;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitasLocalComercial
+     *
+     * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
+     */
+    public function removeVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
+    {
+        $this->visitasLocalComercial->removeElement($visitasLocalComercial);
+    }
+
+    /**
+     * Get visitasLocalComercial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitasLocalComercial()
+    {
+        return $this->visitasLocalComercial;
+    }
 }

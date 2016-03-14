@@ -38,6 +38,13 @@ class ProgramacionEnDia
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="inicio", type="datetime")
+     */
+    private $inicio;
+    
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="vencimiento", type="datetime")
      */
     private $vencimiento;
