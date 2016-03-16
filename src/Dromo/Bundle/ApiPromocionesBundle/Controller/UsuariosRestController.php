@@ -172,7 +172,7 @@ class UsuariosRestController extends Controller {
             return array('password' => $password, 'error' => $error);
         } else{
             return array('password' => $password,
-                'res' => true);
+                'res' => 1);
         }
     }
 

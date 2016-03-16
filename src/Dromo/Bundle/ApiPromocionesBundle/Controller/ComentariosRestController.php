@@ -89,7 +89,7 @@ class ComentariosRestController extends Controller {
         if (isset($error)) {
             return array('error' => $error);
         } else {
-            return array("resultado" => true, "idLocalComercial" => $idLocalComercial);
+            return array("resultado" => 1, "idLocalComercial" => $idLocalComercial);
         }
     }
 

@@ -84,7 +84,7 @@ class LocalesRestController extends Controller {
             return array('error' => $error);
         } else {
             $this->getDoctrine()->getManager()->flush();
-            return array('res' => true);
+            return array('res' => 1);
         }
     }
 
@@ -118,9 +118,9 @@ class LocalesRestController extends Controller {
             $em->flush();
         }
         if (isset($error)) {
-            return false;
+            return array('res' => 0);
         } else {
-            return true;
+            return array('res' => 1);
         }
     }
 
@@ -141,9 +141,9 @@ class LocalesRestController extends Controller {
                 'descripcion' => 'Local inexistentes!');
         } else {
             if ($localComercial->getVersion() == $version) {
-                $res = true;
+                $res = 1;
             } else {
-                $res = false;
+                $res = 0;
             }
         }
         if (isset($error)) {
