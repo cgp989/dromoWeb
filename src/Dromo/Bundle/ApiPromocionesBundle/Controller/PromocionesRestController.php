@@ -215,12 +215,13 @@ class PromocionesRestController extends Controller {
                     'descripcion' => 'El cupon no corresponde a ese UM');
             } else {
                 $estado = $cupon->getEstadoCupon()->getNombre();
+                $puntos = $cupon->getPuntaje();
             }
         }
         if (isset($error)) {
             return array('idCupon' => $idCupon, 'error' => $error);
         } else {
-            return array('idCupon' => $idCupon, 'estado' => $estado);
+            return array('idCupon' => $idCupon, 'estado' => $estado, 'puntaje' => $puntos);
         }
     }
 
