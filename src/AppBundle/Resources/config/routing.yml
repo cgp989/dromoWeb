@@ -1,5 +1,5 @@
 app_premio:
-    resource: "@AppBundle/Resources/config/routing/promocion.yml"
+    resource: "@AppBundle/Resources/config/routing/premio.yml"
     prefix:   /premio
 
 

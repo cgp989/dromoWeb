@@ -24,9 +24,26 @@ class PromocionRepository extends EntityRepository
                 ->createQuery('SELECT p FROM AppBundle:Promocion p '
                         . 'LEFT JOIN p.localComercial l '
                         . 'LEFT JOIN p.estadoPromocion e '
-                        . 'WHERE l.id = :idLocal AND e.nombre != :nombreEstado')
+                        . 'WHERE l.id = :idLocal AND e.nombre != :nombreEstado and p.puntajePremio = 0')
                     ->setParameters(array(
                         'idLocal' => $idLocal,
+                        'nombreEstado' => 'eliminada'))
+                    ->getResult();
+        return $promociones;
+    }
+    
+       /**
+    * Retorna un array con los premios y que no esten eliminados
+    * @param integer $idLocal
+    * @return array
+    */
+    function getPremios(){
+        $promociones = $this->getEntityManager()
+                ->createQuery('SELECT p FROM AppBundle:Promocion p '
+                        . 'LEFT JOIN p.localComercial l '
+                        . 'LEFT JOIN p.estadoPromocion e '
+                        . 'WHERE e.nombre != :nombreEstado and p.puntajePremio!= 0')
+                    ->setParameters(array(
                         'nombreEstado' => 'eliminada'))
                     ->getResult();
         return $promociones;

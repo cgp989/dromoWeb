@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h3 class="sub-header">Premios</h3>
+
+    <a title="nuevo" class="btn-action-top pull-right" href="{{ path('premio_new') }}">
+        <span class="glyphicon glyphicon-plus-sign">
+    </a>
+
+    <table class="table table-hover records_list">
+        <thead>
+            <tr>
+                <th class="col-xs-1">Tipo</th>
+                <th class="col-xs-7">Titulo</th>
+                <th class="col-xs-1">Puntaje</th>
+                <th class="col-xs-1">Precio</th>
+                <th class="col-xs-1">Estado</th>
+                <th class="col-xs-1">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.tipoPromocion }}</td>
+                    <td>{{ entity.titulo }}</td>
+                    <td>${{ entity.puntajePremio }}</td>
+                    <td>${{ entity.precio }}</td>
+                    <td>{{ entity.estadoPromocion }}</td>
+                    <td>
+                        <a title="ver" href="{{ path('premio_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a title="editar" href="{{ path('premio_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

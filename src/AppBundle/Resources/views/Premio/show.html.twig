@@ -1,16 +1,16 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h2 class="sub-header">Ver promoci&oacute;n</h2>
+    <h2 class="sub-header">Ver premio</h2>
     <div class="row btn-action-top">
         <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
         <div class="col-xs-1 pull-right">
-            <a title="editar" href="{{ path('promocion_edit', { 'id': entity.id }) }}">
+            <a title="editar" href="{{ path('premio_edit', { 'id': entity.id }) }}">
                 <span class="glyphicon glyphicon-edit"></span>
             </a>
         </div>
         <div class="col-xs-1 pull-right">
-            <a title="volver" href="{{ path('promocion') }}">
+            <a title="volver" href="{{ path('premio') }}">
                 <span class="glyphicon glyphicon-circle-arrow-left"></span>
             </a>
         </div>
@@ -28,6 +28,10 @@
             <tr>
                 <th>Descripcion</th>
                 <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Puntaje</th>
+                <td>{{ entity.puntajePremio }}</td>
             </tr>
             <tr>
                 <th>Precio</th>
