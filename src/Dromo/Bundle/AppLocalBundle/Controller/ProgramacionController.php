@@ -235,7 +235,7 @@ class ProgramacionController extends Controller
                     array('label' => ' ',
                         'attr' => 
                             ['class' => 'glyphicon glyphicon-trash', 
-                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta porgramción?")',
+                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta programación?")',
                             'title' => 'eliminar']
                     ))
             ->getForm()

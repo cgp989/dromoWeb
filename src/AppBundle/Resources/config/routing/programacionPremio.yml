@@ -1,0 +1,30 @@
+programacionPremio:
+    path:     /
+    defaults: { _controller: "AppBundle:ProgramacionPremio:index" }
+
+programacionPremio_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:ProgramacionPremio:show" }
+
+programacionPremio_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:ProgramacionPremio:new" }
+
+programacionPremio_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:ProgramacionPremio:create" }
+    methods:  POST
+
+programacionPremio_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:ProgramacionPremio:edit" }
+
+programacionPremio_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:ProgramacionPremio:update" }
+    methods:  [POST, PUT]
+
+programacionPremio_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:ProgramacionPremio:delete" }
+    methods:  [POST, DELETE]

@@ -34,7 +34,7 @@ class PromocionRepository extends EntityRepository
     
        /**
     * Retorna un array con los premios y que no esten eliminados
-    * @param integer $idLocal
+    * 
     * @return array
     */
     function getPremios(){

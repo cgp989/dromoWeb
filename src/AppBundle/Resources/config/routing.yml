@@ -1,3 +1,7 @@
+app_programacionPremio:
+    resource: "@AppBundle/Resources/config/routing/programacionPremio.yml"
+    prefix:   /programacionPremio
+
 app_premio:
     resource: "@AppBundle/Resources/config/routing/premio.yml"
     prefix:   /premio

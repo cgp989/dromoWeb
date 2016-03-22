@@ -33,6 +33,21 @@ class ProgramacionRepository extends EntityRepository
         return $promociones;
     }
     
+    function getProgramacionesPremios(){
+        $promociones = $this->getEntityManager()
+                ->createQuery('SELECT pr FROM AppBundle:Programacion pr '
+                        . 'LEFT JOIN pr.promocion p '
+                        . 'LEFT JOIN p.localComercial l '
+                        . 'LEFT JOIN pr.estadoProgramacion epr '
+                        . 'LEFT JOIN p.estadoPromocion e '
+                        . 'WHERE epr.nombre != :nombreEstadoPr AND e.nombre != :nombreEstadoP and p.puntajePremio != 0')
+                    ->setParameters(array(
+                        'nombreEstadoPr' => 'eliminada',
+                        'nombreEstadoP' => 'eliminada'))
+                    ->getResult();
+        return $promociones;
+    }
+    
     function eliminarProgramacionesConPromocion(Promocion $promocion){
         $programaciones = $this->findByPromocion($promocion);
         $estadoEliminada = $this->getEntityManager()->
