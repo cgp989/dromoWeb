@@ -102,7 +102,7 @@ class LocalComercial
      * @ORM\Column(name="valoracion", type="float")
      * 
      * @Expose
-     * @Groups({"serviceUSS23"})
+     * @Groups({"serviceUSS23", "serviceUSS06"})
      */
     private $valoracion;
     
