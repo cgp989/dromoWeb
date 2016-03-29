@@ -142,7 +142,7 @@ class UsuariosRestController extends Controller {
     public function getPasswordAction($password) {
         // el campo password es el id que devuelve google
         /* @var $usuarioMovil Entity\UsuarioMovil */
-        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
+        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findByPassword($password);
         if ($usuarioMovil != null) {
             $em = $this->getDoctrine()->getManager();
             //setear datos a um
@@ -152,17 +152,12 @@ class UsuariosRestController extends Controller {
             $usuarioMovil->setApellido("XX");
             $comentarios = $usuarioMovil->getComentarios();
             /* @var $comentario Entity\Comentario */
-            
+
             foreach ($comentarios as $comentario) {
                 $em->remove($comentario);
             }
             $em->persist($usuarioMovil);
             $em->flush();
-
-            $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
-            if ($usuarioMovil != null) {
-                $arrayUsuario = array("usuario" => $usuarioMovil);
-            }
         } else {
             $error[] = array('codigo' => '',
                 'mensaje' => 'Error de Usuario',
@@ -170,7 +165,7 @@ class UsuariosRestController extends Controller {
         }
         if (isset($error)) {
             return array('password' => $password, 'error' => $error);
-        } else{
+        } else {
             return array('password' => $password,
                 'res' => 1);
         }
