@@ -225,4 +225,53 @@ class PromocionesRestController extends Controller {
         }
     }
 
+    /**
+     * Listado de programaciones de local
+     * 
+     * @param decimal $latitud
+     * @param decimal $longitud
+     * @param integer $idUsuario
+     * @param integer $idLocalComercial
+     *      * 
+     * @View(serializerGroups={"serviceUSS013"})
+     */
+    public function getLatitudLongitudId_usuarioId_local_comercialAction($latitud, $longitud, $idUsuario, $idLocalComercial) {
+        $error;
+        if ($this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuario)) {
+
+            $repositoryProgramacion = $this->getDoctrine()->getRepository('AppBundle:ProgramacionEnDia');
+            $program = $repositoryProgramacion->findAll(); //$programaciones = $repositoryProgramacion->findAll();
+            $programaciones = array();
+            foreach ($program as $programacion) {
+                $localComercial = $programacion->
+                        getProgramacion()->
+                        getPromocion()->
+                        getLocalComercial();
+                if ($localComercial->getId() == $idLocalComercial) {
+                    array_push($programaciones, $programacion);
+                }
+            }
+            foreach ($programaciones as $programacion) {
+                $localComercial = $programacion->
+                        getProgramacion()->
+                        getPromocion()->
+                        getLocalComercial();
+                $distance = $localComercial->getSucursalMinimaDistancia($latitud, $longitud);
+                $programacion->setDistanciaALocalComercial($distance['distance']);
+                $programacion->setSucursalMasCercana($distance['title']);
+            }
+
+            $repositoryProgramacion->ordenarPorDistanciaALocal($programaciones);
+        } else {
+            $error[] = array('codigo' => '3',
+                'mensaje' => 'El usuario no existe',
+                'descripcion' => 'El id del usuario no existe en la base de datos');
+        }
+
+        if (!isset($error)) {
+            return array('promociones' => $programaciones);
+        } else
+            return array('error' => $error);
+    }
+
 }
