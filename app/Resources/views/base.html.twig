@@ -31,7 +31,8 @@
             <div class="row">
                 {#MENU LATERAL IZQUIERDO#}
                 <div class="col-xs-3 sidebar">
-                    <ul class="nav nav-sidebar">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <ul class="nav nav-sidebar">
                         <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
                             <a href="{{ path('app_index_local') }}">Inicio</a>
                         </li>
@@ -41,10 +42,17 @@
                         <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
                             <a href="{{ path('programacion') }}">Programaciones</a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="">Estad&iacute;sticas</a></li>
-                    </ul>
+                        </ul>
+                        <ul class="nav nav-sidebar">
+                            <li><a href="">Estad&iacute;sticas</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="nav nav-sidebar">
+                            <li class="{% if 'fos_user_security_login' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('fos_user_security_login') }}">Login</a>
+                            </li>
+                        </ul>
+                    {% endif %}
                 </div>
                 {#MENU LATERAL FIN#}
                 {#CONTENIDO PAGINA#}
