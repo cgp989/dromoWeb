@@ -1,6 +1,6 @@
 <?php
 
-namespace Dromo\Bundle\AppLocalBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,7 +28,7 @@ class PromocionController extends Controller
         $repoPromociones = $em->getRepository('AppBundle:Promocion');
         $entities = $repoPromociones->getPromocionesLocal($this->idLocalLogueado);
 
-        return $this->render('DromoAppLocalBundle:Promocion:index.html.twig', array(
+        return $this->render('AppBundle:Promocion:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -55,7 +55,7 @@ class PromocionController extends Controller
             return $this->redirect($this->generateUrl('promocion_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('DromoAppLocalBundle:Promocion:new.html.twig', array(
+        return $this->render('AppBundle:Promocion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -89,7 +89,7 @@ class PromocionController extends Controller
         $entity = new Promocion();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('DromoAppLocalBundle:Promocion:new.html.twig', array(
+        return $this->render('AppBundle:Promocion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -111,7 +111,7 @@ class PromocionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DromoAppLocalBundle:Promocion:show.html.twig', array(
+        return $this->render('AppBundle:Promocion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -134,7 +134,7 @@ class PromocionController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DromoAppLocalBundle:Promocion:edit.html.twig', array(
+        return $this->render('AppBundle:Promocion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -183,7 +183,7 @@ class PromocionController extends Controller
             return $this->redirect($this->generateUrl('promocion_edit', array('id' => $id)));
         }
 
-        return $this->render('DromoAppLocalBundle:Promocion:edit.html.twig', array(
+        return $this->render('AppBundle:Promocion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
