@@ -164,5 +164,11 @@ class Sucursal {
         else if ($this->getDistanciaUsuarioMovil() < $otraSucursal->getDistanciaUsuarioMovil())
             return -1;
     }
+    
+    public function __toString() {
+         /* @var $direccion Entity\Direccion */
+       $direccion = $this->getDireccion();
+       return $direccion;
+    }
 
 }

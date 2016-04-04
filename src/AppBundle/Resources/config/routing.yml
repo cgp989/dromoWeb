@@ -1,3 +1,7 @@
+app_localcomercial:
+    resource: "@AppBundle/Resources/config/routing/localcomercial.yml"
+    prefix:   /localcomercial
+
 app_programacionPremio:
     resource: "@AppBundle/Resources/config/routing/programacionPremio.yml"
     prefix:   /programacionPremio
