@@ -514,4 +514,5 @@ class LocalComercial
     {
         return $this->visitasLocalComercial;
     }
+    
 }

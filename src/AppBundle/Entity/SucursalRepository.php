@@ -27,4 +27,18 @@ class SucursalRepository extends EntityRepository
         
         return $arraySucursales;
     }
+    
+    public function getSucursalesLocal($idLocal){
+         $promociones = $this->getEntityManager()
+                ->createQuery('SELECT s FROM AppBundle:Sucursal s '
+                        . 'LEFT JOIN s.localComercial l '
+                        . 'WHERE l.id = :idLocal ')
+                    ->setParameters(array(
+                        'idLocal' => $idLocal
+                        ))
+                    ->getResult();
+        return $promociones;
+    }
+    
+    
 }
