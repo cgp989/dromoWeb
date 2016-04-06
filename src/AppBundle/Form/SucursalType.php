@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DireccionType extends AbstractType
+class SucursalType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,10 +15,9 @@ class DireccionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion')
-            ->add('latitud')
-            ->add('longitud')
-            ->add('localidad')
+            ->add('telefono')
+            ->add('direccion', new DireccionType())
+            ->add('localComercial')
         ;
     }
     
@@ -28,7 +27,7 @@ class DireccionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Direccion',
+            'data_class' => 'AppBundle\Entity\Sucursal',            
             'cascade_validation' => true
         ));
     }
@@ -38,6 +37,6 @@ class DireccionType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_direccion';
+        return 'appbundle_sucursal';
     }
 }

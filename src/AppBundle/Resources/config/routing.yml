@@ -1,8 +1,12 @@
+app_sucursal:
+    resource: "@AppBundle/Resources/config/routing/sucursal.yml"
+    prefix:   /sucursal
+    
 app_direccion:
     resource: "@AppBundle/Resources/config/routing/direccion.yml"
     prefix:   /direccion
 
-app_sucursal:
+app_sucursales:
     resource: "@AppBundle/Resources/config/routing/sucursales.yml"
     prefix:   /sucursales
 
