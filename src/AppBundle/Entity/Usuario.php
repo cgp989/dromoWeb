@@ -147,4 +147,8 @@ class Usuario
     {
         return $this->localComercial;
     }
+    
+    public function __toString() {
+      return $this->usuario;
+   }
 }

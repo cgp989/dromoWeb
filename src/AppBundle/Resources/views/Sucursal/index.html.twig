@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+    <h3 class="sub-header">Sucursales</h3>
+
+    <a title="nuevo" class="btn-action-top pull-right" href="{{ path('sucursal_new') }}">
+        <span class="glyphicon glyphicon-plus-sign">
+    </a>
+
+    <table class="table table-hover records_list">
+        <thead>
+            <tr>
+                <th class="col-xs-2">Local Comercial</th>
+                <th class="col-xs-3">Direccion</th>
+                <th class="col-xs-3">Telefono</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.localComercial }}</td>
+                    <td>{{ entity.direccion.descripcion }}</td>
+                    <td>{{ entity.telefono }}</td>
+
+                    <td>
+                        <a title="ver" href="{{ path('sucursal_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a title="editar" href="{{ path('sucursal_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

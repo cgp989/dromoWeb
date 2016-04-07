@@ -189,4 +189,10 @@ class Direccion
     {
         return $this->localidad;
     }
+    
+   public function __toString() {
+       /* @var $localidad Entity\Localidad */
+       $localidad = $this->getLocalidad();
+       return $localidad->getNombre()."-".$this->descripcion;
+   }
 }

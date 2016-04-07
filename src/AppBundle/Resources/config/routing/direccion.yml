@@ -1,0 +1,30 @@
+direccion:
+    path:     /
+    defaults: { _controller: "AppBundle:Direccion:index" }
+
+direccion_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Direccion:show" }
+
+direccion_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Direccion:new" }
+
+direccion_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Direccion:create" }
+    methods:  POST
+
+direccion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Direccion:edit" }
+
+direccion_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Direccion:update" }
+    methods:  [POST, PUT]
+
+direccion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Direccion:delete" }
+    methods:  [POST, DELETE]

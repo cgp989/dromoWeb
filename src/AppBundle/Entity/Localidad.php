@@ -17,8 +17,8 @@ use JMS\Serializer\Annotation\VirtualProperty;
  * 
  * @ExclusionPolicy("all")
  */
-class Localidad
-{
+class Localidad {
+
     /**
      * @var integer
      *
@@ -37,7 +37,7 @@ class Localidad
      * @Groups({"serviceUSS013", "serviceUSS013-sucursales", "serviceUSS06"})
      */
     private $nombre;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Provincia", inversedBy="localidades")
      * @ORM\JoinColumn(name="idProvincia", referencedColumnName="id")
@@ -49,9 +49,13 @@ class Localidad
      */
     private $direcciones;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->direcciones = new ArrayCollection();
+    }
+
+    public function __toString() {
+        $prov = $this->getProvincia()->getNombre();
+        return $this->nombre . " (" . $prov . ")";
     }
 
     /**
@@ -59,32 +63,29 @@ class Localidad
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-    
+
     /**
      * Set id
      * 
      * @param integer $id
      * @return Localidad
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
 
         return $this;
     }
-    
+
     /**
      * Set nombre
      *
      * @param string $nombre
      * @return Localidad
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
 
         return $this;
@@ -95,8 +96,7 @@ class Localidad
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -106,8 +106,7 @@ class Localidad
      * @param \AppBundle\Entity\Provincia $provincia
      * @return Localidad
      */
-    public function setProvincia(\AppBundle\Entity\Provincia $provincia = null)
-    {
+    public function setProvincia(\AppBundle\Entity\Provincia $provincia = null) {
         $this->provincia = $provincia;
 
         return $this;
@@ -118,8 +117,7 @@ class Localidad
      *
      * @return \AppBundle\Entity\Provincia 
      */
-    public function getProvincia()
-    {
+    public function getProvincia() {
         return $this->provincia;
     }
 
@@ -129,8 +127,7 @@ class Localidad
      * @param \AppBundle\Entity\Direccion $direcciones
      * @return Localidad
      */
-    public function addDirecciones(\AppBundle\Entity\Direccion $direcciones)
-    {
+    public function addDirecciones(\AppBundle\Entity\Direccion $direcciones) {
         $this->direcciones[] = $direcciones;
 
         return $this;
@@ -141,8 +138,7 @@ class Localidad
      *
      * @param \AppBundle\Entity\Direccion $direcciones
      */
-    public function removeDirecciones(\AppBundle\Entity\Direccion $direcciones)
-    {
+    public function removeDirecciones(\AppBundle\Entity\Direccion $direcciones) {
         $this->direcciones->removeElement($direcciones);
     }
 
@@ -151,8 +147,7 @@ class Localidad
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDirecciones()
-    {
+    public function getDirecciones() {
         return $this->direcciones;
     }
 
@@ -162,8 +157,7 @@ class Localidad
      * @param \AppBundle\Entity\Direccion $direcciones
      * @return Localidad
      */
-    public function addDireccione(\AppBundle\Entity\Direccion $direcciones)
-    {
+    public function addDireccione(\AppBundle\Entity\Direccion $direcciones) {
         $this->direcciones[] = $direcciones;
 
         return $this;
@@ -174,8 +168,8 @@ class Localidad
      *
      * @param \AppBundle\Entity\Direccion $direcciones
      */
-    public function removeDireccione(\AppBundle\Entity\Direccion $direcciones)
-    {
+    public function removeDireccione(\AppBundle\Entity\Direccion $direcciones) {
         $this->direcciones->removeElement($direcciones);
     }
+
 }

@@ -1,0 +1,30 @@
+localcomercial:
+    path:     /
+    defaults: { _controller: "AppBundle:LocalComercial:index" }
+
+localcomercial_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:LocalComercial:show" }
+
+localcomercial_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:LocalComercial:new" }
+
+localcomercial_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:LocalComercial:create" }
+    methods:  POST
+
+localcomercial_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:LocalComercial:edit" }
+
+localcomercial_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:LocalComercial:update" }
+    methods:  [POST, PUT]
+
+localcomercial_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:LocalComercial:delete" }
+    methods:  [POST, DELETE]

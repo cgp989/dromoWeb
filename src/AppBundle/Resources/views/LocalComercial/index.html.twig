@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+   <h3 class="sub-header">Locales Comerciales</h3>
+
+    <a title="nuevo" class="btn-action-top pull-right" href="{{ path('localcomercial_new') }}">
+        <span class="glyphicon glyphicon-plus-sign">
+    </a>
+
+    <table class="table table-hover records_list">
+        <thead>
+            <tr>
+                <th class="col-xs-2">Nombre</th>
+                <th class="col-xs-3">Nombre Contacto</th>
+                <th class="col-xs-3">Email Contacto</th>
+                <th class="col-xs-3">Telefono Contaccto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.nombre }}</td>
+                    <td>{{ entity.nombreContacto }}</td>
+                    <td>${{ entity.emailContacto }}</td>
+                    <td>${{ entity.telefonoContacto }}</td>                   
+                    <td>
+                        <a title="ver" href="{{ path('localcomercial_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a title="editar" href="{{ path('localcomercial_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
