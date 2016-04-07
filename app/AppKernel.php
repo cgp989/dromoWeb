@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Dromo\Bundle\ApiPromocionesBundle\DromoApiPromocionesBundle(),
-            new Dromo\Bundle\AppLocalBundle\DromoAppLocalBundle(),
             new Dromo\Bundle\ProcedimientosBundle\DromoProcedimientosBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Dromo\Bundle\FosUserBundle\DromoFosUserBundle(),
