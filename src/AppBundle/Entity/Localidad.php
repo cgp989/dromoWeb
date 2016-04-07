@@ -54,7 +54,8 @@ class Localidad {
     }
 
     public function __toString() {
-        return $this->nombre;
+        $prov = $this->getProvincia()->getNombre();
+        return $this->nombre . " (" . $prov . ")";
     }
 
     /**

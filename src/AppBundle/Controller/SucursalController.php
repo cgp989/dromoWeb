@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Sucursal;
+use AppBundle\Entity\Direccion;
 use AppBundle\Form\SucursalType;
 
 /**
@@ -33,12 +34,17 @@ class SucursalController extends Controller {
      */
     public function createAction(Request $request) {
         $entity = new Sucursal();
+        $direc = new Direccion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+            $direc = $entity->getDireccion();
+            $em->persist($direc);
+                
             $em->flush();
 
             return $this->redirect($this->generateUrl('sucursal_show', array('id' => $entity->getId())));
