@@ -27,11 +27,20 @@
     </div>
     <div class="row">
         <div class="col-xs-4">
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                  {{ 'security.login.remember_me'|trans }}
-                </label>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                      {{ 'security.login.remember_me'|trans }}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <a href="{{ path('fos_user_resetting_request') }}">Olvide mi contrase&ntilde;a</a>
             </div>
         </div>
     </div>

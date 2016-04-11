@@ -886,7 +886,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/22e31b00233a459972a6b3e4df6f7a9535be8289",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/df94140dc39bc591b7c2ce7cd9e791594fad7b28",
                 "reference": "3364f440c068028f766e8707ed911f16371b4cfd",
                 "shasum": ""
             },
