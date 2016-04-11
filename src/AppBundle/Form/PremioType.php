@@ -52,9 +52,9 @@ class PremioType extends AbstractType {
             ));
         } else {
             $builder
-                    ->add('titulo')
                     ->add('tipoPromocion', null, array(
                         'label' => 'Tipo',
+                        'disabled' => true,
                         'empty_value' => '',
             ));
         }

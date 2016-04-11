@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h2 class="sub-header">Editar Sucursal</h2>
+<div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('sucursal') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        {{ form_start(edit_form) }}
+            <div class="row error-count">{{ form_errors(edit_form) }}</div>
+            <div class="row">
+                <div class="col-xs-10">{{ form_row(edit_form.localComercial) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    {{ form_row(edit_form.direccion.descripcion) }}                    
+                </div>
+                <div class="col-xs-3 col-xs-offset-1">
+                    {{ form_row(edit_form.telefono) }}                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">{{ form_row(edit_form.direccion.latitud) }}</div>                
+                <div class="col-xs-3 col-xs-offset-1">{{ form_row(edit_form.direccion.longitud) }}</div>
+            </div>
+             <div class="row">
+                <div class="col-xs-6">{{ form_row(edit_form.direccion.localidad) }}</div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-2 pull-right text-right">{{ form_row(edit_form.actualizar) }}</div>
+            </div>
+        {{ form_end(edit_form) }}
+    </div>   
+    
+{% endblock %}

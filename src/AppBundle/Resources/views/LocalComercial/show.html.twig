@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+     <h2 class="sub-header">Ver Local Comercial</h2>
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="editar" href="{{ path('localcomercial_edit', { 'id': entity.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('localcomercial') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <table class="table table-show">
+        <tbody>
+            <tr>
+                <th>Nombre Contacto</th>
+                <td>{{ entity.nombreContacto }}</td>
+            </tr>
+            <tr>
+                <th class="col-xs-1">Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Email Contacto</th>
+                <td>{{ entity.emailContacto }}</td>
+            </tr>
+            <tr>
+                <th>Telefono Contaco</th>
+                <td>{{ entity.telefonoContacto }}</td>
+            </tr>            
+        </tbody>
+    </table>
+{% endblock %}

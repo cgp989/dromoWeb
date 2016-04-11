@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h2 class="sub-header">Ver Sucursal</h2>
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+        <div class="col-xs-1 pull-right">
+            <a title="editar" href="{{ path('sucursal_edit', { 'id': entity.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('sucursal') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <table class="table table-show">
+        <tbody>
+            <tr>
+                <th>Local Comercial</th>
+                <td>{{ entity.localComercial }}</td>
+            </tr>
+            <tr>
+                <th class="col-xs-1">Direccion</th>
+                <td>{{ entity.direccion.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ entity.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Latitud</th>
+                <td>{{ entity.direccion.latitud }}</td>
+            </tr>
+            <tr>
+                <th>Longitud</th>
+                <td>{{ entity.direccion.longitud }}</td>
+            </tr> 
+            <tr>
+                <th>Localidad</th>
+                <td>{{ entity.direccion.localidad }}</td>
+            </tr> 
+        </tbody>
+    </table>
+{% endblock %}

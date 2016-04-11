@@ -138,4 +138,8 @@ class Usuario extends BaseUser
     {
         return $this->localComercial;
     }
+    
+    public function __toString() {
+      return $this->usuario;
+   }
 }
