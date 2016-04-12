@@ -1,0 +1,30 @@
+programacion:
+    path:     /
+    defaults: { _controller: "AppBundle:Programacion:index" }
+
+programacion_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Programacion:show" }
+
+programacion_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Programacion:new" }
+
+programacion_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Programacion:create" }
+    methods:  POST
+
+programacion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Programacion:edit" }
+
+programacion_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Programacion:update" }
+    methods:  [POST, PUT]
+
+programacion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Programacion:delete" }
+    methods:  [POST, DELETE]

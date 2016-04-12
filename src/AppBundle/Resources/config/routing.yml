@@ -16,12 +16,23 @@ app_localcomercial:
 
 app_programacionPremio:
     resource: "@AppBundle/Resources/config/routing/programacionPremio.yml"
-    prefix:   /programacionPremio
+    prefix:   admin/programacionPremio
 
 app_premio:
     resource: "@AppBundle/Resources/config/routing/premio.yml"
-    prefix:   /premio
+    prefix:   admin/premio
 
+app_index_local:
+    path:     /
+    defaults: { _controller: "AppBundle:Default:index" }
+    
+app_promocion:
+    resource: "@AppBundle/Resources/config/routing/promocion.yml"
+    prefix:   local/promocion
+
+app_programacion:
+    resource: "@AppBundle/Resources/config/routing/programacion.yml"
+    prefix:   local/programacion
 
 
 

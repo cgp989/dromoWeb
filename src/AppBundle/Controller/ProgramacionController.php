@@ -1,6 +1,6 @@
 <?php
 
-namespace Dromo\Bundle\AppLocalBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,7 +27,7 @@ class ProgramacionController extends Controller
         $repoProgramaciones = $em->getRepository('AppBundle:Programacion');
         $entities = $repoProgramaciones->getProgramacionesLocal($this->idLocalLogueado);
 
-        return $this->render('DromoAppLocalBundle:Programacion:index.html.twig', array(
+        return $this->render('AppBundle:Programacion:index.html.twig', array(
             'entities' => $entities,
         ));
     }
@@ -52,7 +52,7 @@ class ProgramacionController extends Controller
             return $this->redirect($this->generateUrl('programacion_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('DromoAppLocalBundle:Programacion:new.html.twig', array(
+        return $this->render('AppBundle:Programacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -86,7 +86,7 @@ class ProgramacionController extends Controller
         $entity = new Programacion();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('DromoAppLocalBundle:Programacion:new.html.twig', array(
+        return $this->render('AppBundle:Programacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -108,7 +108,7 @@ class ProgramacionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DromoAppLocalBundle:Programacion:show.html.twig', array(
+        return $this->render('AppBundle:Programacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -131,7 +131,7 @@ class ProgramacionController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DromoAppLocalBundle:Programacion:edit.html.twig', array(
+        return $this->render('AppBundle:Programacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -184,7 +184,7 @@ class ProgramacionController extends Controller
             return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
         }
 
-        return $this->render('DromoAppLocalBundle:Programacion:edit.html.twig', array(
+        return $this->render('AppBundle:Programacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

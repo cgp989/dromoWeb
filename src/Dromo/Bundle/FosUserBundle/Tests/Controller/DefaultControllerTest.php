@@ -1,6 +1,6 @@
 <?php
 
-namespace Dromo\Bundle\AppLocalBundle\Tests\Controller;
+namespace Dromo\Bundle\FosUserBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

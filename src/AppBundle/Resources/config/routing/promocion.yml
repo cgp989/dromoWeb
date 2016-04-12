@@ -1,0 +1,30 @@
+promocion:
+    path:     /
+    defaults: { _controller: "AppBundle:Promocion:index" }
+
+promocion_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Promocion:show" }
+
+promocion_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Promocion:new" }
+
+promocion_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Promocion:create" }
+    methods:  POST
+
+promocion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Promocion:edit" }
+
+promocion_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Promocion:update" }
+    methods:  [POST, PUT]
+
+promocion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Promocion:delete" }
+    methods:  [POST, DELETE]

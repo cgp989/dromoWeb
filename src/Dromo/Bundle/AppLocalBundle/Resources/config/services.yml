@@ -1,4 +1,0 @@
-services:
-#    dromo_app_local.example:
-#        class: Dromo\Bundle\AppLocalBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
