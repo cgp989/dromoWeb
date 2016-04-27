@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Programacion;
-use Dromo\Bundle\AppLocalBundle\Form\ProgramacionType;
+use AppBundle\Form\ProgramacionType;
 
 /**
  * Programacion controller.

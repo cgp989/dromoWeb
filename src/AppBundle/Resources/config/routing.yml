@@ -1,18 +1,18 @@
 app_sucursal:
     resource: "@AppBundle/Resources/config/routing/sucursal.yml"
-    prefix:   /sucursal
+    prefix:   admin/sucursal
     
 app_direccion:
     resource: "@AppBundle/Resources/config/routing/direccion.yml"
-    prefix:   /direccion
+    prefix:   admin/direccion
 
 app_sucursales:
     resource: "@AppBundle/Resources/config/routing/sucursales.yml"
-    prefix:   /sucursales
+    prefix:   local/sucursales
 
 app_localcomercial:
     resource: "@AppBundle/Resources/config/routing/localcomercial.yml"
-    prefix:   /localcomercial
+    prefix:   admin/localcomercial
 
 app_programacionPremio:
     resource: "@AppBundle/Resources/config/routing/programacionPremio.yml"
