@@ -33,7 +33,7 @@ class Direccion
      * @ORM\Column(name="descripcion", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS013-sucursales"})
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales","serviceUSS06"})
      */
     private $descripcion;
 
@@ -61,7 +61,7 @@ class Direccion
      * @ORM\JoinColumn(name="idLocalidad", referencedColumnName="id")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS013-sucursales"})
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales", "serviceUSS06"})
      */
     private $localidad;
     
@@ -189,4 +189,10 @@ class Direccion
     {
         return $this->localidad;
     }
+    
+   public function __toString() {
+       /* @var $localidad Entity\Localidad */
+       $localidad = $this->getLocalidad();
+       return $localidad->getNombre()."-".$this->descripcion;
+   }
 }

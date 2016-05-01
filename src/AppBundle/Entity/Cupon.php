@@ -47,6 +47,14 @@ class Cupon
      * 
      */
     private $fecha;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="inicio", type="datetime")
+     * 
+     */
+    private $inicio;
 
     /**
      * @var \DateTime
@@ -315,5 +323,28 @@ class Cupon
     public function getVencimiento()
     {
         return $this->vencimiento;
+    }
+
+    /**
+     * Set inicio
+     *
+     * @param \DateTime $inicio
+     * @return Cupon
+     */
+    public function setInicio($inicio)
+    {
+        $this->inicio = $inicio;
+
+        return $this;
+    }
+
+    /**
+     * Get inicio
+     *
+     * @return \DateTime 
+     */
+    public function getInicio()
+    {
+        return $this->inicio;
     }
 }

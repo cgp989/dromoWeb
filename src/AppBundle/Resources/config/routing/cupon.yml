@@ -1,0 +1,9 @@
+cupon_consultar:
+    path: /consultar
+    defaults: { _controller: "AppBundle:Cupon:consultar" }
+    
+cupon_buscar:
+    path: /buscar
+    defaults: { _controller: "AppBundle:Cupon:buscar" }
+    methods:  POST
+    

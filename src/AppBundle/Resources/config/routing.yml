@@ -33,6 +33,10 @@ app_promocion:
 app_programacion:
     resource: "@AppBundle/Resources/config/routing/programacion.yml"
     prefix:   local/programacion
+    
+app_validar_cupon:
+    resource: "@AppBundle/Resources/config/routing/cupon.yml"
+    prefix: local/cupon
 
 
 

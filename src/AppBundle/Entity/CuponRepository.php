@@ -19,6 +19,7 @@ class CuponRepository extends EntityRepository
                 $this->getEntityManager()->getRepository('AppBundle:EstadoCupon')->findOneByNombre('porCanjear')
             );
         $cupon->setFecha(new \DateTime("now"));
+        $cupon->setInicio($programacionEnDia->getInicio());
         $cupon->setVencimiento($programacionEnDia->getVencimiento());
         $cupon->setProgramacion($programacionEnDia->getProgramacion());
         $cupon->setTipoCupon(

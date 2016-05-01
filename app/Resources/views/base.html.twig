@@ -54,11 +54,14 @@
                             <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
-                        <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
                             <a href="{{ path('promocion') }}">Promociones</a>
                             </li>
                             <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacion') }}">Programaciones</a>
+                            </li>
+                            <li class="{% if 'cupon' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('cupon_consultar') }}">Consultar cup&oacute;n</a>
                             </li>
                         </ul>
                         <ul class="nav nav-sidebar">
@@ -81,7 +84,7 @@
             </div>
         </div>
         {% block javascripts %}
-            <!-- Librería jQuery requerida por los plugins de JavaScript -->
+            <!-- LibrerÃ­a jQuery requerida por los plugins de JavaScript -->
                 <script src="{{ asset('resources/js/jquery.js')}}"></script>
  
             <!-- plugins JavaScript de Bootstrap  -->

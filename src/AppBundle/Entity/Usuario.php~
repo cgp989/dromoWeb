@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Usuario
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UsuarioRepository")
  */
-class Usuario
+class Usuario extends BaseUser
 {
     /**
      * @var integer
@@ -19,21 +20,7 @@ class Usuario
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="usuario", type="string", length=255)
-     */
-    private $usuario;
+    protected $id;
     
     /**
      * @ORM\OneToOne(targetEntity="LocalComercial", mappedBy="usuario")
@@ -45,6 +32,10 @@ class Usuario
      * @ORM\JoinColumn(name="idRol", referencedColumnName="id")
      */
     protected $rol;
+    
+    public function __construct() {
+        parent::__construct();
+    }
 
     /**
      * Set password
@@ -147,4 +138,8 @@ class Usuario
     {
         return $this->localComercial;
     }
+    
+    public function __toString() {
+      return $this->usuario;
+   }
 }

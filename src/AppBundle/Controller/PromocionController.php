@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Promocion;
-use Dromo\Bundle\AppLocalBundle\Form\PromocionType;
+use AppBundle\Form\PromocionType;
 
 /**
  * Promocion controller.
@@ -14,8 +14,6 @@ use Dromo\Bundle\AppLocalBundle\Form\PromocionType;
  */
 class PromocionController extends Controller
 {
-    
-    private $idLocalLogueado = 76;
 
     /**
      * Lists all Promocion entities.
@@ -26,7 +24,7 @@ class PromocionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $repoPromociones = $em->getRepository('AppBundle:Promocion');
-        $entities = $repoPromociones->getPromocionesLocal($this->idLocalLogueado);
+        $entities = $repoPromociones->getPromocionesLocal($this->getUser()->getLocalComercial()->getId());
 
         return $this->render('AppBundle:Promocion:index.html.twig', array(
             'entities' => $entities,
@@ -45,7 +43,7 @@ class PromocionController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $repositoryLocal = $em->getRepository('AppBundle:LocalComercial');
-            $local = $repositoryLocal->find($this->idLocalLogueado);
+            $local = $repositoryLocal->find($this->getUser()->getLocalComercial()->getId());
             $entity->setEstaModerada(0);
             $entity->setLocalComercial($local);
             $entity->setPuntajePremio(0);

@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Programacion;
-use Dromo\Bundle\AppLocalBundle\Form\ProgramacionType;
+use AppBundle\Form\ProgramacionType;
 
 /**
  * Programacion controller.
@@ -14,7 +14,6 @@ use Dromo\Bundle\AppLocalBundle\Form\ProgramacionType;
  */
 class ProgramacionController extends Controller
 {
-    private $idLocalLogueado = 76;
 
     /**
      * Lists all Programacion entities.
@@ -25,7 +24,7 @@ class ProgramacionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $repoProgramaciones = $em->getRepository('AppBundle:Programacion');
-        $entities = $repoProgramaciones->getProgramacionesLocal($this->idLocalLogueado);
+        $entities = $repoProgramaciones->getProgramacionesLocal($this->getUser()->getLocalComercial()->getId());
 
         return $this->render('AppBundle:Programacion:index.html.twig', array(
             'entities' => $entities,
@@ -67,7 +66,7 @@ class ProgramacionController extends Controller
      */
     private function createCreateForm(Programacion $entity)
     {
-        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->idLocalLogueado)), $entity, array(
+        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->getUser()->getLocalComercial()->getId())), $entity, array(
             'action' => $this->generateUrl('programacion_create'),
             'method' => 'POST'
         ));
@@ -147,7 +146,7 @@ class ProgramacionController extends Controller
     */
     private function createEditForm(Programacion $entity)
     {
-        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->idLocalLogueado, 'edit' => true)), $entity, array(
+        $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->getUser()->getLocalComercial()->getId(), 'edit' => true)), $entity, array(
             'action' => $this->generateUrl('programacion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

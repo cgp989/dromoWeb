@@ -594,7 +594,7 @@ class Programacion
 
         $inicioValidez = new \DateTime('now');
         $inicioValidez->setTime($arrayHoraInicio['hours'], $arrayHoraInicio['minutes'], 0);
-        $finValidez = $inicioValidez;
+        $finValidez = clone $inicioValidez;
         $finValidez->add(new \DateInterval('PT'.(integer)$horaD.'H'.$minutosD.'M'));
         
         return array('inicioValidez' => $inicioValidez, 'finValidez' => $finValidez);

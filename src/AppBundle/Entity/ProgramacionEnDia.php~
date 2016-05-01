@@ -212,4 +212,27 @@ class ProgramacionEnDia
         return $this->vencimiento;
     }
      
+
+    /**
+     * Set inicio
+     *
+     * @param \DateTime $inicio
+     * @return ProgramacionEnDia
+     */
+    public function setInicio($inicio)
+    {
+        $this->inicio = $inicio;
+
+        return $this;
+    }
+
+    /**
+     * Get inicio
+     *
+     * @return \DateTime 
+     */
+    public function getInicio()
+    {
+        return $this->inicio;
+    }
 }
