@@ -45,6 +45,9 @@
                             <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacionPremio') }}">Programaciones premios</a>
                             </li>
+                            <li class="{% if 'comentarios' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('comentarios') }}">Comenarios Denunciados</a>
+                            </li>
                         </ul>
                         <ul class="nav nav-sidebar">
                             <li><a href="">Estad&iacute;sticas</a></li>
@@ -59,6 +62,9 @@
                             </li>
                             <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacion') }}">Programaciones</a>
+                            </li>
+                            <li class="{% if 'comentario' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('comentario') }}">Comentarios</a>
                             </li>
                         </ul>
                         <ul class="nav nav-sidebar">

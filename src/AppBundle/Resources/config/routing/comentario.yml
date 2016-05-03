@@ -1,0 +1,30 @@
+comentario:
+    path:     /
+    defaults: { _controller: "AppBundle:Comentario:index" }
+
+comentario_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Comentario:show" }
+
+comentario_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Comentario:new" }
+
+comentario_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Comentario:create" }
+    methods:  POST
+
+comentario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Comentario:edit" }
+
+comentario_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Comentario:update" }
+    methods:  [POST, PUT]
+
+comentario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Comentario:delete" }
+    methods:  [POST, DELETE]

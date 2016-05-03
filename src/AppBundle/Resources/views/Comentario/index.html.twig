@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Comentarios</h1>
+
+    <table class="table table-hover records_list">
+        <thead>
+            <tr>
+                <th class="col-xs-6">Comentario</th>
+                <th class="col-xs-1">Valoracion</th>
+                <th class="col-xs-2">Fecha</th>
+                <th class="col-xs-2">Usuario</th>
+                <th class="col-xs-1">Ver</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.comentario }}</td>
+                    <td>{{ entity.valoracion }}</td>
+                    <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ entity.usuarioMovil }}</td>
+                    <td>
+                        <a title="ver" href="{{ path('comentario_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

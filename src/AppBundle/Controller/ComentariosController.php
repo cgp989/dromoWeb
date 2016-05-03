@@ -4,128 +4,122 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Entity\Promocion;
-use AppBundle\Form\PremioType;
+use AppBundle\Entity\Comentario;
+use AppBundle\Form\ComentariosType;
 
 /**
- * Premio controller.
+ * Comentario controller.
  *
  */
-class PremioController extends Controller {
-
-    private $idAdminLogueado = 1;
+class ComentariosController extends Controller {
 
     /**
-     * Lists all Promocion entities.
+     * Lists all Comentario entities.
      *
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $repoPromociones = $em->getRepository('AppBundle:Promocion');
-        $entities = $repoPromociones->getPremios();
-
-        return $this->render('AppBundle:Premio:index.html.twig', array(
+        $entities = $em->getRepository('AppBundle:Comentario')->getComentariosDenunciados();
+        
+        return $this->render('AppBundle:Comentarios:index.html.twig', array(
                     'entities' => $entities,
         ));
     }
 
     /**
-     * Creates a new Promocion entity.
+     * Creates a new Comentario entity.
      *
      */
     public function createAction(Request $request) {
-        $entity = new Promocion();
+        $entity = new Comentario();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity->setEstaModerada(0);
-            $tipo= $em->getRepository('AppBundle:TipoPromocion')->findoneByNombre('Premio');
-            $entity-setTipoPromocion($tipoPromocion);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('premio_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('comentarios_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('AppBundle:Premio:new.html.twig', array(
+        return $this->render('AppBundle:Comentarios:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a Promocion entity.
+     * Creates a form to create a Comentario entity.
      *
-     * @param Promocion $entity The entity
+     * @param Comentario $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Promocion $entity) {
-        $form = $this->createForm(new PremioType(), $entity, array(
-            'action' => $this->generateUrl('premio_create'),
+    private function createCreateForm(Comentario $entity) {
+        $form = $this->createForm(new ComentariosType(), $entity, array(
+            'action' => $this->generateUrl('comentarios_create'),
             'method' => 'POST',
         ));
 
-        $form->add('crear', 'submit', array('label' => 'Crear', 'attr' => ['class' => 'btn btn-primary']));
+        $form->add('submit', 'submit', array('label' => 'Crear'));
 
         return $form;
     }
 
     /**
-     * Displays a form to create a new Promocion entity.
+     * Displays a form to create a new Comentario entity.
      *
      */
     public function newAction() {
-        $entity = new Promocion();
+        $entity = new Comentario();
         $form = $this->createCreateForm($entity);
 
-        return $this->render('AppBundle:Premio:new.html.twig', array(
+        return $this->render('AppBundle:Comentarios:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Promocion entity.
+     * Finds and displays a Comentario entity.
      *
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+        $entity = $em->getRepository('AppBundle:Comentario')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('No existe el premio.');
+            throw $this->createNotFoundException('Comentario no disponible!.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:Premio:show.html.twig', array(
+        return $this->render('AppBundle:Comentarios:show.html.twig', array(
                     'entity' => $entity,
                     'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing Promocion entity.
+     * Displays a form to edit an existing Comentario entity.
      *
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+        $entity = $em->getRepository('AppBundle:Comentario')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('No existe el premio');
+            throw $this->createNotFoundException('Comentario no disponible.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:Premio:edit.html.twig', array(
+        return $this->render('AppBundle:Comentarios:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -133,15 +127,15 @@ class PremioController extends Controller {
     }
 
     /**
-     * Creates a form to edit a Promocion entity.
+     * Creates a form to edit a Comentario entity.
      *
-     * @param Promocion $entity The entity
+     * @param Comentario $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Promocion $entity) {
-        $form = $this->createForm(new PremioType(), $entity, array(
-            'action' => $this->generateUrl('premio_update', array('id' => $entity->getId())),
+    private function createEditForm(Comentario $entity) {
+        $form = $this->createForm(new ComentariosType(), $entity, array(
+            'action' => $this->generateUrl('comentarios_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -151,16 +145,16 @@ class PremioController extends Controller {
     }
 
     /**
-     * Edits an existing Promocion entity.
+     * Edits an existing Comentario entity.
      *
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+        $entity = $em->getRepository('AppBundle:Comentario')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('No existe el premio');
+            throw $this->createNotFoundException('Comentario no disponible!.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -170,10 +164,10 @@ class PremioController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('premio_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('comentarios_edit', array('id' => $id)));
         }
 
-        return $this->render('AppBundle:Premio:edit.html.twig', array(
+        return $this->render('AppBundle:Comentarios:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -181,7 +175,7 @@ class PremioController extends Controller {
     }
 
     /**
-     * Deletes a Promocion entity.
+     * Deletes a Comentario entity.
      *
      */
     public function deleteAction(Request $request, $id) {
@@ -190,25 +184,21 @@ class PremioController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Promocion')->find($id);
+            $entity = $em->getRepository('AppBundle:Comentario')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('No existe el premio.');
+                throw $this->createNotFoundException('Comentario no disponible.');
             }
 
-            $repositoryProgramacion = $em->getRepository('AppBundle:Programacion');
-            $repositoryProgramacion->eliminarProgramacionesConPromocion($entity); //elimino todas las programaciones de la promocion
-            $estadoEliminada = $em->getRepository('AppBundle:EstadoPromocion')->findOneByNombre('eliminada');
-            $entity->setEstadoPromocion($estadoEliminada);
-            $em->persist($entity);
+            $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('premio'));
+        return $this->redirect($this->generateUrl('comentarios'));
     }
 
     /**
-     * Creates a form to delete a Promocion entity by id.
+     * Creates a form to delete a Comentario entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -216,13 +206,12 @@ class PremioController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('premio_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('comentarios_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('eliminar', 'submit', array('label' => ' ',
                             'attr' =>
                             ['class' => 'glyphicon glyphicon-trash',
-                                'onclick' => 'return confirm("¿Esta seguro de eliminar este premio?.'
-                                . ' Tenga en cuenta que tambien se eliminaran todas las programaciones del mismo.")',
+                                'onclick' => 'return confirm("¿Esta seguro de eliminar este cometario?.',
                                 'title' => 'eliminar']
                         ))
                         ->getForm()

@@ -1,3 +1,11 @@
+app_comentario:
+    resource: "@AppBundle/Resources/config/routing/comentario.yml"
+    prefix:   local/comentario
+
+app_comentarios:
+    resource: "@AppBundle/Resources/config/routing/comentarios.yml"
+    prefix:   admin/comentarios
+
 app_sucursal:
     resource: "@AppBundle/Resources/config/routing/sucursal.yml"
     prefix:   admin/sucursal

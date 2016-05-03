@@ -37,7 +37,7 @@ class PremioType extends AbstractType {
                     'label' => 'Estado'
                         )
                 )
-                ->add('tipoPromocion')
+                //->add('tipoPromocion')
                 ->add('localComercial')
         ;
         if (isset($this->opciones['edit']) && $this->opciones['edit']) {
@@ -45,18 +45,19 @@ class PremioType extends AbstractType {
                     ->add('titulo', null, array(
                         'disabled' => true,
                     ))
-                    ->add('tipoPromocion', null, array(
-                        'label' => 'Tipo',
-                        'disabled' => true,
-                        'empty_value' => '',
-            ));
+//                    ->add('tipoPromocion', null, array(
+//                        'label' => 'Tipo',
+//                        'disabled' => true,
+//                        'empty_value' => '',
+//            ))
+                ;
         } else {
-            $builder
-                    ->add('tipoPromocion', null, array(
-                        'label' => 'Tipo',
-                        'disabled' => true,
-                        'empty_value' => '',
-            ));
+//            $builder
+//                    ->add('tipoPromocion', null, array(
+//                        'label' => 'Tipo',
+//                        'disabled' => true,
+//                        'empty_value' => '',
+//            ));
         }
     }
 
