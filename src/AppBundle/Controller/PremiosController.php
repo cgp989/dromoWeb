@@ -5,15 +5,15 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Promocion;
-use AppBundle\Form\PremioType;
+use AppBundle\Form\PremiosType;
 
 /**
- * Premio controller.
+ * Premios controller.
  *
  */
-class PremioController extends Controller {
+class PremiosController extends Controller {
 
-    private $idLocalLogueado = 1;
+    private $idAdminLogueado = 1;
 
     /**
      * Lists all Promocion entities.
@@ -23,9 +23,9 @@ class PremioController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $repoPromociones = $em->getRepository('AppBundle:Promocion');
-        $entities = $repoPromociones->getPremiosLocal($this->idLocalLogueado);
+        $entities = $repoPromociones->getPremios();
 
-        return $this->render('AppBundle:Premio:index.html.twig', array(
+        return $this->render('AppBundle:Premios:index.html.twig', array(
                     'entities' => $entities,
         ));
     }
@@ -42,15 +42,15 @@ class PremioController extends Controller {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setEstaModerada(0);
-            $tipo = $em->getRepository('AppBundle:TipoPromocion')->findoneByNombre('Premio');
-            $entity - setTipoPromocion($tipoPromocion);
+            $tipo= $em->getRepository('AppBundle:TipoPromocion')->findoneByNombre('Premio');
+            $entity-setTipoPromocion($tipoPromocion);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('premio_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('premios_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('AppBundle:Premio:new.html.twig', array(
+        return $this->render('AppBundle:Premios:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -64,8 +64,8 @@ class PremioController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Promocion $entity) {
-        $form = $this->createForm(new PremioType(), $entity, array(
-            'action' => $this->generateUrl('premio_create'),
+        $form = $this->createForm(new PremiosType(), $entity, array(
+            'action' => $this->generateUrl('premios_create'),
             'method' => 'POST',
         ));
 
@@ -82,7 +82,7 @@ class PremioController extends Controller {
         $entity = new Promocion();
         $form = $this->createCreateForm($entity);
 
-        return $this->render('AppBundle:Premio:new.html.twig', array(
+        return $this->render('AppBundle:Premios:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -103,7 +103,7 @@ class PremioController extends Controller {
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:Premio:show.html.twig', array(
+        return $this->render('AppBundle:Premios:show.html.twig', array(
                     'entity' => $entity,
                     'delete_form' => $deleteForm->createView(),
         ));
@@ -125,7 +125,7 @@ class PremioController extends Controller {
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:Premio:edit.html.twig', array(
+        return $this->render('AppBundle:Premios:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -140,8 +140,8 @@ class PremioController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Promocion $entity) {
-        $form = $this->createForm(new PremioType(), $entity, array(
-            'action' => $this->generateUrl('premio_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new PremiosType(), $entity, array(
+            'action' => $this->generateUrl('premios_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,10 +170,10 @@ class PremioController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('premio_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));
         }
 
-        return $this->render('AppBundle:Premio:edit.html.twig', array(
+        return $this->render('AppBundle:Premios:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -204,7 +204,7 @@ class PremioController extends Controller {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('premio'));
+        return $this->redirect($this->generateUrl('premios'));
     }
 
     /**
@@ -216,7 +216,7 @@ class PremioController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('premio_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('premios_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('eliminar', 'submit', array('label' => ' ',
                             'attr' =>

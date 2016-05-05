@@ -15,9 +15,18 @@ class DireccionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion')
-            ->add('latitud')
-            ->add('longitud')
+            ->add('descripcion', null, array(
+                    'label' => 'Direccion',
+                    'required' => true
+                ))
+            ->add('latitud', null, array(
+                    'label' => 'Latitud',
+                    'required' => true
+                ))
+            ->add('longitud', null, array(
+                    'label' => 'Longitud',
+                    'required' => true
+                ))
             ->add('localidad')
         ;
     }

@@ -24,7 +24,7 @@ class ComentarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Comentario')->getComentariosLocal($idLocal);
+        $entities = $em->getRepository('AppBundle:Comentario')->getComentariosLocal($this->idLocalLogueado);
 
         return $this->render('AppBundle:Comentario:index.html.twig', array(
             'entities' => $entities,
@@ -218,7 +218,12 @@ class ComentarioController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('comentario_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('eliminar', 'submit', array('label' => ' ',
+                            'attr' =>
+                            ['class' => 'glyphicon glyphicon-trash',
+                                'onclick' => 'return confirm("¿Esta seguro de denunciar este comentario?.',
+                                'title' => 'eliminar']
+                        ))
             ->getForm()
         ;
     }

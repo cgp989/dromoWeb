@@ -26,9 +26,13 @@ app_programacionPremio:
     resource: "@AppBundle/Resources/config/routing/programacionPremio.yml"
     prefix:   admin/programacionPremio
 
+app_premios:
+    resource: "@AppBundle/Resources/config/routing/premios.yml"
+    prefix:   admin/premios
+    
 app_premio:
     resource: "@AppBundle/Resources/config/routing/premio.yml"
-    prefix:   admin/premio
+    prefix:   local/premio
 
 app_index_local:
     path:     /

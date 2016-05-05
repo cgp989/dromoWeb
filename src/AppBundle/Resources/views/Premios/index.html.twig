@@ -1,9 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h3 class="sub-header">Premios en Mi Local</h3>
+    <h3 class="sub-header">Premios</h3>
 
-       <table class="table table-hover records_list">
+    <a title="nuevo" class="btn-action-top pull-right" href="{{ path('premios_new') }}">
+        <span class="glyphicon glyphicon-plus-sign">
+    </a>
+
+    <table class="table table-hover records_list">
         <thead>
             <tr>
                 <th class="col-xs-1">Tipo</th>
@@ -23,9 +27,9 @@
                     <td>${{ entity.precio }}</td>
                     <td>{{ entity.estadoPromocion }}</td>
                     <td>
-                        <a title="ver" href="{{ path('premio_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        <a title="ver" href="{{ path('premios_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
                         &nbsp;&nbsp;&nbsp;
-                        
+                        <a title="editar" href="{{ path('premios_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                     </td>
                 </tr>
             {% endfor %}

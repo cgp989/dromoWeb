@@ -211,7 +211,7 @@ class ComentariosController extends Controller {
                         ->add('eliminar', 'submit', array('label' => ' ',
                             'attr' =>
                             ['class' => 'glyphicon glyphicon-trash',
-                                'onclick' => 'return confirm("¿Esta seguro de eliminar este cometario?.',
+                                'onclick' => 'return confirm("¿Esta seguro de eliminar este comentario?.',
                                 'title' => 'eliminar']
                         ))
                         ->getForm()
