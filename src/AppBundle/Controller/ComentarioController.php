@@ -196,10 +196,10 @@ class ComentarioController extends Controller
             $entity = $em->getRepository('AppBundle:Comentario')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Comentario entity.');
+                throw $this->createNotFoundException('Comentario no disponible.');
             }
             $estadoComentario = $em->getRepository('AppBundle:EstadoComentario')->findOneByNombre('Denunciado');
-            $entity->setEstadoComentario($estadoCometario);
+            $entity->setEstadoComentario($estadoComentario);
             $em->flush();
         }        
         
