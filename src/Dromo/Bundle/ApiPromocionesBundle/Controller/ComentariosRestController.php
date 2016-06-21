@@ -36,9 +36,10 @@ class ComentariosRestController extends Controller {
                 'mensaje' => 'No existen comentarios para este local',
                 'descripcion' => 'El local comercial no contiene comentarios');
         } else {
-            $cantComentarios = $localComercial->getComentarios()->count();
+            //$cantComentarios = $localComercial->getComentarios()->count();
             $inicio = $cantidadPorPagina * ($nroPagina - 1);
-            $arrayComentarios = array_slice($localComercial->getComentarios()->toArray(), $inicio, $cantidadPorPagina);
+            $comentariosOrdenados = $localComercial->getComentariosOrdenados();
+            $arrayComentarios = array_slice($comentariosOrdenados, $inicio, $cantidadPorPagina);
         }
 
         if (isset($error)) {

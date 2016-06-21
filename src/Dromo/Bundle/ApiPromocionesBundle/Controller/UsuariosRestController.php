@@ -82,8 +82,10 @@ class UsuariosRestController extends Controller {
             if ($nombre != null && $nombre != "null" && $nombre != "") {
                 $usuarioMovil->setNombre($nombre);
             }
-            if ($sexo != null && $sexo != "null" && $sexo != "") {
+            if ($sexo != "f" || $sexo != "m") {
                 $usuarioMovil->setSexo($sexo);
+            }else{
+                $usuarioMovil->setSexo("o");
             }
             if ($fecha != null && $fecha != "null" && $fecha != "") {
                 $timestamp = new \DateTime($fecha); // 1990-11-21

@@ -16,8 +16,8 @@ use JMS\Serializer\Annotation\VirtualProperty;
  * 
  * @ExclusionPolicy("all")
  */
-class Comentario
-{
+class Comentario {
+
     /**
      * @var integer
      *
@@ -86,8 +86,7 @@ class Comentario
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -97,8 +96,7 @@ class Comentario
      * @param \DateTime $fecha
      * @return Comentario
      */
-    public function setFecha($fecha)
-    {
+    public function setFecha($fecha) {
         $this->fecha = $fecha;
 
         return $this;
@@ -109,8 +107,7 @@ class Comentario
      *
      * @return \DateTime 
      */
-    public function getFecha()
-    {
+    public function getFecha() {
         return $this->fecha;
     }
 
@@ -120,8 +117,7 @@ class Comentario
      * @param string $comentario
      * @return Comentario
      */
-    public function setComentario($comentario)
-    {
+    public function setComentario($comentario) {
         $this->comentario = $comentario;
 
         return $this;
@@ -132,8 +128,7 @@ class Comentario
      *
      * @return string 
      */
-    public function getComentario()
-    {
+    public function getComentario() {
         return $this->comentario;
     }
 
@@ -143,8 +138,7 @@ class Comentario
      * @param integer $valoracion
      * @return Comentario
      */
-    public function setValoracion($valoracion)
-    {
+    public function setValoracion($valoracion) {
         $this->valoracion = $valoracion;
 
         return $this;
@@ -155,8 +149,7 @@ class Comentario
      *
      * @return integer 
      */
-    public function getValoracion()
-    {
+    public function getValoracion() {
         return $this->valoracion;
     }
 
@@ -166,8 +159,7 @@ class Comentario
      * @param \AppBundle\Entity\EstadoComentario $estadoComentario
      * @return Comentario
      */
-    public function setEstadoComentario(\AppBundle\Entity\EstadoComentario $estadoComentario = null)
-    {
+    public function setEstadoComentario(\AppBundle\Entity\EstadoComentario $estadoComentario = null) {
         $this->estadoComentario = $estadoComentario;
 
         return $this;
@@ -178,8 +170,7 @@ class Comentario
      *
      * @return \AppBundle\Entity\EstadoComentario 
      */
-    public function getEstadoComentario()
-    {
+    public function getEstadoComentario() {
         return $this->estadoComentario;
     }
 
@@ -189,8 +180,7 @@ class Comentario
      * @param \AppBundle\Entity\UsuarioMovil $usuarioMovil
      * @return Comentario
      */
-    public function setUsuarioMovil(\AppBundle\Entity\UsuarioMovil $usuarioMovil = null)
-    {
+    public function setUsuarioMovil(\AppBundle\Entity\UsuarioMovil $usuarioMovil = null) {
         $this->usuarioMovil = $usuarioMovil;
 
         return $this;
@@ -201,8 +191,7 @@ class Comentario
      *
      * @return \AppBundle\Entity\UsuarioMovil 
      */
-    public function getUsuarioMovil()
-    {
+    public function getUsuarioMovil() {
         return $this->usuarioMovil;
     }
 
@@ -212,8 +201,7 @@ class Comentario
      * @param \AppBundle\Entity\LocalComercial $localComercial
      * @return Comentario
      */
-    public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null)
-    {
+    public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null) {
         $this->localComercial = $localComercial;
 
         return $this;
@@ -224,11 +212,10 @@ class Comentario
      *
      * @return \AppBundle\Entity\LocalComercial 
      */
-    public function getLocalComercial()
-    {
+    public function getLocalComercial() {
         return $this->localComercial;
     }
-    
+
     /**
      * Retorna la fecha formateada
      * 
@@ -236,7 +223,23 @@ class Comentario
      * @VirtualProperty 
      * @Groups({"serviceUSS23-comentarios"})
      */
-    public function getFecha_(){
+    public function getFecha_() {
         return $this->fecha->format("Y-m-d H:m:s");
-    } 
+    }
+
+    /**
+     * compareTo
+     *
+     * 
+     * @return integer
+     */
+    public function compareTo(Comentario $comentario) {
+        if ($this->getFecha() < $comentario->getFecha())
+            return 1;
+        else if ($this->getFecha() > $comentario->getFecha())
+            return -1;
+        else
+            return 0;
+    }
+
 }
