@@ -2,9 +2,15 @@
 
 {% block body -%}
     <h2 class="sub-header">Ver premio</h2>
-    <div class="row btn-action-top">       
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
         <div class="col-xs-1 pull-right">
-            <a title="volver" href="{{ path('premio') }}">
+            <a title="editar" href="{{ path('premios_edit', { 'id': entity.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </div>
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('premios') }}">
                 <span class="glyphicon glyphicon-circle-arrow-left"></span>
             </a>
         </div>

@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Ver Comentario</h1>
+    
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>        
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('comentario') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <table class="table table-show">
+        <tbody>
+            <tr>
+                <th>Comentario</th>
+                <td>{{ entity.comentario }}</td>
+            </tr>
+            <tr>
+                <th class="col-xs-1">Usuario Movil</th>
+                <td>{{ entity.usuarioMovil }}</td>
+            </tr>
+            <tr>
+                <th>Valoracion</th>
+                <td>{{ entity.valoracion }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -82,10 +82,12 @@ class UsuariosRestController extends Controller {
             if ($nombre != null && $nombre != "null" && $nombre != "") {
                 $usuarioMovil->setNombre($nombre);
             }
-            if ($sexo != null && $sexo != "null" && sexo != "") {
+            if ($sexo != "f" || $sexo != "m") {
                 $usuarioMovil->setSexo($sexo);
+            }else{
+                $usuarioMovil->setSexo("o");
             }
-            if ($fecha != null && $fecha != "null" && fecha != "") {
+            if ($fecha != null && $fecha != "null" && $fecha != "") {
                 $timestamp = new \DateTime($fecha); // 1990-11-21
                 $usuarioMovil->setFechaNacimiento($timestamp);
             }
@@ -142,7 +144,7 @@ class UsuariosRestController extends Controller {
     public function getPasswordAction($password) {
         // el campo password es el id que devuelve google
         /* @var $usuarioMovil Entity\UsuarioMovil */
-        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findByPassword($password);
+        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->findOneByPassword($password);
         if ($usuarioMovil != null) {
             $em = $this->getDoctrine()->getManager();
             //setear datos a um

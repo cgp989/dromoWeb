@@ -37,6 +37,10 @@ class EstadoComentario
     public function __construct() {
         $this->comentarios = new ArrayCollection();
     }
+    
+    public function __toString(){
+        return $this->nombre;
+    }
 
 
     /**

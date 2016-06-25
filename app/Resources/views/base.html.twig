@@ -39,11 +39,20 @@
                             <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
-                            <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
-                                <a href="{{ path('premio') }}">Premios</a>
+                            <li class="{% if 'premios' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('premios') }}">Premios</a>
                             </li>
-                            <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'programacionPremio' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacionPremio') }}">Programaciones premios</a>
+                            </li>
+                             <li class="{% if 'localcomercial' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('localcomercial') }}">Locales</a>
+                            </li>
+                             <li class="{% if 'sucursal' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('sucursal') }}">Sucursales</a>
+                            </li>
+                            <li class="{% if 'comentarios' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('comentarios') }}">Comentarios Denunciados</a>
                             </li>
                         </ul>
                         <ul class="nav nav-sidebar">
@@ -62,6 +71,14 @@
                             </li>
                             <li class="{% if 'cupon' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('cupon_consult') }}">Consultar cup&oacute;n</a>
+                            <li class="{% if 'premio' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('premio') }}">Premios</a>
+                            </li>                            
+                            <li class="{% if 'comentario' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('comentario') }}">Comentarios</a>
+                            </li>
+                            <li class="{% if 'sucursales' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('sucursales') }}">Sucursales</a>
                             </li>
                         </ul>
                         <ul class="nav nav-sidebar">

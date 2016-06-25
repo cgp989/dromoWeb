@@ -1,0 +1,30 @@
+comentarios:
+    path:     /
+    defaults: { _controller: "AppBundle:Comentarios:index" }
+
+comentarios_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Comentarios:show" }
+
+comentarios_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Comentarios:new" }
+
+comentarios_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Comentarios:create" }
+    methods:  POST
+
+comentarios_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Comentarios:edit" }
+
+comentarios_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Comentarios:update" }
+    methods:  [POST, PUT]
+
+comentarios_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Comentarios:delete" }
+    methods:  [POST, DELETE]

@@ -9,6 +9,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
+
 /**
  * LocalComercial
  *
@@ -17,8 +18,8 @@ use JMS\Serializer\Annotation\VirtualProperty;
  * 
  * @ExclusionPolicy("all")
  */
-class LocalComercial
-{
+class LocalComercial {
+
     /**
      * @var integer
      *
@@ -70,7 +71,7 @@ class LocalComercial
      * @ORM\Column(name="telefonoContacto", type="string", length=255)
      */
     private $telefonoContacto;
-    
+
     /**
      * @var integer
      *
@@ -87,17 +88,17 @@ class LocalComercial
      * 
      */
     private $usuario;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Sucursal", mappedBy="localComercial")
      */
     private $sucursales;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Promocion", mappedBy="localComercial")
      */
     private $promociones;
-    
+
     /**
      * @ORM\Column(name="valoracion", type="float")
      * 
@@ -105,24 +106,23 @@ class LocalComercial
      * @Groups({"serviceUSS23", "serviceUSS06"})
      */
     private $valoracion;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Comentario", mappedBy="localComercial")
      */
     private $comentarios;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="localComercial")
      */
     private $suscripciones;
-    
-        /**
+
+    /**
      * @ORM\OneToMany(targetEntity="VisitaLocalComercial", mappedBy="localComercial")
      */
     private $visitasLocalComercial;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->sucursales = new ArrayCollection();
         $this->promociones = new ArrayCollection();
         $this->comentarios = new ArrayCollection();
@@ -135,8 +135,7 @@ class LocalComercial
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -146,8 +145,7 @@ class LocalComercial
      * @param string $nombre
      * @return LocalComercial
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
 
         return $this;
@@ -158,8 +156,7 @@ class LocalComercial
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -169,8 +166,7 @@ class LocalComercial
      * @param string $descripcion
      * @return LocalComercial
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -181,8 +177,7 @@ class LocalComercial
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
@@ -192,8 +187,7 @@ class LocalComercial
      * @param string $nombreContacto
      * @return LocalComercial
      */
-    public function setNombreContacto($nombreContacto)
-    {
+    public function setNombreContacto($nombreContacto) {
         $this->nombreContacto = $nombreContacto;
 
         return $this;
@@ -204,8 +198,7 @@ class LocalComercial
      *
      * @return string 
      */
-    public function getNombreContacto()
-    {
+    public function getNombreContacto() {
         return $this->nombreContacto;
     }
 
@@ -215,8 +208,7 @@ class LocalComercial
      * @param string $emailContacto
      * @return LocalComercial
      */
-    public function setEmailContacto($emailContacto)
-    {
+    public function setEmailContacto($emailContacto) {
         $this->emailContacto = $emailContacto;
 
         return $this;
@@ -227,8 +219,7 @@ class LocalComercial
      *
      * @return string 
      */
-    public function getEmailContacto()
-    {
+    public function getEmailContacto() {
         return $this->emailContacto;
     }
 
@@ -238,8 +229,7 @@ class LocalComercial
      * @param string $telefonoContacto
      * @return LocalComercial
      */
-    public function setTelefonoContacto($telefonoContacto)
-    {
+    public function setTelefonoContacto($telefonoContacto) {
         $this->telefonoContacto = $telefonoContacto;
 
         return $this;
@@ -250,8 +240,7 @@ class LocalComercial
      *
      * @return string 
      */
-    public function getTelefonoContacto()
-    {
+    public function getTelefonoContacto() {
         return $this->telefonoContacto;
     }
 
@@ -261,8 +250,7 @@ class LocalComercial
      * @param integer $version
      * @return LocalComercial
      */
-    public function setVersion($version)
-    {
+    public function setVersion($version) {
         $this->version = $version;
 
         return $this;
@@ -273,8 +261,7 @@ class LocalComercial
      *
      * @return integer 
      */
-    public function getVersion()
-    {
+    public function getVersion() {
         return $this->version;
     }
 
@@ -284,8 +271,7 @@ class LocalComercial
      * @param \AppBundle\Entity\Usuario $usuario
      * @return LocalComercial
      */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
-    {
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null) {
         $this->usuario = $usuario;
 
         return $this;
@@ -296,8 +282,7 @@ class LocalComercial
      *
      * @return \AppBundle\Entity\Usuario 
      */
-    public function getUsuario()
-    {
+    public function getUsuario() {
         return $this->usuario;
     }
 
@@ -307,8 +292,7 @@ class LocalComercial
      * @param \AppBundle\Entity\Sucursal $sucursales
      * @return LocalComercial
      */
-    public function addSucursale(\AppBundle\Entity\Sucursal $sucursales)
-    {
+    public function addSucursale(\AppBundle\Entity\Sucursal $sucursales) {
         $this->sucursales[] = $sucursales;
 
         return $this;
@@ -319,8 +303,7 @@ class LocalComercial
      *
      * @param \AppBundle\Entity\Sucursal $sucursales
      */
-    public function removeSucursale(\AppBundle\Entity\Sucursal $sucursales)
-    {
+    public function removeSucursale(\AppBundle\Entity\Sucursal $sucursales) {
         $this->sucursales->removeElement($sucursales);
     }
 
@@ -329,11 +312,10 @@ class LocalComercial
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getSucursales()
-    {
+    public function getSucursales() {
         return $this->sucursales;
     }
-    
+
     /**
      * 
      * @param decimal $latitudUsuario
@@ -341,19 +323,27 @@ class LocalComercial
      * 
      * @return array [title][distance]
      */
-    public function getSucursalMinimaDistancia($latitudUsuario, $longitudUsuario){
+    public function getSucursalMinimaDistancia($latitudUsuario, $longitudUsuario) {
         $arraySucursales;
         foreach ($this->getSucursales() as $sucursal) {
-            $arraySucursales[] =
-                    array(
+            $arraySucursales[] = array(
                         'title' => $sucursal,
                         'latitude' => $sucursal->getDireccion()->getLatitud(),
                         'longitude' => $sucursal->getDireccion()->getLongitud()
-                    );
+            );
         }
         $distance = Distance::getClosest($latitudUsuario, $longitudUsuario, $arraySucursales, 3);
         //print_r($distance);
         return $distance;
+    }
+
+    public function getComentariosOrdenados() {
+       $arrayComentarios = $this->comentarios->toArray();
+       usort($arrayComentarios, function(Comentario $a, Comentario $b) {
+            return $a->compareTo($b);
+        }
+        );
+        return $arrayComentarios;
     }
 
     /**
@@ -362,8 +352,7 @@ class LocalComercial
      * @param \AppBundle\Entity\Promocion $promociones
      * @return LocalComercial
      */
-    public function addPromocione(\AppBundle\Entity\Promocion $promociones)
-    {
+    public function addPromocione(\AppBundle\Entity\Promocion $promociones) {
         $this->promociones[] = $promociones;
 
         return $this;
@@ -374,8 +363,7 @@ class LocalComercial
      *
      * @param \AppBundle\Entity\Promocion $promociones
      */
-    public function removePromocione(\AppBundle\Entity\Promocion $promociones)
-    {
+    public function removePromocione(\AppBundle\Entity\Promocion $promociones) {
         $this->promociones->removeElement($promociones);
     }
 
@@ -384,8 +372,7 @@ class LocalComercial
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPromociones()
-    {
+    public function getPromociones() {
         return $this->promociones;
     }
 
@@ -395,8 +382,7 @@ class LocalComercial
      * @param float $valoracion
      * @return LocalComercial
      */
-    public function setValoracion($valoracion)
-    {
+    public function setValoracion($valoracion) {
         $this->valoracion = $valoracion;
 
         return $this;
@@ -407,8 +393,7 @@ class LocalComercial
      *
      * @return float 
      */
-    public function getValoracion()
-    {
+    public function getValoracion() {
         return $this->valoracion;
     }
 
@@ -418,8 +403,7 @@ class LocalComercial
      * @param \AppBundle\Entity\Comentario $comentarios
      * @return LocalComercial
      */
-    public function addComentario(\AppBundle\Entity\Comentario $comentarios)
-    {
+    public function addComentario(\AppBundle\Entity\Comentario $comentarios) {
         $this->comentarios[] = $comentarios;
 
         return $this;
@@ -430,8 +414,7 @@ class LocalComercial
      *
      * @param \AppBundle\Entity\Comentario $comentarios
      */
-    public function removeComentario(\AppBundle\Entity\Comentario $comentarios)
-    {
+    public function removeComentario(\AppBundle\Entity\Comentario $comentarios) {
         $this->comentarios->removeElement($comentarios);
     }
 
@@ -440,8 +423,7 @@ class LocalComercial
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getComentarios()
-    {
+    public function getComentarios() {
         return $this->comentarios;
     }
 
@@ -451,8 +433,7 @@ class LocalComercial
      * @param \AppBundle\Entity\Suscripcion $suscripciones
      * @return LocalComercial
      */
-    public function addSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
-    {
+    public function addSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones) {
         $this->suscripciones[] = $suscripciones;
 
         return $this;
@@ -463,8 +444,7 @@ class LocalComercial
      *
      * @param \AppBundle\Entity\Suscripcion $suscripciones
      */
-    public function removeSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones)
-    {
+    public function removeSuscripcione(\AppBundle\Entity\Suscripcion $suscripciones) {
         $this->suscripciones->removeElement($suscripciones);
     }
 
@@ -473,11 +453,10 @@ class LocalComercial
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getSuscripciones()
-    {
+    public function getSuscripciones() {
         return $this->suscripciones;
     }
-    
+
     public function __toString() {
         return $this->getNombre();
     }
@@ -488,8 +467,7 @@ class LocalComercial
      * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
      * @return LocalComercial
      */
-    public function addVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
-    {
+    public function addVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial) {
         $this->visitasLocalComercial[] = $visitasLocalComercial;
 
         return $this;
@@ -500,8 +478,7 @@ class LocalComercial
      *
      * @param \AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial
      */
-    public function removeVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial)
-    {
+    public function removeVisitasLocalComercial(\AppBundle\Entity\VisitaLocalComercial $visitasLocalComercial) {
         $this->visitasLocalComercial->removeElement($visitasLocalComercial);
     }
 
@@ -510,9 +487,8 @@ class LocalComercial
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getVisitasLocalComercial()
-    {
+    public function getVisitasLocalComercial() {
         return $this->visitasLocalComercial;
     }
-    
+
 }

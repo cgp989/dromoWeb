@@ -1,0 +1,30 @@
+premios:
+    path:     /
+    defaults: { _controller: "AppBundle:Premios:index" }
+
+premios_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Premios:show" }
+
+premios_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Premios:new" }
+
+premios_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Premios:create" }
+    methods:  POST
+
+premios_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Premios:edit" }
+
+premios_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Premios:update" }
+    methods:  [POST, PUT]
+
+premios_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Premios:delete" }
+    methods:  [POST, DELETE]

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use APPBundle\Entity\VisitaLocalComercial;
+use JeroenDesloovere\Distance\Distance;
 use AppBundle\Entity;
 
 class LocalesRestController extends Controller {
@@ -165,10 +166,29 @@ class LocalesRestController extends Controller {
     public function getLatitudLongitudNropaginaAction($latitud, $longitud, $nroPagina) {
         $cantidadPorPagina = 20;
 
+        $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
         $repositorySucursal = $this->getDoctrine()->getRepository('AppBundle:Sucursal');
-        $locales = $repositorySucursal->findAll();
-
-        $sucursales = $repositorySucursal->getListSucursalesPorDistancia($locales, $latitud, $longitud);
+        $locales = $repositoryLocal->findAll();
+        $sucursales = array();
+        foreach ($locales as $localComercial) {
+            $dis = 0;
+             /* @var $sucM Entity\Sucursal */
+            $sucM;
+            foreach ($localComercial->getSucursales() as $sucursal) {
+                $arraySucursales[] = array(
+                    'title' => $sucursal,
+                    'latitude' => $sucursal->getDireccion()->getLatitud(),
+                    'longitude' => $sucursal->getDireccion()->getLongitud()
+                );
+                $distance = Distance::getClosest($latitud, $longitud, $arraySucursales, 3);
+                if ($dis == 0 || $distance < $dis) {
+                    $dis = $distance;
+                    $sucM = $sucursal;
+                }
+            }
+            array_push($sucursales, $sucM);
+        }
+        $sucursales = $repositorySucursal->getListSucursalesPorDistancia($sucursales, $latitud, $longitud);
 
         $inicio = $cantidadPorPagina * ($nroPagina - 1);
         $arrayPaginaSucursales = array_slice($sucursales, $inicio, $cantidadPorPagina);

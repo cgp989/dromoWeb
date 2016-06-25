@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PremioType extends AbstractType {
+class PremiosType extends AbstractType {
 
     private $opciones;
 
@@ -74,7 +74,7 @@ class PremioType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'appbundle_premio';
+        return 'appbundle_premios';
     }
 
 }
