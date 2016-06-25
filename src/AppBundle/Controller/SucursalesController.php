@@ -13,7 +13,6 @@ use AppBundle\Form\SucursalType;
  */
 class SucursalesController extends Controller {
 
-    private $idLocalLogueado = 1;
 
     /**
      * Lists all Sucursal entities.
@@ -23,7 +22,7 @@ class SucursalesController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $repoSucursales = $em->getRepository('AppBundle:Sucursal');
-        $entities = $repoSucursales->getSucursalesLocal($this->idLocalLogueado);
+        $entities = $repoSucursales->getSucursalesLocal($this->getUser()->getLocalComercial()->getId());
 
         return $this->render('AppBundle:Sucursales:index.html.twig', array(
                     'entities' => $entities,
