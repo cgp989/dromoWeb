@@ -1,9 +1,13 @@
-cupon_consultar:
-    path: /consultar
+cupon_consult:
+    path: /consult
     defaults: { _controller: "AppBundle:Cupon:consultar" }
     
-cupon_buscar:
-    path: /buscar
+cupon_view:
+    path: /view
     defaults: { _controller: "AppBundle:Cupon:buscar" }
     methods:  POST
     
+cupon_exchange:
+    path: /{id}/exchange
+    defaults: { _controller: "AppBundle:Cupon:canjear" }
+    methods: [POST, PUT]

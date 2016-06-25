@@ -30,4 +30,33 @@ class CuponRepository extends EntityRepository
         $this->getEntityManager()->flush();
         return $cupon;
     }
+    
+    /**
+     * registra en la bd un cupon como canjeado actualizando su estado
+     * si es una pormocion y tiene puntos. se suman esos puntos al usuarioMovil que adquirio el cupon
+     * actualiza el estado de cobro del cupon a pendiente
+     * @param integer $idCupon
+     */
+    public function canjearCupon($idCupon){
+        /* @var AppBundle\Entity\Cupon $cupon */
+        $cupon = $this->find($idCupon);
+        if($cupon->getEstadoCupon()->getNombre() == 'porCanjear'){
+            $repositoryEstadoCupon = $this->getEntityManager()->getRepository('AppBundle:EstadoCupon');
+            $repositoryEstadoCobroCupon = $this->getEntityManager()->getRepository('AppBundle:EstadoCobroCupon');
+            $estadoCanjeado = $repositoryEstadoCupon->findOneByNombre('canjeado');
+            $estadoCobroPendiente = $repositoryEstadoCobroCupon->findOneByNombre('pendiente');
+            $cupon->setEstadoCupon($estadoCanjeado);
+            $cupon->setEstadoCobroCupon($estadoCobroPendiente);
+            $this->getEntityManager()->persist($cupon);
+            if(!is_null($cupon->getPuntaje()) && $cupon->getPuntaje() > 0 && $cupon->getTipoCupon()->getNombre() == 'promocion'){
+                $usuarioMovil = $cupon->getUsuarioMovil();
+                $usuarioMovil->setPuntos($usuarioMovil->getPuntos()+$cupon->getPuntaje());
+                $this->getEntityManager()->persist($usuarioMovil);
+            }
+            $this->getEntityManager()->flush();
+            return array('exito' => true, 'cupon' => $cupon);
+        }else{
+            return array('exito' => false, 'cupon' => $cupon);
+        }
+    }
 }

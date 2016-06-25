@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h2 class="sub-header">Cup&oacute;n</h2>
+    <div class="row btn-action-top">
+        <div class="col-xs-1 pull-right">
+            <a title="volver" href="{{ path('cupon_consult') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+        </div>
+    </div>
+    <table class="table table-show">
+        <tbody>
+            <tr>
+                <th class="col-xs-2">C&oacute;digo</th>
+                <td>{{ cupon.codigo }}</td>
+            </tr>
+            <tr>
+                <th class="col-xs-2">Tipo</th>
+                <td>{{ cupon.tipoCupon.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Beneficio</th>
+                <td>{{ cupon.programacion.promocion.tipoPromocion.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ cupon.programacion.promocion.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Descripci&oacute;n</th>
+                <td>{{ cupon.programacion.promocion.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>${{ cupon.programacion.promocion.precio }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ cupon.estadoCupon.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Inicio validez</th>
+                <td>{{ cupon.inicio_ }}</td>
+            </tr>
+            <tr>
+                <th>Fin validez</th>
+                <td>{{ cupon.vencimiento_ }}</td>
+            </tr>
+        </tbody>
+    </table>
+                {% if form_canjear is not empty%}
+        <div class="row">
+            <div class="col-xs-2 pull-right text-right">{{ form(form_canjear) }}</div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -61,7 +61,7 @@
                                 <a href="{{ path('programacion') }}">Programaciones</a>
                             </li>
                             <li class="{% if 'cupon' in app.request.get('_route') %}active{% endif %}">
-                                <a href="{{ path('cupon_consultar') }}">Consultar cup&oacute;n</a>
+                                <a href="{{ path('cupon_consult') }}">Consultar cup&oacute;n</a>
                             </li>
                         </ul>
                         <ul class="nav nav-sidebar">
@@ -77,7 +77,20 @@
                 </div>
                 {#MENU LATERAL FIN#}
                 {#CONTENIDO PAGINA#}
-                <div class="col-xs-9 col-xs-offset-3 main">
+                <div class="col-xs-9 col-xs-offset-3 main">    
+                    {#INICIO CODIGO PARA LOS MENSAJES FLASH CON INFORMACION QUE SE PASAN POR SESION#}
+                    {% for type, flashMessage in app.session.flashbag.all() %}
+                        <div class="alert  alert-{{ type }} fade in">
+                            <button class="close" data-dismiss="alert" type="button">×</button>
+                            {% if flashMessage.title is defined %}
+                            <strong>{{ flashMessage.title }}</strong>
+                            {{ flashMessage.message }}
+                            {% else %}
+                            {{ type }}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    {# FIN CODIGO MENSAJE FLASH #}
                     {% block body %}
                     {% endblock %}
                 </div>

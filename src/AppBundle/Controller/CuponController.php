@@ -35,7 +35,7 @@ class CuponController extends Controller {
     private function createConsultarForm()
     {
         $form = $this->createForm(new ConsultarCuponType(), null, array(
-            'action' => $this->generateUrl('cupon_buscar'),
+            'action' => $this->generateUrl('cupon_view'),
             'method' => 'POST',
         ));
 
@@ -57,10 +57,19 @@ class CuponController extends Controller {
             $repositoryCupon = $em->getRepository('AppBundle:Cupon');
             /* @var $cupon \AppBundle\Entity\Cupon */
             $cupon = $repositoryCupon->findOneByCodigo($codigoCupon);
-        if(!is_null($cupon)){
+            if(!is_null($cupon)){
                 $idLocal = $cupon->getProgramacion()->getPromocion()->getLocalComercial()->getId();
                 if($this->getUser()->getLocalComercial()->getId() == $idLocal){
-                    //ACA LLAMO A LA FUNCION QUE MUESTRA LA INDORMACION DEL CUPON Y EL BOTON PARA CANJEAR
+                    $arrayItemsView = array();
+                    $arrayItemsView['cupon'] = $cupon;
+                    $arrayItemsView['form_canjear'] = null;
+                    $fechaHoy = new \DateTime('now');
+                    if($cupon->getInicio() <= $fechaHoy && $cupon->getVencimiento() >= $fechaHoy && $cupon->getEstadoCupon()->getNombre() == 'porCanjear'){ 
+                        $formCanjear = $this->createCanjearForm($cupon->getId());
+                        $arrayItemsView['form_canjear'] = $formCanjear->createView();
+                    }
+                    
+                    return $this->render('AppBundle:Cupon:view.html.twig', $arrayItemsView);
                 }else{
                     $form->addError(new FormError('El cup&oacute;n no es de este local'));
                 }
@@ -72,5 +81,57 @@ class CuponController extends Controller {
         return $this->render('AppBundle:Cupon:consultar.html.twig', array(
             'consultar_form'   => $form->createView(),
             ));
+    }
+    
+    /**
+     * Crea un formulario que permite cargar el codigo de un cupon
+     * 
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCanjearForm($idCupon)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('cupon_exchange', array('id' => $idCupon)))
+            ->setMethod('PUT')
+            ->add('canjear', 'submit', 
+                    array('label' => 'Canjear',
+                        'attr' => 
+                            ['class' => 'btn btn-primary', 
+                            'onclick' => 'return confirm("¿Esta seguro de canjear este cupón?")',
+                            'title' => 'canjear']
+                    ))
+            ->getForm()
+        ;
+    }
+    
+    /**
+     * registra en la bd un cupon como canjeado actualizando su estado
+     * @param integer $idCupon
+     */
+    public function canjearAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $repositoryCupon = $em->getRepository('AppBundle:Cupon');
+        $arrayResult = $repositoryCupon->canjearCupon($id);
+        
+        if($arrayResult['exito']){
+            //mesaje flash que se muestra en la pagina
+            $this->get('session')->getFlashBag()->set(
+                'success',
+                array(
+                    'title' => 'Canjeado!',
+                    'message' => 'El cupón se canjeó con éxito.'
+                )
+            );
+        }else{
+            //mesaje flash que se muestra en la pagina
+            $this->get('session')->getFlashBag()->set(
+                'warning',
+                array(
+                    'title' => 'Falló canje!',
+                    'message' => 'Este cupón ya ha sido canjeado.'
+                )
+            );
+        }
+        return $this->render('AppBundle:Cupon:view.html.twig', array('cupon' => $arrayResult['cupon'], '', 'form_canjear' => null));
     }
 }

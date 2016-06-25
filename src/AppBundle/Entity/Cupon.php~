@@ -106,6 +106,13 @@ class Cupon
      * @Groups({"serviceUSS21", "serviceUSS37"})
      */
     private $estadoCupon;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="EstadoCobroCupon", inversedBy="cupones")
+     * @ORM\JoinColumn(name="idEstadoCobroCupon", referencedColumnName="id")
+     * 
+     */
+    private $estadoCobroCupon;
 
 
     /**
@@ -323,5 +330,38 @@ class Cupon
     public function getVencimiento()
     {
         return $this->vencimiento;
+    }
+
+    /**
+     * Set inicio
+     *
+     * @param \DateTime $inicio
+     * @return Cupon
+     */
+    public function setInicio($inicio)
+    {
+        $this->inicio = $inicio;
+
+        return $this;
+    }
+
+    /**
+     * Get inicio
+     *
+     * @return \DateTime 
+     */
+    public function getInicio()
+    {
+        return $this->inicio;
+    }
+    
+    /**
+     * Retorna la fecha de inicio formateada
+     *
+     * @return \DateTime 
+     */
+    public function getInicio_()
+    {
+        return $this->inicio->format("Y-m-d H:i:s");
     }
 }
