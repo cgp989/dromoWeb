@@ -1,3 +1,7 @@
+app_visitapromocion:
+    resource: "@AppBundle/Resources/config/routing/visitapromocion.yml"
+    prefix:   /visitapromocion
+
 app_comentario:
     resource: "@AppBundle/Resources/config/routing/comentario.yml"
     prefix:   local/comentario

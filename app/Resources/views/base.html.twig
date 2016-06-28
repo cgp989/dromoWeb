@@ -9,24 +9,36 @@
             <link href="{{ asset('resources/css/estilos-web.css')}}" type="text/css" rel="stylesheet" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('resources/images/iconos/dromo_icon.png') }}" />
+            {% block javascripts %}     
+                <!-- LibrerÃ­a jQuery requerida por los plugins de JavaScript -->
+            <script src="{{ asset('resources/js/jquery.js')}}"></script>
+
+            <!-- plugins JavaScript de Bootstrap  -->
+            <script src="{{ asset('resources/js/bootstrap.min.js')}}"></script>
+            <!-- JS para graficos -->
+            <script src="{{ asset('resources/js/jquery-1.7.1.min.js')}}"></script>
+            <script src="{{ asset('resources/js/highcharts.js')}}"></script>
+            <script src="{{ asset('resources/js/exporting.js')}}"></script>           
+            
+        {% endblock %}
     </head>
     <body>
         {#BARRA NAVEGACION HEADER#}
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
-              <div class="navbar-header">
-                <a class="navbar-brand" href="#">&#60;DROMO&#62;</a>
-              </div>
-              <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                      <li><a href="#">Configuraciones</a></li>
-                      <li><a href="{{ path('fos_user_profile_show') }}">Perfil</a></li>
-                      <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
-                    {% endif %}
-                    <li><a href="#">Contacto</a></li>
-                </ul>
-              </div>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">&#60;DROMO&#62;</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li><a href="#">Configuraciones</a></li>
+                            <li><a href="{{ path('fos_user_profile_show') }}">Perfil</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+                            {% endif %}
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
         {#BARRA NAVEGACION FIN#}
@@ -45,10 +57,10 @@
                             <li class="{% if 'programacionPremio' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacionPremio') }}">Programaciones premios</a>
                             </li>
-                             <li class="{% if 'localcomercial' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'localcomercial' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('localcomercial') }}">Locales</a>
                             </li>
-                             <li class="{% if 'sucursal' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'sucursal' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('sucursal') }}">Sucursales</a>
                             </li>
                             <li class="{% if 'comentarios' in app.request.get('_route') %}active{% endif %}">
@@ -56,7 +68,7 @@
                             </li>
                         </ul>
                         <ul class="nav nav-sidebar">
-                            <li><a href="">Estad&iacute;sticas</a></li>
+                            <li><a href="">Resumenes</a></li>
                         </ul>
                     {% elseif is_granted('ROLE_LOCAL') %}
                         <ul class="nav nav-sidebar">
@@ -64,7 +76,7 @@
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
                             <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
-                            <a href="{{ path('promocion') }}">Promociones</a>
+                                <a href="{{ path('promocion') }}">Promociones</a>
                             </li>
                             <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacion') }}">Programaciones</a>
@@ -82,7 +94,7 @@
                             </li>
                         </ul>
                         <ul class="nav nav-sidebar">
-                            <li><a href="">Estad&iacute;sticas</a></li>
+                            <li><a href="">Resumenes</a></li>
                         </ul>
                     {% else %}
                         <ul class="nav nav-sidebar">
@@ -100,10 +112,10 @@
                         <div class="alert  alert-{{ type }} fade in">
                             <button class="close" data-dismiss="alert" type="button">×</button>
                             {% if flashMessage.title is defined %}
-                            <strong>{{ flashMessage.title }}</strong>
-                            {{ flashMessage.message }}
+                                <strong>{{ flashMessage.title }}</strong>
+                                {{ flashMessage.message }}
                             {% else %}
-                            {{ type }}
+                                {{ type }}
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -113,12 +125,5 @@
                 </div>
             </div>
         </div>
-        {% block javascripts %}
-            <!-- LibrerÃ­a jQuery requerida por los plugins de JavaScript -->
-                <script src="{{ asset('resources/js/jquery.js')}}"></script>
- 
-            <!-- plugins JavaScript de Bootstrap  -->
-            <script src="{{ asset('resources/js/bootstrap.min.js')}}"></script>
-        {% endblock %}
     </body>
 </html>

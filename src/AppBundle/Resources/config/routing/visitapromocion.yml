@@ -1,0 +1,30 @@
+visitapromocion:
+    path:     /
+    defaults: { _controller: "AppBundle:VisitaPromocion:index" }
+
+visitapromocion_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:VisitaPromocion:show" }
+
+visitapromocion_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:VisitaPromocion:new" }
+
+visitapromocion_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:VisitaPromocion:create" }
+    methods:  POST
+
+visitapromocion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:VisitaPromocion:edit" }
+
+visitapromocion_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:VisitaPromocion:update" }
+    methods:  [POST, PUT]
+
+visitapromocion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:VisitaPromocion:delete" }
+    methods:  [POST, DELETE]
