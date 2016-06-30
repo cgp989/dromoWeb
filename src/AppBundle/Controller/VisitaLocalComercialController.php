@@ -5,37 +5,37 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use AppBundle\Entity\VisitaPromocion;
-use AppBundle\Form\VisitaPromocionType;
+use AppBundle\Entity\VisitaLocalComercial;
+use AppBundle\Form\VisitaLocalComercialType;
 
 /**
- * VisitaPromocion controller.
+ * VisitaLocalComercial controller.
  *
  */
-class VisitaPromocionController extends Controller
+class VisitaLocalComercialController extends Controller
 {
 
     /**
-     * Lists all VisitaPromocion entities.
+     * Lists all VisitaLocalComercial entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-//$this->getUser()->getLocalComercial()->getId()
-        $entities = $em->getRepository('AppBundle:VisitaPromocion')->getVisitas(1);
 
-        return $this->render('AppBundle:VisitaPromocion:index.html.twig', array(
+        $entities = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitas();
+
+        return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
             'entities' => $entities,
         ));
     }
     /**
-     * Creates a new VisitaPromocion entity.
+     * Creates a new VisitaLocalComercial entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new VisitaPromocion();
+        $entity = new VisitaLocalComercial();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -44,26 +44,26 @@ class VisitaPromocionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('visitapromocion_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('visitalocalcomercial_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('AppBundle:VisitaPromocion:new.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a VisitaPromocion entity.
+     * Creates a form to create a VisitaLocalComercial entity.
      *
-     * @param VisitaPromocion $entity The entity
+     * @param VisitaLocalComercial $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(VisitaPromocion $entity)
+    private function createCreateForm(VisitaLocalComercial $entity)
     {
-        $form = $this->createForm(new VisitaPromocionType(), $entity, array(
-            'action' => $this->generateUrl('visitapromocion_create'),
+        $form = $this->createForm(new VisitaLocalComercialType(), $entity, array(
+            'action' => $this->generateUrl('visitalocalcomercial_create'),
             'method' => 'POST',
         ));
 
@@ -73,60 +73,60 @@ class VisitaPromocionController extends Controller
     }
 
     /**
-     * Displays a form to create a new VisitaPromocion entity.
+     * Displays a form to create a new VisitaLocalComercial entity.
      *
      */
     public function newAction()
     {
-        $entity = new VisitaPromocion();
+        $entity = new VisitaLocalComercial();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('AppBundle:VisitaPromocion:new.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a VisitaPromocion entity.
+     * Finds and displays a VisitaLocalComercial entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:VisitaPromocion')->find($id);
+        $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find VisitaPromocion entity.');
+            throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:VisitaPromocion:show.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing VisitaPromocion entity.
+     * Displays a form to edit an existing VisitaLocalComercial entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:VisitaPromocion')->find($id);
+        $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find VisitaPromocion entity.');
+            throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:VisitaPromocion:edit.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -134,16 +134,16 @@ class VisitaPromocionController extends Controller
     }
 
     /**
-    * Creates a form to edit a VisitaPromocion entity.
+    * Creates a form to edit a VisitaLocalComercial entity.
     *
-    * @param VisitaPromocion $entity The entity
+    * @param VisitaLocalComercial $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(VisitaPromocion $entity)
+    private function createEditForm(VisitaLocalComercial $entity)
     {
-        $form = $this->createForm(new VisitaPromocionType(), $entity, array(
-            'action' => $this->generateUrl('visitapromocion_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new VisitaLocalComercialType(), $entity, array(
+            'action' => $this->generateUrl('visitalocalcomercial_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -152,17 +152,17 @@ class VisitaPromocionController extends Controller
         return $form;
     }
     /**
-     * Edits an existing VisitaPromocion entity.
+     * Edits an existing VisitaLocalComercial entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:VisitaPromocion')->find($id);
+        $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find VisitaPromocion entity.');
+            throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -172,17 +172,17 @@ class VisitaPromocionController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('visitapromocion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('visitalocalcomercial_edit', array('id' => $id)));
         }
 
-        return $this->render('AppBundle:VisitaPromocion:edit.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a VisitaPromocion entity.
+     * Deletes a VisitaLocalComercial entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -192,21 +192,21 @@ class VisitaPromocionController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:VisitaPromocion')->find($id);
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find VisitaPromocion entity.');
+                throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('visitapromocion'));
+        return $this->redirect($this->generateUrl('visitalocalcomercial'));
     }
 
     /**
-     * Creates a form to delete a VisitaPromocion entity by id.
+     * Creates a form to delete a VisitaLocalComercial entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -215,7 +215,7 @@ class VisitaPromocionController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('visitapromocion_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('visitalocalcomercial_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

@@ -1,6 +1,10 @@
+app_visitalocalcomercial:
+    resource: "@AppBundle/Resources/config/routing/visitalocalcomercial.yml"
+    prefix:   admin/visitalocalcomercial
+
 app_visitapromocion:
     resource: "@AppBundle/Resources/config/routing/visitapromocion.yml"
-    prefix:   /visitapromocion
+    prefix:   local/visitapromocion
 
 app_comentario:
     resource: "@AppBundle/Resources/config/routing/comentario.yml"

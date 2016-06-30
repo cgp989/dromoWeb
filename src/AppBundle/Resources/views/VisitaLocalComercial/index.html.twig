@@ -1,9 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Visitas a Promociones</h1>
-    {#Prueba grafico#}
-    <div id="graficaLineal" style="width: 100%; height: 500px; margin: 0 auto">
+    <h1>Visitas a Locales Comerciales</h1>
+
+   <div id="graficaLineal" style="width: 100%; height: 500px; margin: 0 auto">
     </div>
 
     <script type="text/javascript">
@@ -16,7 +16,7 @@
                     defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
                 },
                 title: {
-                    text: 'Visitas a Programaciones'	// Titulo (Opcional)
+                    text: 'Visitas a Locales'	// Titulo (Opcional)
                 },
                 subtitle: {
                     text: 'Dromo'		// Subtitulo (Opcional)
@@ -24,11 +24,11 @@
                 // Pongo los datos en el eje de las 'X'
                 xAxis: {
                     categories: [{% for entity in entities %}
-                        '{{ entity.descripcion }}',{% endfor %}        {#categories: ['Feb12', 'Mar12', 'Abr12', 'May12', 'Jun12', 'Jul12', 'Ago12', 'Sep12', 'Oct12', 'Nov12',
+                        '{{ entity.nombre }}',{% endfor %}        {#categories: ['Feb12', 'Mar12', 'Abr12', 'May12', 'Jun12', 'Jul12', 'Ago12', 'Sep12', 'Oct12', 'Nov12',
             'Dic12', 'Ene13', 'Feb13', 'Mar13', 'Abr13', 'May13', 'Jun13'],#}
                             ], // Pongo el título para el eje de las 'X'
                             title: {
-                                text: 'Programaciones'
+                                text: 'Locales'
                             }
                         },
                         yAxis: {
@@ -73,4 +73,4 @@
                             });
 
         </script>
-        {% endblock %}
+    {% endblock %}

@@ -66,10 +66,13 @@
                             <li class="{% if 'comentarios' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('comentarios') }}">Comentarios Denunciados</a>
                             </li>
+                            <li class="{% if 'visitalocalcomercial' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('visitalocalcomercial') }}">Resumenes</a>
+                            </li>
                         </ul>
-                        <ul class="nav nav-sidebar">
+                        {#<ul class="nav nav-sidebar">
                             <li><a href="">Resumenes</a></li>
-                        </ul>
+                        </ul>#}
                     {% elseif is_granted('ROLE_LOCAL') %}
                         <ul class="nav nav-sidebar">
                             <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
@@ -92,10 +95,13 @@
                             <li class="{% if 'sucursales' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('sucursales') }}">Sucursales</a>
                             </li>
+                            <li class="{% if 'visitapromocion' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('visitapromocion') }}">Resumenes</a>
+                            </li>
                         </ul>
-                        <ul class="nav nav-sidebar">
+                        {#<ul class="nav nav-sidebar">
                             <li><a href="">Resumenes</a></li>
-                        </ul>
+                        </ul>#}
                     {% else %}
                         <ul class="nav nav-sidebar">
                             <li class="{% if 'fos_user_security_login' in app.request.get('_route') %}active{% endif %}">
