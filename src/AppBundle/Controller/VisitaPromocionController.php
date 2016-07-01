@@ -24,9 +24,12 @@ class VisitaPromocionController extends Controller
         $em = $this->getDoctrine()->getManager();
 //$this->getUser()->getLocalComercial()->getId()
         $entities = $em->getRepository('AppBundle:VisitaPromocion')->getVisitas(1);
-
+        $suma = 0;
+        foreach ($entities as $e) {
+            $suma+= $e['cant'];
+        }
         return $this->render('AppBundle:VisitaPromocion:index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $entities, 'suma' =>$suma,
         ));
     }
     /**
