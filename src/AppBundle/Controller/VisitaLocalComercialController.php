@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use AppBundle\Entity\VisitaLocalComercial;
 use AppBundle\Form\VisitaLocalComercialType;
 
@@ -12,29 +11,31 @@ use AppBundle\Form\VisitaLocalComercialType;
  * VisitaLocalComercial controller.
  *
  */
-class VisitaLocalComercialController extends Controller
-{
+class VisitaLocalComercialController extends Controller {
 
     /**
      * Lists all VisitaLocalComercial entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitas();
+        $suma = 0;
+        foreach ($entities as $e) {
+            $suma+= $e['cant'];
+        }
 
         return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
-            'entities' => $entities,
+                    'entities' => $entities, 'suma' => $suma,
         ));
     }
+
     /**
      * Creates a new VisitaLocalComercial entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new VisitaLocalComercial();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -48,8 +49,8 @@ class VisitaLocalComercialController extends Controller
         }
 
         return $this->render('AppBundle:VisitaLocalComercial:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -60,8 +61,7 @@ class VisitaLocalComercialController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(VisitaLocalComercial $entity)
-    {
+    private function createCreateForm(VisitaLocalComercial $entity) {
         $form = $this->createForm(new VisitaLocalComercialType(), $entity, array(
             'action' => $this->generateUrl('visitalocalcomercial_create'),
             'method' => 'POST',
@@ -76,14 +76,13 @@ class VisitaLocalComercialController extends Controller
      * Displays a form to create a new VisitaLocalComercial entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new VisitaLocalComercial();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:VisitaLocalComercial:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -91,8 +90,7 @@ class VisitaLocalComercialController extends Controller
      * Finds and displays a VisitaLocalComercial entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
@@ -104,8 +102,8 @@ class VisitaLocalComercialController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:VisitaLocalComercial:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -113,8 +111,7 @@ class VisitaLocalComercialController extends Controller
      * Displays a form to edit an existing VisitaLocalComercial entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
@@ -127,21 +124,20 @@ class VisitaLocalComercialController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:VisitaLocalComercial:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a VisitaLocalComercial entity.
-    *
-    * @param VisitaLocalComercial $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(VisitaLocalComercial $entity)
-    {
+     * Creates a form to edit a VisitaLocalComercial entity.
+     *
+     * @param VisitaLocalComercial $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(VisitaLocalComercial $entity) {
         $form = $this->createForm(new VisitaLocalComercialType(), $entity, array(
             'action' => $this->generateUrl('visitalocalcomercial_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -151,12 +147,12 @@ class VisitaLocalComercialController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing VisitaLocalComercial entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
@@ -176,17 +172,17 @@ class VisitaLocalComercialController extends Controller
         }
 
         return $this->render('AppBundle:VisitaLocalComercial:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a VisitaLocalComercial entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -212,13 +208,13 @@ class VisitaLocalComercialController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('visitalocalcomercial_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('visitalocalcomercial_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }
