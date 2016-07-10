@@ -5,9 +5,16 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use FOS\UserBundle\Form\Type\RegistrationFormType;
 
 class LocalComercialType extends AbstractType {
 
+    private $opciones;
+    
+    public function __construct(array $opciones = null) {
+        $this->opciones = $opciones;
+    }
+    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -17,47 +24,30 @@ class LocalComercialType extends AbstractType {
                 ->add('nombre')
                 ->add('descripcion')
                 ->add('nombreContacto')
-                ->add('emailContacto')
+                ->add('emailContacto', 'email')
                 ->add('telefonoContacto')
         ;
 
-        if (isset($this->opciones['edit']) && $this->opciones['edit']) {
-            $builder
-                    ->add('usuario', null, array(
-                        'label' => 'Tipo',
-                        'disabled' => true,
-                        'empty_value' => '',
-            ));
-        } else {
-//            $builder->add('usuario', 'entity', array(
-//                    'class' => 'AppBundle:Usuario',
-//                    'query_builder' =>
-//                    function (\AppBundle\Entity\UsuarioRepository $repositorio) {
-//                        return $repositorio->createQueryBuilder('u');
-////                                ->where('e.nombre != :nombreEstado')
-////                                ->setParameter('nombreEstado', 'eliminada');
-//                    },
-//                    'label' => 'Usuario'
-//                        )
-//                );
+        if (!isset($this->opciones['edit'])) {
+            $builder->add('usuario', new RegistrationFormType('AppBundle\Entity\Usuario'));
         }
-            }
+    }
 
-            /**
-             * @param OptionsResolverInterface $resolver
-             */
-            public function setDefaultOptions(OptionsResolverInterface $resolver) {
-                $resolver->setDefaults(array(
-                    'data_class' => 'AppBundle\Entity\LocalComercial'
-                ));
-            }
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\LocalComercial'
+        ));
+    }
 
-            /**
-             * @return string
-             */
-            public function getName() {
-                return 'appbundle_localcomercial';
-            }
+    /**
+     * @return string
+     */
+    public function getName() {
+        return 'appbundle_localcomercial';
+    }
 
-        }
+    }
         

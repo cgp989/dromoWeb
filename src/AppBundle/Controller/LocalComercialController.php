@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\LocalComercial;
 use AppBundle\Form\LocalComercialType;
+use FOS\UserBundle\Form\Type\RegistrationFormType;
 
 /**
  * LocalComercial controller.
@@ -43,6 +44,15 @@ class LocalComercialController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity->setVersion(1);
             $entity->setValoracion(0);
+            
+            
+            //se crea el usuario del local
+            $userEntity = $entity->getUsuario();
+            $userManipulator = $this->get('fos_user.util.user_manipulator');
+            $userNew = $userManipulator->create($userEntity->getUsername(), $userEntity->getPlainPassword(), $userEntity->getEmail(), true, false);
+            $userManipulator->addRole($userEntity->getUsername(), 'ROLE_LOCAL');
+            $entity->setUsuario($userNew);
+            
             $em->persist($entity);
             $em->flush();
 
@@ -144,7 +154,7 @@ class LocalComercialController extends Controller
     */
     private function createEditForm(LocalComercial $entity)
     {
-        $form = $this->createForm(new LocalComercialType(), $entity, array(
+        $form = $this->createForm(new LocalComercialType(array('edit' => true)), $entity, array(
             'action' => $this->generateUrl('localcomercial_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
