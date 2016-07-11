@@ -364,4 +364,27 @@ class Cupon
     {
         return $this->inicio->format("Y-m-d H:i:s");
     }
+
+    /**
+     * Set estadoCobroCupon
+     *
+     * @param \AppBundle\Entity\EstadoCobroCupon $estadoCobroCupon
+     * @return Cupon
+     */
+    public function setEstadoCobroCupon(\AppBundle\Entity\EstadoCobroCupon $estadoCobroCupon = null)
+    {
+        $this->estadoCobroCupon = $estadoCobroCupon;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoCobroCupon
+     *
+     * @return \AppBundle\Entity\EstadoCobroCupon 
+     */
+    public function getEstadoCobroCupon()
+    {
+        return $this->estadoCobroCupon;
+    }
 }

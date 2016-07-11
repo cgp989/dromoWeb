@@ -23,4 +23,26 @@ class LocalComercialRepository extends EntityRepository
         }
         );
     }
+    
+    /**
+     * Retorna una lista con los locales que tiene cupones que no han sido cobrado aun
+     */
+    public function getPendientesCobro(){
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "select loc.id, loc.nombre, loc.nombreContacto, loc.emailContacto, loc.telefonoContacto
+                from AppBundle:Cupon cup
+                     join cup.programacion prog
+                     join prog.promocion prom
+                     join prom.localComercial loc
+                     join cup.estadoCobroCupon estCobro
+                     join cup.tipoCupon tipoC
+                where estCobro.nombre=:paramEstadoCobroCupon
+                    and tipoC.nombre=:paramTipoCupon")
+            ->setParameter('paramEstadoCobroCupon', 'pendiente')
+            ->setParameter('paramTipoCupon', 'promocion');
+        
+        //echo $query->getSQL();exit;
+        return $query->getResult();
+    }
 }

@@ -1,0 +1,7 @@
+cobros_pendientes_locales:
+    path:     /pendientes/locales
+    defaults: { _controller: "AppBundle:Cobros:showLocalesPendientes" }
+
+cobros_pendientes_detalle_local:
+    path:     /pendientes/{id}/local
+    defaults: { _controller: "AppBundle:Cobros:getPendientesLocal" }

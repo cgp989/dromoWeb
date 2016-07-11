@@ -16,8 +16,8 @@ use JMS\Serializer\Annotation\VirtualProperty;
  * 
  * @ExclusionPolicy("all")
  */
-class Direccion
-{
+class Direccion {
+
     /**
      * @var integer
      *
@@ -41,6 +41,9 @@ class Direccion
      * @var string
      *
      * @ORM\Column(name="latitud", type="string", length=100)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales","serviceUSS06"})
      */
     private $latitud;
 
@@ -48,6 +51,9 @@ class Direccion
      * @var string
      *
      * @ORM\Column(name="longitud", type="string", length=100)
+     * 
+     * @Expose
+     * @Groups({"serviceUSS013", "serviceUSS013-sucursales","serviceUSS06"})
      */
     private $longitud;
 
@@ -55,7 +61,7 @@ class Direccion
      * @ORM\OneToOne(targetEntity="Sucursal", mappedBy="direccion")
      */
     private $sucursal;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Localidad", inversedBy="direcciones")
      * @ORM\JoinColumn(name="idLocalidad", referencedColumnName="id")
@@ -64,14 +70,13 @@ class Direccion
      * @Groups({"serviceUSS013", "serviceUSS013-sucursales", "serviceUSS06"})
      */
     private $localidad;
-    
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,8 +86,7 @@ class Direccion
      * @param string $descripcion
      * @return Direccion
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -93,8 +97,7 @@ class Direccion
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
@@ -104,8 +107,7 @@ class Direccion
      * @param string $latitud
      * @return Direccion
      */
-    public function setLatitud($latitud)
-    {
+    public function setLatitud($latitud) {
         $this->latitud = $latitud;
 
         return $this;
@@ -116,8 +118,7 @@ class Direccion
      *
      * @return string 
      */
-    public function getLatitud()
-    {
+    public function getLatitud() {
         return $this->latitud;
     }
 
@@ -127,8 +128,7 @@ class Direccion
      * @param string $longitud
      * @return Direccion
      */
-    public function setLongitud($longitud)
-    {
+    public function setLongitud($longitud) {
         $this->longitud = $longitud;
 
         return $this;
@@ -139,8 +139,7 @@ class Direccion
      *
      * @return string 
      */
-    public function getLongitud()
-    {
+    public function getLongitud() {
         return $this->longitud;
     }
 
@@ -150,8 +149,7 @@ class Direccion
      * @param \AppBundle\Entity\Sucursal $sucursal
      * @return Direccion
      */
-    public function setSucursal(\AppBundle\Entity\Sucursal $sucursal = null)
-    {
+    public function setSucursal(\AppBundle\Entity\Sucursal $sucursal = null) {
         $this->sucursal = $sucursal;
 
         return $this;
@@ -162,8 +160,7 @@ class Direccion
      *
      * @return \AppBundle\Entity\Sucursal 
      */
-    public function getSucursal()
-    {
+    public function getSucursal() {
         return $this->sucursal;
     }
 
@@ -173,8 +170,7 @@ class Direccion
      * @param \AppBundle\Entity\Localidad $localidad
      * @return Direccion
      */
-    public function setLocalidad(\AppBundle\Entity\Localidad $localidad = null)
-    {
+    public function setLocalidad(\AppBundle\Entity\Localidad $localidad = null) {
         $this->localidad = $localidad;
 
         return $this;
@@ -185,14 +181,14 @@ class Direccion
      *
      * @return \AppBundle\Entity\Localidad 
      */
-    public function getLocalidad()
-    {
+    public function getLocalidad() {
         return $this->localidad;
     }
-    
-   public function __toString() {
-       /* @var $localidad Entity\Localidad */
-       $localidad = $this->getLocalidad();
-       return $localidad->getNombre()."-".$this->descripcion;
-   }
+
+    public function __toString() {
+        /* @var $localidad Entity\Localidad */
+        $localidad = $this->getLocalidad();
+        return $localidad->getNombre() . "-" . $this->descripcion;
+    }
+
 }

@@ -148,6 +148,10 @@ class UsuarioMovil
      * mapear cuando este la entidad Suscripcion
     private $suscripciones;
 |   */
+    
+    public function __toString() {
+        return $this->usuario;
+    }
 
         /**
      * Set fechaNacimiento

@@ -48,8 +48,11 @@
                              <li class="{% if 'localcomercial' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('localcomercial') }}">Locales</a>
                             </li>
-                             <li class="{% if 'sucursal' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'sucursal' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('sucursal') }}">Sucursales</a>
+                            </li>
+                            <li class="{% if 'pendientes' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('cobros_pendientes_locales') }}">Cobros pendientes</a>
                             </li>
                             <li class="{% if 'comentarios' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('comentarios') }}">Comentarios Denunciados</a>

@@ -632,4 +632,37 @@ class Programacion
     {
         return $this->visitasPromocion;
     }
+    
+    /**
+     * Add cupones
+     *
+     * @param \AppBundle\Entity\Cupon $cupones
+     * @return Programacion
+     */
+    public function addCupone(\AppBundle\Entity\Cupon $cupones)
+    {
+        $this->cupones[] = $cupones;
+
+        return $this;
+    }
+
+    /**
+     * Remove cupones
+     *
+     * @param \AppBundle\Entity\Cupon $cupones
+     */
+    public function removeCupone(\AppBundle\Entity\Cupon $cupones)
+    {
+        $this->cupones->removeElement($cupones);
+    }
+
+    /**
+     * Get cupones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCupone()
+    {
+        return $this->cupones;
+    }
 }
