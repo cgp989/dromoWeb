@@ -13,7 +13,6 @@ use AppBundle\Form\PremiosType;
  */
 class PremiosController extends Controller {
 
-    private $idAdminLogueado = 1;
 
     /**
      * Lists all Promocion entities.

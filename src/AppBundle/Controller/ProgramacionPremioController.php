@@ -13,7 +13,6 @@ use AppBundle\Form\ProgramacionPremioType;
  */
 class ProgramacionPremioController extends Controller {
 
-    private $idAdminLogueado = 1;
 
     /**
      * Lists all Programacion entities.

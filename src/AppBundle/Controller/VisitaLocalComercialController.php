@@ -4,37 +4,39 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Entity\Sucursal;
-use AppBundle\Form\SucursalType;
+use AppBundle\Entity\VisitaLocalComercial;
+use AppBundle\Form\VisitaLocalComercialType;
 
 /**
- * Sucursal controller.
+ * VisitaLocalComercial controller.
  *
  */
-class SucursalesController extends Controller {
-
+class VisitaLocalComercialController extends Controller {
 
     /**
-     * Lists all Sucursal entities.
+     * Lists all VisitaLocalComercial entities.
      *
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $repoSucursales = $em->getRepository('AppBundle:Sucursal');
-        $entities = $repoSucursales->getSucursalesLocal($this->getUser()->getLocalComercial()->getId());
+        $entities = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitas();
+        $suma = 0;
+        foreach ($entities as $e) {
+            $suma+= $e['cant'];
+        }
 
-        return $this->render('AppBundle:Sucursales:index.html.twig', array(
-                    'entities' => $entities,
+        return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
+                    'entities' => $entities, 'suma' => $suma,
         ));
     }
 
     /**
-     * Creates a new Sucursal entity.
+     * Creates a new VisitaLocalComercial entity.
      *
      */
     public function createAction(Request $request) {
-        $entity = new Sucursal();
+        $entity = new VisitaLocalComercial();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -43,25 +45,25 @@ class SucursalesController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sucursales_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('visitalocalcomercial_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('AppBundle:Sucursales:new.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a Sucursal entity.
+     * Creates a form to create a VisitaLocalComercial entity.
      *
-     * @param Sucursal $entity The entity
+     * @param VisitaLocalComercial $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Sucursal $entity) {
-        $form = $this->createForm(new SucursalType(), $entity, array(
-            'action' => $this->generateUrl('sucursales_create'),
+    private function createCreateForm(VisitaLocalComercial $entity) {
+        $form = $this->createForm(new VisitaLocalComercialType(), $entity, array(
+            'action' => $this->generateUrl('visitalocalcomercial_create'),
             'method' => 'POST',
         ));
 
@@ -71,57 +73,57 @@ class SucursalesController extends Controller {
     }
 
     /**
-     * Displays a form to create a new Sucursal entity.
+     * Displays a form to create a new VisitaLocalComercial entity.
      *
      */
     public function newAction() {
-        $entity = new Sucursal();
+        $entity = new VisitaLocalComercial();
         $form = $this->createCreateForm($entity);
 
-        return $this->render('AppBundle:Sucursales:new.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Sucursal entity.
+     * Finds and displays a VisitaLocalComercial entity.
      *
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Sucursal')->find($id);
+        $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('No existe la sucursal.');
+            throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:Sucursales:show.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:show.html.twig', array(
                     'entity' => $entity,
                     'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing Sucursal entity.
+     * Displays a form to edit an existing VisitaLocalComercial entity.
      *
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Sucursal')->find($id);
+        $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sucursal entity.');
+            throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AppBundle:Sucursales:edit.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -129,15 +131,15 @@ class SucursalesController extends Controller {
     }
 
     /**
-     * Creates a form to edit a Sucursal entity.
+     * Creates a form to edit a VisitaLocalComercial entity.
      *
-     * @param Sucursal $entity The entity
+     * @param VisitaLocalComercial $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Sucursal $entity) {
-        $form = $this->createForm(new SucursalType(), $entity, array(
-            'action' => $this->generateUrl('sucursales_update', array('id' => $entity->getId())),
+    private function createEditForm(VisitaLocalComercial $entity) {
+        $form = $this->createForm(new VisitaLocalComercialType(), $entity, array(
+            'action' => $this->generateUrl('visitalocalcomercial_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -147,16 +149,16 @@ class SucursalesController extends Controller {
     }
 
     /**
-     * Edits an existing Sucursal entity.
+     * Edits an existing VisitaLocalComercial entity.
      *
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Sucursal')->find($id);
+        $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sucursal entity.');
+            throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -166,10 +168,10 @@ class SucursalesController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sucursales_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('visitalocalcomercial_edit', array('id' => $id)));
         }
 
-        return $this->render('AppBundle:Sucursales:edit.html.twig', array(
+        return $this->render('AppBundle:VisitaLocalComercial:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -177,7 +179,7 @@ class SucursalesController extends Controller {
     }
 
     /**
-     * Deletes a Sucursal entity.
+     * Deletes a VisitaLocalComercial entity.
      *
      */
     public function deleteAction(Request $request, $id) {
@@ -186,21 +188,21 @@ class SucursalesController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Sucursal')->find($id);
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Sucursal entity.');
+                throw $this->createNotFoundException('Unable to find VisitaLocalComercial entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('sucursales'));
+        return $this->redirect($this->generateUrl('visitalocalcomercial'));
     }
 
     /**
-     * Creates a form to delete a Sucursal entity by id.
+     * Creates a form to delete a VisitaLocalComercial entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -208,7 +210,7 @@ class SucursalesController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('sucursales_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('visitalocalcomercial_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm()

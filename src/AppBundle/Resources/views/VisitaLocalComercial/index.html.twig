@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Visitas a Locales Comerciales</h1>
+
+    <div id="graficaCircular" style="width: 100%; height: 500px; margin: 0 auto">
+    </div>
+
+    <script type="text/javascript">
+        var chart;
+        $(document).ready(function () {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'graficaCircular'
+                },
+                title: {
+                    text: 'Porcentaje de Visitas a Locales'
+                },
+                subtitle: {
+                    text: 'Dromo'
+                },
+                plotArea: {
+                    shadow: null,
+                    borderWidth: null,
+                    backgroundColor: null
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function () {
+                                return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                        type: 'pie',
+                        name: 'Browser share',
+                        data: [{% for entity in entities %}
+                            ['{{ entity.nombre }}',{{ (entity.cant/suma)*100 }} , ],
+        {% endfor %} 
+                        ]
+                    }]
+            });
+        });
+        </script>
+        {% endblock %}

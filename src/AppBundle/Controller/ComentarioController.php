@@ -14,7 +14,6 @@ use AppBundle\Form\ComentarioType;
  */
 class ComentarioController extends Controller
 {
-    private $idLocalLogueado = 1;
 
     /**
      * Lists all Comentario entities.
@@ -24,7 +23,7 @@ class ComentarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Comentario')->getComentariosLocal($this->idLocalLogueado);
+        $entities = $em->getRepository('AppBundle:Comentario')->getComentariosLocal($this->getUser()->getLocalComercial()->getId());
 
         return $this->render('AppBundle:Comentario:index.html.twig', array(
             'entities' => $entities,

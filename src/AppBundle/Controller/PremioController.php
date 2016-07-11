@@ -13,8 +13,7 @@ use AppBundle\Form\PremioType;
  */
 class PremioController extends Controller {
 
-    private $idLocalLogueado = 1;
-
+   
     /**
      * Lists all Promocion entities.
      *
@@ -23,7 +22,7 @@ class PremioController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $repoPromociones = $em->getRepository('AppBundle:Promocion');
-        $entities = $repoPromociones->getPremiosLocal($this->idLocalLogueado);
+        $entities = $repoPromociones->getPremiosLocal($this->getUser()->getLocalComercial()->getId());
 
         return $this->render('AppBundle:Premio:index.html.twig', array(
                     'entities' => $entities,
