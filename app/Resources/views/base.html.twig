@@ -77,6 +77,9 @@
                             <li class="{% if 'comentario' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('comentario') }}">Comentarios</a>
                             </li>
+                            <li class="{% if 'ventas' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('ventas') }}">Historial ventas</a>
+                            </li>
                             <li class="{% if 'sucursales' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('sucursales') }}">Sucursales</a>
                             </li>

@@ -1,0 +1,3 @@
+ventas:
+    path:     /
+    defaults: { _controller: "AppBundle:Ventas:index" }

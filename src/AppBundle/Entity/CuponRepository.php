@@ -59,4 +59,32 @@ class CuponRepository extends EntityRepository
             return array('exito' => false, 'cupon' => $cupon);
         }
     }
+    
+    /**
+     * Retorna un array con los cupones vendidos por el local
+     * con el id de usuario pasado por paremetro
+     * 
+     * @param int $idUserLocal
+     * @return array array de objetos cupon
+     */
+    public function getVentasLocal($idUserLocal){
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "select cup
+                from AppBundle:Cupon cup
+                    left join cup.estadoCupon ec
+                    left join cup.programacion prog
+                    left join cup.tipoCupon tc
+                    left join prog.promocion prom
+                    left join prom.localComercial lc
+                where ec.nombre=:paramEstadoCupon
+                    and lc.usuario=:paramUsuario
+                    and tc.nombre=:paramTipoCupon")
+            ->setParameter('paramEstadoCupon', 'canjeado')
+            ->setParameter('paramUsuario', $idUserLocal)
+            ->setParameter('paramTipoCupon', 'promocion');
+        
+        //echo $query->getSQL();exit;
+        return $query->getResult();
+    }
 }

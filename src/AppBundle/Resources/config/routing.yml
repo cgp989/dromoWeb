@@ -49,6 +49,10 @@ app_programacion:
 app_validar_cupon:
     resource: "@AppBundle/Resources/config/routing/cupon.yml"
     prefix: local/cupon
+    
+app_ventas:
+    resource: "@AppBundle/Resources/config/routing/ventas.yml"
+    prefix: local/ventas
 
 
 

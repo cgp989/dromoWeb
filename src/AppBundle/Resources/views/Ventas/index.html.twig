@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Promociones vendidas</h1>
+
+    <table class="table table-hover records_list">
+        <thead>
+            <tr>
+                <th class="col-xs-1">Tipo</th>
+                <th class="col-xs-8">Promoci&oacute;n</th>
+                <th class="col-xs-2">Fecha venta</th>
+                <th class="col-xs-1">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set total = 0 %}
+            {% for cupon in cupones %}
+                {% set total = total +cupon.programacion.promocion.precio  %}
+                <tr>
+                    <td>{{ cupon.programacion.promocion.tipoPromocion.nombre }}</td>
+                    <td>{{ cupon.programacion.promocion.titulo }}</td>
+                    <td>{{ cupon.fecha|date('Y-m-d') }}</td>
+                    <td>${{ cupon.programacion.promocion.precio }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-xs-2 pull-right text-right"><h3>Total: ${{ total }}</h3></div>
+    </div>
+{% endblock %}{# empty Twig template #}
