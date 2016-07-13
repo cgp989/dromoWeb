@@ -24,7 +24,9 @@
         "jeroendesloovere/distance": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "^2.2",
         "symfony/console": "2.5",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "knplabs/knp-snappy-bundle": "dev-master",
+        "h4cc/wkhtmltopdf-amd64": "^0.12.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
