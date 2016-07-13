@@ -81,6 +81,9 @@
                             <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
+                            <li class="{% if 'programacionendia' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('programacionendia') }}">Promos en Dia</a>
+                            </li>
                             <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('promocion') }}">Promociones</a>
                             </li>

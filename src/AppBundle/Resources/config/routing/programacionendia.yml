@@ -1,0 +1,30 @@
+programacionendia:
+    path:     /
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:index" }
+
+programacionendia_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:show" }
+
+programacionendia_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:new" }
+
+programacionendia_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:create" }
+    methods:  POST
+
+programacionendia_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:edit" }
+
+programacionendia_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:update" }
+    methods:  [POST, PUT]
+
+programacionendia_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:delete" }
+    methods:  [POST, DELETE]
