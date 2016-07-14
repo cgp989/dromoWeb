@@ -5,3 +5,7 @@ cobros_pendientes_locales:
 cobros_pendientes_detalle_local:
     path:     /pendientes/{id}/local
     defaults: { _controller: "AppBundle:Cobros:getPendientesLocal" }
+
+cobros_pendientes_detalle_local_exportar_pdf:
+    path:     /pendientes/{id}/local/export-pdf
+    defaults: { _controller: "AppBundle:Cobros:getPdfPendientesLocal" }
