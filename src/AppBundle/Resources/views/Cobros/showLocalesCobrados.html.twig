@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Locales con cobros pendientes</h1>
+    <h1>Locales con cobros realizados</h1>
 
     <table class="table table-hover records_list">
         <thead>
@@ -21,7 +21,7 @@
                     <td>{{ local.emailContacto }}</td>
                     <td>{{ local.telefonoContacto }}</td>
                     <td>
-                        <a title="ver" href="{{ path('cobros_pendientes_detalle_local', { 'id': local.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        <a title="ver" href="{{ path('cobros_cobrados_detalle_local', { 'id': local.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
                     </td>
                 </tr>
             {% endfor %}

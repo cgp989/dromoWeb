@@ -41,8 +41,13 @@ class CobrosController extends Controller {
         //HACELO ADENTRO DEL REPOSITORIO DE CUPON O DE LOCAL
         $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
         $cuponesPendientes = $repositoryLocal->getItemsPendientesCobro($id);
+        $local = 'local';
+        foreach ($cuponesPendientes as $e) {
+            $local = $e['nombre'];
+            break;
+        }
         return $this->render('AppBundle:Cobros:listarPendientesLocal.html.twig', array(
-                    'cuponesPendientes' => $cuponesPendientes,
+                    'cuponesPendientes' => $cuponesPendientes, 'nombreLocal' => $local,
         ));
     }
 
@@ -61,10 +66,41 @@ class CobrosController extends Controller {
         $em->persist($entity);
         $em->flush();
         //redirigir
+        $Local = $em->getRepository('AppBundle:LocalComercial')->findOneById($id);
+        $nombreLocal = $Local->getNombre();
         $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
         $cuponesPendientes = $repositoryLocal->getItemsPendientesCobro($id);
         return $this->render('AppBundle:Cobros:listarPendientesLocal.html.twig', array(
-                    'cuponesPendientes' => $cuponesPendientes,
+                    'cuponesPendientes' => $cuponesPendientes, 'nombreLocal' => $nombreLocal,
+        ));
+    }
+
+    /**
+     * Lista los locales que tienen cobros realizados
+     */
+    public function showLocalesCobradosAction() {
+        $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
+        $locales = $repositoryLocal->getCobrados();
+
+        return $this->render('AppBundle:Cobros:showLocalesCobrados.html.twig', array(
+                    'locales' => $locales,
+        ));
+    }
+
+    /**
+     * Me retorna un listado de los cupones cobrados a un local
+     * 
+     * @param type $idLocal
+     */
+    public function getCobradosLocalAction($id) {
+        $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
+        $cuponesCobrados = $repositoryLocal->getItemsCobradosCobro($id);
+        foreach ($cuponesCobrados as $e) {
+            $local = $e['nombre'];
+            break;
+        }
+        return $this->render('AppBundle:Cobros:listarCobradosLocal.html.twig', array(
+                    'cuponesCobrados' => $cuponesCobrados, 'nombreLocal' => $local,
         ));
     }
 

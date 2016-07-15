@@ -66,6 +66,9 @@
                             <li class="{% if 'pendientes' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('cobros_pendientes_locales') }}">Cobros pendientes</a>
                             </li>
+                            <li class="{% if 'cobrados' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('cobros_cobrados_locales') }}">Cobros realizados</a>
+                            </li>
                             <li class="{% if 'comentarios' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('comentarios') }}">Comentarios Denunciados</a>
                             </li>
