@@ -5,3 +5,15 @@ cobros_pendientes_locales:
 cobros_pendientes_detalle_local:
     path:     /pendientes/{id}/local
     defaults: { _controller: "AppBundle:Cobros:getPendientesLocal" }
+    
+cobro_local:
+    path:     /pendientes/{id}/local/{idCupon}/cupon
+    defaults: { _controller: "AppBundle:Cobros:setCobroLocal" }
+    
+cobros_cobrados_locales:
+    path:     /cobrados/locales
+    defaults: { _controller: "AppBundle:Cobros:showLocalesCobrados" }
+
+cobros_cobrados_detalle_local:
+    path:     /cobrados/{id}/local
+    defaults: { _controller: "AppBundle:Cobros:getCobradosLocal" }
