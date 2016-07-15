@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\EstadoCobroCupon;
 
@@ -100,8 +101,20 @@ class CobrosController extends Controller {
             break;
         }
         return $this->render('AppBundle:Cobros:listarCobradosLocal.html.twig', array(
+                    'idLocal' => $id,
                     'cuponesCobrados' => $cuponesCobrados, 'nombreLocal' => $local,
         ));
     }
-
+    
+    public function getPdfPendientesLocalAction($id){
+         $html = $this->renderView('AppBundle:Cobros:pdfPromocionesPendientesCobro.html.twig');
+         return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', 'nombre-del-pdf'),
+            ]
+        );
+    }
 }

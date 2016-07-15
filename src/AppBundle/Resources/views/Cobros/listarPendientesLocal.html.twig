@@ -4,7 +4,7 @@
     <h1>Pendientes de cobro de {{ nombreLocal }} </h1>
     <div class="row btn-action-top">
         <div class="col-xs-4 pull-left">
-            <a class="text-info" href=""><span class="glyphicon glyphicon-export"></span> Exportar a PDF</a>
+            <a class="text-info" href="{{ path('cobros_pendientes_detalle_local_exportar_pdf', { 'id': idLocal }) }}"><span class="glyphicon glyphicon-export"></span> Exportar a PDF</a>
         </div>
         <div class="col-xs-1 pull-right">
             <a title="volver" href="{{ path('cobros_pendientes_locales') }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>

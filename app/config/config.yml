@@ -77,8 +77,8 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: gmail
-    username: cgp989@gmail.com
-    password: NOEGILBERNATI
+    username: dromoconsulta@gmail.com
+    password: proyectodromo
     spool:     { type: memory }
     
 fos_rest:
@@ -109,3 +109,8 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\Usuario
+    
+knp_snappy:  
+    pdf:
+        enabled:    true
+        binary:     %kernel.root_dir%\..\bin\wkhtmltopdf.exe.bat
