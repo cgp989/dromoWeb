@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}DROMO{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ absolute_url(asset('resources/css/bootstrap.min.css'))}}" type="text/css" rel="stylesheet" />
+            <link href="{{ absolute_url(asset('resources/css/dashboard.css'))}}" type="text/css" rel="stylesheet" />
+            <link href="{{ absolute_url(asset('resources/css/estilos-web.css'))}}" type="text/css" rel="stylesheet" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('resources/images/iconos/dromo_icon.png')) }}" />
+            {% block javascripts %}     
+                <!-- LibrerÃ­a jQuery requerida por los plugins de JavaScript -->
+            <script src="{{ absolute_url(asset('resources/js/jquery.js'))}}"></script>
+
+            <!-- plugins JavaScript de Bootstrap  -->
+            <script src="{{ absolute_url(asset('resources/js/bootstrap.min.js'))}}"></script>
+            <!-- JS para graficos -->
+            <script src="{{ absolute_url(asset('resources/js/jquery-1.7.1.min.js'))}}"></script>
+            <script src="{{ absolute_url(asset('resources/js/highcharts.js'))}}"></script>
+            <script src="{{ absolute_url(asset('resources/js/exporting.js'))}}"></script>           
+            
+        {% endblock %}
+    </head>
+    <body class="pdf-export">
+        <h1>Pendientes de cobro de {{ nombreLocal }} </h1>
+        <table class="table table-hover records_list">
+            <thead>
+                <tr>
+                    <th class="col-xs-2">Fecha</th>
+                    <th class="col-xs-2">C&oacute;digo</th>
+                    <th class="col-xs-6">Promoci&oacute;n</th>
+                    <th class="col-xs-2">Importe</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = 0 %}
+                {% for cupon in cuponesPendientes %}
+                    {% set total = total +cupon.precioCobroLocal  %}
+                    <tr>
+                        <td>{{ cupon.fecha|date('d/m/Y') }}</td>
+                        <td>{{ cupon.codigo }}</td>
+                        <td>{{ cupon.titulo }}</td>
+                        <td>${{ cupon.precioCobroLocal}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-xs-2 pull-right text-right"><h3>Total: ${{ total }}</h3></div>
+        </div>
+    </body>
+</html>

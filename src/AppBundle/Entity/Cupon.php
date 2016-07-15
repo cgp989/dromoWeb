@@ -113,7 +113,14 @@ class Cupon
      * 
      */
     private $estadoCobroCupon;
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="precioCobroLocal", type="float", nullable=TRUE)
+     * 
+     */
+    private $precioCobroLocal;
 
     /**
      * Get id
@@ -386,5 +393,13 @@ class Cupon
     public function getEstadoCobroCupon()
     {
         return $this->estadoCobroCupon;
+    }
+    
+    function getPrecioCobroLocal() {
+        return $this->precioCobroLocal;
+    }
+
+    function setPrecioCobroLocal($precioCobroLocal) {
+        $this->precioCobroLocal = $precioCobroLocal;
     }
 }

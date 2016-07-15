@@ -74,3 +74,8 @@ body{
 .btn-action-top button.glyphicon:hover{
     color: #23527C;
 }
+
+body.pdf-export, .pdf-export h1, .pdf-export h3{
+    background-color: #FFF;
+    color: #000;
+}
