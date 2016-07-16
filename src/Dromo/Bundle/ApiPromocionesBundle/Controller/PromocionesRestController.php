@@ -274,4 +274,18 @@ class PromocionesRestController extends Controller {
             return array('error' => $error);
     }
 
+    /**
+     * Devuelve listado de cupones de um
+     * 
+     * @param integer $idUsuario     * 
+     * 
+     * @View(serializerGroups={"serviceCupones"})
+     */
+    public function getId_usuario_movilAction($idUsuario) {
+        /* @var $usuarioMovil Entity\UsuarioMovil */
+        $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->find($idUsuario);
+        $cupones = $this->getDoctrine()->getRepository('AppBundle:Cupon')->findByUsuarioMovil($usuarioMovil);
+        return array('idUsuario' => $idUsuario, 'cupones' => $cupones);
+    }
+
 }

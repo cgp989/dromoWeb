@@ -28,7 +28,7 @@ class LocalComercial {
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06", "serviceCupones", "serviceUSS04-cuenta"})
      */
     private $id;
 
@@ -38,7 +38,7 @@ class LocalComercial {
      * @ORM\Column(name="nombre", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS06"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS06", "serviceCupones", "serviceUSS04-cuenta"})
      */
     private $nombre;
 
@@ -78,7 +78,7 @@ class LocalComercial {
      * @ORM\Column(name="version", type="integer")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06","serviceCupones"})
      */
     private $version;
 
@@ -327,9 +327,9 @@ class LocalComercial {
         $arraySucursales;
         foreach ($this->getSucursales() as $sucursal) {
             $arraySucursales[] = array(
-                        'title' => $sucursal,
-                        'latitude' => $sucursal->getDireccion()->getLatitud(),
-                        'longitude' => $sucursal->getDireccion()->getLongitud()
+                'title' => $sucursal,
+                'latitude' => $sucursal->getDireccion()->getLatitud(),
+                'longitude' => $sucursal->getDireccion()->getLongitud()
             );
         }
         $distance = Distance::getClosest($latitudUsuario, $longitudUsuario, $arraySucursales, 3);
@@ -338,8 +338,8 @@ class LocalComercial {
     }
 
     public function getComentariosOrdenados() {
-       $arrayComentarios = $this->comentarios->toArray();
-       usort($arrayComentarios, function(Comentario $a, Comentario $b) {
+        $arrayComentarios = $this->comentarios->toArray();
+        usort($arrayComentarios, function(Comentario $a, Comentario $b) {
             return $a->compareTo($b);
         }
         );
