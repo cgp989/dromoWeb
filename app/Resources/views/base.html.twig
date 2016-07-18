@@ -32,11 +32,12 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <li><a href="#">Configuraciones</a></li>
-                            <li><a href="{{ path('fos_user_profile_show') }}">Perfil</a></li>
-                            <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+                            {% if is_granted('ROLE_LOCAL') %}
+                                <li>Local <a href="{{ path('fos_user_profile_show') }}">{{ app.security.getToken().getUser().getLocalComercial().getNombre() }}</a></li>
                             {% endif %}
-                        <li><a href="#">Contacto</a></li>
+                            <li>Usuario <a class="" href="{{ path('fos_user_profile_show') }}">{{ app.security.getToken().getUser().getUsername() }}</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

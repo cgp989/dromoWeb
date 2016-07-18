@@ -79,3 +79,9 @@ body.pdf-export, .pdf-export h1, .pdf-export h3{
     background-color: #FFF;
     color: #000;
 }
+
+#navbar a{
+    color:#337ab7;
+    display: inline-block;
+    padding-left: 0px;
+}
