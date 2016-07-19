@@ -28,7 +28,7 @@ class Programacion
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS21"})
+     * @Groups({"serviceUSS013", "serviceUSS21", "serviceCupones"})
      */
     private $id;
 
@@ -129,7 +129,7 @@ class Programacion
      * @ORM\ManyToOne(targetEntity="Promocion", inversedBy="programaciones")
      * @ORM\JoinColumn(name="idPromocion", referencedColumnName="id")
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $promocion;
 
