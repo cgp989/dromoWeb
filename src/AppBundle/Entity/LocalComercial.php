@@ -47,7 +47,7 @@ class LocalComercial {
      *
      * @ORM\Column(name="descripcion", type="text")
      * @Expose
-     * @Groups({"serviceUSS23", "serviceUSS06"})
+     * @Groups({"serviceUSS23", "serviceUSS06","serviceUSS04-cuenta"})
      */
     private $descripcion;
 
@@ -78,7 +78,7 @@ class LocalComercial {
      * @ORM\Column(name="version", type="integer")
      * 
      * @Expose
-     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06","serviceCupones"})
+     * @Groups({"serviceUSS013", "serviceUSS23", "serviceUSS02-login", "serviceUSS19-version", "serviceUSS06","serviceCupones","serviceUSS04-cuenta"})
      */
     private $version;
 
