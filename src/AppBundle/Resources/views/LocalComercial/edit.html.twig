@@ -1,14 +1,22 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-     <h2 class="sub-header">Editar Local Comercial</h2>
+     <h2 class="sub-header">Editar Local</h2>
 <div class="row btn-action-top">
-        <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
-        <div class="col-xs-1 pull-right">
-            <a title="volver" href="{{ path('localcomercial') }}">
-                <span class="glyphicon glyphicon-circle-arrow-left"></span>
-            </a>
-        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
+            <div class="col-xs-1 pull-right">
+                <a title="volver" href="{{ path('localcomercial') }}">
+                    <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                </a>
+            </div>
+        {% else %}
+            <div class="col-xs-1 pull-right">
+                <a title="volver" href="{{ path('localcomercial_log') }}">
+                    <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                </a>
+            </div>
+        {% endif %}
     </div>
     <div class="col-xs-12">
         {{ form_start(edit_form) }}

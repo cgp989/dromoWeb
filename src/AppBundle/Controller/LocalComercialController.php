@@ -154,8 +154,14 @@ class LocalComercialController extends Controller
     */
     private function createEditForm(LocalComercial $entity)
     {
+        $nameRouteUdpate = 'localcomercial_update';
+        //Si el usuario es un local se cambia la url de actualizacion
+        if($this->getUser()->hasRole('ROLE_LOCAL')){
+            $nameRouteUdpate = 'localcomercial_log_update';
+        }
+        
         $form = $this->createForm(new LocalComercialType(array('edit' => true)), $entity, array(
-            'action' => $this->generateUrl('localcomercial_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl($nameRouteUdpate, array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -174,7 +180,7 @@ class LocalComercialController extends Controller
         $entity = $em->getRepository('AppBundle:LocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('No existe el Local Comercial.');
+            throw $this->createNotFoundException('No existe el Local.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -185,8 +191,14 @@ class LocalComercialController extends Controller
             $version = $entity->getVersion();
             $entity->setVersion($version+1);
             $em->flush();
+            
+            $urlEdit = $this->generateUrl('localcomercial_edit', array('id' => $id));
+            //Si el usuario es un local se cambia la url de actualizacion
+            if($this->getUser()->hasRole('ROLE_LOCAL')){
+                $nameRouteEdit = $this->generateUrl('localcomercial_log_edit');
+            }
 
-            return $this->redirect($this->generateUrl('localcomercial_edit', array('id' => $id)));
+            return $this->redirect($nameRouteEdit);
         }
 
         return $this->render('AppBundle:LocalComercial:edit.html.twig', array(
@@ -239,5 +251,13 @@ class LocalComercialController extends Controller
                         ))
             ->getForm()
         ;
+    }
+    
+    public function showLogueadoAction(){
+        return $this->showAction($this->getUser()->getLocalComercial()->getId());
+    }
+    
+    public function editLogueadoAction(){
+        return $this->editAction($this->getUser()->getLocalComercial()->getId());
     }
 }
