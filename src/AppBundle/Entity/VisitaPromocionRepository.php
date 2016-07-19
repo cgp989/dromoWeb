@@ -14,10 +14,12 @@ class VisitaPromocionRepository extends EntityRepository {
 
     public function getVisitas($idLocal) {
         $visitas = $this->getEntityManager()
-                ->createQuery('SELECT p.id, p.descripcion, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
-                        . ' JOIN v.programacion p join p.promocion r join r.localComercial l'
+                ->createQuery('SELECT r.id, r.titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
+                        . ' JOIN v.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l'
                         . ' WHERE l.id = :idLocal '
-                        . ' GROUP BY p.id, p.descripcion ')
+                        . ' GROUP BY r.id, r.titulo ')
                 ->setParameters(array(
                     'idLocal' => $idLocal
                 ))

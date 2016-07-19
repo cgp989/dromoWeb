@@ -27,7 +27,7 @@ class EstadoCupon
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS37"})
+     * @Groups({"serviceUSS37", "serviceCupones"})
      */
     private $id;
 
@@ -37,7 +37,7 @@ class EstadoCupon
      * @ORM\Column(name="nombre", type="string", length=100)
      * 
      * @Expose
-     * @Groups({"serviceUSS37"})
+     * @Groups({"serviceUSS37", "serviceCupones"})
      */
     private $nombre;
     
@@ -45,7 +45,7 @@ class EstadoCupon
      * @ORM\OneToMany(targetEntity="Cupon", mappedBy="estadoCupon")
      * 
      * @Expose
-     * @Groups({"serviceUSS37", "serviceCupones"})
+     * @Groups({"serviceUSS37"})
      */
     private $cupones;
     

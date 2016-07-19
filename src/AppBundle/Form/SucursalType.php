@@ -15,7 +15,9 @@ class SucursalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('telefono')
+            ->add('telefono', null, array(
+                    'label' => 'Teléfono'
+                ))
             ->add('direccion', new DireccionType())
             ->add('localComercial')
         ;
