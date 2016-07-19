@@ -1,0 +1,12 @@
+localcomercial_log:
+    path:     /
+    defaults: { _controller: "AppBundle:LocalComercial:showLogueado" }
+
+localcomercial_log_edit:
+    path:     /edit
+    defaults: { _controller: "AppBundle:LocalComercial:editLogueado" }
+
+localcomercial_log_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:LocalComercial:update" }
+    methods:  [POST, PUT]
