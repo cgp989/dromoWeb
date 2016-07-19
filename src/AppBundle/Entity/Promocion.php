@@ -33,7 +33,7 @@ class Promocion
      *
      * @ORM\Column(name="titulo", type="string", length=25)
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $titulo;
 
@@ -42,7 +42,7 @@ class Promocion
      *
      * @ORM\Column(name="descripcion", type="string", length=500)
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $descripcion;
 
@@ -51,7 +51,7 @@ class Promocion
      *
      * @ORM\Column(name="precio")
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $precio;
 
@@ -83,13 +83,16 @@ class Promocion
      * @ORM\JoinColumn(name="idTipoPromocion", referencedColumnName="id")
      * 
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $tipoPromocion;
     
     /**
      * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="promociones")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
+     * 
+     * @Expose
+     * @Groups({"serviceCupones"})
      */
     private $localComercial;
 

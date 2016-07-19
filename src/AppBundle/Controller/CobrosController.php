@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\EstadoCobroCupon;
 
@@ -41,13 +42,10 @@ class CobrosController extends Controller {
         //HACELO ADENTRO DEL REPOSITORIO DE CUPON O DE LOCAL
         $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
         $cuponesPendientes = $repositoryLocal->getItemsPendientesCobro($id);
-        $local = 'local';
-        foreach ($cuponesPendientes as $e) {
-            $local = $e['nombre'];
-            break;
-        }
+        $Local = $repositoryLocal->findOneById($id);
         return $this->render('AppBundle:Cobros:listarPendientesLocal.html.twig', array(
-                    'cuponesPendientes' => $cuponesPendientes, 'nombreLocal' => $local,
+            'idLocal' => $id,
+            'cuponesPendientes' => $cuponesPendientes, 'nombreLocal' => $Local->getNombre(),
         ));
     }
 
@@ -66,13 +64,7 @@ class CobrosController extends Controller {
         $em->persist($entity);
         $em->flush();
         //redirigir
-        $Local = $em->getRepository('AppBundle:LocalComercial')->findOneById($id);
-        $nombreLocal = $Local->getNombre();
-        $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
-        $cuponesPendientes = $repositoryLocal->getItemsPendientesCobro($id);
-        return $this->render('AppBundle:Cobros:listarPendientesLocal.html.twig', array(
-                    'cuponesPendientes' => $cuponesPendientes, 'nombreLocal' => $nombreLocal,
-        ));
+        return $this->getPendientesLocalAction($id);
     }
 
     /**
@@ -103,5 +95,21 @@ class CobrosController extends Controller {
                     'cuponesCobrados' => $cuponesCobrados, 'nombreLocal' => $local,
         ));
     }
-
+    
+    public function getPdfPendientesLocalAction($id){
+        $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
+        $cuponesPendientes = $repositoryLocal->getItemsPendientesCobro($id);
+        $Local = $repositoryLocal->findOneById($id);
+        $html = $this->render('AppBundle:Cobros:listarPendientesLocalPdf.html.twig', array(
+            'cuponesPendientes' => $cuponesPendientes, 'nombreLocal' => $Local->getNombre(),
+        ));
+        return new Response(
+           $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+           200,
+           [
+               'Content-Type'        => 'application/pdf',
+               'Content-Disposition' => sprintf('attachment; filename="%s"', 'cobros-pendientes-local'),
+           ]
+        );
+    }
 }

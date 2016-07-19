@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Dromo\Bundle\ProcedimientosBundle\DromoProcedimientosBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Dromo\Bundle\FosUserBundle\DromoFosUserBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

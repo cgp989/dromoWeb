@@ -47,6 +47,7 @@ class CuponRepository extends EntityRepository
             $estadoCobroPendiente = $repositoryEstadoCobroCupon->findOneByNombre('pendiente');
             $cupon->setEstadoCupon($estadoCanjeado);
             $cupon->setEstadoCobroCupon($estadoCobroPendiente);
+            $this->calcPrecioCobroYPuntos($cupon);
             $this->getEntityManager()->persist($cupon);
             if(!is_null($cupon->getPuntaje()) && $cupon->getPuntaje() > 0 && $cupon->getTipoCupon()->getNombre() == 'promocion'){
                 $usuarioMovil = $cupon->getUsuarioMovil();
@@ -86,5 +87,20 @@ class CuponRepository extends EntityRepository
         
         //echo $query->getSQL();exit;
         return $query->getResult();
+    }
+    
+    public function calcPrecioCobroYPuntos(Cupon $cupon){
+        $precioPromocion = $cupon->getProgramacion()->getPromocion()->getPrecio();
+        $repositoryVariable = $this->getEntityManager()->getRepository('AppBundle:Variables');
+        $ArrayVariables = $repositoryVariable->findAll();
+        $variables = $ArrayVariables[0];
+        //se calcula el precio que se le cobra al local
+        $precioCobroLocal = $precioPromocion*$variables->getPorcCobroLocal();
+        //se calcula la cantidad de puntos del cupon
+        $puntosCupon = intval($precioCobroLocal*(1-$variables->getPorcGanancia())*$variables->getValorPunto());
+        
+        $cupon->setPuntaje($puntosCupon);
+        $cupon->setPrecioCobroLocal($precioCobroLocal);
+        return $cupon;
     }
 }

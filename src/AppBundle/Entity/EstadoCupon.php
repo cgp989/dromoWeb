@@ -45,7 +45,7 @@ class EstadoCupon
      * @ORM\OneToMany(targetEntity="Cupon", mappedBy="estadoCupon")
      * 
      * @Expose
-     * @Groups({"serviceUSS37"})
+     * @Groups({"serviceUSS37", "serviceCupones"})
      */
     private $cupones;
     

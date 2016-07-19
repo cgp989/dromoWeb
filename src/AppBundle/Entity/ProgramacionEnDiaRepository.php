@@ -117,7 +117,7 @@ class ProgramacionEnDiaRepository extends EntityRepository {
      * Recorre todas las programaciones del dia, verificando si se encentran en el rango horario
      * o no para actualizar su vigencia
      * 
-     * @return array $arrayInfoEstados con tres indices con informacion de cuantas promociones hay agotadas, vigentes o noVigentes.
+     * @return array $arrayInfoEstados con tres indices con informacion de cuantas promociones hay agotadas, vigentes, noVigentes o se eliminaron de la tabla.
      */
     public function actualizarVigenciasProgramaciones($programacionesED = null) {
         if (is_null($programacionesED)) {
@@ -131,20 +131,28 @@ class ProgramacionEnDiaRepository extends EntityRepository {
         /* @var $programacionED ProgramacionEnDia */
         $programacionED;
         $fechaActual = new \DateTime('now');
-        $arrayInfoEstados = array('agotadas' => 0, 'vigentes' => 0, 'noVigentes' => 0);
+        $arrayInfoEstados = array('agotadas' => 0, 'vigentes' => 0, 'noVigentes' => 0, 'eliminadas' => 0);
         foreach ($programacionesED as $key => $value) {
             $programacionED = $value;
-            if ($programacionED->getCantidadDisponible() == 0) {
-                $programacionED->setEstadoProgramacionEnDia($estadoAgotada);
-                $arrayInfoEstados['agotadas'] ++;
-            } elseif ($fechaActual >= $programacionED->getInicio() && $fechaActual <= $programacionED->getVencimiento()) {
-                $programacionED->setEstadoProgramacionEnDia($estadoVigente);
-                $arrayInfoEstados['vigentes'] ++;
-            } else {
+            
+            if ($fechaActual < $programacionED->getInicio()){
                 $programacionED->setEstadoProgramacionEnDia($estadoNoVigente);
-                $arrayInfoEstados['noVigentes'] ++;
+                $arrayInfoEstados['noVigentes']++;
+                $this->getEntityManager()->persist($programacionED);
+            }elseif ($fechaActual >= $programacionED->getInicio() && $fechaActual <= $programacionED->getVencimiento()){
+                if($programacionED->getCantidadDisponible() == 0){
+                    $programacionED->setEstadoProgramacionEnDia($estadoAgotada);
+                    $arrayInfoEstados['agotadas']++;
+                }else{
+                    $programacionED->setEstadoProgramacionEnDia($estadoVigente);
+                    $arrayInfoEstados['vigentes']++;
+                }
+                $this->getEntityManager()->persist($programacionED);
+            }else{
+                // si ya paso a fecha de vencimiento la elimino
+                $this->getEntityManager()->remove($programacionED);
+                $arrayInfoEstados['eliminadas']++;
             }
-            $this->getEntityManager()->persist($programacionED);
         }
         $this->getEntityManager()->flush();
         return $arrayInfoEstados;

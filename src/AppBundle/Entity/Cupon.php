@@ -26,7 +26,7 @@ class Cupon
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
      * @Expose
-     * @Groups({"serviceUSS21", "serviceUSS37"})
+     * @Groups({"serviceUSS21", "serviceUSS37", "serviceCupones"})
      */
     private $id;
 
@@ -36,7 +36,7 @@ class Cupon
      * @ORM\Column(name="codigo", type="string", length=255)
      * 
      * @Expose
-     * @Groups({"serviceUSS21"})
+     * @Groups({"serviceUSS21", "serviceCupones"})
      */
     private $codigo;
 
@@ -70,7 +70,7 @@ class Cupon
      * @ORM\Column(name="puntaje", type="integer", nullable=TRUE)
      * 
      * @Expose
-     * @Groups({"serviceUSS21"})
+     * @Groups({"serviceUSS21", "serviceCupones"})
      */
     private $puntaje;
     
@@ -79,7 +79,7 @@ class Cupon
      * @ORM\JoinColumn(name="idProgramacion", referencedColumnName="id")
      * 
      * @Expose
-     * @Groups({"serviceUSS21"})
+     * @Groups({"serviceUSS21", "serviceCupones"})
      */
     private $programacion;
     
@@ -103,7 +103,7 @@ class Cupon
      * @ORM\JoinColumn(name="idEstadoCupon", referencedColumnName="id")
      * 
      * @Expose
-     * @Groups({"serviceUSS21", "serviceUSS37"})
+     * @Groups({"serviceUSS21", "serviceUSS37" , "serviceCupones"})
      */
     private $estadoCupon;
     
@@ -113,7 +113,14 @@ class Cupon
      * 
      */
     private $estadoCobroCupon;
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="precioCobroLocal", type="float", nullable=TRUE)
+     * 
+     */
+    private $precioCobroLocal;
 
     /**
      * Get id
@@ -386,5 +393,13 @@ class Cupon
     public function getEstadoCobroCupon()
     {
         return $this->estadoCobroCupon;
+    }
+    
+    function getPrecioCobroLocal() {
+        return $this->precioCobroLocal;
+    }
+
+    function setPrecioCobroLocal($precioCobroLocal) {
+        $this->precioCobroLocal = $precioCobroLocal;
     }
 }

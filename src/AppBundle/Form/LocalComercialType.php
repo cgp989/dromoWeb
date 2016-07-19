@@ -10,11 +10,11 @@ use FOS\UserBundle\Form\Type\RegistrationFormType;
 class LocalComercialType extends AbstractType {
 
     private $opciones;
-    
+
     public function __construct(array $opciones = null) {
         $this->opciones = $opciones;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -25,7 +25,9 @@ class LocalComercialType extends AbstractType {
                 ->add('descripcion')
                 ->add('nombreContacto')
                 ->add('emailContacto', 'email')
-                ->add('telefonoContacto')
+                ->add('telefonoContacto', 'integer', array('attr' => array(
+                        'min' => '99999',
+            )))
         ;
 
         if (!isset($this->opciones['edit'])) {
@@ -49,5 +51,4 @@ class LocalComercialType extends AbstractType {
         return 'appbundle_localcomercial';
     }
 
-    }
-        
+}
