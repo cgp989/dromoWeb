@@ -87,5 +87,6 @@ body.pdf-export, .pdf-export h1, .pdf-export h3{
 }
 
 .portada{
-    background-image: url("../images/iconos/dromoPortada.jpg");   
+    background-image: url("../images/iconos/dromoPortada.jpg");
+    background-size: cover;
 }

@@ -106,4 +106,13 @@ class ProgramacionRepository extends EntityRepository
                 ->getResult();
         return $programaciones;
     }
+    
+        function validaFecha(Programacion $programacion){
+        $fechaHoy = new \DateTime('now');
+        if ($programacion->getFechaInicio() >= $fechaHoy && $programacion->getFechaInicio() <= $programacion->getFechaFin()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

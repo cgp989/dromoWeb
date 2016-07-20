@@ -64,14 +64,14 @@ class CuponController extends Controller {
                     $arrayItemsView['cupon'] = $cupon;
                     $arrayItemsView['form_canjear'] = null;
                     $fechaHoy = new \DateTime('now');
-                    if($cupon->getInicio() <= $fechaHoy && $cupon->getVencimiento() >= $fechaHoy && $cupon->getEstadoCupon()->getNombre() == 'porCanjear'){ 
+                    if($cupon->esCuponEnfecha()){ 
                         $formCanjear = $this->createCanjearForm($cupon->getId());
                         $arrayItemsView['form_canjear'] = $formCanjear->createView();
                     }
                     
                     return $this->render('AppBundle:Cupon:view.html.twig', $arrayItemsView);
                 }else{
-                    $form->addError(new FormError('El cup&oacute;n no es de este local'));
+                    $form->addError(new FormError('El cupón no es de este local'));
                 }
             }else{
                 $form->addError(new FormError('El codigo no existe'));

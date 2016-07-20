@@ -4,56 +4,59 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use AppBundle\Entity\Programacion;
 use AppBundle\Form\ProgramacionType;
+use Symfony\Component\Form\FormError;
 
 /**
  * Programacion controller.
  *
  */
-class ProgramacionController extends Controller
-{
+class ProgramacionController extends Controller {
 
     /**
      * Lists all Programacion entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $repoProgramaciones = $em->getRepository('AppBundle:Programacion');
         $entities = $repoProgramaciones->getProgramacionesLocal($this->getUser()->getLocalComercial()->getId());
 
         return $this->render('AppBundle:Programacion:index.html.twig', array(
-            'entities' => $entities,
+                    'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Programacion entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Programacion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-            
-            if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                $em->getRepository ('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
 
-            return $this->redirect($this->generateUrl('programacion_show', array('id' => $entity->getId())));
+            $em = $this->getDoctrine()->getManager();
+            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+                $em->persist($entity);
+                $em->flush();
+
+                if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                    $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
+
+                return $this->redirect($this->generateUrl('programacion_show', array('id' => $entity->getId())));
+            }else {
+                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+            }
         }
 
         return $this->render('AppBundle:Programacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -64,15 +67,13 @@ class ProgramacionController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Programacion $entity)
-    {
+    private function createCreateForm(Programacion $entity) {
         $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->getUser()->getLocalComercial()->getId())), $entity, array(
             'action' => $this->generateUrl('programacion_create'),
             'method' => 'POST'
         ));
 
         $form->add('crear', 'submit', array('label' => 'Crear', 'attr' => ['class' => 'btn btn-primary']));
-
         return $form;
     }
 
@@ -80,14 +81,13 @@ class ProgramacionController extends Controller
      * Displays a form to create a new Programacion entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Programacion();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Programacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -95,8 +95,7 @@ class ProgramacionController extends Controller
      * Finds and displays a Programacion entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Programacion')->find($id);
@@ -108,8 +107,8 @@ class ProgramacionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:Programacion:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -117,8 +116,7 @@ class ProgramacionController extends Controller
      * Displays a form to edit an existing Programacion entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Programacion')->find($id);
@@ -131,21 +129,20 @@ class ProgramacionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:Programacion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a Programacion entity.
-    *
-    * @param Programacion $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Programacion $entity)
-    {
+     * Creates a form to edit a Programacion entity.
+     *
+     * @param Programacion $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Programacion $entity) {
         $form = $this->createForm(new ProgramacionType(array('idLocal' => $this->getUser()->getLocalComercial()->getId(), 'edit' => true)), $entity, array(
             'action' => $this->generateUrl('programacion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -154,12 +151,12 @@ class ProgramacionController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Programacion entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Programacion')->find($id);
@@ -174,27 +171,27 @@ class ProgramacionController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-            
-            if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                $em->getRepository ('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
+
+            if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                $em->getRepository('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
             else
-                $em->getRepository ('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
-                
+                $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
+
             return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Programacion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a Programacion entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -206,10 +203,10 @@ class ProgramacionController extends Controller
                 throw $this->createNotFoundException('No existe la programacion.');
             }
 
-            if($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                $em->getRepository ('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
-            
-            $estadoEliminada=$em->getRepository('AppBundle:EstadoProgramacion')->findOneByNombre('eliminada');
+            if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
+
+            $estadoEliminada = $em->getRepository('AppBundle:EstadoProgramacion')->findOneByNombre('eliminada');
             $entity->setEstadoProgramacion($estadoEliminada);
             $em->persist($entity);
             $em->flush();
@@ -225,19 +222,18 @@ class ProgramacionController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('programacion_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', 
-                    array('label' => ' ',
-                        'attr' => 
-                            ['class' => 'glyphicon glyphicon-trash', 
-                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta programación?")',
-                            'title' => 'eliminar']
-                    ))
-            ->getForm()
+                        ->setAction($this->generateUrl('programacion_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => ' ',
+                            'attr' =>
+                            ['class' => 'glyphicon glyphicon-trash',
+                                'onclick' => 'return confirm("¿Esta seguro de eliminar esta programación?")',
+                                'title' => 'eliminar']
+                        ))
+                        ->getForm()
         ;
-    } 
+    }
+
 }
