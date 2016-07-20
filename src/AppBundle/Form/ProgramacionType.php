@@ -78,7 +78,10 @@ class ProgramacionType extends AbstractType
                 ),
                 'label' => 'Duración [hs]'
             ))
-            ->add('cantidad')
+            ->add('cantidad', 'integer', array('attr' => array(
+                        'min' => '1',
+                        'max' => '1000',
+            )))
             ->add('esLunes', null, array(
                 'label' => 'Lunes',
                 'required' => false

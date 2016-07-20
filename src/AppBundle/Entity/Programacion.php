@@ -154,7 +154,7 @@ class Programacion
     public function __construct() {
         $this->cupones = new ArrayCollection();
         $this->visitasPromocion = new ArrayCollection();
-    }
+     }
 
     /**
      * Get id
