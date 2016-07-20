@@ -43,8 +43,10 @@ class Cupon
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="date")
+     * @ORM\Column(name="fecha", type="date") 
      * 
+     * @Expose
+     * @Groups({"serviceCupones"})
      */
     private $fecha;
     
