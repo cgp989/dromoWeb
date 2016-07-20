@@ -44,7 +44,7 @@ class Programacion
      *
      * @ORM\Column(name="duracion", type="integer")
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $duracion;
 
@@ -52,6 +52,8 @@ class Programacion
      * @var \DateTime
      *
      * @ORM\Column(name="fechaInicio", type="date")
+     * @Expose
+     * @Groups({"serviceCupones"})
      */
     private $fechaInicio;
 

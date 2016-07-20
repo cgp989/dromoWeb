@@ -4,38 +4,36 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use AppBundle\Entity\LocalComercial;
 use AppBundle\Form\LocalComercialType;
 use FOS\UserBundle\Form\Type\RegistrationFormType;
+use Symfony\Component\Form\FormError;
 
 /**
  * LocalComercial controller.
  *
  */
-class LocalComercialController extends Controller
-{
+class LocalComercialController extends Controller {
 
     /**
      * Lists all LocalComercial entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('AppBundle:LocalComercial')->findAll();
 
         return $this->render('AppBundle:LocalComercial:index.html.twig', array(
-            'entities' => $entities,
+                    'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new LocalComercial entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new LocalComercial();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -44,24 +42,29 @@ class LocalComercialController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity->setVersion(1);
             $entity->setValoracion(0);
-            
-            
+
+
             //se crea el usuario del local
             $userEntity = $entity->getUsuario();
             $userManipulator = $this->get('fos_user.util.user_manipulator');
-            $userNew = $userManipulator->create($userEntity->getUsername(), $userEntity->getPlainPassword(), $userEntity->getEmail(), true, false);
-            $userManipulator->addRole($userEntity->getUsername(), 'ROLE_LOCAL');
-            $entity->setUsuario($userNew);
-            
-            $em->persist($entity);
-            $em->flush();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneByusername($userEntity->getUsername());
+            if ($usuario == null) {
+                $userNew = $userManipulator->create($userEntity->getUsername(), $userEntity->getPlainPassword(), $userEntity->getEmail(), true, false);
+                $userManipulator->addRole($userEntity->getUsername(), 'ROLE_LOCAL');
+                $entity->setUsuario($userNew);
 
-            return $this->redirect($this->generateUrl('localcomercial_show', array('id' => $entity->getId())));
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('localcomercial_show', array('id' => $entity->getId())));
+            } else {
+                $form->addError(new FormError('Usuario ya existe!'));
+            }
         }
-
+//        
         return $this->render('AppBundle:LocalComercial:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -72,8 +75,7 @@ class LocalComercialController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(LocalComercial $entity)
-    {
+    private function createCreateForm(LocalComercial $entity) {
         $form = $this->createForm(new LocalComercialType(), $entity, array(
             'action' => $this->generateUrl('localcomercial_create'),
             'method' => 'POST',
@@ -88,14 +90,13 @@ class LocalComercialController extends Controller
      * Displays a form to create a new LocalComercial entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new LocalComercial();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:LocalComercial:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -103,8 +104,7 @@ class LocalComercialController extends Controller
      * Finds and displays a LocalComercial entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:LocalComercial')->find($id);
@@ -116,8 +116,8 @@ class LocalComercialController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:LocalComercial:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -125,8 +125,7 @@ class LocalComercialController extends Controller
      * Displays a form to edit an existing LocalComercial entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:LocalComercial')->find($id);
@@ -139,23 +138,28 @@ class LocalComercialController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:LocalComercial:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a LocalComercial entity.
-    *
-    * @param LocalComercial $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(LocalComercial $entity)
-    {
+     * Creates a form to edit a LocalComercial entity.
+     *
+     * @param LocalComercial $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(LocalComercial $entity) {
+        $nameRouteUdpate = 'localcomercial_update';
+        //Si el usuario es un local se cambia la url de actualizacion
+        if ($this->getUser()->hasRole('ROLE_LOCAL')) {
+            $nameRouteUdpate = 'localcomercial_log_update';
+        }
+
         $form = $this->createForm(new LocalComercialType(array('edit' => true)), $entity, array(
-            'action' => $this->generateUrl('localcomercial_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl($nameRouteUdpate, array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -163,18 +167,18 @@ class LocalComercialController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing LocalComercial entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:LocalComercial')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('No existe el Local Comercial.');
+            throw $this->createNotFoundException('No existe el Local.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -183,24 +187,30 @@ class LocalComercialController extends Controller
 
         if ($editForm->isValid()) {
             $version = $entity->getVersion();
-            $entity->setVersion($version+1);
+            $entity->setVersion($version + 1);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('localcomercial_edit', array('id' => $id)));
+            $urlEdit = $this->generateUrl('localcomercial_edit', array('id' => $id));
+            //Si el usuario es un local se cambia la url de actualizacion
+            if ($this->getUser()->hasRole('ROLE_LOCAL')) {
+                $nameRouteEdit = $this->generateUrl('localcomercial_log_edit');
+            }
+
+            return $this->redirect($nameRouteEdit);
         }
 
         return $this->render('AppBundle:LocalComercial:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a LocalComercial entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -226,18 +236,26 @@ class LocalComercialController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('localcomercial_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('eliminar', 'submit', array('label' => ' ',
+                        ->setAction($this->generateUrl('localcomercial_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('eliminar', 'submit', array('label' => ' ',
                             'attr' =>
                             ['class' => 'glyphicon glyphicon-trash',
                                 'onclick' => 'return confirm("¿Esta seguro de eliminar este Local Comercial?")',
                                 'title' => 'eliminar']
                         ))
-            ->getForm()
+                        ->getForm()
         ;
     }
+
+    public function showLogueadoAction() {
+        return $this->showAction($this->getUser()->getLocalComercial()->getId());
+    }
+
+    public function editLogueadoAction() {
+        return $this->editAction($this->getUser()->getLocalComercial()->getId());
+    }
+
 }

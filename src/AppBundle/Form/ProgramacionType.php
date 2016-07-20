@@ -76,7 +76,7 @@ class ProgramacionType extends AbstractType
                     '47' => '23:30',
                     '48' => '24:00',
                 ),
-                'label' => 'Duración'
+                'label' => 'Duración [hs]'
             ))
             ->add('cantidad')
             ->add('esLunes', null, array(
@@ -88,7 +88,7 @@ class ProgramacionType extends AbstractType
                 'required' => false
             ))
             ->add('esMiercoles', null, array(
-                'label' => 'Miercoles',
+                'label' => 'Miércoles',
                 'required' => false
             ))
             ->add('esJueves', null, array(

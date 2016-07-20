@@ -25,6 +25,9 @@ class TipoPromocion
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Expose
+     * @Groups({"serviceCupones"})
      */
     private $id;
 
@@ -33,7 +36,7 @@ class TipoPromocion
      *
      * @ORM\Column(name="nombre", type="string", length=50)
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $nombre;
 

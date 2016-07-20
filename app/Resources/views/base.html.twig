@@ -27,16 +27,17 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">&#60;DROMO&#62;</a>
+                    <a class="navbar-brand" href="{{ path('app_index_local') }}">&#60;DROMO&#62;</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <li><a href="#">Configuraciones</a></li>
-                            <li><a href="{{ path('fos_user_profile_show') }}">Perfil</a></li>
-                            <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+                            {% if is_granted('ROLE_LOCAL') %}
+                                <li><span class="glyphicon glyphicon-home"></span> <a href="{{ path('localcomercial_log') }}">{{ app.security.getToken().getUser().getLocalComercial().getNombre() }}</a></li>
                             {% endif %}
-                        <li><a href="#">Contacto</a></li>
+                            <li><span class="glyphicon glyphicon-user"></span> <a class="" href="{{ path('fos_user_profile_show') }}">{{ app.security.getToken().getUser().getUsername() }}</a></li>
+                            <li><span class="glyphicon glyphicon-log-out"></span> <a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -85,7 +86,7 @@
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
                             <li class="{% if 'programacionendia' in app.request.get('_route') %}active{% endif %}">
-                                <a href="{{ path('programacionendia') }}">Promos en Dia</a>
+                                <a href="{{ path('programacionendia') }}">Promos en D&iacute;a</a>
                             </li>
                             <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('promocion') }}">Promociones</a>

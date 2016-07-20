@@ -14,7 +14,7 @@
                     renderTo: 'graficaCircular'
                 },
                 title: {
-                    text: 'Porcentaje de Visitas a Programaciones'
+                    text: 'Porcentaje de Visitas a Promociones'
                 },
                 subtitle: {
                     text: 'Dromo'
@@ -47,7 +47,7 @@
                         type: 'pie',
                         name: 'Browser share',
                         data: [{% for entity in entities %}
-                            ['{{ entity.descripcion }}',{{ (entity.cant/suma)*100 }} , ],
+                            ['{{ entity.titulo }} - {{ entity.cant }}',{{ (entity.cant/suma)*100 }} , ],
         {% endfor %} 
                         ]
                     }]

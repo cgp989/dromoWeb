@@ -11,10 +11,10 @@
         <thead>
             <tr>
                 <th class="col-xs-1">Tipo</th>
-                <th class="col-xs-8">Titulo</th>
+                <th class="col-xs-7">T&iacute;tulo</th>
                 <th class="col-xs-1">Precio</th>
                 <th class="col-xs-1">Estado</th>
-                <th class="col-xs-1">Acciones</th>
+                <th class="col-xs-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -26,8 +26,8 @@
                 <td>{{ entity.estadoPromocion }}</td>
                 <td>
                     <a title="ver" href="{{ path('promocion_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
-                    &nbsp;&nbsp;&nbsp;
                     <a title="editar" href="{{ path('promocion_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a title="ver programaciones" href="{{ path('programacion_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-time"></span></a>
                 </td>
             </tr>
         {% endfor %}
