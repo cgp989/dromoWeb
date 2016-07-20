@@ -29,35 +29,11 @@ class cargarProgramacionesEnDiaCommand extends ContainerAwareCommand {
             ->setDescription('Esta tarea va a buscar en la base de datos las promociones que esten'
                     . ' programadas para la fecha actual y va a cargar las mismas en la tabla'
                     . ' programacionEnDia')
-            /*->addArgument(
-                'name',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
-            )
-            ->addOption(
-                'yell',
-                null,
-                InputOption::VALUE_NONE,
-                'If set, the task will yell in uppercase letters'
-            )*/
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /*$name = $input->getArgument('name');
-        if ($name) {
-            $text = 'Hello '.$name;
-        } else {
-            $text = 'Hello';
-        }
-
-        if ($input->getOption('yell')) {
-            $text = strtoupper($text);
-        }*/
-        
-        //get entity manager for queries
-        /* @var $em EntityManager */
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $repositoryPr = $em->getRepository('AppBundle:Programacion');
         $repositoryPrED = $em->getRepository('AppBundle:ProgramacionEnDia');

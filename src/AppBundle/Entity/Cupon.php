@@ -402,4 +402,14 @@ class Cupon
     function setPrecioCobroLocal($precioCobroLocal) {
         $this->precioCobroLocal = $precioCobroLocal;
     }
+    
+    /**
+     * Verifica si un cupon esta dentro de la fecha de inicio y vencimiento y con estado porCanjer
+     * 
+     * @return boolean
+     */
+    public function esCuponEnfecha(){
+        $fechaHoy = new \DateTime('now');
+        return ($this->getInicio() <= $fechaHoy && $this->getVencimiento() >= $fechaHoy && $this->getEstadoCupon()->getNombre() == 'porCanjear');
+    }
 }

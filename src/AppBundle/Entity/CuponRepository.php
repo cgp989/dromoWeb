@@ -40,7 +40,7 @@ class CuponRepository extends EntityRepository
     public function canjearCupon($idCupon){
         /* @var AppBundle\Entity\Cupon $cupon */
         $cupon = $this->find($idCupon);
-        if($cupon->getEstadoCupon()->getNombre() == 'porCanjear'){
+        if($cupon->esCuponEnfecha()){
             $repositoryEstadoCupon = $this->getEntityManager()->getRepository('AppBundle:EstadoCupon');
             $repositoryEstadoCobroCupon = $this->getEntityManager()->getRepository('AppBundle:EstadoCobroCupon');
             $estadoCanjeado = $repositoryEstadoCupon->findOneByNombre('canjeado');
@@ -102,5 +102,38 @@ class CuponRepository extends EntityRepository
         $cupon->setPuntaje($puntosCupon);
         $cupon->setPrecioCobroLocal($precioCobroLocal);
         return $cupon;
+    }
+    
+    /**
+     * Recorre los cupones con estado porCanjear y que se haya pasado su vencimiento y les actualiza el estado.
+     * 
+     * @return array con la cantidas de cupones vencidos
+     */
+    public function actualizarVigenciaCupones(){
+        $fechaHoy = new \DateTime('now');
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "select cup
+                from AppBundle:Cupon cup
+                    left join cup.estadoCupon ec
+                where ec.nombre=:paramEstadoCupon
+                and cup.vencimiento<=:paramFechaHoy")
+            ->setParameter('paramEstadoCupon', 'porCanjear')
+            ->setParameter('paramFechaHoy', $fechaHoy);
+        
+        $arrayCupones = $query->getResult();
+        $arrayResult['cupones-vencidos']=count($arrayCupones);
+        if($arrayResult['cupones-vencidos']>0){
+            $entityManager = $this->getEntityManager();
+            $repoEstadoCupon = $entityManager->getRepository('AppBundle:EstadoCupon');
+            $estadoVencido = $repoEstadoCupon->findOneByNombre('vencido');
+            foreach ($arrayCupones as $cupon) {
+                $cupon->setEstadoCupon($estadoVencido);
+                $entityManager->persist($cupon);
+            }
+            $entityManager->flush();
+        }
+        
+        return $arrayResult;
     }
 }
