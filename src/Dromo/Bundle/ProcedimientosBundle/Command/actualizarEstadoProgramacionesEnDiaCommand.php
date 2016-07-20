@@ -28,7 +28,12 @@ class actualizarEstadoProgramacionesEnDiaCommand extends ContainerAwareCommand {
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $repositoryPrED = $em->getRepository('AppBundle:ProgramacionEnDia');
-        $arrayResult = $repositoryPrED->actualizarVigenciasProgramaciones();
-        $output->writeln(print_r($arrayResult));
+        $arrayResultPrED = $repositoryPrED->actualizarVigenciasProgramaciones();
+        
+        $repositoryCupon = $em->getRepository('AppBundle:Cupon');
+        $arrayResultCup = $repositoryCupon->actualizarVigenciaCupones();
+        
+        $output->writeln(print_r($arrayResultPrED));
+        $output->writeln(print_r($arrayResultCup));
     }
 }
