@@ -20,7 +20,9 @@ class PromocionType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('descripcion', 'textarea')
+                ->add('descripcion', 'textarea', array(
+                    'label' => 'Descripción'
+                ))
                 ->add('precio', null, array(
                     'label' => 'Precio ($)'
                 ))
@@ -41,6 +43,7 @@ class PromocionType extends AbstractType {
             $builder
                     ->add('titulo', null, array(
                         'disabled' => true,
+                        'label' => 'Título'
                     ))
                     ->add('tipoPromocion', null, array(
                         'label' => 'Tipo',
@@ -55,7 +58,9 @@ class PromocionType extends AbstractType {
             ));
         } else {
             $builder
-                    ->add('titulo')
+                    ->add('titulo', null, array(
+                        'label' => 'Título'
+                    ))
                     ->add('tipoPromocion', null, array(
                         'label' => 'Tipo',
                         'empty_value' => '',

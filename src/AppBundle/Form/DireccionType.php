@@ -16,7 +16,7 @@ class DireccionType extends AbstractType
     {
         $builder
             ->add('descripcion', null, array(
-                    'label' => 'Direccion',
+                    'label' => 'Dirección',
                     'required' => true
                 ))
             ->add('latitud', null, array(
