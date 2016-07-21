@@ -27,9 +27,9 @@ class LocalComercialType extends AbstractType {
                 ))
                 ->add('nombreContacto')
                 ->add('emailContacto', 'email')
-                ->add('telefonoContacto', 'integer', array('attr' => array(
-                        'label' => 'Teléfono Contacto',
-                        'min' => '99999',
+                ->add('telefonoContacto', null, array('attr' => array(
+                        'type' => 'number',
+                        'label' => 'Teléfono Contacto',                        
             )))
         ;
 
