@@ -28,10 +28,10 @@ class ComentarioRepository extends EntityRepository {
                 ->createQuery('SELECT c FROM AppBundle:Comentario c '
                         . 'LEFT JOIN c.localComercial l '
                         . 'LEFT JOIN c.estadoComentario e '
-                        . 'WHERE l.id = :idLocal AND e.nombre != :nombre ')
+                        . 'WHERE l.id = :idLocal ')
                 ->setParameters(array(
-                    'idLocal' => $idLocal,
-                    'nombre' => 'Denunciado'))
+                    'idLocal' => $idLocal
+                    ))
                 ->getResult();
         return $comentarios;
     }

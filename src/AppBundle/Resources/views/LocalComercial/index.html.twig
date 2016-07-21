@@ -11,9 +11,10 @@
         <thead>
             <tr>
                 <th class="col-xs-2">Nombre</th>
-                <th class="col-xs-3">Nombre Contacto</th>
+                <th class="col-xs-1">Nombre Contacto</th>
                 <th class="col-xs-3">Email Contacto</th>
-                <th class="col-xs-3">Tel&eacute;fono Contaccto</th>
+                <th class="col-xs-3">Tel&eacute;fono Contacto</th>
+                <th class="col-xs-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +26,9 @@
                     <td>{{ entity.telefonoContacto }}</td>                   
                     <td>
                         <a title="ver" href="{{ path('localcomercial_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        &nbsp;&nbsp;&nbsp;
                         <a title="editar" href="{{ path('localcomercial_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a title="agregar sucursal" href="{{ path('sucursal_new_local', { 'idLocal': entity.id }) }}"><span class="glyphicon glyphicon-paperclip"></span></a>
+                        <a title="ver sucursales" href="{{ path('sucursal_local', { 'idLocal': entity.id }) }}"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
                     </td>
                 </tr>
             {% endfor %}
