@@ -9,8 +9,9 @@
                 <th class="col-xs-6">Comentario</th>
                 <th class="col-xs-1">Valoraci&oacute;n</th>
                 <th class="col-xs-2">Fecha</th>
-                <th class="col-xs-2">Usuario</th>
-                <th class="col-xs-1">Ver</th>
+                <th class="col-xs-1">Usuario</th>
+                <th class="col-xs-1">Estado</th>
+                <th class="col-xs-1">Denunciar</th>
             </tr>
         </thead>
         <tbody>
@@ -18,10 +19,11 @@
                 <tr>
                     <td>{{ entity.comentario }}</td>
                     <td>{{ entity.valoracion }}</td>
-                    <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ entity.fecha|date('d-m-Y H:i:s') }}</td>
                     <td>{{ entity.usuarioMovil }}</td>
-                    <td>
-                        <a title="ver" href="{{ path('comentario_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    <td>{{ entity.estadoComentario.nombre }}</td>
+                    <td>                       
+                        <a title="denunciar" href="{{ path('comentario_delete', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
             {% endfor %}

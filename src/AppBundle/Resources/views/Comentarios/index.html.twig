@@ -18,12 +18,11 @@
                 <tr>
                     <td>{{ entity.comentario }}</td>
                     <td>{{ entity.valoracion }}</td>
-                    <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ entity.fecha|date('d-m-Y H:i:s') }}</td>
                     <td>{{ entity.localComercial }}</td>
                     <td>
-                        <a title="ver" href="{{ path('comentarios_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a title="editar" href="{{ path('comentarios_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a title="activar" href="{{ path('comentarios_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a title="eliminar" href="{{ path('comentarios_delete', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
             {% endfor %}

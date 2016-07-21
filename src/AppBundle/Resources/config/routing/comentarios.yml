@@ -27,4 +27,4 @@ comentarios_update:
 comentarios_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:Comentarios:delete" }
-    methods:  [POST, DELETE]
+
