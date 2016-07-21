@@ -13,7 +13,6 @@ use AppBundle\Form\PremiosType;
  */
 class PremiosController extends Controller {
 
-
     /**
      * Lists all Promocion entities.
      *
@@ -37,17 +36,15 @@ class PremiosController extends Controller {
         $entity = new Promocion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $entity->setEstaModerada(true);
+        $tipo = $em->getRepository('AppBundle:TipoPromocion')->findOneByNombre('Premio');
+        $entity->setTipoPromocion($tipo);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity->setEstaModerada(0);
-            $tipo= $em->getRepository('AppBundle:TipoPromocion')->findoneByNombre('Premio');
-            $entity-setTipoPromocion($tipoPromocion);
-            $em->persist($entity);
-            $em->flush();
+        $em->persist($entity);
+        $em->flush();
 
-            return $this->redirect($this->generateUrl('premios_show', array('id' => $entity->getId())));
-        }
+        return $this->redirect($this->generateUrl('premios_show', array('id' => $entity->getId())));
 
         return $this->render('AppBundle:Premios:new.html.twig', array(
                     'entity' => $entity,

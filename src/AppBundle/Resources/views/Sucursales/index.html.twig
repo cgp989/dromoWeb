@@ -5,15 +5,13 @@
     <table class="table table-hover records_list">
         <thead>
             <tr>
-                <th class="col-xs-4">Local Comercial</th>
-                <th class="col-xs-4">Direcci&oacute;n</th>
-                <th class="col-xs-3">Telefono</th>                
+                <th class="col-xs-5">Direcci&oacute;n</th>
+                <th class="col-xs-3">Tel&eacute;fono</th>                
             </tr>
         </thead>
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td>{{ entity.localComercial }}</td>
                     <td>{{ entity.direccion }}</td>
                     <td>{{ entity.telefono }}</td>            
                 </tr>
