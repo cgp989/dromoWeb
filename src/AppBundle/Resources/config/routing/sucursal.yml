@@ -1,6 +1,10 @@
 sucursal:
     path:     /
     defaults: { _controller: "AppBundle:Sucursal:index" }
+    
+sucursal_local:
+    path:     /{idLocal}/
+    defaults: { _controller: "AppBundle:Sucursal:indexLocal" }
 
 sucursal_show:
     path:     /{id}/show
@@ -9,6 +13,10 @@ sucursal_show:
 sucursal_new:
     path:     /new
     defaults: { _controller: "AppBundle:Sucursal:new" }
+    
+sucursal_new_local:
+    path:     /{idLocal}/new
+    defaults: { _controller: "AppBundle:Sucursal:newSucursal" }
 
 sucursal_create:
     path:     /create

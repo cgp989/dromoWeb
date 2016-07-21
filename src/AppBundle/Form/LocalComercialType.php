@@ -22,10 +22,13 @@ class LocalComercialType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('nombre')
-                ->add('descripcion')
+                ->add('descripcion', null, array(
+                    'label' => 'Descripción'
+                ))
                 ->add('nombreContacto')
                 ->add('emailContacto', 'email')
                 ->add('telefonoContacto', 'integer', array('attr' => array(
+                        'label' => 'Teléfono Contacto',
                         'min' => '99999',
             )))
         ;

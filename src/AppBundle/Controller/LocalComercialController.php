@@ -56,7 +56,7 @@ class LocalComercialController extends Controller {
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('localcomercial_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('sucursal_new_local', array('idLocal' => $entity->getId())));
             } else {
                 $form->addError(new FormError('Usuario ya existe!'));
             }
