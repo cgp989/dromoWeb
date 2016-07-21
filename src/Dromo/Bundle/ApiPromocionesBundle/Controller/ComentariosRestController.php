@@ -19,7 +19,7 @@ class ComentariosRestController extends Controller {
      * @View(serializerGroups={"serviceUSS23-comentarios"})
      */
     public function getId_local_comercialId_usuario_movilNro_paginaAction($idLocalComercial, $idUSuarioMovil, $nroPagina) {
-        $cantidadPorPagina = 5;
+        //$cantidadPorPagina = 5;
         /* @var $localComercial Entity\LocalComercial */
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
 
@@ -36,16 +36,15 @@ class ComentariosRestController extends Controller {
                 'mensaje' => 'No existen comentarios para este local',
                 'descripcion' => 'El local comercial no contiene comentarios');
         } else {
-            //$cantComentarios = $localComercial->getComentarios()->count();
-            $inicio = $cantidadPorPagina * ($nroPagina - 1);
+            //$inicio = $cantidadPorPagina * ($nroPagina - 1);
             $comentariosOrdenados = $localComercial->getComentariosOrdenados();
-            $arrayComentarios = array_slice($comentariosOrdenados, $inicio, $cantidadPorPagina);
+            //$arrayComentarios = array_slice($comentariosOrdenados, $inicio, $cantidadPorPagina);
         }
 
         if (isset($error)) {
             return array('error' => $error);
-        } elseif (is_array($arrayComentarios)) {
-            return array("comentarios" => $arrayComentarios);
+        } elseif (is_array($comentariosOrdenados)) {
+            return array("comentarios" => $comentariosOrdenados);
         }
     }
 
