@@ -38,6 +38,8 @@ twig:
     form:
         resources: ['bootstrap_3_layout.html.twig']
         resources: ['bootstrap_3_horizontal_layout.html.twig']
+    form_themes:
+        - 'VichUploaderBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -114,3 +116,16 @@ knp_snappy:
     pdf:
         enabled:    true
         binary:     %kernel.root_dir%\..\bin\wkhtmltopdf.exe.bat
+        
+vich_uploader:
+    db_driver: orm
+    mappings:
+        local_image:
+            uri_prefix: /dromoweb/web/resources/images/locales
+            upload_destination: %kernel.root_dir%/../web/resources/images/locales
+            namer:
+                service: vich_uploader.namer_property
+                options: { property: 'id'}
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true

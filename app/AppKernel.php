@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Dromo\Bundle\FosUserBundle\DromoFosUserBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
