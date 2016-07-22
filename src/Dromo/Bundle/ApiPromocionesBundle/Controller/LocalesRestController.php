@@ -164,7 +164,7 @@ class LocalesRestController extends Controller {
      * @View(serializerGroups={"serviceUSS06"})
      */
     public function getLatitudLongitudNropaginaAction($latitud, $longitud, $nroPagina) {
-        $cantidadPorPagina = 20;
+        //$cantidadPorPagina = 20;
 
         $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
         $repositorySucursal = $this->getDoctrine()->getRepository('AppBundle:Sucursal');
@@ -190,10 +190,10 @@ class LocalesRestController extends Controller {
         }
         $sucursales = $repositorySucursal->getListSucursalesPorDistancia($sucursales, $latitud, $longitud);
 
-        $inicio = $cantidadPorPagina * ($nroPagina - 1);
-        $arrayPaginaSucursales = array_slice($sucursales, $inicio, $cantidadPorPagina);
+//        $inicio = $cantidadPorPagina * ($nroPagina - 1);
+//        $arrayPaginaSucursales = array_slice($sucursales, $inicio, $cantidadPorPagina);
 
-        return array('sucursales' => $arrayPaginaSucursales);
+        return array('sucursales' => $sucursales);
     }
 
 }

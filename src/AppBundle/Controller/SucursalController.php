@@ -29,6 +29,21 @@ class SucursalController extends Controller {
     }
 
     /**
+     * Lists all Sucursal entities.
+     *
+     */
+    public function indexLocalAction($idLocal) {
+        $em = $this->getDoctrine()->getManager();
+
+        $localComercial = $em->getRepository('AppBundle:LocalComercial')->findOneById($idLocal);
+        $entities = $em->getRepository('AppBundle:Sucursal')->findByLocalComercial($localComercial);
+
+        return $this->render('AppBundle:Sucursal:index.html.twig', array(
+                    'entities' => $entities,
+        ));
+    }
+
+    /**
      * Creates a new Sucursal entity.
      *
      */
@@ -37,14 +52,14 @@ class SucursalController extends Controller {
         $direc = new Direccion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-        
+
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $direc = $entity->getDireccion();
             $em->persist($direc);
-                
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('sucursal_show', array('id' => $entity->getId())));
@@ -80,6 +95,23 @@ class SucursalController extends Controller {
      */
     public function newAction() {
         $entity = new Sucursal();
+        $form = $this->createCreateForm($entity);
+
+        return $this->render('AppBundle:Sucursal:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to create a new Sucursal entity.
+     *
+     */
+    public function newSucursalAction($idLocal) {
+        $entity = new Sucursal();
+        $em = $this->getDoctrine()->getManager();
+        $localComercial = $em->getRepository('AppBundle:LocalComercial')->findOneById($idLocal);
+        $entity->setLocalComercial($localComercial);
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Sucursal:new.html.twig', array(

@@ -20,11 +20,13 @@ class PremiosType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('titulo')
-                ->add('descripcion', 'textarea')
+                ->add('titulo', null, array(
+                    'label' => 'Título'))
+                ->add('descripcion', 'textarea', array(
+                    'label' => 'Descripción'))
                 ->add('precio', 'number', array('attr' => array(
-                        'min' => '0',
                         'label' => 'Precio ($)',
+                        'min' => '0',                        
             )))
                 ->add('puntajePremio', 'integer', array('attr' => array(
                         'min' => '0',

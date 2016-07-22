@@ -1,6 +1,11 @@
 programacion:
     path:     /
     defaults: { _controller: "AppBundle:Programacion:index" }
+    
+programacion_promocion:
+    path:     /{idPromocion}/
+    defaults: { _controller: "AppBundle:Programacion:indexPromo" }
+
 
 programacion_show:
     path:     /{id}/show
@@ -9,6 +14,10 @@ programacion_show:
 programacion_new:
     path:     /new
     defaults: { _controller: "AppBundle:Programacion:new" }
+    
+programacion_promocion_new:
+    path:     /{idPromocion}/new
+    defaults: { _controller: "AppBundle:Programacion:newPromo" }
 
 programacion_create:
     path:     /create

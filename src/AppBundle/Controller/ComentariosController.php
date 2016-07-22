@@ -21,7 +21,7 @@ class ComentariosController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('AppBundle:Comentario')->getComentariosDenunciados();
-        
+
         return $this->render('AppBundle:Comentarios:index.html.twig', array(
                     'entities' => $entities,
         ));
@@ -109,21 +109,14 @@ class ComentariosController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('AppBundle:Comentario')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Comentario no disponible.');
         }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('AppBundle:Comentarios:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
+        $estadoComentario = $em->getRepository('AppBundle:EstadoComentario')->findOneByNombre('Activo');
+        $entity->setEstadoComentario($estadoComentario);
+        $em->flush();
+        return $this->redirect($this->generateUrl('comentarios'));
     }
 
     /**
@@ -178,21 +171,17 @@ class ComentariosController extends Controller {
      * Deletes a Comentario entity.
      *
      */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+    public function deleteAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:Comentario')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Comentario')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Comentario no disponible.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Comentario no disponible.');
         }
+
+        $em->remove($entity);
+        $em->flush();
+
 
         return $this->redirect($this->generateUrl('comentarios'));
     }

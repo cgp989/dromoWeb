@@ -31,7 +31,7 @@
                     <td>{{ cupon.titulo }}</td>
                     <td>${{ cupon.precioCobroLocal}}</td>
                     <td>
-                        <a title="cobrado" href="{{ path('cobro_local', { 'id': cupon.idLocal, 'idCupon': cupon.id}) }}"><span class="glyphicon glyphicon-ok"></span></a> 
+                        <a title="cobrado" href="{{ path('cobro_local', { 'id': cupon.idLocal, 'idCupon': cupon.id}) }}"><span class="glyphicon glyphicon-check"></span></a> 
                     </td>
                 </tr>
             {% endfor %}

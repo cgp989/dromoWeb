@@ -22,14 +22,15 @@ class LocalComercialType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('nombre')
-                ->add('descripcion')
+                ->add('descripcion', null, array(
+                    'label' => 'Descripción'
+                ))
                 ->add('nombreContacto')
                 ->add('emailContacto', 'email')
-                ->add('telefonoContacto', 'integer',
-                        array('attr' => array(
-                            'min' => '99999',)
-                ))
-                
+                ->add('telefonoContacto', null, array('attr' => array(
+                        'type' => 'number',
+                        'label' => 'Teléfono Contacto',                        
+            )))
         ;
 
         if (!isset($this->opciones['edit'])) {

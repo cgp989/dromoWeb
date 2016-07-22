@@ -18,8 +18,8 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ExclusionPolicy("all")
  * @ORM\HasLifecycleCallbacks
  */
-class Programacion
-{
+class Programacion {
+
     /**
      * @var integer
      *
@@ -67,7 +67,9 @@ class Programacion
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="horaInicio", type="time")
+     * @ORM\Column(name="horaInicio", type="time") 
+     * 
+     * 
      */
     private $horaInicio;
 
@@ -145,12 +147,12 @@ class Programacion
      * @ORM\OneToMany(targetEntity="Cupon", mappedBy="programacion")
      */
     private $cupones;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="VisitaPromocion", mappedBy="programacion")
      */
     private $visitasPromocion;
-    
+
     public function __construct() {
         $this->cupones = new ArrayCollection();
         $this->visitasPromocion = new ArrayCollection();
@@ -161,8 +163,7 @@ class Programacion
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -172,8 +173,7 @@ class Programacion
      * @param string $descripcion
      * @return Programacion
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -184,8 +184,7 @@ class Programacion
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
@@ -195,8 +194,7 @@ class Programacion
      * @param integer $duracion
      * @return Programacion
      */
-    public function setDuracion($duracion)
-    {
+    public function setDuracion($duracion) {
         $this->duracion = $duracion;
 
         return $this;
@@ -207,14 +205,12 @@ class Programacion
      *
      * @return integer 
      */
-    public function getDuracion()
-    {
+    public function getDuracion() {
         return $this->duracion;
     }
-    
-    public function getDuracion_()
-    {
-        $arrayHoras = array(1 => '0:30', 2 => '1:00', 3 => '1:30', 4 => '2:00', 5 => '2:30', 6 => '3:00', 7 => '3:30', 8 => '4:00', 9 => '4:30',10 => '5:00',11 => '5:30',12 => '6:00',13 => '6:30',14 => '7:00',15 => '7:30',16 => '8:00',17 => '8:30',18 => '9:00',19 => '9:30',20 => '10:00',21 => '10:30',22 => '11:00',23 => '11:30',24 => '12:00',25 => '12:30',26 => '13:00',27 => '13:30',28 => '14:00',29 => '14:30',30 => '15:00',31 => '15:30',32 => '16:00',33 => '16:30',34 => '17:00',35 => '17:30',36 => '18:00',37 => '18:30',38 => '19:00',39 => '19:30',40 => '20:00',41 => '20:30',42 => '21:00',43 => '21:30',44 => '22:00',45 => '22:30',46 => '23:00',47 => '23:30',48 => '24:00');
+
+    public function getDuracion_() {
+        $arrayHoras = array(1 => '0:30', 2 => '1:00', 3 => '1:30', 4 => '2:00', 5 => '2:30', 6 => '3:00', 7 => '3:30', 8 => '4:00', 9 => '4:30', 10 => '5:00', 11 => '5:30', 12 => '6:00', 13 => '6:30', 14 => '7:00', 15 => '7:30', 16 => '8:00', 17 => '8:30', 18 => '9:00', 19 => '9:30', 20 => '10:00', 21 => '10:30', 22 => '11:00', 23 => '11:30', 24 => '12:00', 25 => '12:30', 26 => '13:00', 27 => '13:30', 28 => '14:00', 29 => '14:30', 30 => '15:00', 31 => '15:30', 32 => '16:00', 33 => '16:30', 34 => '17:00', 35 => '17:30', 36 => '18:00', 37 => '18:30', 38 => '19:00', 39 => '19:30', 40 => '20:00', 41 => '20:30', 42 => '21:00', 43 => '21:30', 44 => '22:00', 45 => '22:30', 46 => '23:00', 47 => '23:30', 48 => '24:00');
         return $arrayHoras[$this->duracion];
     }
 
@@ -224,8 +220,7 @@ class Programacion
      * @param \DateTime $fechaInicio
      * @return Programacion
      */
-    public function setFechaInicio($fechaInicio)
-    {
+    public function setFechaInicio($fechaInicio) {
         $this->fechaInicio = $fechaInicio;
 
         return $this;
@@ -236,8 +231,7 @@ class Programacion
      *
      * @return \DateTime 
      */
-    public function getFechaInicio()
-    {
+    public function getFechaInicio() {
         return $this->fechaInicio;
     }
 
@@ -247,8 +241,7 @@ class Programacion
      * @param \DateTime $fechaFin
      * @return Programacion
      */
-    public function setFechaFin($fechaFin)
-    {
+    public function setFechaFin($fechaFin) {
         $this->fechaFin = $fechaFin;
 
         return $this;
@@ -259,8 +252,7 @@ class Programacion
      *
      * @return \DateTime 
      */
-    public function getFechaFin()
-    {
+    public function getFechaFin() {
         return $this->fechaFin;
     }
 
@@ -270,8 +262,7 @@ class Programacion
      * @param \DateTime $horaInicio
      * @return Programacion
      */
-    public function setHoraInicio($horaInicio)
-    {
+    public function setHoraInicio($horaInicio) {
         $this->horaInicio = $horaInicio;
 
         return $this;
@@ -282,8 +273,7 @@ class Programacion
      *
      * @return \DateTime 
      */
-    public function getHoraInicio()
-    {
+    public function getHoraInicio() {
         return $this->horaInicio;
     }
 
@@ -293,8 +283,7 @@ class Programacion
      * @param integer $cantidad
      * @return Programacion
      */
-    public function setCantidad($cantidad)
-    {
+    public function setCantidad($cantidad) {
         $this->cantidad = $cantidad;
 
         return $this;
@@ -305,8 +294,7 @@ class Programacion
      *
      * @return integer 
      */
-    public function getCantidad()
-    {
+    public function getCantidad() {
         return $this->cantidad;
     }
 
@@ -316,8 +304,7 @@ class Programacion
      * @param boolean $esLunes
      * @return Programacion
      */
-    public function setEsLunes($esLunes)
-    {
+    public function setEsLunes($esLunes) {
         $this->esLunes = $esLunes;
 
         return $this;
@@ -328,8 +315,7 @@ class Programacion
      *
      * @return boolean 
      */
-    public function getEsLunes()
-    {
+    public function getEsLunes() {
         return $this->esLunes;
     }
 
@@ -339,8 +325,7 @@ class Programacion
      * @param boolean $esMartes
      * @return Programacion
      */
-    public function setEsMartes($esMartes)
-    {
+    public function setEsMartes($esMartes) {
         $this->esMartes = $esMartes;
 
         return $this;
@@ -351,8 +336,7 @@ class Programacion
      *
      * @return boolean 
      */
-    public function getEsMartes()
-    {
+    public function getEsMartes() {
         return $this->esMartes;
     }
 
@@ -362,8 +346,7 @@ class Programacion
      * @param boolean $esMiercoles
      * @return Programacion
      */
-    public function setEsMiercoles($esMiercoles)
-    {
+    public function setEsMiercoles($esMiercoles) {
         $this->esMiercoles = $esMiercoles;
 
         return $this;
@@ -374,8 +357,7 @@ class Programacion
      *
      * @return boolean 
      */
-    public function getEsMiercoles()
-    {
+    public function getEsMiercoles() {
         return $this->esMiercoles;
     }
 
@@ -385,8 +367,7 @@ class Programacion
      * @param boolean $esJueves
      * @return Programacion
      */
-    public function setEsJueves($esJueves)
-    {
+    public function setEsJueves($esJueves) {
         $this->esJueves = $esJueves;
 
         return $this;
@@ -397,8 +378,7 @@ class Programacion
      *
      * @return boolean 
      */
-    public function getEsJueves()
-    {
+    public function getEsJueves() {
         return $this->esJueves;
     }
 
@@ -408,8 +388,7 @@ class Programacion
      * @param boolean $esViernes
      * @return Programacion
      */
-    public function setEsViernes($esViernes)
-    {
+    public function setEsViernes($esViernes) {
         $this->esViernes = $esViernes;
 
         return $this;
@@ -420,8 +399,7 @@ class Programacion
      *
      * @return boolean 
      */
-    public function getEsViernes()
-    {
+    public function getEsViernes() {
         return $this->esViernes;
     }
 
@@ -431,8 +409,7 @@ class Programacion
      * @param boolean $esSabado
      * @return Programacion
      */
-    public function setEsSabado($esSabado)
-    {
+    public function setEsSabado($esSabado) {
         $this->esSabado = $esSabado;
 
         return $this;
@@ -443,8 +420,7 @@ class Programacion
      *
      * @return boolean 
      */
-    public function getEsSabado()
-    {
+    public function getEsSabado() {
         return $this->esSabado;
     }
 
@@ -454,8 +430,7 @@ class Programacion
      * @param boolean $esDomingo
      * @return Programacion
      */
-    public function setEsDomingo($esDomingo)
-    {
+    public function setEsDomingo($esDomingo) {
         $this->esDomingo = $esDomingo;
 
         return $this;
@@ -466,8 +441,7 @@ class Programacion
      *
      * @return boolean 
      */
-    public function getEsDomingo()
-    {
+    public function getEsDomingo() {
         return $this->esDomingo;
     }
 
@@ -477,8 +451,7 @@ class Programacion
      * @param \stdClass $promocion
      * @return Programacion
      */
-    public function setPromocion($promocion)
-    {
+    public function setPromocion($promocion) {
         $this->promocion = $promocion;
 
         return $this;
@@ -489,8 +462,7 @@ class Programacion
      *
      * @return \stdClass 
      */
-    public function getPromocion()
-    {
+    public function getPromocion() {
         return $this->promocion;
     }
 
@@ -500,8 +472,7 @@ class Programacion
      * @param \stdClass $estadoProgramacion
      * @return Programacion
      */
-    public function setEstadoProgramacion($estadoProgramacion)
-    {
+    public function setEstadoProgramacion($estadoProgramacion) {
         $this->estadoProgramacion = $estadoProgramacion;
 
         return $this;
@@ -512,84 +483,81 @@ class Programacion
      *
      * @return \stdClass 
      */
-    public function getEstadoProgramacion()
-    {
+    public function getEstadoProgramacion() {
         return $this->estadoProgramacion;
     }
-    
-    
+
     /**
      * Retorna la fecha hora de inicio formateada
      * 
      * @return String
      * @VirtualProperty 
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
-    public function getHoraInicio_(){
+    public function getHoraInicio_() {
         return $this->horaInicio->format("H:i");
-    } 
-    
-    public function getDias(){
+    }
+
+    public function getDias() {
         $str = [];
-        if($this->getEsLunes())
+        if ($this->getEsLunes())
             $str[] = 'Lunes';
-        if($this->getEsMartes())
+        if ($this->getEsMartes())
             $str[] = 'Martes';
-        if($this->getEsMiercoles())
+        if ($this->getEsMiercoles())
             $str[] = 'Miercoles';
-        if($this->getEsJueves())
+        if ($this->getEsJueves())
             $str[] = 'Jueves';
-        if($this->getEsViernes())
+        if ($this->getEsViernes())
             $str[] = 'Viernes';
-        if($this->getEsSabado())
+        if ($this->getEsSabado())
             $str[] = 'Sabado';
-        if($this->getEsDomingo())
+        if ($this->getEsDomingo())
             $str[] = 'Domingo';
-        
+
         return implode(', ', $str);
     }
-    
+
     /**
-    * @ORM\PrePersist
-    */
+     * @ORM\PrePersist
+     */
     function onPrePersist() {
-       if(is_null($this->getEsLunes()))
-           $this->setEsLunes (0);
-       if(is_null($this->getEsMartes()))
-           $this->setEsMartes (0);
-       if(is_null($this->getEsMiercoles()))
-           $this->setEsMiercoles (0);
-       if(is_null($this->getEsJueves()))
-           $this->setEsJueves (0);
-       if(is_null($this->getEsViernes()))
-           $this->setEsViernes (0);
-       if(is_null($this->getEsSabado()))
-           $this->setEsSabado (0);
-       if(is_null($this->getEsDomingo()))
-           $this->setEsDomingo (0);
+        if (is_null($this->getEsLunes()))
+            $this->setEsLunes(0);
+        if (is_null($this->getEsMartes()))
+            $this->setEsMartes(0);
+        if (is_null($this->getEsMiercoles()))
+            $this->setEsMiercoles(0);
+        if (is_null($this->getEsJueves()))
+            $this->setEsJueves(0);
+        if (is_null($this->getEsViernes()))
+            $this->setEsViernes(0);
+        if (is_null($this->getEsSabado()))
+            $this->setEsSabado(0);
+        if (is_null($this->getEsDomingo()))
+            $this->setEsDomingo(0);
     }
-    
+
     /**
      * verifica que al menos un dia sea insertado como true
      * 
      * @param ExecutionContextInterface $context
      */
-    public function isValidDays(ExecutionContextInterface $context)
-    {
-        if(!$this->getEsLunes() && !$this->getEsMartes() && !$this->getEsMiercoles() && !$this->getEsJueves() && !$this->getEsViernes() && !$this->getEsSabado() && !$this->getEsDomingo()){
+    public function isValidDays(ExecutionContextInterface $context) {
+        if (!$this->getEsLunes() && !$this->getEsMartes() && !$this->getEsMiercoles() && !$this->getEsJueves() && !$this->getEsViernes() && !$this->getEsSabado() && !$this->getEsDomingo()) {
             $context->addViolation("Debe seleccionar al menos un día");
-        }    
+        }
     }
-    
+
     /**
      * Calcula para el dia actual el DateTime de inicio y el DateTime de vencimiento y lo retorna en un array
      * @return array: fechaInicio => \DateTime, fechaFin => \DateTime
      */
-    public function getValidezDelDia(){
+    public function getValidezDelDia() {
         $arrayHoraInicio = getdate($this->getHoraInicio()->getTimestamp());
         $duracion = $this->getDuracion();
-        $horaD = (int) $duracion/2;
-        if($duracion%2)
+        $horaD = (int) $duracion / 2;
+        if ($duracion % 2)
             $minutosD = 30;
         else
             $minutosD = 0;
@@ -597,8 +565,8 @@ class Programacion
         $inicioValidez = new \DateTime('now');
         $inicioValidez->setTime($arrayHoraInicio['hours'], $arrayHoraInicio['minutes'], 0);
         $finValidez = clone $inicioValidez;
-        $finValidez->add(new \DateInterval('PT'.(integer)$horaD.'H'.$minutosD.'M'));
-        
+        $finValidez->add(new \DateInterval('PT' . (integer) $horaD . 'H' . $minutosD . 'M'));
+
         return array('inicioValidez' => $inicioValidez, 'finValidez' => $finValidez);
     }
 
@@ -608,8 +576,7 @@ class Programacion
      * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
      * @return Programacion
      */
-    public function addVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
-    {
+    public function addVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion) {
         $this->visitasPromocion[] = $visitasPromocion;
 
         return $this;
@@ -620,8 +587,7 @@ class Programacion
      *
      * @param \AppBundle\Entity\VisitaPromocion $visitasPromocion
      */
-    public function removeVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion)
-    {
+    public function removeVisitasPromocion(\AppBundle\Entity\VisitaPromocion $visitasPromocion) {
         $this->visitasPromocion->removeElement($visitasPromocion);
     }
 
@@ -630,19 +596,17 @@ class Programacion
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getVisitasPromocion()
-    {
+    public function getVisitasPromocion() {
         return $this->visitasPromocion;
     }
-    
+
     /**
      * Add cupones
      *
      * @param \AppBundle\Entity\Cupon $cupones
      * @return Programacion
      */
-    public function addCupone(\AppBundle\Entity\Cupon $cupones)
-    {
+    public function addCupone(\AppBundle\Entity\Cupon $cupones) {
         $this->cupones[] = $cupones;
 
         return $this;
@@ -653,8 +617,7 @@ class Programacion
      *
      * @param \AppBundle\Entity\Cupon $cupones
      */
-    public function removeCupone(\AppBundle\Entity\Cupon $cupones)
-    {
+    public function removeCupone(\AppBundle\Entity\Cupon $cupones) {
         $this->cupones->removeElement($cupones);
     }
 
@@ -663,8 +626,8 @@ class Programacion
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCupone()
-    {
+    public function getCupone() {
         return $this->cupones;
     }
+
 }
