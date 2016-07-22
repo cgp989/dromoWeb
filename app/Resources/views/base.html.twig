@@ -52,11 +52,11 @@
                             <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
-                            <li class="{% if 'premios' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'premios' or 'programacionPremio' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('premios') }}">Premios</a>
                             </li>
-                            <li class="{% if 'programacionPremio' in app.request.get('_route') %}active{% endif %}">
-                                <a href="{{ path('programacionPremio') }}">Programaciones premios</a>
+{#                            <li class="{% if 'programacionPremio' in app.request.get('_route') %}active{% endif %}">
+                                <a href="{{ path('programacionPremio') }}">Programaciones premios</a>#}
                             </li>
                             <li class="{% if ('localcomercial' or 'sucursal') in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('localcomercial') }}">Locales</a>

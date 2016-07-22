@@ -1,6 +1,10 @@
 programacionPremio:
     path:     /
     defaults: { _controller: "AppBundle:ProgramacionPremio:index" }
+    
+programacionPremio_premio:
+    path:     /{idPromocion}/
+    defaults: { _controller: "AppBundle:ProgramacionPremio:indexPremio" }
 
 programacionPremio_show:
     path:     /{id}/show
@@ -9,6 +13,10 @@ programacionPremio_show:
 programacionPremio_new:
     path:     /new
     defaults: { _controller: "AppBundle:ProgramacionPremio:new" }
+    
+programacionPremio_premio_new:
+    path:     /{idPromocion}/new
+    defaults: { _controller: "AppBundle:ProgramacionPremio:newPremio" }
 
 programacionPremio_create:
     path:     /create
