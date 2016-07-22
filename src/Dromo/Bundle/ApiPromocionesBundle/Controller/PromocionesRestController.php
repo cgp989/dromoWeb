@@ -26,7 +26,7 @@ class PromocionesRestController extends Controller {
      * @View(serializerGroups={"serviceUSS013"})
      */
     public function getLatitudLongitudIdusaurioNropaginaTipoAction($latitud, $longitud, $idUsuario, $nroPagina, $tipo) {
-        //$cantidadPorPagina = 20;
+        $cantidadPorPagina = 10000;
         $error;
         if ($this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuario)) {
 
@@ -54,8 +54,8 @@ class PromocionesRestController extends Controller {
 
             $repositoryProgramacion->ordenarPorDistanciaALocal($programaciones);
 
-//            $inicio = $cantidadPorPagina * ($nroPagina - 1);
-//            $arrayPaginaPromociones = array_slice($programaciones, $inicio, $cantidadPorPagina);
+            $inicio = $cantidadPorPagina * ($nroPagina - 1);
+            $arrayPaginaPromociones = array_slice($programaciones, $inicio, $cantidadPorPagina);
         } else {
             $error[] = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
@@ -63,7 +63,7 @@ class PromocionesRestController extends Controller {
         }
 
         if (!isset($error)) {
-            return array('promociones' => $programaciones);
+            return array('promociones' => $arrayPaginaPromociones);
         } else
             return array('error' => $error);
     }
