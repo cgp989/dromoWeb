@@ -88,12 +88,12 @@
                             <li class="{% if 'programacionendia' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacionendia') }}">Promos en D&iacute;a</a>
                             </li>
-                            <li class="{% if 'promocion' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'promocion' or 'programacion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('promocion') }}">Promociones</a>
                             </li>
-                            <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
+{#                            <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('programacion') }}">Programaciones</a>
-                            </li>
+                            </li>#}
                             <li class="{% if 'cupon' in app.request.get('_route') %}active{% endif %}">
                                 <a href="{{ path('cupon_consult') }}">Consultar cup&oacute;n</a>
                             <li class="{% if 'premio' in app.request.get('_route') %}active{% endif %}">

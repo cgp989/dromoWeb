@@ -32,6 +32,27 @@ class ProgramacionRepository extends EntityRepository {
                 ->getResult();
         return $promociones;
     }
+    
+    /**
+     * Retorna un array con las programaciones de una promocion y que no esten eliminadas
+     * @param integer $idPromocion
+     * @return array
+     */
+    function getProgramacionesPromocion($idPromocion) {
+        $promociones = $this->getEntityManager()
+                ->createQuery('SELECT pr FROM AppBundle:Programacion pr '
+                        . 'LEFT JOIN pr.promocion p '
+                        . 'LEFT JOIN p.localComercial l '
+                        . 'LEFT JOIN pr.estadoProgramacion epr '
+                        . 'LEFT JOIN p.estadoPromocion e '
+                        . 'WHERE p.id = :idPromocion AND epr.nombre != :nombreEstadoPr AND e.nombre != :nombreEstadoP')
+                ->setParameters(array(
+                    'idPromocion' => $idLocal,
+                    'nombreEstadoPr' => 'eliminada',
+                    'nombreEstadoP' => 'eliminada'))
+                ->getResult();
+        return $promociones;
+    }
 
     function getProgramacionesPremios() {
         $promociones = $this->getEntityManager()
