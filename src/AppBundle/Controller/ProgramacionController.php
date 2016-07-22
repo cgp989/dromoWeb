@@ -28,6 +28,21 @@ class ProgramacionController extends Controller {
                     'entities' => $entities,
         ));
     }
+    
+    /**
+     * Lists all Programacion entities.
+     *
+     */
+    public function indexPromoAction($idPromocion) {
+        $em = $this->getDoctrine()->getManager();
+
+        $repoProgramaciones = $em->getRepository('AppBundle:Programacion');
+        $entities = $repoProgramaciones->getProgramacionesLocal($this->getUser()->getLocalComercial()->getId());
+
+        return $this->render('AppBundle:Programacion:index.html.twig', array(
+                    'entities' => $entities,
+        ));
+    }
 
     /**
      * Creates a new Programacion entity.
@@ -83,6 +98,25 @@ class ProgramacionController extends Controller {
      */
     public function newAction() {
         $entity = new Programacion();
+        $form = $this->createCreateForm($entity);
+
+        return $this->render('AppBundle:Programacion:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
+    }
+    
+     /**
+     * Displays a form to create a new Programacion entity.
+     *
+     */
+    public function newPromoAction($idPromocion) {
+        $entity = new Programacion();
+        $em = $this->getDoctrine()->getManager();
+
+        $repoPromocion = $em->getRepository('AppBundle:Promocion');
+        $promocion = $repoPromocion->findOneById($idPromocion);
+        $entity->setPromocion($promocion);
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Programacion:new.html.twig', array(
