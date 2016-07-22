@@ -135,14 +135,14 @@ class LocalComercial {
     private $imageFile;
 
     /**
-     * @ORM\Column(name="imageName", type="string", length=255)
+     * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
      *
      * @var string
      */
     private $imageName;
 
     /**
-     * @ORM\Column(name="updatedAt", type="datetime")
+     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      *
      * @var \DateTime
      */

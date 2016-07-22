@@ -61,3 +61,13 @@ AppBundle\Entity\Promocion:
                 max: 500
                 minMessage: "El campo debe tener minimo {{ limit }} caracteres"
                 maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
+                
+AppBundle\Entity\LocalComercial:
+    properties:
+        telefonoContacto:
+            - Regex:
+                pattern: '/^[0-9]*$/'
+                message: "Se aceptan solo números"
+            - Length:
+                max: 13
+                maxMessage: "El campo debe tener maximo de {{ limit }} caracteres"

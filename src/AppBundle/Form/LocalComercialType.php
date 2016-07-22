@@ -27,10 +27,12 @@ class LocalComercialType extends AbstractType {
                 ))
                 ->add('nombreContacto')
                 ->add('emailContacto', 'email')
-                ->add('telefonoContacto', null, array('attr' => array(
-                        'type' => 'number',
-                        'label' => 'Teléfono Contacto',                        
-            )))
+                ->add('telefonoContacto', 'text', array(
+                    'label' => 'Teléfono contacto',
+                    'attr' => array(
+                        'maxlength' => 13
+                    )
+                ))
         ;
 
         if (!isset($this->opciones['edit'])) {

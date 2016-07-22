@@ -193,10 +193,10 @@ class LocalComercialController extends Controller {
             $urlEdit = $this->generateUrl('localcomercial_edit', array('id' => $id));
             //Si el usuario es un local se cambia la url de actualizacion
             if ($this->getUser()->hasRole('ROLE_LOCAL')) {
-                $nameRouteEdit = $this->generateUrl('localcomercial_log_edit');
+                $urlEdit = $this->generateUrl('localcomercial_log_edit');
             }
 
-            return $this->redirect($nameRouteEdit);
+            return $this->redirect($urlEdit);
         }
 
         return $this->render('AppBundle:LocalComercial:edit.html.twig', array(
