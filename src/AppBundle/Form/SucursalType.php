@@ -6,30 +6,30 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SucursalType extends AbstractType
-{
+class SucursalType extends AbstractType {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('telefono', null, array(
+                ->add('telefono', null, array(
                     'label' => 'Teléfono'
                 ))
-            ->add('direccion', new DireccionType())
-            ->add('localComercial')
+                ->add('direccion', new DireccionType())
+                ->add('localComercial', null, array(
+                    'disabled' => true,
+                ))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Sucursal',            
+            'data_class' => 'AppBundle\Entity\Sucursal',
             'cascade_validation' => true
         ));
     }
@@ -37,8 +37,8 @@ class SucursalType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'appbundle_sucursal';
     }
+
 }
