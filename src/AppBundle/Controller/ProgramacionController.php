@@ -115,9 +115,9 @@ class ProgramacionController extends Controller {
         $entity = new Programacion();
         $em = $this->getDoctrine()->getManager();
 
-//        $repoPromocion = $em->getRepository('AppBundle:Promocion');
-//        $promocion = $repoPromocion->findOneById($idPromocion);
-//        $entity->setPromocion($promocion);
+        $repoPromocion = $em->getRepository('AppBundle:Promocion');
+        $promocion = $repoPromocion->findOneById($idPromocion);
+        $entity->setPromocion($promocion);
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Programacion:new.html.twig', array(
