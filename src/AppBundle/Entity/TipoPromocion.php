@@ -41,6 +41,13 @@ class TipoPromocion
     private $nombre;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=50)
+     */
+    private $descripcion;
+
+    /**
      * ORM\OneToMany(targetEntity="Promocion", mappedBy="tipoPromocion")
      */
     private $promociones;
@@ -83,6 +90,22 @@ class TipoPromocion
     }
     
     public function __toString() {
-        return $this->getNombre();
+        return $this->getDescripcion();
+    }
+    
+    function getDescripcion() {
+        return $this->descripcion;
+    }
+
+    function getPromociones() {
+        return $this->promociones;
+    }
+
+    function setDescripcion($descripcion) {
+        $this->descripcion = $descripcion;
+    }
+
+    function setPromociones($promociones) {
+        $this->promociones = $promociones;
     }
 }
