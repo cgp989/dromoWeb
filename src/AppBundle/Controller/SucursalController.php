@@ -223,5 +223,17 @@ class SucursalController extends Controller {
                         ->getForm()
         ;
     }
+    
+    public function ajaxFormAction(Request $request)
+    {
+        $entity = new Sucursal();
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
+        
+        return $this->render('AppBundle:Sucursal:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
+    }
 
 }

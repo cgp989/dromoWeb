@@ -28,7 +28,10 @@
                 <div class="col-xs-3">{{ form_row(edit_form.direccion.latitud) }}</div>                
                 <div class="col-xs-3 col-xs-offset-1">{{ form_row(edit_form.direccion.longitud) }}</div>
             </div>
-             <div class="row">
+            <div class="row">
+                <div class="col-xs-6">{{ form_row(edit_form.direccion.provincia) }}</div>
+            </div>
+            <div class="row">
                 <div class="col-xs-6">{{ form_row(edit_form.direccion.localidad) }}</div>
             </div>
             
@@ -37,5 +40,20 @@
             </div>
         {{ form_end(edit_form) }}
     </div>   
-    
+    <script>
+    var $provincia = $('#{{ edit_form.direccion.provincia.vars.id }}'); 
+    var $form = $provincia.closest('form');
+    $provincia.on('change', function() {
+        $('#{{ edit_form.direccion.localidad.vars.id }}').attr('disabled','disabled');
+        var data = $provincia.serialize();
+        $.ajax({
+            url : "{{ path('sucursal_ajax_localidad') }}",
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+                $('#{{ edit_form.direccion.localidad.vars.id }}').replaceWith($(html).find('#{{ edit_form.direccion.localidad.vars.id }}'));
+            }
+        });
+    });
+    </script>
 {% endblock %}
