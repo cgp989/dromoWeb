@@ -71,3 +71,19 @@ AppBundle\Entity\LocalComercial:
             - Length:
                 max: 13
                 maxMessage: "El campo debe tener maximo de {{ limit }} caracteres"
+                
+AppBundle\Entity\Sucursal:
+    properties:
+        telefono:
+            - Regex:
+                pattern: '/^[0-9]*$/'
+                message: "Se aceptan solo números"
+            - Length:
+                max: 13
+                maxMessage: "El campo debe tener maximo de {{ limit }} caracteres"
+                
+AppBundle\Entity\Direccion:
+    properties:
+        localidad:
+            - NotNull:
+                message: "Campo obligatorio"
