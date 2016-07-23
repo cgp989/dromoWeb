@@ -13,7 +13,6 @@ use AppBundle\Form\ProgramacionPremioType;
  */
 class ProgramacionPremioController extends Controller {
 
-
     /**
      * Lists all Programacion entities.
      *
@@ -28,8 +27,7 @@ class ProgramacionPremioController extends Controller {
                     'entities' => $entities,
         ));
     }
-    
-    
+
     /**
      * Lists all Programacion entities.
      *
@@ -102,8 +100,8 @@ class ProgramacionPremioController extends Controller {
                     'form' => $form->createView(),
         ));
     }
-    
-        /**
+
+    /**
      * Displays a form to create a new Programacion entity.
      *
      */

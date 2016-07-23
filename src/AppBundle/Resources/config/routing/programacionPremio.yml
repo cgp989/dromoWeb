@@ -9,7 +9,6 @@ programacionPremio_premio:
     requirements:
         idPromocion:  \d+
 
-
 programacionPremio_show:
     path:     /{id}/show
     defaults: { _controller: "AppBundle:ProgramacionPremio:show" }
@@ -21,6 +20,9 @@ programacionPremio_new:
 programacionPremio_premio_new:
     path:     /{idPromocion}/new
     defaults: { _controller: "AppBundle:ProgramacionPremio:newPremio" }
+    methods:  GET
+    requirements:
+        idPromocion:  \d+
 
 programacionPremio_create:
     path:     /create
