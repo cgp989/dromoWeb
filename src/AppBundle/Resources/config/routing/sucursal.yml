@@ -36,3 +36,8 @@ sucursal_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:Sucursal:delete" }
     methods:  [POST, DELETE]
+    
+sucursal_ajax_localidad:
+    path:     /ajax-localidad
+    defaults: { _controller: "AppBundle:Sucursal:ajaxForm" }
+    condition: "request.isXmlHttpRequest()"
