@@ -40,7 +40,7 @@ class PremiosController extends Controller {
         $entity->setEstaModerada(true);
         $tipo = $em->getRepository('AppBundle:TipoPromocion')->findOneByNombre('Premio');
         $entity->setTipoPromocion($tipo);
-
+        $entity->setPuntajePremioPlata($entity->getPuntajePremio(), $em);
         $em->persist($entity);
         $em->flush();
 
@@ -113,7 +113,8 @@ class PremiosController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
-
+        $plata = $entity->getPuntajePremioPlata($em);
+        $entity->setPuntajePremio($plata);
         if (!$entity) {
             throw $this->createNotFoundException('No existe el premio');
         }
@@ -158,7 +159,7 @@ class PremiosController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('No existe el premio');
         }
-
+        $entity->setPuntajePremioPlata($entity->getPuntajePremio(), $em);
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
