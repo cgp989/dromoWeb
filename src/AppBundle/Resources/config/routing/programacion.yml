@@ -5,6 +5,9 @@ programacion:
 programacion_promocion:
     path:     /{idPromocion}/
     defaults: { _controller: "AppBundle:Programacion:indexPromo" }
+    methods:  GET
+    requirements:
+        idPromocion:  \d+
 
 
 programacion_show:

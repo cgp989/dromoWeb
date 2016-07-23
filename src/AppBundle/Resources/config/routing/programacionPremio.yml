@@ -5,6 +5,10 @@ programacionPremio:
 programacionPremio_premio:
     path:     /{idPromocion}/
     defaults: { _controller: "AppBundle:ProgramacionPremio:indexPremio" }
+    methods:  GET
+    requirements:
+        idPromocion:  \d+
+
 
 programacionPremio_show:
     path:     /{id}/show
