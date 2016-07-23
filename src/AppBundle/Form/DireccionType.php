@@ -42,7 +42,6 @@ class DireccionType extends AbstractType
         // para que sus opciones correspondan
         // con la provincia seleccionada
         $builder->addEventSubscriber(new AddLocalidadFieldSubscriber());
-        $builder->addEventSubscriber(new AddProvinciaFieldSubscriber());
     }
     
     /**

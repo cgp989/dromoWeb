@@ -5,6 +5,10 @@ sucursal:
 sucursal_local:
     path:     /{idLocal}/
     defaults: { _controller: "AppBundle:Sucursal:indexLocal" }
+    methods:  GET
+    requirements:
+       idPromocion:  \d+
+    
 
 sucursal_show:
     path:     /{id}/show
