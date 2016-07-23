@@ -87,3 +87,15 @@ AppBundle\Entity\Direccion:
         localidad:
             - NotNull:
                 message: "Campo obligatorio"
+        latitud:
+            - NotNull:
+                message: "Campo obligatorio"
+            - Type:
+                type: float
+                message: "El valor no es válido"            
+        longitud:
+            - NotNull:
+                message: "Campo obligatorio"
+            - Type:
+                type: float
+                message: "El valor no es válido"
