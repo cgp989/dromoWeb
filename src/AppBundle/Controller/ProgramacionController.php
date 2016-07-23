@@ -37,7 +37,7 @@ class ProgramacionController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $repoProgramaciones = $em->getRepository('AppBundle:Programacion');
-        $entities = $repoProgramaciones->getProgramacionesLocal($this->getUser()->getLocalComercial()->getId());
+        $entities = $repoProgramaciones->getProgramacionesPromocion($idPromocion);
 
         return $this->render('AppBundle:Programacion:index.html.twig', array(
                     'entities' => $entities,
@@ -63,10 +63,11 @@ class ProgramacionController extends Controller {
                 if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
                     $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
 
-                return $this->redirect($this->generateUrl('programacion_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('programacion_promocion', array('idPromocion' => $entity->getPromocion()->getId())));
             }else {
                 $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
             }
+       
         }
 
         return $this->render('AppBundle:Programacion:new.html.twig', array(
@@ -114,9 +115,9 @@ class ProgramacionController extends Controller {
         $entity = new Programacion();
         $em = $this->getDoctrine()->getManager();
 
-        $repoPromocion = $em->getRepository('AppBundle:Promocion');
-        $promocion = $repoPromocion->findOneById($idPromocion);
-        $entity->setPromocion($promocion);
+//        $repoPromocion = $em->getRepository('AppBundle:Promocion');
+//        $promocion = $repoPromocion->findOneById($idPromocion);
+//        $entity->setPromocion($promocion);
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Programacion:new.html.twig', array(

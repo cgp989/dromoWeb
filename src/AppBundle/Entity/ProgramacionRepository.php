@@ -47,7 +47,7 @@ class ProgramacionRepository extends EntityRepository {
                         . 'LEFT JOIN p.estadoPromocion e '
                         . 'WHERE p.id = :idPromocion AND epr.nombre != :nombreEstadoPr AND e.nombre != :nombreEstadoP')
                 ->setParameters(array(
-                    'idPromocion' => $idLocal,
+                    'idPromocion' => $idPromocion,
                     'nombreEstadoPr' => 'eliminada',
                     'nombreEstadoP' => 'eliminada'))
                 ->getResult();
