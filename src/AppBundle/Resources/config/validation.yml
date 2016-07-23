@@ -41,6 +41,14 @@ AppBundle\Entity\Promocion:
                 max: 25
                 minMessage: "El campo debe tener minimo {{ limit }} caracteres"
                 maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
+        cantidad:
+            - NotBlank:
+                    message: "Campo obligatorio"
+            - Length:
+                min: 1
+                max: 4
+                minMessage: "El campo debe tener minimo {{ limit }} caracteres"
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
         tipoPromocion:
             - NotNull:
                 message: "Campo obligatorio"
