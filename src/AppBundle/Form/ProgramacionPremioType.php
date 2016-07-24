@@ -130,8 +130,7 @@ class ProgramacionPremioType extends AbstractType {
                         'class' => 'AppBundle:Promocion',
                         'choices' => $repoPromocion->getPremios(),
                         'label' => 'Premio',
-                        'empty_value' => '',
-                        'disabled' => true)
+                        'empty_value' => '')
             );
         } else {
             $builder
@@ -139,8 +138,7 @@ class ProgramacionPremioType extends AbstractType {
                         'class' => 'AppBundle:Promocion',
                         'choices' => $repoPromocion->getPremios(),
                         'label' => 'Premio',
-                        'empty_value' => '',
-                        'disabled' => true)
+                        'empty_value' => '')
             );
         }
     }

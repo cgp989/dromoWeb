@@ -20,9 +20,7 @@ programacionPremio_new:
 programacionPremio_premio_new:
     path:     /{idPromocion}/new
     defaults: { _controller: "AppBundle:ProgramacionPremio:newPremio" }
-    methods:  GET
-    requirements:
-        idPromocion:  \d+
+
 
 programacionPremio_create:
     path:     /create
