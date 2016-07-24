@@ -172,11 +172,12 @@ class PremioController extends Controller {
             return $this->redirect($this->generateUrl('premio_edit', array('id' => $id)));
         }
 
-        return $this->render('AppBundle:Premio:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
+//        return $this->render('AppBundle:Premio:edit.html.twig', array(
+//                    'entity' => $entity,
+//                    'edit_form' => $editForm->createView(),
+//                    'delete_form' => $deleteForm->createView(),
+//        ));
+        return $this->redirect($this->generateUrl('premio'));
     }
 
     /**

@@ -211,8 +211,8 @@ class ProgramacionController extends Controller {
                 $em->getRepository('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
             else
                 $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
-
-            return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('promocion'));
+//            return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Programacion:edit.html.twig', array(

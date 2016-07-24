@@ -13,7 +13,6 @@ use AppBundle\Form\ProgramacionPremioType;
  */
 class ProgramacionPremioController extends Controller {
 
-
     /**
      * Lists all Programacion entities.
      *
@@ -28,8 +27,7 @@ class ProgramacionPremioController extends Controller {
                     'entities' => $entities,
         ));
     }
-    
-    
+
     /**
      * Lists all Programacion entities.
      *
@@ -56,13 +54,17 @@ class ProgramacionPremioController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+                $em->persist($entity);
+                $em->flush();
 
-            if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
+                if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                    $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
 
-            return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $entity->getId())));
+            }else {
+                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+            }
         }
 
         return $this->render('AppBundle:ProgramacionPremio:new.html.twig', array(
@@ -102,8 +104,8 @@ class ProgramacionPremioController extends Controller {
                     'form' => $form->createView(),
         ));
     }
-    
-        /**
+
+    /**
      * Displays a form to create a new Programacion entity.
      *
      */

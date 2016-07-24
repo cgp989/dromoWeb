@@ -25,7 +25,9 @@ class PremioType extends AbstractType {
                 ->add('precio', null, array(
                     'label' => 'Precio ($)'
                 ))
-                ->add('puntajePremio')
+                ->add('puntajePremio', null, array(
+                    'label' => 'Puntaje Premio ($)'
+                ))
                 ->add('estadoPromocion', 'entity', array(
                     'class' => 'AppBundle:EstadoPromocion',
                     'query_builder' =>

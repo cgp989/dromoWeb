@@ -42,7 +42,6 @@ class PremiosType extends AbstractType {
                     'label' => 'Estado'
                         )
                 )
-                //->add('tipoPromocion')
                 ->add('localComercial')
         ;
         if (isset($this->opciones['edit']) && $this->opciones['edit']) {

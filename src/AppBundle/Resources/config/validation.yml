@@ -9,12 +9,11 @@ AppBundle\Entity\Programacion:
             - Type:
                 type: integer
                 message: "El valor no es válido"
-        cantidad:
-            - NotBlank:
-                message: "Campo obligatorio"
-            - Type:
-                type: initeger
-                message: "El valor no es válido"
+            - Length:
+                min: 1
+                max: 4
+                minMessage: "El campo debe tener minimo {{ limit }} caracteres"
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"      
         fechaInicio:
             - NotNull:
                 message: "Campo obligatorio"
@@ -40,7 +39,7 @@ AppBundle\Entity\Promocion:
                 min: 3
                 max: 25
                 minMessage: "El campo debe tener minimo {{ limit }} caracteres"
-                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"         
         tipoPromocion:
             - NotNull:
                 message: "Campo obligatorio"
@@ -87,3 +86,15 @@ AppBundle\Entity\Direccion:
         localidad:
             - NotNull:
                 message: "Campo obligatorio"
+        latitud:
+            - NotNull:
+                message: "Campo obligatorio"
+            - Type:
+                type: float
+                message: "El valor no es válido"            
+        longitud:
+            - NotNull:
+                message: "Campo obligatorio"
+            - Type:
+                type: float
+                message: "El valor no es válido"

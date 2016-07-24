@@ -19,10 +19,8 @@ class SucursalType extends AbstractType {
                 ))
                 ->add('direccion', new DireccionType())
                 ->add('localComercial', null, array(
-                    'disabled' => true,
-                ))
+                    'attr' => array('readonly' => true)))
         ;
-        
     }
 
     /**

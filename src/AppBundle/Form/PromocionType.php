@@ -38,25 +38,25 @@ class PromocionType extends AbstractType {
                         )
                 )
         ;
-
-        if (isset($this->opciones['edit']) && $this->opciones['edit']) {
-            $builder
-                    ->add('titulo', null, array(
-                        'disabled' => true,
-                        'label' => 'Título'
-                    ))
-                    ->add('tipoPromocion', null, array(
-                        'label' => 'Tipo',
-                        'disabled' => true,
-                        'empty_value' => '',
-                        'query_builder' =>
-                        function (\AppBundle\Entity\TipoPromocionRepository $repositorio) {
-                            return $repositorio->createQueryBuilder('e')
-                                    ->where('e.nombre != :nombrePromo')
-                                    ->setParameter('nombrePromo', 'Premio');
-                        }
-            ));
-        } else {
+//
+//        if (isset($this->opciones['edit']) && $this->opciones['edit']) {
+//            $builder
+//                    ->add('titulo', null, array(
+//                        'disabled' => true,
+//                        'label' => 'Título'
+//                    ))
+//                    ->add('tipoPromocion', null, array(
+//                        'label' => 'Tipo',
+//                        'disabled' => true,
+//                        'empty_value' => '',
+//                        'query_builder' =>
+//                        function (\AppBundle\Entity\TipoPromocionRepository $repositorio) {
+//                            return $repositorio->createQueryBuilder('e')
+//                                    ->where('e.nombre != :nombrePromo')
+//                                    ->setParameter('nombrePromo', 'Premio');
+//                        }
+//            ));
+//        } else {
             $builder
                     ->add('titulo', null, array(
                         'label' => 'Título'
@@ -70,7 +70,7 @@ class PromocionType extends AbstractType {
                                     ->setParameter('nombrePromo', 'Premio');
                         }
             ));
-        }
+        //}
     }
 
     /**
