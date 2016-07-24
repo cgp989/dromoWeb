@@ -166,8 +166,8 @@ class PremiosController extends Controller {
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));
+             return $this->redirect($this->generateUrl('premios'));
+//            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Premios:edit.html.twig', array(
@@ -175,6 +175,7 @@ class PremiosController extends Controller {
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
+       
     }
 
     /**
