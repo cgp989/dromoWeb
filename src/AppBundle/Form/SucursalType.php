@@ -18,9 +18,9 @@ class SucursalType extends AbstractType {
                     'label' => 'Teléfono'
                 ))
                 ->add('direccion', new DireccionType())
-                ->add('localComercial')
+                ->add('localComercial', null, array(
+                    'attr' => array('readonly' => true)))
         ;
-        
     }
 
     /**

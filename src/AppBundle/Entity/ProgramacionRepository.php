@@ -146,7 +146,8 @@ class ProgramacionRepository extends EntityRepository {
 
     function validaFecha(Programacion $programacion) {
         $fechaHoy = new \DateTime('now');
-        if ($programacion->getFechaInicio() >= $fechaHoy && $programacion->getFechaInicio() <= $programacion->getFechaFin()) {
+//        $programacion->getFechaInicio() >= $fechaHoy &&
+        if ($programacion->getFechaInicio() <= $programacion->getFechaFin()) {
             return true;
         } else {
             return false;
