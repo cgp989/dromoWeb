@@ -190,7 +190,7 @@ class LocalComercialController extends Controller {
             $entity->setVersion($version + 1);
             $em->flush();
 
-            $urlEdit = $this->generateUrl('localcomercial_edit', array('id' => $id));
+            $urlEdit = $this->generateUrl('localcomercial_show', array('id' => $id));
             //Si el usuario es un local se cambia la url de actualizacion
             if ($this->getUser()->hasRole('ROLE_LOCAL')) {
                 $urlEdit = $this->generateUrl('localcomercial_log_edit');

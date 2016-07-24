@@ -205,14 +205,18 @@ class ProgramacionPremioController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+                $em->flush();
 
-            if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                $em->getRepository('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
-            else
-                $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
+                if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                    $em->getRepository('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
+                else
+                    $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
 
-            return $this->redirect($this->generateUrl('programacionPremio_edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $id)));
+            }else {
+                $editForm->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+            }
         }
 
         return $this->render('AppBundle:ProgramacionPremio:edit.html.twig', array(

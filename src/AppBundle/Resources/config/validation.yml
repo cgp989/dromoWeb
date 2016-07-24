@@ -48,7 +48,10 @@ AppBundle\Entity\Promocion:
                 message: "Campo obligatorio"
             - Type:
                 type: float
-                message: "El valor no es válido"
+                message: "El valor no es válido"   
+            - GreaterThanOrEqual:
+                value: 0
+                message: "El precio minimo es 0 "                
         tipoPromocion:
             - NotNull:
                 message: "Campo obligatorio"
@@ -98,3 +101,4 @@ AppBundle\Entity\Direccion:
             - Type:
                 type: float
                 message: "El valor no es válido"
+                

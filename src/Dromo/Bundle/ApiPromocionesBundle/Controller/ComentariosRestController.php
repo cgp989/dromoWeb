@@ -84,19 +84,20 @@ class ComentariosRestController extends Controller {
             $estadoComentario = $this->getDoctrine()->getRepository('AppBundle:EstadoComentario')->find(1);
             $comen->setEstadoComentario($estadoComentario);
             $em->persist($comen);
+            $em->flush();
             $comentariosLocal = $this->getDoctrine()->getRepository('AppBundle:Comentario')->findByLocalComercial($localComercial);
             $suma=0;
             $cant=0;
-            foreach ($comentariosLocal as $coment) {
+            foreach ($comentariosLocal as $coment) {                
                  $cant++;
                  $suma+= $coment->getValoracion();
              }
              if($cant==0){
-                 $localComercial->setValoracion(0);
-                 $em->persist($localComercial);
+                  $localComercial->setValoracion(0);
+                 //$em->persist($localComercial);
              }else{
-                $localComercial->setValoracion($suma/$cant); 
-                $em->persist($localComercial);
+                $localComercial->setValoracion((double)$suma/$cant); 
+                //$em->persist($localComercial);
              }
             
             $em->flush();

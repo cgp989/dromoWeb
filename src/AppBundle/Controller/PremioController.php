@@ -169,7 +169,7 @@ class PremioController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('premio_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('premio_show', array('id' => $id)));
         }
 
 //        return $this->render('AppBundle:Premio:edit.html.twig', array(

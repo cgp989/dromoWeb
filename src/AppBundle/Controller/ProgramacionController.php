@@ -28,7 +28,7 @@ class ProgramacionController extends Controller {
                     'entities' => $entities,
         ));
     }
-    
+
     /**
      * Lists all Programacion entities.
      *
@@ -67,7 +67,6 @@ class ProgramacionController extends Controller {
             }else {
                 $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
             }
-       
         }
 
         return $this->render('AppBundle:Programacion:new.html.twig', array(
@@ -106,8 +105,8 @@ class ProgramacionController extends Controller {
                     'form' => $form->createView(),
         ));
     }
-    
-     /**
+
+    /**
      * Displays a form to create a new Programacion entity.
      *
      */
@@ -205,14 +204,18 @@ class ProgramacionController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+                $em->flush();
 
-            if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                $em->getRepository('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
-            else
-                $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
-            return $this->redirect($this->generateUrl('promocion'));
+                if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                    $em->getRepository('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
+                else
+                    $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
+                return $this->redirect($this->generateUrl('promocion'));
 //            return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
+            }else {
+                $editForm->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+            }
         }
 
         return $this->render('AppBundle:Programacion:edit.html.twig', array(
