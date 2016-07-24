@@ -164,7 +164,7 @@ class ComentarioController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('comentario_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('comentario_show', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Comentario:edit.html.twig', array(
