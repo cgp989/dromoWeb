@@ -21,9 +21,9 @@
                     <td>{{ entity.telefono }}</td>
 
                     <td>
-                        <a title="ver" href="{{ path('sucursal_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        &nbsp;&nbsp;&nbsp;
+                        <a title="ver" href="{{ path('sucursal_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>                        
                         <a title="editar" href="{{ path('sucursal_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a title="eliminar" href="{{ path('sucursal_delete', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
             {% endfor %}

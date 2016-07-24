@@ -24,9 +24,9 @@ class PremiosType extends AbstractType {
                     'label' => 'Título'))
                 ->add('descripcion', 'textarea', array(
                     'label' => 'Descripción'))
-                ->add('precio', 'number', array('attr' => array(
+                ->add('precio', null, array('attr' => array(
                         'label' => 'Precio ($)',
-                        'min' => '0',                        
+                                                
             )))
                 ->add('puntajePremio', 'integer', array('attr' => array(
                         'min' => '0',

@@ -38,7 +38,7 @@ sucursal_update:
 sucursal_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:Sucursal:delete" }
-    methods:  [POST, DELETE]
+#    methods:  [POST, DELETE]
     
 sucursal_ajax_localidad:
     path:     /ajax-localidad
