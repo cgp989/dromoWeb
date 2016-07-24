@@ -165,6 +165,22 @@ class PremiosController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $estadoEliminada = $em->getRepository('AppBundle:EstadoPromocion')->findOneByNombre('eliminada');
+            $promocion = new Promocion();
+            $promocion->setTitulo($entity->getTitulo());
+            $promocion->setDescripcion($entity->getDescripcion());
+            $promocion->setPrecio($entity->getPrecio());
+            $promocion->setEstaModerada($entity->getEstaModerada());
+            $promocion->setPuntajePremio($entity->getPuntajePremio());
+            $promocion->setEstadoPromocion($entity->getEstadoPromocion());
+            $promocion->setTipoPromocion($entity->getTipoPromocion());
+            $promocion->setLocalComercial($entity->getLocalComercial());
+             foreach ($entity->getProgramaciones() as $programacion) {
+                $programacion->setPromocion($promocion);
+             }
+            
+            $entity->setEstadoPromocion($estadoEliminada);
+            $em->persist($promocion);
             $em->flush();
              return $this->redirect($this->generateUrl('premios'));
 //            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));

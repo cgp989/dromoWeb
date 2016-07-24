@@ -10,46 +10,46 @@
     </div>
     <div class="col-xs-12">
         {{ form_start(form) }}
-            <div class="row error-count">{{ form_errors(form) }}</div>
-            <div class="row">
-                <div class="col-xs-6">{{ form_row(form.promocion) }}</div>
-                <div class="col-xs-3">{{ form_row(form.cantidad) }}</div>
+        <div class="row error-count">{{ form_errors(form) }}</div>
+        <div class="row">
+            <div class="col-xs-6">{{ form_row(form.promocion) }}</div>
+            <div class="col-xs-3">{{ form_row(form.cantidad) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">{{ form_row(form.fechaInicio) }}</div>
+            <div class="col-xs-6">{{ form_row(form.fechaFin) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">{{ form_row(form.horaInicio) }}</div>
+            <div class="col-xs-2">{{ form_row(form.duracion) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12"><label>D&iacute;as disponible</label></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                {{ form_row(form.esLunes) }}
+                {{ form_row(form.esJueves) }}
+                {{ form_row(form.esDomingo) }}
             </div>
-            <div class="row">
-                <div class="col-xs-6">{{ form_row(form.fechaInicio) }}</div>
-                <div class="col-xs-6">{{ form_row(form.fechaFin) }}</div>
+            <div class="col-xs-4">
+                {{ form_row(form.esMartes) }}
+                {{ form_row(form.esViernes) }}
             </div>
-            <div class="row">
-                <div class="col-xs-6">{{ form_row(form.horaInicio) }}</div>
-                <div class="col-xs-2">{{ form_row(form.duracion) }}</div>
+            <div class="col-xs-4">
+                {{ form_row(form.esMiercoles) }}
+                {{ form_row(form.esSabado) }}
             </div>
-            <div class="row">
-                <div class="col-xs-12"><label>D&iacute;as disponible</label></div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    {{ form_row(form.esLunes) }}
-                    {{ form_row(form.esJueves) }}
-                    {{ form_row(form.esDomingo) }}
-                </div>
-                <div class="col-xs-4">
-                    {{ form_row(form.esMartes) }}
-                    {{ form_row(form.esViernes) }}
-                </div>
-                <div class="col-xs-4">
-                    {{ form_row(form.esMiercoles) }}
-                    {{ form_row(form.esSabado) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">{{ form_row(form.estadoProgramacion) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">{{ form_row(form.descripcion) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2 pull-right text-right">{{ form_row(form.crear) }}</div>
-            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">{{ form_row(form.estadoProgramacion) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">{{ form_row(form.descripcion) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 pull-right text-right">{{ form_row(form.crear) }}</div>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}
