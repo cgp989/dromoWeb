@@ -137,7 +137,7 @@ class PremiosController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Promocion $entity) {
-        $form = $this->createForm(new PremiosType(), $entity, array(
+        $form = $this->createForm(new PremiosType(array('edit' => true)), $entity, array(
             'action' => $this->generateUrl('premios_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

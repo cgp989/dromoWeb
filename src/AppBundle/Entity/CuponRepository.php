@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CuponRepository extends EntityRepository
 {
-    public function crearNuevoCupon(ProgramacionEnDia $programacionEnDia, UsuarioMovil $usuarioMovil){
+    public function crearNuevoCupon(ProgramacionEnDia $programacionEnDia, UsuarioMovil $usuarioMovil) {
         $cupon = new Cupon();
         $cupon->setCodigo(uniqid());
         $cupon->setEstadoCupon(
@@ -22,10 +22,21 @@ class CuponRepository extends EntityRepository
         $cupon->setInicio($programacionEnDia->getInicio());
         $cupon->setVencimiento($programacionEnDia->getVencimiento());
         $cupon->setProgramacion($programacionEnDia->getProgramacion());
-        $cupon->setTipoCupon(
-                $this->getEntityManager()->getRepository('AppBundle:TipoCupon')->findOneByNombre('promocion')
-            );
         $cupon->setUsuarioMovil($usuarioMovil);
+        
+        
+        $promocion = $programacionEnDia->getProgramacion()->getPromocion();
+        if($promocion->getTipoPromocion()->getNombre() == 'premio'){
+            //si la promocion es a la vez un premio tego q restarle al usuario movil los puntos de esta
+            $puntosPremio = $promocion->getPuntajePremio();
+            $usuarioMovil->setPuntos($usuarioMovil->getPuntos() - $puntosPremio);
+            $this->getEntityManager()->persist($usuarioMovil);
+            $tipoCupon = $this->getEntityManager()->getRepository('AppBundle:TipoCupon')->findOneByNombre('premio');
+        }else{
+            $tipoCupon = $this->getEntityManager()->getRepository('AppBundle:TipoCupon')->findOneByNombre('promocion');
+        }
+        $cupon->setTipoCupon($tipoCupon);
+        
         $this->getEntityManager()->persist($cupon);
         $this->getEntityManager()->flush();
         return $cupon;
