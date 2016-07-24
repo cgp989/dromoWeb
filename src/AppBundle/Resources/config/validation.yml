@@ -101,3 +101,4 @@ AppBundle\Entity\Direccion:
             - Type:
                 type: float
                 message: "El valor no es válido"
+                

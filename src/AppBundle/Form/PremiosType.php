@@ -59,7 +59,7 @@ class PremiosType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'appbundle_premios';
+        return 'appbundle_promocion';
     }
 
 }
