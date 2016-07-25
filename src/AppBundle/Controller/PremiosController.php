@@ -35,19 +35,18 @@ class PremiosController extends Controller {
     public function createAction(Request $request) {
         $entity = new Promocion();
         $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
-        $entity->setEstaModerada(true);
-        if ($entity->getPrecio() < 0) {
-            $entity->setPrecio($entity->getPrecio() * -1);
-        }
         $tipo = $em->getRepository('AppBundle:TipoPromocion')->findOneByNombre('Premio');
         $entity->setTipoPromocion($tipo);
-        $entity->setPuntajePremioPlata($entity->getPuntajePremio(), $em);
-        $em->persist($entity);
-        $em->flush();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entity->setEstaModerada(true);
+            $entity->setPuntajePremioPlata($em);
+            $em->persist($entity);
+            $em->flush();
 
-        return $this->redirect($this->generateUrl('premios_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('premios_show', array('id' => $entity->getId())));
+        }
 
         return $this->render('AppBundle:Premios:new.html.twig', array(
                     'entity' => $entity,
@@ -162,15 +161,15 @@ class PremiosController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('No existe el premio');
         }
-        $entity->setPuntajePremioPlata($entity->getPuntajePremio(), $em);
+            
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            if ($entity->getPrecio() < 0) {
-                $entity->setPrecio($entity->getPrecio() * -1);
-            }
+            $plata = $entity->getPuntajePremioPlata($em);
+            $entity->setPuntajePremio($plata);
+            $entity->setPuntajePremioPlata($em);
             $em->flush();
             return $this->redirect($this->generateUrl('premios'));
 //            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));

@@ -28,16 +28,12 @@ class PremiosType extends AbstractType {
                     'label' => 'Descripción'))
                 ->add('precio', 'number', array(
                     'label' => 'Precio ($)',
-                    'attr' => array(
-                        'min' => '0',
                     'disabled' => $disableOption                        
-            )))
+                ))
                 ->add('puntajePremio', 'integer', array(
                     'label' => 'Puntos en $',
-                    'attr' => array(
-                        'min' => '0',
                     'disabled' => $disableOption
-            )))
+                ))
                 ->add('estadoPromocion', 'entity', array(
                     'class' => 'AppBundle:EstadoPromocion',
                     'query_builder' =>

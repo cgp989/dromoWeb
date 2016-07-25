@@ -216,11 +216,12 @@ class Promocion {
      * @param float $puntajePremio
      * @return Promocion
      */
-    public function setPuntajePremioPlata($puntajePremioPlata, $em) {
+    public function setPuntajePremioPlata($em) {
         $repositoryVariable = $em->getRepository('AppBundle:Variables');
         $ArrayVariables = $repositoryVariable->findAll();
         $puntos = $ArrayVariables[0]->getValorPunto();
-        $this->puntajePremio = (int) ($puntajePremioPlata * $puntos);
+        $puntajePremio = (int) ($this->getPuntajePremio() * $puntos);
+        $this->setPuntajePremio($puntajePremio);
 
         return $this;
     }
@@ -243,7 +244,7 @@ class Promocion {
         $repositoryVariable = $em->getRepository('AppBundle:Variables');
         $ArrayVariables = $repositoryVariable->findAll();
         $puntos = $ArrayVariables[0]->getValorPunto();
-        return $this->puntajePremio / $puntos;
+        return $this->getPuntajePremio() / $puntos;
     }
 
     /**

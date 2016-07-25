@@ -19,58 +19,40 @@ class PromocionType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $disableOption = (isset($this->opciones['edit']) && $this->opciones['edit']);
         $builder
-                ->add('descripcion', 'textarea', array(
-                    'label' => 'Descripción'
-                ))
-                ->add('precio', null, array(
-                    'label' => 'Precio ($)'
-                ))
-                ->add('estadoPromocion', 'entity', array(
-                    'class' => 'AppBundle:EstadoPromocion',
-                    'query_builder' =>
-                    function (\AppBundle\Entity\EstadoPromocionRepository $repositorio) {
-                        return $repositorio->createQueryBuilder('e')
-                                ->where('e.nombre != :nombreEstado')
-                                ->setParameter('nombreEstado', 'eliminada');
-                    },
-                    'label' => 'Estado'
-                        )
-                )
-        ;
-//
-//        if (isset($this->opciones['edit']) && $this->opciones['edit']) {
-//            $builder
-//                    ->add('titulo', null, array(
-//                        'disabled' => true,
-//                        'label' => 'Título'
-//                    ))
-//                    ->add('tipoPromocion', null, array(
-//                        'label' => 'Tipo',
-//                        'disabled' => true,
-//                        'empty_value' => '',
-//                        'query_builder' =>
-//                        function (\AppBundle\Entity\TipoPromocionRepository $repositorio) {
-//                            return $repositorio->createQueryBuilder('e')
-//                                    ->where('e.nombre != :nombrePromo')
-//                                    ->setParameter('nombrePromo', 'Premio');
-//                        }
-//            ));
-//        } else {
-            $builder
-                    ->add('titulo', null, array(
-                        'label' => 'Título'
-                    ))
-                    ->add('tipoPromocion', null, array(
-                        'label' => 'Tipo',
-                        'empty_value' => '',
-                        'query_builder' => function (\AppBundle\Entity\TipoPromocionRepository $repositorio) {
-                            return $repositorio->createQueryBuilder('e')
-                                    ->where('e.nombre != :nombrePromo')
-                                    ->setParameter('nombrePromo', 'Premio');
-                        }
+            ->add('descripcion', 'textarea', array(
+                'label' => 'Descripción'
+            ))
+            ->add('precio', null, array(
+                'label' => 'Precio ($)',
+                'disabled' => $disableOption
+            ))
+            ->add('estadoPromocion', 'entity', array(
+                'class' => 'AppBundle:EstadoPromocion',
+                'query_builder' =>
+                function (\AppBundle\Entity\EstadoPromocionRepository $repositorio) {
+                    return $repositorio->createQueryBuilder('e')
+                            ->where('e.nombre != :nombreEstado')
+                            ->setParameter('nombreEstado', 'eliminada');
+                },
+                'label' => 'Estado'
+                    )
+            )
+            ->add('titulo', null, array(
+                'label' => 'Título',
+                'disabled' => $disableOption
+            ))
+            ->add('tipoPromocion', null, array(
+                'label' => 'Tipo',
+                'empty_value' => '',
+                'query_builder' => function (\AppBundle\Entity\TipoPromocionRepository $repositorio) {
+                    return $repositorio->createQueryBuilder('e')
+                            ->where('e.nombre != :nombrePromo')
+                            ->setParameter('nombrePromo', 'Premio');
+                },
+                'disabled' => $disableOption
             ));
-        //}
     }
 
     /**
