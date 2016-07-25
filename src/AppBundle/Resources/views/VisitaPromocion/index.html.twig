@@ -47,7 +47,7 @@
                         type: 'pie',
                         name: 'Browser share',
                         data: [{% for entity in entities %}
-                            ['{{ entity.titulo }} - {{ entity.cant }}',{{ (entity.cant/suma)*100 }} , ],
+                            ['{{ entity.titulo }} - {{ entity.cant }}',{{ ((entity.cant/suma)*100) |round(2, 'floor') }} , ],
         {% endfor %} 
                         ]
                     }]

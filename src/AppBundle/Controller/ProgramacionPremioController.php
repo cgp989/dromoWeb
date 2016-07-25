@@ -56,6 +56,9 @@ class ProgramacionPremioController extends Controller {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+                if ($entity->getCantidad() < 0) {
+                    $entity->setCantidad($entity->getCantidad() * -1);
+                }
                 $em->persist($entity);
                 $em->flush();
 
@@ -206,6 +209,9 @@ class ProgramacionPremioController extends Controller {
 
         if ($editForm->isValid()) {
             if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+                if ($entity->getCantidad() < 0) {
+                    $entity->setCantidad($entity->getCantidad() * -1);
+                }
                 $em->flush();
 
                 if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
