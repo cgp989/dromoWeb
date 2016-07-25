@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use AppBundle\Form\Listener\AddLocalidadFieldSubscriber;
+use AppBundle\Form\Listener\AddProvinciaFieldSubscriber;
 
 class DireccionType extends AbstractType
 {
@@ -26,9 +28,20 @@ class DireccionType extends AbstractType
             ->add('longitud', null, array(
                     'label' => 'Longitud',
                     'required' => true
-                ))
-            ->add('localidad')
-        ;
+                ));
+//            ->add('provincia', 'entity', array(
+//                'class' => 'AppBundle:Provincia',
+//                'mapped' => false,
+//                'empty_value'  => 'Seleccione una provincia'))
+//            ->add('localidad', 'entity', array(
+//                'class' => 'AppBundle:Localidad',
+//                'empty_value'  => 'Seleccione una localidad',
+//                'disabled' => true));        
+        
+        // Añadimos un EventListener que actualizará el campo localidad
+        // para que sus opciones correspondan
+        // con la provincia seleccionada
+        $builder->addEventSubscriber(new AddLocalidadFieldSubscriber());
     }
     
     /**

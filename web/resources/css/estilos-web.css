@@ -90,3 +90,27 @@ body.pdf-export, .pdf-export h1, .pdf-export h3{
     background-image: url("../images/iconos/dromoPortada.jpg");
     background-size: cover;
 }
+
+.vich-image img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 10px auto 0px auto;
+    border-radius: 50%;
+}
+
+.vich-image input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 100%;
+   // min-height: 100%;
+   // font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

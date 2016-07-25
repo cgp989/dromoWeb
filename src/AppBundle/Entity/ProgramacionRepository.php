@@ -47,7 +47,7 @@ class ProgramacionRepository extends EntityRepository {
                         . 'LEFT JOIN p.estadoPromocion e '
                         . 'WHERE p.id = :idPromocion AND epr.nombre != :nombreEstadoPr AND e.nombre != :nombreEstadoP')
                 ->setParameters(array(
-                    'idPromocion' => $idLocal,
+                    'idPromocion' => $idPromocion,
                     'nombreEstadoPr' => 'eliminada',
                     'nombreEstadoP' => 'eliminada'))
                 ->getResult();
@@ -146,6 +146,8 @@ class ProgramacionRepository extends EntityRepository {
 
     function validaFecha(Programacion $programacion) {
         $fechaHoy = new \DateTime('now');
+        date_add($fechaHoy, date_interval_create_from_date_string('1 days'));
+//        $programacion->getFechaInicio() >= $fechaHoy &&
         if ($programacion->getFechaInicio() >= $fechaHoy && $programacion->getFechaInicio() <= $programacion->getFechaFin()) {
             return true;
         } else {

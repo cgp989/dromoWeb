@@ -19,18 +19,21 @@ class PremiosType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $disableOption = (isset($this->opciones['edit']) && $this->opciones['edit']);
         $builder
                 ->add('titulo', null, array(
-                    'label' => 'Título'))
+                    'label' => 'Título',
+                    'disabled' => $disableOption))
                 ->add('descripcion', 'textarea', array(
                     'label' => 'Descripción'))
-                ->add('precio', 'number', array('attr' => array(
-                        'label' => 'Precio ($)',
-                        'min' => '0',                        
-            )))
-                ->add('puntajePremio', 'integer', array('attr' => array(
-                        'min' => '0',
-            )))
+                ->add('precio', 'number', array(
+                    'label' => 'Precio ($)',
+                    'disabled' => $disableOption                        
+                ))
+                ->add('puntajePremio', 'integer', array(
+                    'label' => 'Puntos en $',
+                    'disabled' => $disableOption
+                ))
                 ->add('estadoPromocion', 'entity', array(
                     'class' => 'AppBundle:EstadoPromocion',
                     'query_builder' =>
@@ -42,28 +45,10 @@ class PremiosType extends AbstractType {
                     'label' => 'Estado'
                         )
                 )
-                //->add('tipoPromocion')
-                ->add('localComercial')
+                ->add('localComercial', null, array(
+                    'disabled' => $disableOption
+                ))
         ;
-        if (isset($this->opciones['edit']) && $this->opciones['edit']) {
-            $builder
-                    ->add('titulo', null, array(
-                        'disabled' => true,
-                    ))
-//                    ->add('tipoPromocion', null, array(
-//                        'label' => 'Tipo',
-//                        'disabled' => true,
-//                        'empty_value' => '',
-//            ))
-            ;
-        } else {
-//            $builder
-//                    ->add('tipoPromocion', null, array(
-//                        'label' => 'Tipo',
-//                        'disabled' => true,
-//                        'empty_value' => '',
-//            ));
-        }
     }
 
     /**
@@ -79,7 +64,7 @@ class PremiosType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'appbundle_premios';
+        return 'appbundle_promocion';
     }
 
 }

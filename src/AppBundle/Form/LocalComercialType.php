@@ -27,14 +27,23 @@ class LocalComercialType extends AbstractType {
                 ))
                 ->add('nombreContacto')
                 ->add('emailContacto', 'email')
-                ->add('telefonoContacto', null, array('attr' => array(
-                        'type' => 'number',
-                        'label' => 'Teléfono Contacto',                        
-            )))
+                ->add('telefonoContacto', 'text', array(
+                    'label' => 'Teléfono contacto',
+                    'attr' => array(
+                        'maxlength' => 13
+                    )
+                ))
         ;
 
         if (!isset($this->opciones['edit'])) {
             $builder->add('usuario', new RegistrationFormType('AppBundle\Entity\Usuario'));
+        }else{
+            $builder->add('imageFile', 'vich_image', array(
+                    'required'      => false,
+                    'allow_delete'  => false, // not mandatory, default is true
+                    'download_link' => false, // not mandatory, default is true
+                    'label' => 'Imagen'
+            ));
         }
     }
 

@@ -5,7 +5,9 @@ programacion:
 programacion_promocion:
     path:     /{idPromocion}/
     defaults: { _controller: "AppBundle:Programacion:indexPromo" }
-
+    methods:  GET
+    requirements:
+        idPromocion:  \d+
 
 programacion_show:
     path:     /{id}/show
@@ -18,6 +20,9 @@ programacion_new:
 programacion_promocion_new:
     path:     /{idPromocion}/new
     defaults: { _controller: "AppBundle:Programacion:newPromo" }
+    methods:  GET
+    requirements:
+        idPromocion:  \d+
 
 programacion_create:
     path:     /create

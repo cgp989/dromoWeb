@@ -135,7 +135,8 @@ class ProgramacionType extends AbstractType
                         'choices' => $repoPromocion->getPromocionesLocal($this->opciones['idLocal']),
                         'label' => 'Promoción',
                         'empty_value' => '',
-                        'disabled' => true)
+                        'attr' => array('readonly' => true)
+                        )
             );
         } else {
             $builder
@@ -143,7 +144,8 @@ class ProgramacionType extends AbstractType
                         'class' => 'AppBundle:Promocion',
                         'choices' => $repoPromocion->getPromocionesLocal($this->opciones['idLocal']),
                         'label' => 'Promoción',
-                        'empty_value' => '')
+                        'empty_value' => '',
+                        'attr' => array('readonly' => true))
             );
         }
     }

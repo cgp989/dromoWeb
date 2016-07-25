@@ -5,6 +5,9 @@ sucursal:
 sucursal_local:
     path:     /{idLocal}/
     defaults: { _controller: "AppBundle:Sucursal:indexLocal" }
+    methods:  GET
+    requirements:
+        idLocal:  \d+
 
 sucursal_show:
     path:     /{id}/show
@@ -35,4 +38,9 @@ sucursal_update:
 sucursal_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:Sucursal:delete" }
-    methods:  [POST, DELETE]
+#    methods:  [POST, DELETE]
+    
+sucursal_ajax_localidad:
+    path:     /ajax-localidad
+    defaults: { _controller: "AppBundle:Sucursal:ajaxForm" }
+    condition: "request.isXmlHttpRequest()"

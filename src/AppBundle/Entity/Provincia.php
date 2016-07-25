@@ -103,4 +103,8 @@ class Provincia
     {
         return $this->localidades;
     }
+    
+    public function __toString() {
+        return $this->getNombre();
+    }
 }

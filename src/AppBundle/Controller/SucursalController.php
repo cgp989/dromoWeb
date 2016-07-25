@@ -202,7 +202,7 @@ class SucursalController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sucursal_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('sucursal_show', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Sucursal:edit.html.twig', array(
@@ -220,7 +220,7 @@ class SucursalController extends Controller {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+//        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('AppBundle:Sucursal')->find($id);
 
@@ -230,9 +230,9 @@ class SucursalController extends Controller {
 
             $em->remove($entity);
             $em->flush();
-        }
+//        }
 
-        return $this->redirect($this->generateUrl('sucursal'));
+        return $this->redirect($this->generateUrl('localcomercial'));
     }
 
     /**
@@ -254,6 +254,18 @@ class SucursalController extends Controller {
                         ))
                         ->getForm()
         ;
+    }
+    
+    public function ajaxFormAction(Request $request)
+    {
+        $entity = new Sucursal();
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
+        
+        return $this->render('AppBundle:Sucursal:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
     }
 
 }

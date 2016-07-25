@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use AppBundle\Entity\Promocion;
 use AppBundle\Form\PromocionType;
 
@@ -12,30 +11,28 @@ use AppBundle\Form\PromocionType;
  * Promocion controller.
  *
  */
-class PromocionController extends Controller
-{
+class PromocionController extends Controller {
 
     /**
      * Lists all Promocion entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $repoPromociones = $em->getRepository('AppBundle:Promocion');
         $entities = $repoPromociones->getPromocionesLocal($this->getUser()->getLocalComercial()->getId());
 
         return $this->render('AppBundle:Promocion:index.html.twig', array(
-            'entities' => $entities,
+                    'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Promocion entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Promocion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -54,8 +51,8 @@ class PromocionController extends Controller
         }
 
         return $this->render('AppBundle:Promocion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -66,8 +63,7 @@ class PromocionController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Promocion $entity)
-    {
+    private function createCreateForm(Promocion $entity) {
         $form = $this->createForm(new PromocionType(), $entity, array(
             'action' => $this->generateUrl('promocion_create'),
             'method' => 'POST',
@@ -82,14 +78,13 @@ class PromocionController extends Controller
      * Displays a form to create a new Promocion entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Promocion();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Promocion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -97,8 +92,7 @@ class PromocionController extends Controller
      * Finds and displays a Promocion entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
@@ -110,8 +104,8 @@ class PromocionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:Promocion:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -119,8 +113,7 @@ class PromocionController extends Controller
      * Displays a form to edit an existing Promocion entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
@@ -133,21 +126,20 @@ class PromocionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:Promocion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a Promocion entity.
-    *
-    * @param Promocion $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Promocion $entity)
-    {
+     * Creates a form to edit a Promocion entity.
+     *
+     * @param Promocion $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Promocion $entity) {
         $form = $this->createForm(new PromocionType(array('edit' => true)), $entity, array(
             'action' => $this->generateUrl('promocion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -157,12 +149,12 @@ class PromocionController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Promocion entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
@@ -177,22 +169,22 @@ class PromocionController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('promocion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('promocion'));
+//            return $this->redirect($this->generateUrl('promocion_edit', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Promocion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a Promocion entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -202,10 +194,10 @@ class PromocionController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('No existe la promoción.');
             }
-            
+
             $repositoryProgramacion = $em->getRepository('AppBundle:Programacion');
             $repositoryProgramacion->eliminarProgramacionesConPromocion($entity); //elimino todas las programaciones de la promocion
-            $estadoEliminada=$em->getRepository('AppBundle:EstadoPromocion')->findOneByNombre('eliminada');
+            $estadoEliminada = $em->getRepository('AppBundle:EstadoPromocion')->findOneByNombre('eliminada');
             $entity->setEstadoPromocion($estadoEliminada);
             $em->persist($entity);
             $em->flush();
@@ -221,20 +213,19 @@ class PromocionController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('promocion_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('eliminar', 'submit', 
-                    array('label' => ' ',
-                        'attr' => 
-                            ['class' => 'glyphicon glyphicon-trash', 
-                            'onclick' => 'return confirm("¿Esta seguro de eliminar esta promoción?.'
+                        ->setAction($this->generateUrl('promocion_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('eliminar', 'submit', array('label' => ' ',
+                            'attr' =>
+                            ['class' => 'glyphicon glyphicon-trash',
+                                'onclick' => 'return confirm("¿Esta seguro de eliminar esta promoción?.'
                                 . ' Tenga en cuenta que tambien se eliminaran todas las programaciones de la misma.")',
-                            'title' => 'eliminar']
-                    ))
-            ->getForm()
+                                'title' => 'eliminar']
+                        ))
+                        ->getForm()
         ;
     }
+
 }

@@ -149,15 +149,15 @@ class UsuariosRestController extends Controller {
             $em = $this->getDoctrine()->getManager();
             //setear datos a um
             $usuarioMovil->setPassword("XX");
-            $usuarioMovil->setUsuario("XX");
-            $usuarioMovil->setNombre("XX");
-            $usuarioMovil->setApellido("XX");
+//            $usuarioMovil->setUsuario("XX");
+//            $usuarioMovil->setNombre("XX");
+//            $usuarioMovil->setApellido("XX");
             $comentarios = $usuarioMovil->getComentarios();
+            
             /* @var $comentario Entity\Comentario */
-
-            foreach ($comentarios as $comentario) {
-                $em->remove($comentario);
-            }
+//            foreach ($comentarios as $comentario) {
+//                $em->remove($comentario);
+//            }
             $em->persist($usuarioMovil);
             $em->flush();
         } else {

@@ -17,8 +17,8 @@ use JMS\Serializer\Annotation\VirtualProperty;
  * 
  * @ExclusionPolicy("all")
  */
-class Promocion
-{
+class Promocion {
+
     /**
      * @var integer
      *
@@ -27,7 +27,7 @@ class Promocion
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var string
      *
@@ -86,7 +86,7 @@ class Promocion
      * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $tipoPromocion;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="promociones")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
@@ -100,7 +100,7 @@ class Promocion
      * @ORM\OneToMany(targetEntity="Programacion", mappedBy="promocion")
      */
     private $programaciones;
-    
+
     public function __construct() {
         $this->programaciones = new ArrayCollection();
     }
@@ -110,8 +110,7 @@ class Promocion
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -121,8 +120,7 @@ class Promocion
      * @param string $descripcion
      * @return Promocion
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -133,8 +131,7 @@ class Promocion
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
@@ -144,8 +141,7 @@ class Promocion
      * @param float $precio
      * @return Promocion
      */
-    public function setPrecio($precio)
-    {
+    public function setPrecio($precio) {
         $this->precio = $precio;
 
         return $this;
@@ -156,8 +152,7 @@ class Promocion
      *
      * @return float 
      */
-    public function getPrecio()
-    {
+    public function getPrecio() {
         return $this->precio;
     }
 
@@ -167,8 +162,7 @@ class Promocion
      * @param string $titulo
      * @return Promocion
      */
-    public function setTitulo($titulo)
-    {
+    public function setTitulo($titulo) {
         $this->titulo = $titulo;
 
         return $this;
@@ -179,8 +173,7 @@ class Promocion
      *
      * @return string 
      */
-    public function getTitulo()
-    {
+    public function getTitulo() {
         return $this->titulo;
     }
 
@@ -190,8 +183,7 @@ class Promocion
      * @param boolean $estaModerada
      * @return Promocion
      */
-    public function setEstaModerada($estaModerada)
-    {
+    public function setEstaModerada($estaModerada) {
         $this->estaModerada = $estaModerada;
 
         return $this;
@@ -202,8 +194,7 @@ class Promocion
      *
      * @return boolean 
      */
-    public function getEstaModerada()
-    {
+    public function getEstaModerada() {
         return $this->estaModerada;
     }
 
@@ -213,9 +204,24 @@ class Promocion
      * @param integer $puntajePremio
      * @return Promocion
      */
-    public function setPuntajePremio($puntajePremio)
-    {
+    public function setPuntajePremio($puntajePremio) {
         $this->puntajePremio = $puntajePremio;
+
+        return $this;
+    }
+
+    /**
+     * Set puntajePremioPlata
+     *
+     * @param float $puntajePremio
+     * @return Promocion
+     */
+    public function setPuntajePremioPlata($em) {
+        $repositoryVariable = $em->getRepository('AppBundle:Variables');
+        $ArrayVariables = $repositoryVariable->findAll();
+        $puntos = $ArrayVariables[0]->getValorPunto();
+        $puntajePremio = (int) ($this->getPuntajePremio() * $puntos);
+        $this->setPuntajePremio($puntajePremio);
 
         return $this;
     }
@@ -225,9 +231,20 @@ class Promocion
      *
      * @return integer 
      */
-    public function getPuntajePremio()
-    {
+    public function getPuntajePremio() {
         return $this->puntajePremio;
+    }
+
+    /**
+     * Get puntajePremioPlata
+     *
+     * @return integer 
+     */
+    public function getPuntajePremioPlata($em) {        
+        $repositoryVariable = $em->getRepository('AppBundle:Variables');
+        $ArrayVariables = $repositoryVariable->findAll();
+        $puntos = $ArrayVariables[0]->getValorPunto();
+        return $this->getPuntajePremio() / $puntos;
     }
 
     /**
@@ -236,8 +253,7 @@ class Promocion
      * @param \stdClass $estadoPromocion
      * @return Promocion
      */
-    public function setEstadoPromocion($estadoPromocion)
-    {
+    public function setEstadoPromocion($estadoPromocion) {
         $this->estadoPromocion = $estadoPromocion;
 
         return $this;
@@ -248,8 +264,7 @@ class Promocion
      *
      * @return \stdClass 
      */
-    public function getEstadoPromocion()
-    {
+    public function getEstadoPromocion() {
         return $this->estadoPromocion;
     }
 
@@ -259,8 +274,7 @@ class Promocion
      * @param \stdClass $tipoPromocion
      * @return Promocion
      */
-    public function setTipoPromocion($tipoPromocion)
-    {
+    public function setTipoPromocion($tipoPromocion) {
         $this->tipoPromocion = $tipoPromocion;
 
         return $this;
@@ -271,8 +285,7 @@ class Promocion
      *
      * @return \stdClass 
      */
-    public function getTipoPromocion()
-    {
+    public function getTipoPromocion() {
         return $this->tipoPromocion;
     }
 
@@ -282,8 +295,7 @@ class Promocion
      * @param \AppBundle\Entity\Programacion $programaciones
      * @return Promocion
      */
-    public function addProgramacione(\AppBundle\Entity\Programacion $programaciones)
-    {
+    public function addProgramacione(\AppBundle\Entity\Programacion $programaciones) {
         $this->programaciones[] = $programaciones;
 
         return $this;
@@ -294,8 +306,7 @@ class Promocion
      *
      * @param \AppBundle\Entity\Programacion $programaciones
      */
-    public function removeProgramacione(\AppBundle\Entity\Programacion $programaciones)
-    {
+    public function removeProgramacione(\AppBundle\Entity\Programacion $programaciones) {
         $this->programaciones->removeElement($programaciones);
     }
 
@@ -304,8 +315,7 @@ class Promocion
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProgramaciones()
-    {
+    public function getProgramaciones() {
         return $this->programaciones;
     }
 
@@ -315,8 +325,7 @@ class Promocion
      * @param \AppBundle\Entity\LocalComercial $localComercial
      * @return Promocion
      */
-    public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null)
-    {
+    public function setLocalComercial(\AppBundle\Entity\LocalComercial $localComercial = null) {
         $this->localComercial = $localComercial;
 
         return $this;
@@ -327,12 +336,12 @@ class Promocion
      *
      * @return \AppBundle\Entity\LocalComercial 
      */
-    public function getLocalComercial()
-    {
+    public function getLocalComercial() {
         return $this->localComercial;
     }
-    
+
     public function __toString() {
-        return $this->getTipoPromocion().': '.$this->getTitulo();
+        return $this->getTipoPromocion() . ': ' . $this->getTitulo();
     }
+
 }

@@ -30,8 +30,8 @@
                 <td>{{ entity.promocion.tipoPromocion }}: {{ entity.promocion.titulo }}</td>
                 <td>{% if entity.fechaInicio %}{{ entity.fechaInicio|date('d/m/Y') }}{% endif %}</td>
                 <td>{% if entity.fechaFin %}{{ entity.fechaFin|date('d/m/Y') }}{% endif %}</td>
-                <td>{% if entity.horaInicio %}{{ entity.horaInicio|date('H:i') }}{% endif %}</td>
-                <td>{{ entity.duracion }}</td>
+                <td>{% if entity.horaInicio %}{{ entity.horaInicio|date('H:i') }}{% endif %}</td>                
+                <td>{{ entity.duracion_ }}h</td>
                 <td>{{ entity.cantidad }}</td>
                 <td>{{ entity.estadoProgramacion }}</td>
                 <td>

@@ -35,16 +35,18 @@ class PremiosController extends Controller {
     public function createAction(Request $request) {
         $entity = new Promocion();
         $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
-        $entity->setEstaModerada(true);
         $tipo = $em->getRepository('AppBundle:TipoPromocion')->findOneByNombre('Premio');
         $entity->setTipoPromocion($tipo);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entity->setEstaModerada(true);
+            $entity->setPuntajePremioPlata($em);
+            $em->persist($entity);
+            $em->flush();
 
-        $em->persist($entity);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('premios_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('premios_show', array('id' => $entity->getId())));
+        }
 
         return $this->render('AppBundle:Premios:new.html.twig', array(
                     'entity' => $entity,
@@ -113,7 +115,8 @@ class PremiosController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Promocion')->find($id);
-
+        $plata = $entity->getPuntajePremioPlata($em);
+        $entity->setPuntajePremio($plata);
         if (!$entity) {
             throw $this->createNotFoundException('No existe el premio');
         }
@@ -136,7 +139,7 @@ class PremiosController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Promocion $entity) {
-        $form = $this->createForm(new PremiosType(), $entity, array(
+        $form = $this->createForm(new PremiosType(array('edit' => true)), $entity, array(
             'action' => $this->generateUrl('premios_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -158,15 +161,18 @@ class PremiosController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('No existe el premio');
         }
-
+            
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $plata = $entity->getPuntajePremioPlata($em);
+            $entity->setPuntajePremio($plata);
+            $entity->setPuntajePremioPlata($em);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('premios'));
+//            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Premios:edit.html.twig', array(

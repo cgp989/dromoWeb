@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class VisitaPromocionRepository extends EntityRepository {
 
+    //Cantidad de visitas a cada promocion
     public function getVisitas($idLocal) {
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT r.id, r.titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '

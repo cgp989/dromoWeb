@@ -47,33 +47,28 @@
             <div class="row">
                 {#MENU LATERAL IZQUIERDO#}
                 <div class="col-xs-3 sidebar">
+                    {% set name_route = app.request.get('_route')%}
                     {% if is_granted('ROLE_ADMIN') %}
                         <ul class="nav nav-sidebar">
-                            <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'app_index_local' in name_route %}active{% endif %}">
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
-                            <li class="{% if 'premios' or 'programacionPremio' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'premios' in name_route or 'programacionPremio' in name_route %}active{% endif %}">
                                 <a href="{{ path('premios') }}">Premios</a>
                             </li>
-{#                            <li class="{% if 'programacionPremio' in app.request.get('_route') %}active{% endif %}">
-                                <a href="{{ path('programacionPremio') }}">Programaciones premios</a>#}
-                            </li>
-                            <li class="{% if ('localcomercial' or 'sucursal') in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'localcomercial' in name_route or 'sucursal' in name_route %}active{% endif %}">
                                 <a href="{{ path('localcomercial') }}">Locales</a>
                             </li>
-{#                            <li class="{% if 'sucursal' in app.request.get('_route') %}active{% endif %}">
-                                <a href="{{ path('sucursal') }}">Sucursales</a>
-                            </li>#}
-                            <li class="{% if 'pendientes' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'pendientes' in name_route %}active{% endif %}">
                                 <a href="{{ path('cobros_pendientes_locales') }}">Cobros pendientes</a>
                             </li>
-                            <li class="{% if 'cobrados' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'cobrados' in name_route %}active{% endif %}">
                                 <a href="{{ path('cobros_cobrados_locales') }}">Cobros realizados</a>
                             </li>
-                            <li class="{% if 'comentarios' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'comentarios' in name_route %}active{% endif %}">
                                 <a href="{{ path('comentarios') }}">Comentarios denunciados</a>
                             </li>
-                            <li class="{% if 'visitalocalcomercial' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'visitalocalcomercial' in name_route %}active{% endif %}">
                                 <a href="{{ path('visitalocalcomercial') }}">Res&uacute;menes</a>
                             </li>
                         </ul>
@@ -82,42 +77,36 @@
                         </ul>#}
                     {% elseif is_granted('ROLE_LOCAL') %}
                         <ul class="nav nav-sidebar">
-                            <li class="{% if 'app_index_local' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'app_index_local' in name_route %}active{% endif %}">
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
                             </li>
-                            <li class="{% if 'programacionendia' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'programacionendia' in name_route %}active{% endif %}">
                                 <a href="{{ path('programacionendia') }}">Promos en D&iacute;a</a>
                             </li>
-                            <li class="{% if 'promocion' or 'programacion' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'promocion' in name_route or 'programacion' in name_route %}active{% endif %}">
                                 <a href="{{ path('promocion') }}">Promociones</a>
                             </li>
-{#                            <li class="{% if 'programacion' in app.request.get('_route') %}active{% endif %}">
-                                <a href="{{ path('programacion') }}">Programaciones</a>
-                            </li>#}
-                            <li class="{% if 'cupon' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'cupon' in name_route %}active{% endif %}">
                                 <a href="{{ path('cupon_consult') }}">Consultar cup&oacute;n</a>
-                            <li class="{% if 'premio' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'premio' in name_route %}active{% endif %}">
                                 <a href="{{ path('premio') }}">Premios</a>
                             </li>                            
-                            <li class="{% if 'comentario' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'comentario' in name_route %}active{% endif %}">
                                 <a href="{{ path('comentario') }}">Comentarios</a>
                             </li>
-                            <li class="{% if 'ventas' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'ventas' in name_route %}active{% endif %}">
                                 <a href="{{ path('ventas') }}">Historial ventas</a>
                             </li>
-                            <li class="{% if 'sucursales' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'sucursales' in name_route %}active{% endif %}">
                                 <a href="{{ path('sucursales') }}">Sucursales</a>
                             </li>
-                            <li class="{% if 'visitapromocion' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'visitapromocion' in name_route %}active{% endif %}">
                                 <a href="{{ path('visitapromocion') }}">Res&uacute;menes</a>
                             </li>
                         </ul>
-                        {#<ul class="nav nav-sidebar">
-                            <li><a href="">Resumenes</a></li>
-                        </ul>#}
                     {% else %}
                         <ul class="nav nav-sidebar">
-                            <li class="{% if 'fos_user_security_login' in app.request.get('_route') %}active{% endif %}">
+                            <li class="{% if 'fos_user_security_login' in name_route %}active{% endif %}">
                                 <a href="{{ path('fos_user_security_login') }}">Login</a>
                             </li>
                         </ul>

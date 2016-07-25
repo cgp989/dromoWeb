@@ -9,12 +9,14 @@ AppBundle\Entity\Programacion:
             - Type:
                 type: integer
                 message: "El valor no es válido"
-        cantidad:
-            - NotBlank:
-                message: "Campo obligatorio"
-            - Type:
-                type: initeger
-                message: "El valor no es válido"
+            - Length:
+                min: 1
+                max: 4
+                minMessage: "El campo debe tener minimo {{ limit }} caracteres"
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres" 
+            - GreaterThanOrEqual:
+                value: 1
+                message: "La cantidad minima es 1 "
         fechaInicio:
             - NotNull:
                 message: "Campo obligatorio"
@@ -40,7 +42,7 @@ AppBundle\Entity\Promocion:
                 min: 3
                 max: 25
                 minMessage: "El campo debe tener minimo {{ limit }} caracteres"
-                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"         
         tipoPromocion:
             - NotNull:
                 message: "Campo obligatorio"
@@ -49,7 +51,10 @@ AppBundle\Entity\Promocion:
                 message: "Campo obligatorio"
             - Type:
                 type: float
-                message: "El valor no es válido"
+                message: "El valor no es válido"   
+            - GreaterThanOrEqual:
+                value: 0
+                message: "El precio minimo es 0 "                
         tipoPromocion:
             - NotNull:
                 message: "Campo obligatorio"
@@ -61,3 +66,42 @@ AppBundle\Entity\Promocion:
                 max: 500
                 minMessage: "El campo debe tener minimo {{ limit }} caracteres"
                 maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
+                
+AppBundle\Entity\LocalComercial:
+    properties:
+        telefonoContacto:
+            - Regex:
+                pattern: '/^[0-9]*$/'
+                message: "Se aceptan solo números"
+            - Length:
+                max: 13
+                maxMessage: "El campo debe tener maximo de {{ limit }} caracteres"
+                
+AppBundle\Entity\Sucursal:
+    properties:
+        telefono:
+            - Regex:
+                pattern: '/^[0-9]*$/'
+                message: "Se aceptan solo números"
+            - Length:
+                max: 13
+                maxMessage: "El campo debe tener maximo de {{ limit }} caracteres"
+                
+AppBundle\Entity\Direccion:
+    properties:
+        localidad:
+            - NotNull:
+                message: "Campo obligatorio"
+        latitud:
+            - NotNull:
+                message: "Campo obligatorio"
+            - Type:
+                type: float
+                message: "El valor no es válido"            
+        longitud:
+            - NotNull:
+                message: "Campo obligatorio"
+            - Type:
+                type: float
+                message: "El valor no es válido"
+                
