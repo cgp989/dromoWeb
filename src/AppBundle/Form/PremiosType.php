@@ -19,18 +19,21 @@ class PremiosType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $disableOption = (isset($this->opciones['edit']) && $this->opciones['edit']);
         $builder
                 ->add('titulo', null, array(
-                    'label' => 'Título'))
+                    'label' => 'Título',
+                    'disabled' => $disableOption))
                 ->add('descripcion', 'textarea', array(
                     'label' => 'Descripción'))
-                ->add('precio', null, array('attr' => array(
-                        'label' => 'Precio ($)',
-                                                
-            )))
-                ->add('puntajePremio', 'integer', array('attr' => array(
-                        'min' => '0',
-            )))
+                ->add('precio', 'number', array(
+                    'label' => 'Precio ($)',
+                    'disabled' => $disableOption                        
+                ))
+                ->add('puntajePremio', 'integer', array(
+                    'label' => 'Puntos en $',
+                    'disabled' => $disableOption
+                ))
                 ->add('estadoPromocion', 'entity', array(
                     'class' => 'AppBundle:EstadoPromocion',
                     'query_builder' =>
@@ -42,7 +45,9 @@ class PremiosType extends AbstractType {
                     'label' => 'Estado'
                         )
                 )
-                ->add('localComercial')
+                ->add('localComercial', null, array(
+                    'disabled' => $disableOption
+                ))
         ;
     }
 

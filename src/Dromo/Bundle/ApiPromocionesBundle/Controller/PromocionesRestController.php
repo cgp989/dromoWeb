@@ -79,6 +79,8 @@ class PromocionesRestController extends Controller {
         $repositoryProgramacionEnDia = $this->getDoctrine()->getRepository('AppBundle:ProgramacionEnDia');
         $repositoryUsuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil');
         $repositoryCupon = $this->getDoctrine()->getRepository('AppBundle:Cupon');
+        $repositoryPromocion = $this->getDoctrine()->getRepository('AppBundle:Promocion');
+        
         /* @var $programacionEnDia ProgramacionEnDia */
         $programacionEnDia = $repositoryProgramacionEnDia->findByIdProgramacion($idProgramacion);
         $usuarioMovil = $repositoryUsuarioMovil->findOneById($idUsuarioMovil);
@@ -95,6 +97,10 @@ class PromocionesRestController extends Controller {
             $error[] = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario movil no existe');
+        }elseif(!$repositoryPromocion->validarPuntosUsuario($programacionEnDia->getProgramacion()->getPromocion(), $usuarioMovil)){
+            $error[] = array('codigo' => '10',
+                'mensaje' => 'No tiene los puntos suficientes para canjear el premio',
+                'descripcion' => 'El usuario no tiene puntos suficientes');
         } else {
             //INICIO TRANSACCION
             $this->getDoctrine()->getConnection()->beginTransaction();
@@ -108,7 +114,7 @@ class PromocionesRestController extends Controller {
                 //VUELVO CAMBIOS ATRAS 
                 $this->getDoctrine()->getConnection()->rollback();
                 $error[] = array('codigo' => '0',
-                    'mensaje' => 'No se ha popido generar el nuevo cupón. Intente de nuevo más tarde.',
+                    'mensaje' => 'No se ha podido generar el nuevo cupón. Intente de nuevo más tarde.',
                     'descripcion' => 'fallo alguna de las consultaas a la base de datos y se lanzo una excepcion');
             }
         }

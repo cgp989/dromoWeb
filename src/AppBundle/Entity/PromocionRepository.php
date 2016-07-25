@@ -68,4 +68,19 @@ class PromocionRepository extends EntityRepository {
         return $promociones;
     }
 
+    /**
+     * Controla si una promocion es de tipo premio
+     * Si es premio controla que el usuario que la quiere canjear tenga los puntos necesarios
+     * 
+     * @return boolean retorna True si el usuario tiene los puntos necesarios o no es premio 
+     *  Retorna False si es premio y el usuario no tiene los puntos necesarios 
+     */
+    function validarPuntosUsuario(\AppBundle\Entity\Promocion $promocion, \AppBundle\Entity\UsuarioMovil $usuarioMovil){
+        if ($promocion->getTipoPromocion()->getNombre() == 'premio') {
+            if ($promocion->getPuntajePremio() > $usuarioMovil->getPuntos()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
