@@ -13,7 +13,10 @@ AppBundle\Entity\Programacion:
                 min: 1
                 max: 4
                 minMessage: "El campo debe tener minimo {{ limit }} caracteres"
-                maxMessage: "El campo debe tener maximo {{ limit }} caracteres"      
+                maxMessage: "El campo debe tener maximo {{ limit }} caracteres" 
+            - GreaterThanOrEqual:
+                value: 1
+                message: "La cantidad minima es 1 "
         fechaInicio:
             - NotNull:
                 message: "Campo obligatorio"
