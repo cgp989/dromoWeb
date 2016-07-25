@@ -28,8 +28,19 @@ class VisitaPromocionController extends Controller
         foreach ($entities as $e) {
             $suma+= $e['cant'];
         }
+        $cuponesCanjeados = $em->getRepository('AppBundle:VisitaPromocion')->getCuponesPromocion($this->getUser()->getLocalComercial()->getId());
+        $sumaCupones = 0;
+        foreach ($cuponesCanjeados as $c) {
+            $sumaCupones+= $c['cant'];
+        }
+        $visitasSexo = $em->getRepository('AppBundle:VisitaPromocion')->getVisitasPorSexo($this->getUser()->getLocalComercial()->getId());
+        $sumaSexo = 0;
+        foreach ($visitasSexo as $v) {
+            $sumaSexo+= $v['cant'];
+        }
         return $this->render('AppBundle:VisitaPromocion:index.html.twig', array(
-            'entities' => $entities, 'suma' =>$suma,
+            'entities' => $entities, 'suma' =>$suma, 'cuponesCanjeados' => $cuponesCanjeados,
+            'sumaCupones' => $sumaCupones, 'visitasSexo' => $visitasSexo, 'sumaSexo' => $sumaSexo
         ));
     }
     /**

@@ -41,7 +41,7 @@ class ProgramacionEnDiaRepository extends EntityRepository {
 
     public function descontarCantidadDisponible(ProgramacionEnDia $programacionEnDia) {
         $programacionEnDia->setCantidadDisponible($programacionEnDia->getCantidadDisponible() - 1);
-        if ($programacionEnDia->getCantidadDisponible() == 1) {
+        if ($programacionEnDia->getCantidadDisponible() == 0) {
             $programacionEnDia->setEstadoProgramacionEnDia(
                     $this->getEntityManager()->getRepository('AppBundle:EstadoProgramacionEnDia')->findOneByNombre('agotada')
             );
