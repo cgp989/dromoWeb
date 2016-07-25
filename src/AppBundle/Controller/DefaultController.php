@@ -5,17 +5,18 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ));
+        if(!is_null($this->getUser()) && $this->getUser()->hasRole('ROLE_LOCAL')){
+            return new RedirectResponse($this->generateUrl('app_index_local'));
+        }elseif(!is_null($this->getUser()) && $this->getUser()->hasRole('ROLE_ADMIN')){
+            return new RedirectResponse($this->generateUrl('app_index_admin'));
+        }else{
+            return new RedirectResponse($this->generateUrl('fos_user_security_login'));
+        }
     }
 }

@@ -87,8 +87,7 @@ body.pdf-export, .pdf-export h1, .pdf-export h3{
 }
 
 .portada{
-    background-image: url("../images/iconos/dromoPortada.jpg");
-    background-size: cover;
+    
 }
 
 .vich-image img{
@@ -113,4 +112,18 @@ body.pdf-export, .pdf-export h1, .pdf-export h3{
     background: white;
     cursor: inherit;
     display: block;
+}
+
+body.body-deslog{
+    background-image: url("../images/iconos/dromoPortada.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container-login{
+    margin-top: 175px;
+}
+
+.container-login a{
+    color: #FFF;
 }
