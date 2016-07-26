@@ -51,8 +51,8 @@
                     {% set name_route = app.request.get('_route')%}
                     {% if is_granted('ROLE_ADMIN') %}
                         <ul class="nav nav-sidebar">
-                            <li class="{% if 'app_index_local' in name_route %}active{% endif %}">
-                                <a href="{{ path('app_index_local') }}">Inicio</a>
+                            <li class="{% if 'app_index_admin' in name_route %}active{% endif %}">
+                                <a href="{{ path('app_index_admin') }}">Inicio</a>
                             </li>
                             <li class="{% if 'premios' in name_route or 'programacionPremio' in name_route %}active{% endif %}">
                                 <a href="{{ path('premios') }}">Premios</a>

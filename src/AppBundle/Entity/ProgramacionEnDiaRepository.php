@@ -134,24 +134,24 @@ class ProgramacionEnDiaRepository extends EntityRepository {
         $arrayInfoEstados = array('agotadas' => 0, 'vigentes' => 0, 'noVigentes' => 0, 'eliminadas' => 0);
         foreach ($programacionesED as $key => $value) {
             $programacionED = $value;
-            
-            if ($fechaActual < $programacionED->getInicio()){
+
+            if ($fechaActual < $programacionED->getInicio()) {
                 $programacionED->setEstadoProgramacionEnDia($estadoNoVigente);
-                $arrayInfoEstados['noVigentes']++;
+                $arrayInfoEstados['noVigentes'] ++;
                 $this->getEntityManager()->persist($programacionED);
-            }elseif ($fechaActual >= $programacionED->getInicio() && $fechaActual <= $programacionED->getVencimiento()){
-                if($programacionED->getCantidadDisponible() == 0){
+            } elseif ($fechaActual >= $programacionED->getInicio() && $fechaActual <= $programacionED->getVencimiento()) {
+                if ($programacionED->getCantidadDisponible() == 0) {
                     $programacionED->setEstadoProgramacionEnDia($estadoAgotada);
-                    $arrayInfoEstados['agotadas']++;
-                }else{
+                    $arrayInfoEstados['agotadas'] ++;
+                } else {
                     $programacionED->setEstadoProgramacionEnDia($estadoVigente);
-                    $arrayInfoEstados['vigentes']++;
+                    $arrayInfoEstados['vigentes'] ++;
                 }
                 $this->getEntityManager()->persist($programacionED);
-            }else{
+            } else {
                 // si ya paso a fecha de vencimiento la elimino
                 $this->getEntityManager()->remove($programacionED);
-                $arrayInfoEstados['eliminadas']++;
+                $arrayInfoEstados['eliminadas'] ++;
             }
         }
         $this->getEntityManager()->flush();
@@ -174,6 +174,25 @@ class ProgramacionEnDiaRepository extends EntityRepository {
                         . 'WHERE l.id = :idLocal AND epr.nombre != :nombreEstadoPr AND e.nombre != :nombreEstadoP')
                 ->setParameters(array(
                     'idLocal' => $idLocal,
+                    'nombreEstadoPr' => 'eliminada',
+                    'nombreEstadoP' => 'eliminada'))
+                ->getResult();
+        return $promociones;
+    }
+
+    function getPremios() {
+        $promociones = $this->getEntityManager()
+                ->createQuery('SELECT prd FROM AppBundle:ProgramacionEnDia prd '
+                        . 'LEFT JOIN prd.programacion pr '
+                        . 'LEFT JOIN pr.promocion p '
+                        . 'LEFT JOIN p.localComercial l '
+                        . 'LEFT JOIN pr.estadoProgramacion epr '
+                        . 'LEFT JOIN p.estadoPromocion e '
+                        . 'LEFT JOIN p.tipoPromocion t '
+                        . 'WHERE epr.nombre != :nombreEstadoPr AND e.nombre != :nombreEstadoP '
+                        . ' AND t.nombre = :tipoPromocion')
+                ->setParameters(array(
+                    'tipoPromocion' => 'Premio',
                     'nombreEstadoPr' => 'eliminada',
                     'nombreEstadoP' => 'eliminada'))
                 ->getResult();

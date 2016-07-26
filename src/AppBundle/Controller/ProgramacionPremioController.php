@@ -55,7 +55,8 @@ class ProgramacionPremioController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+             if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
+                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
                 if ($entity->getCantidad() < 0) {
                     $entity->setCantidad($entity->getCantidad() * -1);
                 }
@@ -66,8 +67,11 @@ class ProgramacionPremioController extends Controller {
                     $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
 
                 return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $entity->getId())));
-            }else {
-                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+             }else {
+                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
+                }
+            } else {
+                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
             }
         }
 
@@ -208,7 +212,8 @@ class ProgramacionPremioController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+            if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
+                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
                 if ($entity->getCantidad() < 0) {
                     $entity->setCantidad($entity->getCantidad() * -1);
                 }
@@ -221,7 +226,10 @@ class ProgramacionPremioController extends Controller {
 
                 return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $id)));
             }else {
-                $editForm->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
+                }
+            } else {
+                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
             }
         }
 
