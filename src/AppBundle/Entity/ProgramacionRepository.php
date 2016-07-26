@@ -144,14 +144,28 @@ class ProgramacionRepository extends EntityRepository {
         return $programaciones;
     }
 
-    function validaFecha(Programacion $programacion) {
+    function validaFechaFin(Programacion $programacion) {
         $fechaHoy = new \DateTime('now');
         $fechaHoy->setTime(0, 0, 0);
         $fechaInicio=$programacion->getFechaInicio();
         $fechaInicio->setTime(0, 0, 0);
         $feechaFin=$programacion->getFechaFin();
         $feechaFin->setTime(0, 0, 0);
-        if ($fechaInicio >= $fechaHoy && $fechaInicio <= $feechaFin) {
+        if ($fechaInicio <= $feechaFin) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    function validaFechaInicio(Programacion $programacion) {
+        $fechaHoy = new \DateTime('now');
+        $fechaHoy->setTime(0, 0, 0);
+        $fechaInicio=$programacion->getFechaInicio();
+        $fechaInicio->setTime(0, 0, 0);
+        $feechaFin=$programacion->getFechaFin();
+        $feechaFin->setTime(0, 0, 0);
+        if ($fechaInicio >= $fechaHoy) {
             return true;
         } else {
             return false;

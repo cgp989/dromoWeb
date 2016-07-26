@@ -56,7 +56,7 @@ app_index_local:
     
 app_index_admin:
     path: /admin
-    defaults: { _controller: "AppBundle:Premios:index" }
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:premios" }
     
 app_promocion:
     resource: "@AppBundle/Resources/config/routing/promocion.yml"

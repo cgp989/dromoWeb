@@ -24,15 +24,15 @@ class ComentariosRestController extends Controller {
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
 
         if (!$this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUSuarioMovil)) {
-            $error[] = array('codigo' => '3',
+            $error = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario no existe en la base de datos');
         } elseif (!is_object($localComercial)) {
-            $error[] = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
+            $error = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
                 'mensaje' => 'El local comercial no existe',
                 'descripcion' => 'El id del local comercial no existe en la base de datos');
         } elseif ($localComercial->getComentarios()->isEmpty()) {
-            $error[] = array('idLocalComercial' => $idLocalComercial, 'codigo' => '6',
+            $error = array('idLocalComercial' => $idLocalComercial, 'codigo' => '6',
                 'mensaje' => 'No existen comentarios para este local',
                 'descripcion' => 'El local comercial no contiene comentarios');
         } else {
@@ -63,18 +63,19 @@ class ComentariosRestController extends Controller {
         $usuarioMovil = $this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->find($idUsuarioMovil);
 
         if (!$this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuarioMovil)) {
-            $error[] = array('codigo' => '3',
+            $error = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario no existe en la base de datos');
         } elseif (!is_object($localComercial)) {
-            $error[] = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
+            $error = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
                 'mensaje' => 'El local comercial no existe',
                 'descripcion' => 'El id del local comercial no existe en la base de datos');
         } else {
             /* @var $comen Entity\Comentario */
             $comen = new Entity\Comentario();
             $em = $this->getDoctrine()->getManager();
-
+            $comenDecode = urldecode($comentario);
+            $comentario = str_replace('€', '.', $comenDecode);
             $comen->setComentario($comentario);
             $comen->setValoracion($valoracion);
             $comen->setLocalComercial($localComercial);
@@ -86,20 +87,20 @@ class ComentariosRestController extends Controller {
             $em->persist($comen);
             $em->flush();
             $comentariosLocal = $this->getDoctrine()->getRepository('AppBundle:Comentario')->findByLocalComercial($localComercial);
-            $suma=0;
-            $cant=0;
-            foreach ($comentariosLocal as $coment) {                
-                 $cant++;
-                 $suma+= $coment->getValoracion();
-             }
-             if($cant==0){
-                  $localComercial->setValoracion(0);
-                 //$em->persist($localComercial);
-             }else{
-                $localComercial->setValoracion((double)$suma/$cant); 
+            $suma = 0;
+            $cant = 0;
+            foreach ($comentariosLocal as $coment) {
+                $cant++;
+                $suma+= $coment->getValoracion();
+            }
+            if ($cant == 0) {
+                $localComercial->setValoracion(0);
                 //$em->persist($localComercial);
-             }
-            
+            } else {
+                $localComercial->setValoracion((double) $suma / $cant);
+                //$em->persist($localComercial);
+            }
+
             $em->flush();
         }
         if (isset($error)) {

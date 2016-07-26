@@ -21,4 +21,13 @@ class VisitaLocalComercialRepository extends EntityRepository {
         return $visitas;
     }
 
+    //Cantidad usuarios por sexo
+    public function getUsuariosPorSexo() {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT u.sexo as sexo, count(u.id) as cant FROM AppBundle:UsuarioMovil u '
+                        . ' GROUP BY u.sexo ')
+                ->getResult();
+        return $visitas;
+    }
+
 }

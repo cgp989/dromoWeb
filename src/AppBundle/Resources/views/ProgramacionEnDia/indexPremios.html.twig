@@ -1,13 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h3 class="sub-header">Promos en D&iacute;a</h3>
+    <h3 class="sub-header">Premios en D&iacute;a</h3>
 
       
     <table class="table table-hover records_list">
         <thead>
             <tr>
-                <th class="col-xs-6">Promoci&oacute;n</th>
+                <th class="col-xs-2">Local</th>
+                <th class="col-xs-4">Promoci&oacute;n</th>
                 <th class="col-xs-3">Vencimiento</th>
                 <th class="col-xs-1">Cantidad</th>
                 <th class="col-xs-1">Estado</th>
@@ -17,14 +18,15 @@
         <tbody>
         {% for entity in entities %}
             <tr>
+                <td>{{ entity.programacion.promocion.localComercial.nombre }}</td>
                 <td>{{ entity.programacion.promocion.titulo }}</td>
                 <td>{% if entity.vencimiento %}{{ entity.vencimiento|date('d/m/Y H:i') }}{% endif %}</td>
                 <td>{{ entity.cantidadDisponible }}</td>
                 <td>{{ entity.estadoProgramacionEnDia.nombre }}</td>
                 <td>
-                    <a href="{{ path('programacion_show', { 'id': entity.programacion.id }) }}"><span class="glyphicon glyphicon-eye-open"></a>
+                    <a href="{{ path('programacionPremio_show', { 'id': entity.programacion.id }) }}"><span class="glyphicon glyphicon-eye-open"></a>
                    {% if entity.programacion.promocion.tipoPromocion != 'Premio' %}
-                       <a href="{{ path('programacion_edit', { 'id': entity.programacion.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                       <a href="{{ path('programacionPremio_edit', { 'id': entity.programacion.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                        {% endif %}
                 </td>
             </tr>
