@@ -74,7 +74,8 @@ class ComentariosRestController extends Controller {
             /* @var $comen Entity\Comentario */
             $comen = new Entity\Comentario();
             $em = $this->getDoctrine()->getManager();
-
+            $comenDecode = urldecode($comentario);
+            $comentario = str_replace('€', '.', $comenDecode);
             $comen->setComentario($comentario);
             $comen->setValoracion($valoracion);
             $comen->setLocalComercial($localComercial);
@@ -86,20 +87,20 @@ class ComentariosRestController extends Controller {
             $em->persist($comen);
             $em->flush();
             $comentariosLocal = $this->getDoctrine()->getRepository('AppBundle:Comentario')->findByLocalComercial($localComercial);
-            $suma=0;
-            $cant=0;
-            foreach ($comentariosLocal as $coment) {                
-                 $cant++;
-                 $suma+= $coment->getValoracion();
-             }
-             if($cant==0){
-                  $localComercial->setValoracion(0);
-                 //$em->persist($localComercial);
-             }else{
-                $localComercial->setValoracion((double)$suma/$cant); 
+            $suma = 0;
+            $cant = 0;
+            foreach ($comentariosLocal as $coment) {
+                $cant++;
+                $suma+= $coment->getValoracion();
+            }
+            if ($cant == 0) {
+                $localComercial->setValoracion(0);
                 //$em->persist($localComercial);
-             }
-            
+            } else {
+                $localComercial->setValoracion((double) $suma / $cant);
+                //$em->persist($localComercial);
+            }
+
             $em->flush();
         }
         if (isset($error)) {
