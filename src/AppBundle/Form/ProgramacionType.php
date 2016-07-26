@@ -103,7 +103,7 @@ class ProgramacionType extends AbstractType
                 'required' => false
             ))
             ->add('esSabado', null, array(
-                'label' => 'Sabado',
+                'label' => 'Sábado',
                 'required' => false
             ))
             ->add('esDomingo', null, array(
