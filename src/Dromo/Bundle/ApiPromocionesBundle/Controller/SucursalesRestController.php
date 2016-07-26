@@ -24,11 +24,11 @@ class SucursalesRestController extends Controller {
         /* @var $localComercial LocalComercial */
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
         if (!$this->getDoctrine()->getRepository('AppBundle:UsuarioMovil')->existUsaurioMovil($idUsuarioMovil)) {
-            $error[] = array('codigo' => '3',
+            $error = array('codigo' => '3',
                 'mensaje' => 'El usuario no existe',
                 'descripcion' => 'El id del usuario no existe en la base de datos');
         } elseif (!is_object($localComercial)) {
-            $error[] = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
+            $error = array('idLocalComercial' => $idLocalComercial, 'codigo' => '5',
                 'mensaje' => 'El local comercial no existe',
                 'descripcion' => 'El id del local comercial no existe en la base de datos');
         } else {

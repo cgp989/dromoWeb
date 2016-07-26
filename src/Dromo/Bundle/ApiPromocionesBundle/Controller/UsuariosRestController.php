@@ -161,7 +161,7 @@ class UsuariosRestController extends Controller {
             $em->persist($usuarioMovil);
             $em->flush();
         } else {
-            $error[] = array('codigo' => '',
+            $error = array('codigo' => '',
                 'mensaje' => 'Error de Usuario',
                 'descripcion' => 'Usuario no registrado para dar de baja');
         }
