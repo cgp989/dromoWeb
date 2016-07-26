@@ -89,7 +89,8 @@ class PromocionesRestController extends Controller {
             $error[] = array('idProgramacion' => $idProgramacion, 'codigo' => '1',
                 'mensaje' => 'La promoción ya no está disponible.',
                 'descripcion' => 'El id de la programacion en dia no existe');
-        } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'agotada') {
+        } elseif ($programacionEnDia->getEstadoProgramacionEnDia()->getNombre() == 'agotada' 
+                || $programacionEnDia->getCantidadDisponible() == 0) {
             $error[] = array('idProgramacion' => $idProgramacion, 'codigo' => '2',
                 'mensaje' => 'La promoción se ha agotado.',
                 'descripcion' => 'el estado de la programacion es agotada');

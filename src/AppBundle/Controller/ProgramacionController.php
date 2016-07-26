@@ -56,19 +56,23 @@ class ProgramacionController extends Controller {
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
-                if ($entity->getCantidad() < 0) {
-                    $entity->setCantidad($entity->getCantidad() * -1);
+            if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
+                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
+                    if ($entity->getCantidad() < 0) {
+                        $entity->setCantidad($entity->getCantidad() * -1);
+                    }
+                    $em->persist($entity);
+                    $em->flush();
+
+                    if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
+                        $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
+
+                    return $this->redirect($this->generateUrl('programacion_promocion', array('idPromocion' => $entity->getPromocion()->getId())));
+                }else {
+                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
                 }
-                $em->persist($entity);
-                $em->flush();
-
-                if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                    $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
-
-                return $this->redirect($this->generateUrl('programacion_promocion', array('idPromocion' => $entity->getPromocion()->getId())));
-            }else {
-                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+            } else {
+                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
             }
         }
 
@@ -207,7 +211,8 @@ class ProgramacionController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            if ($em->getRepository('AppBundle:Programacion')->validaFecha($entity)) {
+            if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
+                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
                 if ($entity->getCantidad() < 0) {
                     $entity->setCantidad($entity->getCantidad() * -1);
                 }
@@ -220,7 +225,10 @@ class ProgramacionController extends Controller {
                 return $this->redirect($this->generateUrl('promocion'));
 //            return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
             }else {
-                $editForm->addError(new FormError('Fecha de Inicio debe ser mayor a la actual. Fecha fin mayor a fecha inicio'));
+                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
+                }
+            } else {
+                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
             }
         }
 

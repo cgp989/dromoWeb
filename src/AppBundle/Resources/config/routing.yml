@@ -1,6 +1,6 @@
-app_programacionendia:
-    resource: "@AppBundle/Resources/config/routing/programacionendia.yml"
-    prefix:   local/programacionendia
+#app_programacionendia:
+#    resource: "@AppBundle/Resources/config/routing/programacionendia.yml"
+#    prefix:   local/programacionendia
 
 app_visitalocalcomercial:
     resource: "@AppBundle/Resources/config/routing/visitalocalcomercial.yml"
@@ -46,9 +46,17 @@ app_premio:
     resource: "@AppBundle/Resources/config/routing/premio.yml"
     prefix:   local/premio
 
-app_index_local:
-    path:     /
+app_index:
+    path: /
     defaults: { _controller: "AppBundle:Default:index" }
+    
+app_index_local:
+    path: /local
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:index" }
+    
+app_index_admin:
+    path: /admin
+    defaults: { _controller: "AppBundle:ProgramacionEnDia:premios" }
     
 app_promocion:
     resource: "@AppBundle/Resources/config/routing/promocion.yml"

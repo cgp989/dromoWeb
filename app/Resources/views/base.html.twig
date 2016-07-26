@@ -22,7 +22,8 @@
             
         {% endblock %}
     </head>
-    <body>
+    <body class="{% if not is_granted('IS_AUTHENTICATED_FULLY') %} body-deslog {% endif %}">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {#BARRA NAVEGACION HEADER#}
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -31,27 +32,27 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            {% if is_granted('ROLE_LOCAL') %}
-                                <li><span class="glyphicon glyphicon-home"></span> <a href="{{ path('localcomercial_log') }}">{{ app.security.getToken().getUser().getLocalComercial().getNombre() }}</a></li>
-                            {% endif %}
-                            <li><span class="glyphicon glyphicon-user"></span> <a class="" href="{{ path('fos_user_profile_show') }}">{{ app.security.getToken().getUser().getUsername() }}</a></li>
-                            <li><span class="glyphicon glyphicon-log-out"></span> <a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+                        {% if is_granted('ROLE_LOCAL') %}
+                            <li><span class="glyphicon glyphicon-home"></span> <a href="{{ path('localcomercial_log') }}">{{ app.security.getToken().getUser().getLocalComercial().getNombre() }}</a></li>
                         {% endif %}
+                        <li><span class="glyphicon glyphicon-user"></span> <a class="" href="{{ path('fos_user_profile_show') }}">{{ app.security.getToken().getUser().getUsername() }}</a></li>
+                        <li><span class="glyphicon glyphicon-log-out"></span> <a href="{{ path('fos_user_security_logout') }}">Salir</a></li>                      
                     </ul>
                 </div>
             </div>
         </nav>
+        {% endif %}
         {#BARRA NAVEGACION FIN#}
         <div class="container-fluid">
             <div class="row">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 {#MENU LATERAL IZQUIERDO#}
                 <div class="col-xs-3 sidebar">
                     {% set name_route = app.request.get('_route')%}
                     {% if is_granted('ROLE_ADMIN') %}
                         <ul class="nav nav-sidebar">
-                            <li class="{% if 'app_index_local' in name_route %}active{% endif %}">
-                                <a href="{{ path('app_index_local') }}">Inicio</a>
+                            <li class="{% if 'app_index_admin' in name_route %}active{% endif %}">
+                                <a href="{{ path('app_index_admin') }}">Inicio</a>
                             </li>
                             <li class="{% if 'premios' in name_route or 'programacionPremio' in name_route %}active{% endif %}">
                                 <a href="{{ path('premios') }}">Premios</a>
@@ -79,9 +80,6 @@
                         <ul class="nav nav-sidebar">
                             <li class="{% if 'app_index_local' in name_route %}active{% endif %}">
                                 <a href="{{ path('app_index_local') }}">Inicio</a>
-                            </li>
-                            <li class="{% if 'programacionendia' in name_route %}active{% endif %}">
-                                <a href="{{ path('programacionendia') }}">Promos en D&iacute;a</a>
                             </li>
                             <li class="{% if 'promocion' in name_route or 'programacion' in name_route %}active{% endif %}">
                                 <a href="{{ path('promocion') }}">Promociones</a>
@@ -113,8 +111,15 @@
                     {% endif %}
                 </div>
                 {#MENU LATERAL FIN#}
+                {% endif %}
                 {#CONTENIDO PAGINA#}
-                <div class="col-xs-9 col-xs-offset-3 main">    
+                <div class="
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        col-xs-9 col-xs-offset-3 main
+                    {% else %}
+                        col-xs-6
+                    {% endif %}
+                ">    
                     {#INICIO CODIGO PARA LOS MENSAJES FLASH CON INFORMACION QUE SE PASAN POR SESION#}
                     {% for type, flashMessage in app.session.flashbag.all() %}
                         <div class="alert  alert-{{ type }} fade in">

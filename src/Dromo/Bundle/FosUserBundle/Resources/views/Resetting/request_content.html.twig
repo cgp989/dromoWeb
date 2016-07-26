@@ -5,7 +5,7 @@
 {% endif %}
 <form class="form-horizontal" action="{{ path('fos_user_resetting_send_email') }}" method="POST">
     <div class="row">
-        <div class="col-xs-4">
+        <div class="col-xs-5 col-xs-offset-4">
             <div class="form-group">
                 <label class="control-label required" for="username">{{ 'resetting.request.username'|trans }}</label>
                 <input class="form-control" type="text" id="username" name="username" required="required" />
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-2 pull-right text-right">
+        <div class="col-xs-5 col-xs-offset-6">
             <div class="form-group">
                 <input class="btn btn-primary btn" type="submit" value="{{ 'resetting.request.submit'|trans }}" />
             </div>

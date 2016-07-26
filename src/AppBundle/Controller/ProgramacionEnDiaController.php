@@ -29,6 +29,21 @@ class ProgramacionEnDiaController extends Controller
             'entities' => $entities,
         ));
     }
+    
+     /**
+     * Lists all ProgramacionEnDia entities.
+     *
+     */
+    public function premiosAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('AppBundle:ProgramacionEnDia')->getPremios();
+
+        return $this->render('AppBundle:ProgramacionEnDia:indexPremios.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
     /**
      * Creates a new ProgramacionEnDia entity.
      *

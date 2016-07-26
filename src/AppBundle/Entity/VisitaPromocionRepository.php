@@ -27,4 +27,37 @@ class VisitaPromocionRepository extends EntityRepository {
                 ->getResult();
         return $visitas;
     }
+    
+    //Cantidad de cupones canjeados por promocion
+    public function getCuponesPromocion($idLocal) {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT r.id, r.titulo, count(c.id) as cant FROM AppBundle:Cupon c '
+                        . ' JOIN c.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l'
+                        . ' WHERE l.id = :idLocal '
+                        . ' GROUP BY r.id, r.titulo ')
+                ->setParameters(array(
+                    'idLocal' => $idLocal
+                ))
+                ->getResult();
+        return $visitas;
+    }
+    
+    //Cantidad de visitas a cada promocion por sexo
+    public function getVisitasPorSexo($idLocal) {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT u.sexo as sexo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
+                        . ' JOIN v.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l'
+                        . ' JOIN v.usuarioMovil u'
+                        . ' WHERE l.id = :idLocal '
+                        . ' GROUP BY u.sexo ')
+                ->setParameters(array(
+                    'idLocal' => $idLocal
+                ))
+                ->getResult();
+        return $visitas;
+    }
 }

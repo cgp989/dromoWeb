@@ -25,9 +25,14 @@ class VisitaLocalComercialController extends Controller {
         foreach ($entities as $e) {
             $suma+= $e['cant'];
         }
-
+        $usuariosSexo = $em->getRepository('AppBundle:VisitaLocalComercial')->getUsuariosPorSexo();
+        $sumaSexo = 0;
+        foreach ($usuariosSexo as $u) {
+            $sumaSexo+= $u['cant'];
+        }
         return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
-                    'entities' => $entities, 'suma' => $suma,
+                    'entities' => $entities, 'suma' => $suma, 'visitasSexo' => $usuariosSexo,
+            'sumaSexo'=> $sumaSexo
         ));
     }
 

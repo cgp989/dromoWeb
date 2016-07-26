@@ -1,11 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Visitas a Promociones</h1>
+    <h1>Resumenes</h1>
     {#Prueba grafico#}
     <div id="graficaCircular" style="width: 100%; height: 500px; margin: 0 auto">
     </div>
-
+    <div id="graficaCircularCupones" style="width: 100%; height: 500px; margin: 0 auto">
+    </div>
+    <div id="graficaCircularUsuario" style="width: 100%; height: 500px; margin: 0 auto">
+    </div>
     <script type="text/javascript">
         var chart;
         $(document).ready(function () {
@@ -48,6 +51,104 @@
                         name: 'Browser share',
                         data: [{% for entity in entities %}
                             ['{{ entity.titulo }} - {{ entity.cant }}',{{ ((entity.cant/suma)*100) |round(2, 'floor') }} , ],
+        {% endfor %} 
+                        ]
+                    }]
+            });
+        });
+        </script>
+        
+        <script type="text/javascript">
+        var chart;
+        $(document).ready(function () {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'graficaCircularCupones'
+                },
+                title: {
+                    text: 'Porcentaje Cupones canjeados por Promoción'
+                },
+                subtitle: {
+                    text: 'Dromo'
+                },
+                plotArea: {
+                    shadow: null,
+                    borderWidth: null,
+                    backgroundColor: null
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function () {
+                                return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                        type: 'pie',
+                        name: 'Browser share',
+                        data: [{% for entity in cuponesCanjeados %}
+                            ['{{ entity.titulo }} - {{ entity.cant }}',{{ ((entity.cant/sumaCupones)*100) |round(2, 'floor') }} , ],
+        {% endfor %} 
+                        ]
+                    }]
+            });
+        });
+        </script>
+        
+        <script type="text/javascript">
+        var chart;
+        $(document).ready(function () {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'graficaCircularUsuario'
+                },
+                title: {
+                    text: 'Usuarios por sexo que visitan mis promociones'
+                },
+                subtitle: {
+                    text: 'Dromo'
+                },
+                plotArea: {
+                    shadow: null,
+                    borderWidth: null,
+                    backgroundColor: null
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function () {
+                                return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                        type: 'pie',
+                        name: 'Browser share',
+                        data: [{% for entity in visitasSexo %}
+                            ['{{ entity.sexo }} - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ],
         {% endfor %} 
                         ]
                     }]
