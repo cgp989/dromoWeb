@@ -17,7 +17,9 @@
             {% for cupon in cupones %}
                 {% set total = total +cupon.programacion.promocion.precio  %}
                 <tr>
-                    <td>{{ cupon.programacion.promocion.tipoPromocion.nombre }}</td>
+                    <td>
+                        <image class="img-tipo" src="{{ asset('resources/images/iconos/tipo_promocion/') ~ 'ic_' ~ cupon.programacion.promocion.tipoPromocion.nombre ~ '.png' }}">
+                    </td>
                     <td>{{ cupon.programacion.promocion.titulo }}</td>
                     <td>{{ cupon.fecha|date('Y-m-d') }}</td>
                     <td>${{ cupon.programacion.promocion.precio }}</td>

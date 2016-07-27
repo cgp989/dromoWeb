@@ -1,6 +1,6 @@
 /*cambios estilos bootstrap*/
 .navbar-inverse{
-    background-color: #0E1124;
+    background-color: RGBA(10, 27, 77, 0.81);
 }
 
 .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
@@ -25,7 +25,7 @@
 
 .nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus{
     font-weight: bold;
-    background-color: #262626;
+    background-color: #262b2e;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
@@ -48,7 +48,7 @@
 /*fin cambios estilos bootstrap*/
 
 body{
-    background-color: #262626;
+    background-color: #262b2e;
     color: #FFF;
 }
 
@@ -126,4 +126,8 @@ body.body-deslog{
 
 .container-login a{
     color: #FFF;
+}
+
+.img-tipo{
+    width: 60px;
 }
