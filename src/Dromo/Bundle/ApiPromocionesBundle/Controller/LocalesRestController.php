@@ -195,5 +195,30 @@ class LocalesRestController extends Controller {
 
         return array('sucursales' => $arrayPaginaSucursales);
     }
+    
+    /**
+     * Devuelve la valoracion de un local comercial
+     * @param String $idLocalComercial
+     * @param int $version
+     * 
+     * @View(serializerGroups={"serviceUSS19-version"})
+     */
+    public function getId_local_comercialAction($idLocalComercial) {
+        /* @var $localComercial Entity\LocalComercial */
+        $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
+
+        if ($localComercial == null) {
+            $error = array('codigo' => '5',
+                'mensaje' => 'Error',
+                'descripcion' => 'Local inexistente!');
+        } else {
+            $valoracion = $localComercial->getValoracion();
+        }
+        if (isset($error)) {
+            return array('idLocalComercial' => $idLocalComercial, 'error' => $error);
+        } else {
+            return array('idLocalComercial' => $idLocalComercial, 'valoracion' => $valoracion);
+        }
+    }
 
 }
