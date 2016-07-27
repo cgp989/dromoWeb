@@ -240,7 +240,7 @@ class Promocion {
      *
      * @return integer 
      */
-    public function getPuntajePremioPlata($em) {        
+    public function getPuntajePremioPlata($em) {
         $repositoryVariable = $em->getRepository('AppBundle:Variables');
         $ArrayVariables = $repositoryVariable->findAll();
         $puntos = $ArrayVariables[0]->getValorPunto();
@@ -341,7 +341,7 @@ class Promocion {
     }
 
     public function __toString() {
-        return $this->getTipoPromocion() . ': ' . $this->getTitulo();
+        return $this->getTipoPromocion() . ' ' . $this->getTitulo();
     }
 
 }

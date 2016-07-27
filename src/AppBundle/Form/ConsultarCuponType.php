@@ -17,6 +17,7 @@ class ConsultarCuponType extends AbstractType
     {
         $builder
             ->add('codigo', 'text', array(
+                'label' => 'Código',
                 'constraints' => new Length(array(
                     'min'        => 13,
                     'max'        => 13

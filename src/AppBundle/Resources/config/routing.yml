@@ -3,12 +3,12 @@
 #    prefix:   local/programacionendia
 
 app_visitalocalcomercial:
-    resource: "@AppBundle/Resources/config/routing/visitalocalcomercial.yml"
-    prefix:   admin/visitalocalcomercial
+    resource: "@AppBundle/Resources/config/routing/visitalc.yml"
+    prefix:   admin/visitalc
 
 app_visitapromocion:
-    resource: "@AppBundle/Resources/config/routing/visitapromocion.yml"
-    prefix:   local/visitapromocion
+    resource: "@AppBundle/Resources/config/routing/visitaprom.yml"
+    prefix:   local/visitaprom
 
 app_comentario:
     resource: "@AppBundle/Resources/config/routing/comentario.yml"
