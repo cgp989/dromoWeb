@@ -19,6 +19,7 @@ class ProgramacionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $fechaHoy = new \DateTime('now');
         global $kernel;
         $repoPromocion = $kernel->getContainer()->get('doctrine')->getManager()->getRepository('AppBundle:Promocion');
         $builder
@@ -103,7 +104,7 @@ class ProgramacionType extends AbstractType
                 'required' => false
             ))
             ->add('esSabado', null, array(
-                'label' => 'Sabado',
+                'label' => 'Sábado',
                 'required' => false
             ))
             ->add('esDomingo', null, array(
