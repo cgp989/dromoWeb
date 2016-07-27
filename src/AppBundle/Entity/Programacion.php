@@ -154,6 +154,8 @@ class Programacion {
     private $visitasPromocion;
 
     public function __construct() {
+        $this->fechaInicio = new \DateTime('now');
+        $this->fechaFin = new \DateTime('now');
         $this->cupones = new ArrayCollection();
         $this->visitasPromocion = new ArrayCollection();
     }

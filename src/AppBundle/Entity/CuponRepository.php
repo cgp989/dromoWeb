@@ -108,8 +108,8 @@ class CuponRepository extends EntityRepository
         //se calcula el precio que se le cobra al local
         $precioCobroLocal = $precioPromocion*$variables->getPorcCobroLocal();
         //se calcula la cantidad de puntos del cupon
-        $puntosCupon = intval($precioCobroLocal*(1-$variables->getPorcGanancia())*$variables->getValorPunto());
-        
+        $puntosCupon = ($precioCobroLocal*(1-$variables->getPorcGanancia())*$variables->getValorPunto());
+        $puntosCupon = round($puntosCupon, 0, PHP_ROUND_HALF_DOWN);
         $cupon->setPuntaje($puntosCupon);
         $cupon->setPrecioCobroLocal($precioCobroLocal);
         return $cupon;
