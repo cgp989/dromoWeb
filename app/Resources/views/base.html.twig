@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}DROMO{% endblock %}</title>
+        <title>{% block title %}&#60;DROMO&#62;{% endblock %}</title>
         {% block stylesheets %}
             <link href="{{ asset('resources/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('resources/css/dashboard.css')}}" type="text/css" rel="stylesheet" />
@@ -28,7 +28,9 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ path('app_index_local') }}">&#60;DROMO&#62;</a>
+                    <a class="navbar-brand" href="{{ path('app_index') }}">
+                        <img class="logo-dromo" src="{{ asset('resources/images/iconos/logo.png') }}" >
+                    </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">

@@ -20,7 +20,9 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{{ entity.tipoPromocion }}</td>
+                <td>
+                    <image class="img-tipo" src="{{ asset('resources/images/iconos/tipo_promocion/') ~ 'ic_' ~ entity.tipoPromocion.nombre ~ '.png' }}">
+                </td>
                 <td>{{ entity.titulo }}</td>
                 <td>${{ entity.precio }}</td>
                 <td>{{ entity.estadoPromocion }}</td>
