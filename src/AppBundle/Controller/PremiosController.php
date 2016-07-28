@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Promocion;
 use AppBundle\Form\PremiosType;
+use Symfony\Component\Form\FormError;
 
 /**
  * Premios controller.
@@ -39,6 +40,11 @@ class PremiosController extends Controller {
         $tipo = $em->getRepository('AppBundle:TipoPromocion')->findOneByNombre('Premio');
         $entity->setTipoPromocion($tipo);
         $form->handleRequest($request);
+        
+        if ($entity->getPuntajePremio() <= 0) {
+            $form->addError(new FormError('El puntaje debe ser mayor a 0'));
+        }
+        
         if ($form->isValid()) {
             $entity->setEstaModerada(true);
             $entity->setPuntajePremioPlata($em);
@@ -165,14 +171,19 @@ class PremiosController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+        
+        if ($entity->getPuntajePremio() <= 0) {
+            $editForm->addError(new FormError('El puntaje debe ser mayor a 0'));
+        }
+        
         if ($editForm->isValid()) {
-            $plata = $entity->getPuntajePremioPlata($em);
-            $entity->setPuntajePremio($plata);
-            $entity->setPuntajePremioPlata($em);
-            $em->flush();
-            return $this->redirect($this->generateUrl('premios'));
-//            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));
+            
+                $plata = $entity->getPuntajePremioPlata($em);
+                $entity->setPuntajePremio($plata);
+                $entity->setPuntajePremioPlata($em);
+                $em->flush();
+                return $this->redirect($this->generateUrl('premios'));
+    //            return $this->redirect($this->generateUrl('premios_edit', array('id' => $id)));
         }
 
         return $this->render('AppBundle:Premios:edit.html.twig', array(

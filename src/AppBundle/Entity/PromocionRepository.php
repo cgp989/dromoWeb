@@ -43,9 +43,11 @@ class PromocionRepository extends EntityRepository {
                 ->createQuery('SELECT p FROM AppBundle:Promocion p '
                         . 'LEFT JOIN p.localComercial l '
                         . 'LEFT JOIN p.estadoPromocion e '
-                        . 'WHERE e.nombre != :nombreEstado and p.puntajePremio!= 0')
+                        . 'LEFT JOIN p.tipoPromocion t '
+                        . 'WHERE e.nombre != :nombreEstado and t.nombre= :tipoPremio')
                 ->setParameters(array(
-                    'nombreEstado' => 'eliminada'))
+                    'nombreEstado' => 'eliminada',
+                    'tipoPremio' => 'premio'))
                 ->getResult();
         return $promociones;
     }

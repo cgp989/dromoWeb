@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Resumenes</h1>
+    <h1>Res&uacuote;menes</h1>
 
     <div id="graficaCircular" style="width: 100%; height: 500px; margin: 0 auto">
     </div>
@@ -97,7 +97,13 @@
                             type: 'pie',
                             name: 'Browser share',
                             data: [{% for entity in visitasSexo %}
-                                ['{{ entity.sexo }} - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ],
+                                {% if entity.sexo == 'm' %}
+     ['Masculino - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ], 
+{% elseif entity.sexo == 'f' %}
+    ['Femenino - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ],
+{% else %}
+    ['Sin Datos - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ],
+{% endif %}
             {% endfor %} 
                             ]
                         }]

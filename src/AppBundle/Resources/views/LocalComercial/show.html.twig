@@ -23,28 +23,39 @@
             </div>
         {% endif %}
     </div>
-    <table class="table table-show">
-        <tbody>
-            <tr>
-                <th>Nombre Contacto</th>
-                <td>{{ entity.nombreContacto }}</td>
-            </tr>
-            <tr>
-                <th class="col-xs-1">Nombre</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ entity.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Email Contacto</th>
-                <td>{{ entity.emailContacto }}</td>
-            </tr>
-            <tr>
-                <th>Telefono Contaco</th>
-                <td>{{ entity.telefonoContacto }}</td>
-            </tr>            
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-xs-9">
+            <table class="table table-show">
+                <tbody>
+                    <tr>
+                        <th>Nombre Contacto</th>
+                        <td>{{ entity.nombreContacto }}</td>
+                    </tr>
+                    <tr>
+                        <th class="col-xs-1">Nombre</th>
+                        <td>{{ entity.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <th>Descripcion</th>
+                        <td>{{ entity.descripcion }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email Contacto</th>
+                        <td>{{ entity.emailContacto }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telefono Contaco</th>
+                        <td>{{ entity.telefonoContacto }}</td>
+                    </tr>            
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-2">
+            {% if entity.imageName != '' %}
+            <div class="vich-image">
+                <img src="{{ vich_uploader_asset(entity, 'imageFile') }}" />
+            </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
