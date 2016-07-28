@@ -17,12 +17,12 @@
             </tr>
             <tr>
                 <th class="col-xs-2">Tipo</th>
-                <td>{{ cupon.tipoCupon.nombre }}</td>
+                <td><image class="img-tipo" src="{{ asset('resources/images/iconos/tipo_promocion/') ~ 'ic_' ~ entity.tipoPromocion.nombre ~ '.png' }}"></td>
             </tr>
-            <tr>
+            {#<tr>
                 <th>Beneficio</th>
                 <td>{{ cupon.programacion.promocion.tipoPromocion.nombre }}</td>
-            </tr>
+            </tr>#}
             <tr>
                 <th>Nombre</th>
                 <td>{{ cupon.programacion.promocion.titulo }}</td>
