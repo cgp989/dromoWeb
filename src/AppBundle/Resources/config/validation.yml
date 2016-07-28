@@ -66,10 +66,6 @@ AppBundle\Entity\Promocion:
                 max: 500
                 minMessage: "El campo debe tener minimo {{ limit }} caracteres"
                 maxMessage: "El campo debe tener maximo {{ limit }} caracteres"
-        puntajePremio:
-            - GreaterThan:
-                value: 0
-                message: "El minimo es 0 " 
 AppBundle\Entity\LocalComercial:
     properties:
         telefonoContacto:
