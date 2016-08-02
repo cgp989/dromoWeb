@@ -55,12 +55,12 @@
                         <ul class="nav nav-sidebar">
                             <li class="{% if 'app_index_admin' in name_route %}active{% endif %}">
                                 <a href="{{ path('app_index_admin') }}">Inicio</a>
+                            </li>                            
+                            <li class="{% if 'localcomercial' in name_route or 'sucursal' in name_route %}active{% endif %}">
+                                <a href="{{ path('localcomercial') }}">Locales</a>
                             </li>
                             <li class="{% if 'premios' in name_route or 'programacionPremio' in name_route %}active{% endif %}">
                                 <a href="{{ path('premios') }}">Premios</a>
-                            </li>
-                            <li class="{% if 'localcomercial' in name_route or 'sucursal' in name_route %}active{% endif %}">
-                                <a href="{{ path('localcomercial') }}">Locales</a>
                             </li>
                             <li class="{% if 'pendientes' in name_route %}active{% endif %}">
                                 <a href="{{ path('cobros_pendientes_locales') }}">Cobros pendientes</a>
