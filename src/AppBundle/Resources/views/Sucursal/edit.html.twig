@@ -2,7 +2,7 @@
 
 {% block body -%}
     <h2 class="sub-header">Editar Sucursal</h2>
-<div class="row btn-action-top">
+    <div class="row btn-action-top">
         <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
         <div class="col-xs-1 pull-right">
             <a title="volver" href="{{ path('localcomercial') }}">
@@ -12,48 +12,60 @@
     </div>
     <div class="col-xs-12">
         {{ form_start(edit_form) }}
-            <div class="row error-count">{{ form_errors(edit_form) }}</div>
-            <div class="row">
-                <div class="col-xs-10">{{ form_row(edit_form.localComercial) }}</div>
+        <div class="row error-count">{{ form_errors(edit_form) }}</div>
+        <div class="row">
+            <div class="col-xs-10">{{ form_row(edit_form.localComercial) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                {{ form_row(edit_form.direccion.descripcion) }}                    
             </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    {{ form_row(edit_form.direccion.descripcion) }}                    
-                </div>
-                <div class="col-xs-3 col-xs-offset-1">
-                    {{ form_row(edit_form.telefono) }}                    
-                </div>
+            <div class="col-xs-3 col-xs-offset-1">
+                {{ form_row(edit_form.telefono) }}                    
             </div>
-            <div class="row">
-                <div class="col-xs-3">{{ form_row(edit_form.direccion.latitud) }}</div>                
-                <div class="col-xs-3 col-xs-offset-1">{{ form_row(edit_form.direccion.longitud) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6">{{ form_row(edit_form.direccion.provincia) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6">{{ form_row(edit_form.direccion.localidad) }}</div>
-            </div>
-            
-            <div class="row">
-                <div class="col-xs-2 pull-right text-right">{{ form_row(edit_form.actualizar) }}</div>
-            </div>
-        {{ form_end(edit_form) }}
-    </div>   
-    <script>
-    var $provincia = $('#{{ edit_form.direccion.provincia.vars.id }}'); 
+        </div>
+        <div class="row">
+            <div class="col-xs-6">{{ form_row(edit_form.direccion.provincia) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">{{ form_row(edit_form.direccion.localidad) }}
+                <image class="img-tipo" onclick="BuscaMapa();" src="{{ asset('resources/images/iconos/') ~ 'ubicacion.png' }}"></div></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">{{ form_row(edit_form.direccion.latitud) }}</div>                
+        <div class="col-xs-3 col-xs-offset-1">{{ form_row(edit_form.direccion.longitud) }}</div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-2 pull-right text-right">{{ form_row(edit_form.actualizar) }}</div>
+    </div>
+    {{ form_end(edit_form) }}
+</div>   
+<script>
+    var $provincia = $('#{{ edit_form.direccion.provincia.vars.id }}');
     var $form = $provincia.closest('form');
-    $provincia.on('change', function() {
-        $('#{{ edit_form.direccion.localidad.vars.id }}').attr('disabled','disabled');
+    $provincia.on('change', function () {
+        $('#{{ edit_form.direccion.localidad.vars.id }}').attr('disabled', 'disabled');
         var data = $provincia.serialize();
         $.ajax({
-            url : "{{ path('sucursal_ajax_localidad') }}",
+            url: "{{ path('sucursal_ajax_localidad') }}",
             type: $form.attr('method'),
-            data : data,
-            success: function(html) {
+            data: data,
+            success: function (html) {
                 $('#{{ edit_form.direccion.localidad.vars.id }}').replaceWith($(html).find('#{{ edit_form.direccion.localidad.vars.id }}'));
             }
         });
     });
-    </script>
+</script>
+<script>
+    function BuscaMapa() {
+        direccion = document.getElementById('appbundle_sucursal_direccion_descripcion').value;
+        prov = document.getElementById('appbundle_sucursal_direccion_provincia');
+        provincia = prov.options[prov.selectedIndex].text;
+        loc = document.getElementById('appbundle_sucursal_direccion_localidad');
+        localidad = loc.options[loc.selectedIndex].text;
+        window.open('https://www.google.com.ar/maps/place/' + direccion + ',+' + localidad + ',+' + provincia + '', 'Mapa Google', 'height=400,width=600,left=200,top=150,resizable=false');
+    }
+</script>
 {% endblock %}

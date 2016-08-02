@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-     <h2 class="sub-header">Nueva Sucursal</h2>
+    <h2 class="sub-header">Nueva Sucursal</h2>
 
     <div class="row btn-action-top form-group">
         <div class="col-xs-1 pull-right">
@@ -19,39 +19,53 @@
         </div>
         <div class="row">
             <div class="col-xs-4">{{ form_row(form.direccion.descripcion) }}</div>                
-            <div class="col-xs-3 col-xs-offset-1">{{ form_row(form.telefono) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">{{ form_row(form.direccion.latitud) }}</div>
-            <div class="col-xs-3 col-xs-offset-1">{{ form_row(form.direccion.longitud) }}</div>
+            <div class="col-xs-3 col-xs-offset-1">{{ form_row(form.telefono) }}
+            </div>
         </div>
         <div class="row">
             <div class="col-xs-6">{{ form_row(form.direccion.provincia) }}</div>
         </div>
         <div class="row">
-            <div class="col-xs-6">{{ form_row(form.direccion.localidad) }}</div>
+            <div class="col-xs-6">{{ form_row(form.direccion.localidad) }}
+                <image class="img-tipo" onclick="BuscaMapa();" src="{{ asset('resources/images/iconos/') ~ 'ubicacion.png' }}"></div>
         </div>
-        
+        <div class="row">
+            <div class="col-xs-3">{{ form_row(form.direccion.latitud) }}</div>
+            <div class="col-xs-3 col-xs-offset-1">{{ form_row(form.direccion.longitud) }}
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-xs-2 pull-right text-right">{{ form_row(form.crear) }}</div>
         </div>
         {{ form_end(form) }}
     </div>
-        
+
     <script>
-    var $provincia = $('#{{ form.direccion.provincia.vars.id }}'); 
-    var $form = $provincia.closest('form');
-    $provincia.on('change', function() {
-        $('#{{ form.direccion.localidad.vars.id }}').attr('disabled','disabled');
-        var data = $provincia.serialize();
-        $.ajax({
-            url : "{{ path('sucursal_ajax_localidad') }}",
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-                $('#{{ form.direccion.localidad.vars.id }}').replaceWith($(html).find('#{{ form.direccion.localidad.vars.id }}'));
-            }
+        var $provincia = $('#{{ form.direccion.provincia.vars.id }}');
+        var $form = $provincia.closest('form');
+        $provincia.on('change', function () {
+            $('#{{ form.direccion.localidad.vars.id }}').attr('disabled', 'disabled');
+            var data = $provincia.serialize();
+            $.ajax({
+                url: "{{ path('sucursal_ajax_localidad') }}",
+                type: $form.attr('method'),
+                data: data,
+                success: function (html) {
+                    $('#{{ form.direccion.localidad.vars.id }}').replaceWith($(html).find('#{{ form.direccion.localidad.vars.id }}'));
+                }
+            });
         });
-    });
+    </script>
+    <script>
+        function BuscaMapa() {
+            direccion = document.getElementById('appbundle_sucursal_direccion_descripcion').value;
+            prov = document.getElementById('appbundle_sucursal_direccion_provincia');
+            provincia = prov.options[prov.selectedIndex].text;
+            loc = document.getElementById('appbundle_sucursal_direccion_localidad');
+            localidad = loc.options[loc.selectedIndex].text;
+            window.open('https://www.google.com.ar/maps/place/' + direccion + ',+' + localidad + ',+' + provincia + '', 'Mapa Google', 'height=400,width=600,left=200,top=150,resizable=false');
+        }
     </script>
 {% endblock %}
