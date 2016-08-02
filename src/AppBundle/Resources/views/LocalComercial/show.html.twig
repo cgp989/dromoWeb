@@ -51,9 +51,11 @@
             </table>
         </div>
         <div class="col-xs-2">
+            {% if entity.imageName != '' %}
             <div class="vich-image">
-                <img src="{{ vich_uploader_asset(entity, 'imageFile') }}" alt="{{ entity.nombre }}" />
+                <img src="{{ vich_uploader_asset(entity, 'imageFile') }}" />
             </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
