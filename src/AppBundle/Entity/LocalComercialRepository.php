@@ -99,7 +99,7 @@ class LocalComercialRepository extends EntityRepository {
     public function getItemsCobradosCobro($idLocal) {
         $query = $this->getEntityManager()
                 ->createQuery(
-                        "select cup.id,loc.id as idLocal, loc.nombre, cup.fecha, prom.titulo, prom.precio*:paramPorcCobro as precio
+                        "select cup.id,loc.id as idLocal, loc.nombre, cup.fecha, prom.titulo, prom.precio*loc.porcentajeCobro as precio
                 from AppBundle:Cupon cup
                      join cup.programacion prog
                      join prog.promocion prom
@@ -114,7 +114,6 @@ class LocalComercialRepository extends EntityRepository {
                 ->setParameter('paramEstadoCobroCupon', 'cobrado')
                 ->setParameter('paramTipoCupon', 'promocion')
                 ->setParameter('paramEstadoCupon', 'canjeado')
-                ->setParameter('paramPorcCobro', 0.20)
                 ->setParameter('paramIdLocal', $idLocal);
 
         //echo $query->getSQL();exit;

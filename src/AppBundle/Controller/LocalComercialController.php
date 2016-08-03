@@ -42,8 +42,7 @@ class LocalComercialController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $entity->setVersion(1);
             $entity->setValoracion(0);
-
-
+            $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
             //se crea el usuario del local
             $userEntity = $entity->getUsuario();
             $userManipulator = $this->get('fos_user.util.user_manipulator');
@@ -92,6 +91,11 @@ class LocalComercialController extends Controller {
      */
     public function newAction() {
         $entity = new LocalComercial();
+        $em = $this->getDoctrine()->getManager();
+        $repositoryVariable = $em->getRepository('AppBundle:Variables');
+        $ArrayVariables = $repositoryVariable->findAll();
+        $porcentajeCobro = $ArrayVariables[0]->getPorcCobroLocal();
+        $entity->setPorcentajeCobro($porcentajeCobro*100);
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:LocalComercial:new.html.twig', array(
@@ -133,7 +137,7 @@ class LocalComercialController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('no existe el Local Comercial.');
         }
-
+        $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -188,6 +192,7 @@ class LocalComercialController extends Controller {
         if ($editForm->isValid()) {
             $version = $entity->getVersion();
             $entity->setVersion($version + 1);
+            $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
             $em->flush();
 
             $urlEdit = $this->generateUrl('localcomercial_show', array('id' => $id));

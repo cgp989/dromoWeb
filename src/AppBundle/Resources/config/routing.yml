@@ -1,3 +1,7 @@
+app_variables:
+    resource: "@AppBundle/Resources/config/routing/variables.yml"
+    prefix:   admin/variables
+
 #app_programacionendia:
 #    resource: "@AppBundle/Resources/config/routing/programacionendia.yml"
 #    prefix:   local/programacionendia

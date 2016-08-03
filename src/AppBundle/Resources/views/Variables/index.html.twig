@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Variables list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Porccobrolocal</th>
+                <th>Porcganancia</th>
+                <th>Valorpunto</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('variables_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.porcCobroLocal }}</td>
+                <td>{{ entity.porcGanancia }}</td>
+                <td>{{ entity.valorPunto }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('variables_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('variables_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('variables_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
