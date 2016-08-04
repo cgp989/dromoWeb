@@ -137,7 +137,7 @@ class LocalComercialController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('no existe el Local Comercial.');
         }
-        $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
+        $entity->setPorcentajeCobro($entity->getPorcentaje_Cobro());
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
