@@ -28,23 +28,27 @@
             <table class="table table-show">
                 <tbody>
                     <tr>
-                        <th>Nombre Contacto</th>
-                        <td>{{ entity.nombreContacto }}</td>
-                    </tr>
-                    <tr>
                         <th class="col-xs-1">Nombre</th>
                         <td>{{ entity.nombre }}</td>
                     </tr>
                     <tr>
-                        <th>Descripcion</th>
+                       <th>Descripci&oacute;n</th>
                         <td>{{ entity.descripcion }}</td>
                     </tr>
+                    <tr>
+                        <th>Porcentaje Cobro[%]</th>
+                        <td>{{ entity.PorcentajeCobro*100 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre Contacto</th>
+                        <td>{{ entity.nombreContacto }}</td>
+                    </tr>                    
                     <tr>
                         <th>Email Contacto</th>
                         <td>{{ entity.emailContacto }}</td>
                     </tr>
                     <tr>
-                        <th>Telefono Contaco</th>
+                        <th>Tel&eacute;fono Contacto</th>
                         <td>{{ entity.telefonoContacto }}</td>
                     </tr>            
                 </tbody>

@@ -124,7 +124,7 @@ class LocalComercial {
      * @ORM\OneToMany(targetEntity="VisitaLocalComercial", mappedBy="localComercial")
      */
     private $visitasLocalComercial;
-    
+
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
@@ -147,6 +147,14 @@ class LocalComercial {
      * @var \DateTime
      */
     private $updatedAt;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="porcentajeCobro")
+     *      * 
+     */
+    private $porcentajeCobro;
 
     public function __construct() {
         $this->sucursales = new ArrayCollection();
@@ -528,8 +536,7 @@ class LocalComercial {
      *
      * @return Product
      */
-    public function setImageFile(File $image = null)
-    {
+    public function setImageFile(File $image = null) {
         $this->imageFile = $image;
 
         if ($image) {
@@ -544,8 +551,7 @@ class LocalComercial {
     /**
      * @return File
      */
-    public function getImageFile()
-    {
+    public function getImageFile() {
         return $this->imageFile;
     }
 
@@ -554,8 +560,7 @@ class LocalComercial {
      *
      * @return Product
      */
-    public function setImageName($imageName)
-    {
+    public function setImageName($imageName) {
         $this->imageName = $imageName;
 
         return $this;
@@ -564,8 +569,24 @@ class LocalComercial {
     /**
      * @return string
      */
-    public function getImageName()
-    {
+    public function getImageName() {
         return $this->imageName;
     }
+
+    function getPorcentajeCobro() {
+        return $this->porcentajeCobro;
+    }
+
+    function setPorcentajeCobro($porcentajeCobro) {
+        $this->porcentajeCobro = $porcentajeCobro;
+    }
+    
+    public function setPorcentaje_Cobro($porcentajeCobro) {
+        $this->porcentajeCobro = $porcentajeCobro/100;
+    }
+    
+    public function getPorcentaje_Cobro() {
+        return $this->porcentajeCobro*100;
+    }
+
 }
