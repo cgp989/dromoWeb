@@ -23,6 +23,7 @@ class CuponRepository extends EntityRepository
         $cupon->setVencimiento($programacionEnDia->getVencimiento());
         $cupon->setProgramacion($programacionEnDia->getProgramacion());
         $cupon->setUsuarioMovil($usuarioMovil);
+        $cupon->setComentado(false);
         
         
         $promocion = $programacionEnDia->getProgramacion()->getPromocion();
