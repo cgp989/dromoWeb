@@ -105,11 +105,11 @@ class CuponRepository extends EntityRepository
         $precioPromocion = $cupon->getProgramacion()->getPromocion()->getPrecio();
         $idLocalComercial = $cupon->getProgramacion()->getPromocion()->getLocalComercial()->getId();
         $localComercial = $this->getEntityManager()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
-       
+        $variables = $this->getEntityManager()->getRepository('AppBundle:Variables')->findAll();
         //se calcula el precio que se le cobra al local
         $precioCobroLocal = $precioPromocion*($localComercial->getPorcentajeCobro());
         //se calcula la cantidad de puntos del cupon
-        $puntosCupon = ($precioCobroLocal*(1-$variables->getPorcGanancia())*$variables->getValorPunto());
+        $puntosCupon = ($precioCobroLocal*(1-$variables[0]->getPorcGanancia())*$variables[0]->getValorPunto());
         $puntosCupon = round($puntosCupon, 0, PHP_ROUND_HALF_DOWN);
         $cupon->setPuntaje($puntosCupon);
         $cupon->setPrecioCobroLocal($precioCobroLocal);
