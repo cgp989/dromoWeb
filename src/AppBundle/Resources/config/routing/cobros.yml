@@ -7,8 +7,9 @@ cobros_pendientes_detalle_local:
     defaults: { _controller: "AppBundle:Cobros:getPendientesLocal" }
     
 cobro_local:
-    path:     /pendientes/{id}/local/{idCupon}/cupon
+    path:     /pendientes/cobrar
     defaults: { _controller: "AppBundle:Cobros:setCobroLocal" }
+    methods:  POST
     
 cobros_cobrados_locales:
     path:     /cobrados/locales

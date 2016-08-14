@@ -140,3 +140,14 @@ body.body-deslog{
     width: 60px;
 }
 
+.cobros-pendientes .glyphicon{
+    font-size: 10px;
+}
+
+.cobros-pendientes .btn{
+    padding: 1px 7px;
+}
+
+.cobros-pendientes > thead > tr > th{
+    vertical-align: text-top;
+}

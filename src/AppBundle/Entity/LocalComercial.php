@@ -147,6 +147,11 @@ class LocalComercial {
      * @var \DateTime
      */
     private $updatedAt;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Cobro", mappedBy="localComercial")
+     */
+    private $cobros;
 
     public function __construct() {
         $this->sucursales = new ArrayCollection();
@@ -154,6 +159,7 @@ class LocalComercial {
         $this->comentarios = new ArrayCollection();
         $this->suscripciones = new ArrayCollection();
         $this->visitasLocalComercial = new ArrayCollection();
+        $this->cobros = new ArrayCollection();
     }
 
     /**
@@ -567,5 +573,61 @@ class LocalComercial {
     public function getImageName()
     {
         return $this->imageName;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return LocalComercial
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add cobros
+     *
+     * @param \AppBundle\Entity\Cobro $cobros
+     * @return LocalComercial
+     */
+    public function addCobro(\AppBundle\Entity\Cobro $cobros)
+    {
+        $this->cobros[] = $cobros;
+
+        return $this;
+    }
+
+    /**
+     * Remove cobros
+     *
+     * @param \AppBundle\Entity\Cobro $cobros
+     */
+    public function removeCobro(\AppBundle\Entity\Cobro $cobros)
+    {
+        $this->cobros->removeElement($cobros);
+    }
+
+    /**
+     * Get cobros
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCobros()
+    {
+        return $this->cobros;
     }
 }

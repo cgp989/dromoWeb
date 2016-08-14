@@ -32,7 +32,7 @@ class Suscripcion
      *
      * @ORM\Column(name="notificaciones", type="boolean")
      * @Expose
-     * @Groups({"serviceUSS02-login"})
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $notificaciones;
     
@@ -40,7 +40,7 @@ class Suscripcion
      * @ORM\ManyToOne(targetEntity="LocalComercial", inversedBy="suscripciones")
      * @ORM\JoinColumn(name="idLocalComercial", referencedColumnName="id")
      * @Expose
-     * @Groups({"serviceUSS02-login"})
+     * @Groups({"serviceUSS02-login", "serviceUSS04-cuenta"})
      */
     private $localComercial;
     

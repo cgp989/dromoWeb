@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Cobro;
 use AppBundle\Entity\EstadoCobroCupon;
 
 /**
@@ -55,16 +56,57 @@ class CobrosController extends Controller {
      * @param type $id
      * @param type $idCupon
      */
-    public function setCobroLocalAction($id, $idCupon) {
-        //setear estado "cobrado"
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:Cupon')->find($idCupon);
-        $estadoCobrado = $em->getRepository('AppBundle:EstadoCobroCupon')->findOneByNombre('cobrado');
-        $entity->setEstadoCobroCupon($estadoCobrado);
-        $em->persist($entity);
-        $em->flush();
-        //redirigir
-        return $this->getPendientesLocalAction($id);
+    public function setCobroLocalAction(Request $request) {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        //creo la entity cobro
+        try{
+            $cobroEntity = new Cobro();
+            $fechaHoy = new \DateTime('now');
+            $cobroEntity->setFecha($fechaHoy);
+            $localEntity = $em->getRepository('AppBundle:LocalComercial')->find($request->get('idLocal'));
+            $cobroEntity->setLocalComercial($localEntity);
+            $cobroEntity->setTotal($request->get('total'));
+            $cobroEntity->setUserAdmin($this->getUser());
+            $em->persist($cobroEntity);
+            $em->flush();
+            //seteo a cada cupon el objeto cobro y el estado "cobrado"
+            $repoCupon = $em->getRepository('AppBundle:Cupon');
+            $estadoCobrado = $em->getRepository('AppBundle:EstadoCobroCupon')->findOneByNombre('cobrado');
+            foreach ($request->get('cupon') as $idCupon) { 
+                $cupon = $repoCupon->find($idCupon);
+                $cupon->setEstadoCobroCupon($estadoCobrado);
+                $cupon->setCobro($cobroEntity);
+                $em->persist($cupon);
+            }
+
+            //finalizo la transaccion
+            
+            $em->flush();
+
+            //mesaje flash que se muestra en la pagina
+            $this->get('session')->getFlashBag()->set(
+                'success',
+                array(
+                    'title' => 'Cobro registrado',
+                    'message' => 'El cobro se registro exitosamente.'
+                )
+            );
+            
+        } catch (Exception $ex) {
+            //mesaje flash que se muestra en la pagina
+                        $this->get('session')->getFlashBag()->set(
+                            'warning',
+                            array(
+                                'title' => 'Ocurrio un error',
+                                'message' => 'Ocurrio un error inesperado. Vuelva a intentarlo'
+                            )
+            );
+        }
+        
+        //redirijo a la pagina de cupones pendientes
+        return $this->redirect($this->generateUrl('cobros_pendientes_detalle_local', array('id' => $request->get('idLocal'))));
+        //return $this->getPendientesLocalAction($request->get('idLocal'));
     }
 
     /**

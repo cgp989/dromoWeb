@@ -63,7 +63,8 @@ class LocalComercialRepository extends EntityRepository {
                      join cup.estadoCupon est
                      join cup.tipoCupon tipoC
                 where estCobro.nombre=:paramEstadoCobroCupon
-                    and tipoC.nombre=:paramTipoCupon and est.nombre=:paramEstadoCupon")
+                    and tipoC.nombre=:paramTipoCupon and est.nombre=:paramEstadoCupon
+                GROUP BY loc.id, loc.nombre, loc.nombreContacto, loc.emailContacto, loc.telefonoContacto")
                 ->setParameter('paramEstadoCobroCupon', 'cobrado')
                 ->setParameter('paramTipoCupon', 'promocion')
                 ->setParameter('paramEstadoCupon', 'canjeado');

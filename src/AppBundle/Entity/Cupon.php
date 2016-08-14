@@ -123,6 +123,12 @@ class Cupon
      * 
      */
     private $precioCobroLocal;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Cobro")
+     * @ORM\JoinColumn(name="idCobro", referencedColumnName="id")
+     */
+    private $cobro;
 
     /**
      * Get id
@@ -413,5 +419,28 @@ class Cupon
     public function esCuponEnfecha(){
         $fechaHoy = new \DateTime('now');
         return ($this->getInicio() <= $fechaHoy && $this->getVencimiento() >= $fechaHoy && $this->getEstadoCupon()->getNombre() == 'porCanjear');
+    }
+
+    /**
+     * Set cobro
+     *
+     * @param \AppBundle\Entity\Cobro $cobro
+     * @return Cupon
+     */
+    public function setCobro(\AppBundle\Entity\Cobro $cobro = null)
+    {
+        $this->cobro = $cobro;
+
+        return $this;
+    }
+
+    /**
+     * Get cobro
+     *
+     * @return \AppBundle\Entity\Cobro 
+     */
+    public function getCobro()
+    {
+        return $this->cobro;
     }
 }
