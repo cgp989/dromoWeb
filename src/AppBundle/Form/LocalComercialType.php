@@ -33,6 +33,7 @@ class LocalComercialType extends AbstractType {
                         'maxlength' => 13
                     )
                 ))
+                 ->add('porcentajeCobro')
         ;
 
         if (!isset($this->opciones['edit'])) {

@@ -1,0 +1,30 @@
+variables:
+    path:     /
+    defaults: { _controller: "AppBundle:Variables:index" }
+
+variables_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Variables:show" }
+
+variables_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Variables:new" }
+
+variables_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Variables:create" }
+    methods:  POST
+
+variables_edit:
+    path:     /edit
+    defaults: { _controller: "AppBundle:Variables:edit" }
+
+variables_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Variables:update" }
+    methods:  [POST, PUT]
+
+variables_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Variables:delete" }
+    methods:  [POST, DELETE]

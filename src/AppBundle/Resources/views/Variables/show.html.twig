@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Sucursal</h1>
+    <h1>Variables</h1>
 
     <table class="record_properties">
         <tbody>
@@ -10,20 +10,28 @@
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Tel&eacute;fono</th>
-                <td>{{ entity.telefono }}</td>
+                <th>Porccobrolocal</th>
+                <td>{{ entity.porcCobroLocal }}</td>
+            </tr>
+            <tr>
+                <th>Porcganancia</th>
+                <td>{{ entity.porcGanancia }}</td>
+            </tr>
+            <tr>
+                <th>Valorpunto</th>
+                <td>{{ entity.valorPunto }}</td>
             </tr>
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('sucursales') }}">
+        <a href="{{ path('variables') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('sucursales_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('variables_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>

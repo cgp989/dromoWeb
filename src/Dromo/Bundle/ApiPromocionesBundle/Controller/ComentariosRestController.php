@@ -56,7 +56,7 @@ class ComentariosRestController extends Controller {
      * 
      * @View(serializerGroups={"serviceUSS31-comentarios"})
      */
-    public function getId_local_comercialId_usuario_movilValoracionComentarioAction($idLocalComercial, $idUsuarioMovil, $valoracion, $comentario) {
+    public function getId_local_comercialId_cuponId_usuario_movilValoracionComentarioAction($idLocalComercial, $idCupon, $idUsuarioMovil, $valoracion, $comentario) {
         /* @var $localComercial Entity\LocalComercial */
         $localComercial = $this->getDoctrine()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
         /* @var $usuarioMovil Entity\UsuarioMovil */
@@ -85,6 +85,9 @@ class ComentariosRestController extends Controller {
             $estadoComentario = $this->getDoctrine()->getRepository('AppBundle:EstadoComentario')->find(1);
             $comen->setEstadoComentario($estadoComentario);
             $em->persist($comen);
+            /* @var $cupon Entity\Cupon */
+            $cupon = $this->getDoctrine()->getRepository('AppBundle:Cupon')->find($idCupon);
+            $cupon->setComentado(true);
             $em->flush();
             $comentariosLocal = $this->getDoctrine()->getRepository('AppBundle:Comentario')->findByLocalComercial($localComercial);
             $suma = 0;
@@ -106,7 +109,7 @@ class ComentariosRestController extends Controller {
         if (isset($error)) {
             return array('error' => $error);
         } else {
-            return array("resultado" => 1, "idLocalComercial" => $idLocalComercial);
+            return array("resultado" => 1, "idLocalComercial" => $idLocalComercial, "idCupon" => $idCupon);
         }
     }
 

@@ -16,8 +16,8 @@ use JMS\Serializer\Annotation\VirtualProperty;
  * 
  * @ExclusionPolicy("all")
  */
-class Cupon
-{
+class Cupon {
+
     /**
      * @var integer
      *
@@ -49,7 +49,7 @@ class Cupon
      * @Groups({"serviceCupones"})
      */
     private $fecha;
-    
+
     /**
      * @var \DateTime
      *
@@ -75,7 +75,7 @@ class Cupon
      * @Groups({"serviceUSS21", "serviceCupones"})
      */
     private $puntaje;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Programacion", inversedBy="cupones")
      * @ORM\JoinColumn(name="idProgramacion", referencedColumnName="id")
@@ -84,7 +84,7 @@ class Cupon
      * @Groups({"serviceUSS21", "serviceCupones"})
      */
     private $programacion;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="UsuarioMovil", inversedBy="cupones")
      * @ORM\JoinColumn(name="idUsuarioMovil", referencedColumnName="id")
@@ -93,13 +93,13 @@ class Cupon
      * @Groups({"serviceUSS37"})
      */
     private $usuarioMovil;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="TipoCupon", inversedBy="cupones")
      * @ORM\JoinColumn(name="idTipoCupon", referencedColumnName="id")
      */
     private $tipoCupon;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="EstadoCupon", inversedBy="cupones")
      * @ORM\JoinColumn(name="idEstadoCupon", referencedColumnName="id")
@@ -108,14 +108,14 @@ class Cupon
      * @Groups({"serviceUSS21", "serviceUSS37" , "serviceCupones"})
      */
     private $estadoCupon;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="EstadoCobroCupon", inversedBy="cupones")
      * @ORM\JoinColumn(name="idEstadoCobroCupon", referencedColumnName="id")
      * 
      */
     private $estadoCobroCupon;
-    
+
     /**
      * @var float
      *
@@ -131,12 +131,21 @@ class Cupon
     private $cobro;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="comentado", type="boolean")
+     * 
+     * @Expose
+     * @Groups({"serviceCupones"})
+     */
+    private $comentado;
+
+    /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -146,8 +155,7 @@ class Cupon
      * @param string $codigo
      * @return Cupon
      */
-    public function setCodigo($codigo)
-    {
+    public function setCodigo($codigo) {
         $this->codigo = $codigo;
 
         return $this;
@@ -158,8 +166,7 @@ class Cupon
      *
      * @return string 
      */
-    public function getCodigo()
-    {
+    public function getCodigo() {
         return $this->codigo;
     }
 
@@ -169,8 +176,7 @@ class Cupon
      * @param \DateTime $fecha
      * @return Cupon
      */
-    public function setFecha($fecha)
-    {
+    public function setFecha($fecha) {
         $this->fecha = $fecha;
 
         return $this;
@@ -181,11 +187,9 @@ class Cupon
      *
      * @return \DateTime 
      */
-    public function getFecha()
-    {
+    public function getFecha() {
         return $this->fecha;
     }
-
 
     /**
      * Set puntaje
@@ -193,8 +197,7 @@ class Cupon
      * @param integer $puntaje
      * @return Cupon
      */
-    public function setPuntaje($puntaje)
-    {
+    public function setPuntaje($puntaje) {
         $this->puntaje = $puntaje;
 
         return $this;
@@ -205,8 +208,7 @@ class Cupon
      *
      * @return integer 
      */
-    public function getPuntaje()
-    {
+    public function getPuntaje() {
         return $this->puntaje;
     }
 
@@ -216,8 +218,7 @@ class Cupon
      * @param \AppBundle\Entity\Programacion $programacion
      * @return Cupon
      */
-    public function setProgramacion(\AppBundle\Entity\Programacion $programacion = null)
-    {
+    public function setProgramacion(\AppBundle\Entity\Programacion $programacion = null) {
         $this->programacion = $programacion;
 
         return $this;
@@ -228,8 +229,7 @@ class Cupon
      *
      * @return \AppBundle\Entity\Programacion 
      */
-    public function getProgramacion()
-    {
+    public function getProgramacion() {
         return $this->programacion;
     }
 
@@ -239,8 +239,7 @@ class Cupon
      * @param \AppBundle\Entity\UsuarioMovil $usuarioMovil
      * @return Cupon
      */
-    public function setUsuarioMovil(\AppBundle\Entity\UsuarioMovil $usuarioMovil = null)
-    {
+    public function setUsuarioMovil(\AppBundle\Entity\UsuarioMovil $usuarioMovil = null) {
         $this->usuarioMovil = $usuarioMovil;
 
         return $this;
@@ -251,8 +250,7 @@ class Cupon
      *
      * @return \AppBundle\Entity\UsuarioMovil 
      */
-    public function getUsuarioMovil()
-    {
+    public function getUsuarioMovil() {
         return $this->usuarioMovil;
     }
 
@@ -262,8 +260,7 @@ class Cupon
      * @param \AppBundle\Entity\TipoCupon $tipoCupon
      * @return Cupon
      */
-    public function setTipoCupon(\AppBundle\Entity\TipoCupon $tipoCupon = null)
-    {
+    public function setTipoCupon(\AppBundle\Entity\TipoCupon $tipoCupon = null) {
         $this->tipoCupon = $tipoCupon;
 
         return $this;
@@ -274,8 +271,7 @@ class Cupon
      *
      * @return \AppBundle\Entity\TipoCupon 
      */
-    public function getTipoCupon()
-    {
+    public function getTipoCupon() {
         return $this->tipoCupon;
     }
 
@@ -285,8 +281,7 @@ class Cupon
      * @param \AppBundle\Entity\EstadoCupon $estadoCupon
      * @return Cupon
      */
-    public function setEstadoCupon(\AppBundle\Entity\EstadoCupon $estadoCupon = null)
-    {
+    public function setEstadoCupon(\AppBundle\Entity\EstadoCupon $estadoCupon = null) {
         $this->estadoCupon = $estadoCupon;
 
         return $this;
@@ -297,8 +292,7 @@ class Cupon
      *
      * @return \AppBundle\Entity\EstadoCupon 
      */
-    public function getEstadoCupon()
-    {
+    public function getEstadoCupon() {
         return $this->estadoCupon;
     }
 
@@ -309,10 +303,10 @@ class Cupon
      * @VirtualProperty 
      * @Groups({"serviceUSS21"})
      */
-    public function getFecha_(){
+    public function getFecha_() {
         return $this->fecha->format("Y-m-d");
     }
-    
+
     /**
      * Retorna la fecha vencimiento formateada
      * 
@@ -320,9 +314,9 @@ class Cupon
      * @VirtualProperty 
      * @Groups({"serviceUSS21"})
      */
-    public function getVencimiento_(){
+    public function getVencimiento_() {
         return $this->vencimiento->format("Y-m-d H:i:s");
-    }   
+    }
 
     /**
      * Set vencimiento
@@ -330,8 +324,7 @@ class Cupon
      * @param \DateTime $vencimiento
      * @return Cupon
      */
-    public function setVencimiento($vencimiento)
-    {
+    public function setVencimiento($vencimiento) {
         $this->vencimiento = $vencimiento;
 
         return $this;
@@ -342,8 +335,7 @@ class Cupon
      *
      * @return \DateTime 
      */
-    public function getVencimiento()
-    {
+    public function getVencimiento() {
         return $this->vencimiento;
     }
 
@@ -353,8 +345,7 @@ class Cupon
      * @param \DateTime $inicio
      * @return Cupon
      */
-    public function setInicio($inicio)
-    {
+    public function setInicio($inicio) {
         $this->inicio = $inicio;
 
         return $this;
@@ -365,18 +356,16 @@ class Cupon
      *
      * @return \DateTime 
      */
-    public function getInicio()
-    {
+    public function getInicio() {
         return $this->inicio;
     }
-    
+
     /**
      * Retorna la fecha de inicio formateada
      *
      * @return \DateTime 
      */
-    public function getInicio_()
-    {
+    public function getInicio_() {
         return $this->inicio->format("Y-m-d H:i:s");
     }
 
@@ -386,8 +375,7 @@ class Cupon
      * @param \AppBundle\Entity\EstadoCobroCupon $estadoCobroCupon
      * @return Cupon
      */
-    public function setEstadoCobroCupon(\AppBundle\Entity\EstadoCobroCupon $estadoCobroCupon = null)
-    {
+    public function setEstadoCobroCupon(\AppBundle\Entity\EstadoCobroCupon $estadoCobroCupon = null) {
         $this->estadoCobroCupon = $estadoCobroCupon;
 
         return $this;
@@ -398,11 +386,10 @@ class Cupon
      *
      * @return \AppBundle\Entity\EstadoCobroCupon 
      */
-    public function getEstadoCobroCupon()
-    {
+    public function getEstadoCobroCupon() {
         return $this->estadoCobroCupon;
     }
-    
+
     function getPrecioCobroLocal() {
         return $this->precioCobroLocal;
     }
@@ -410,15 +397,23 @@ class Cupon
     function setPrecioCobroLocal($precioCobroLocal) {
         $this->precioCobroLocal = $precioCobroLocal;
     }
-    
+
     /**
      * Verifica si un cupon esta dentro de la fecha de inicio y vencimiento y con estado porCanjer
      * 
      * @return boolean
      */
-    public function esCuponEnfecha(){
+    public function esCuponEnfecha() {
         $fechaHoy = new \DateTime('now');
         return ($this->getInicio() <= $fechaHoy && $this->getVencimiento() >= $fechaHoy && $this->getEstadoCupon()->getNombre() == 'porCanjear');
+    }
+
+    function getComentado() {
+        return $this->comentado;
+    }
+
+    function setComentado($comentado) {
+        $this->comentado = $comentado;
     }
 
     /**
