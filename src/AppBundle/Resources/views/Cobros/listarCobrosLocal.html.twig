@@ -10,17 +10,17 @@
     <table class="table table-hover records_list">
         <thead>
             <tr>
-                <th class="col-xs-3">Fecha</th>
-                <th class="col-xs-6">Titulo</th>
-                <th class="col-xs-2">Importe</th>
+                <th class="col-xs-6">Fecha</th>
+                <th class="col-xs-5">Importe</th>
+                <th class="col-xs-1">Detalle</th>
             </tr>
         </thead>
         <tbody>
-            {% for cupon in cuponesCobrados %}
+            {% for cobro in cobros %}
                 <tr>
-                    <td>{{ cupon.fecha|date('d/m/Y') }}</td>
-                    <td>{{ cupon.titulo }}</td>
-                    <td>{{ cupon.precio}}</td>
+                    <td>{{ cobro.fecha|date('d/m/Y') }}</td>
+                    <td>${{ cobro.total }}</td>
+                    <td><a title="ver detalle" href="{{ path('cobros_cobrados_detalle_cobro', { 'id': cobro.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                 </tr>
             {% endfor %}
         </tbody>

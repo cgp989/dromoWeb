@@ -106,7 +106,6 @@ class CobrosController extends Controller {
         
         //redirijo a la pagina de cupones pendientes
         return $this->redirect($this->generateUrl('cobros_pendientes_detalle_local', array('id' => $request->get('idLocal'))));
-        //return $this->getPendientesLocalAction($request->get('idLocal'));
     }
 
     /**
@@ -128,13 +127,11 @@ class CobrosController extends Controller {
      */
     public function getCobradosLocalAction($id) {
         $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
-        $cuponesCobrados = $repositoryLocal->getItemsCobradosCobro($id);
-        foreach ($cuponesCobrados as $e) {
-            $local = $e['nombre'];
-            break;
-        }
-        return $this->render('AppBundle:Cobros:listarCobradosLocal.html.twig', array(
-                    'cuponesCobrados' => $cuponesCobrados, 'nombreLocal' => $local,
+        $local = $repositoryLocal->find($id);
+        $repositoryCobro = $this->getDoctrine()->getRepository('AppBundle:Cobro');
+        $cobrosLocal = $repositoryCobro->getCobrosLocal($id);
+        return $this->render('AppBundle:Cobros:listarCobrosLocal.html.twig', array(
+                    'cobros' => $cobrosLocal, 'nombreLocal' => $local->getNombre(),
         ));
     }
     
@@ -153,5 +150,15 @@ class CobrosController extends Controller {
                'Content-Disposition' => sprintf('attachment; filename="%s"', 'cobros-pendientes-local'),
            ]
         );
+    }
+    
+    public function getDetalleCobroAction($id){
+        $repositoryCobro = $this->getDoctrine()->getRepository('AppBundle:Cobro');
+        $repositoryCupon = $this->getDoctrine()->getRepository('AppBundle:Cupon');
+        $cobro = $repositoryCobro->find($id);
+        $cuponesCobrados = $repositoryCupon->getCuponesCobro($id);
+        return $this->render('AppBundle:Cobros:listarDetalleCobro.html.twig', array(
+                'cuponesCobrados' => $cuponesCobrados, 'cobro' => $cobro,
+        ));
     }
 }

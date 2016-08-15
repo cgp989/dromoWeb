@@ -22,3 +22,7 @@ cobros_cobrados_detalle_local:
 cobros_pendientes_detalle_local_exportar_pdf:
     path:     /pendientes/{id}/local/export-pdf
     defaults: { _controller: "AppBundle:Cobros:getPdfPendientesLocal" }
+    
+cobros_cobrados_detalle_cobro:
+    path: /cobrados/{id}/cobro
+    defaults: { _controller: "AppBundle:Cobros:getDetalleCobro" }

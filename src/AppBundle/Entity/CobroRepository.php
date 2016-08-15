@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class CobroRepository extends EntityRepository
 {
+    /**
+     * Retorna los cobros de el local
+     * 
+     * @param integer $idLocal
+     */
+    public function getCobrosLocal($idLocal){
+        $query = $this->getEntityManager()
+                ->createQuery(
+                        "select c.id, c.fecha, c.total
+                from AppBundle:Cobro c
+                where c.localComercial=:paramIdLocal
+                ORDER BY c.fecha")
+                ->setParameter('paramIdLocal', $idLocal);
+
+        //echo $query->getSQL();exit;
+        return $query->getResult();
+    }
 }

@@ -147,4 +147,16 @@ class CuponRepository extends EntityRepository
         
         return $arrayResult;
     }
+    
+    public function getCuponesCobro($idCobro){
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "select cup
+                from AppBundle:Cupon cup
+                where cup.cobro=:paramCobro")
+            ->setParameter('paramCobro', $idCobro);
+        
+        //echo $query->getSQL();exit;
+        return $query->getResult();
+    }
 }
