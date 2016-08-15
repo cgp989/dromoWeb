@@ -101,6 +101,7 @@ class ProgramacionEnDiaRepository extends EntityRepository {
             $progEnDia->setVencimiento($arrayValidez['finValidez']);
             $this->getEntityManager()->persist($progEnDia);
             $this->getEntityManager()->flush();
+            $this->actualizarVigenciasProgramaciones(array($progEnDia));
         }
     }
 

@@ -211,8 +211,7 @@ class ProgramacionController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
-                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
+            if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
                 if ($entity->getCantidad() < 0) {
                     $entity->setCantidad($entity->getCantidad() * -1);
                 }
@@ -223,12 +222,9 @@ class ProgramacionController extends Controller {
                 else
                     $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
                 return $this->redirect($this->generateUrl('promocion'));
-//            return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
+//              return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
             }else {
-                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
-                }
-            } else {
-                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
+                $editForm->addError(new FormError('Fecha fin mayor a fecha inicio'));
             }
         }
 
