@@ -1,12 +1,21 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Deatalle Cobro a {{ cobro.localComercial.nombre }}</h1>
-    <div class="row btn-action-top">
-        <div class="col-xs-1 pull-right">
-            <a title="volver" href="{{ path('cobros_cobrados_detalle_local', { 'id': cobro.localComercial.id }) }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Detalle cobro a {{ cobro.localComercial.nombre }}</h1>
+        <div class="row btn-action-top">
+            <div class="col-xs-1 pull-right">
+                <a title="volver" href="{{ path('cobros_cobrados_detalle_local', { 'id': cobro.localComercial.id }) }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            </div>
         </div>
-    </div>
+    {% else %}
+        <h1>Detalle de pago</h1>
+        <div class="row btn-action-top">
+            <div class="col-xs-1 pull-right">
+                <a title="volver" href="{{ path('pagos_realizados_local_log') }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            </div>
+        </div>
+    {% endif %}
     <div class="row">
         <div class="col-xs-3">
             <table class="table table-show">

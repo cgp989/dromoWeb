@@ -21,33 +21,37 @@
             
         {% endblock %}
     </head>
-    <body class="pdf-export">
-        <h1>Pendientes de cobro de {{ nombreLocal }} </h1>
-        <table class="table table-hover records_list">
-            <thead>
-                <tr>
-                    <th class="col-xs-2">Fecha</th>
-                    <th class="col-xs-2">C&oacute;digo</th>
-                    <th class="col-xs-6">Promoci&oacute;n</th>
-                    <th class="col-xs-2">Importe</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% set total = 0 %}
-                {% for cupon in cuponesPendientes %}
-                    {% set total = total +cupon.precioCobroLocal  %}
+    <body class="pdf-export-body" style="color: #FFF">
+        <div class="pdf-export-content">
+            <h1>Pendientes de cobro de {{ nombreLocal }} </h1>
+            <table class="table table-hover records_list">
+                <thead>
                     <tr>
-                        <td>{{ cupon.fecha|date('d/m/Y') }}</td>
-                        <td>{{ cupon.codigo }}</td>
-                        <td>{{ cupon.titulo }}</td>
-                        <td>${{ cupon.precioCobroLocal}}</td>
+                        <th class="col-xs-2">Fecha</th>
+                        <th class="col-xs-2">C&oacute;digo</th>
+                        <th class="col-xs-2">Tipo</th>
+                        <th class="col-xs-4">T&iacute;tulo</th>
+                        <th class="col-xs-2">Importe</th>
+
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <div class="row">
-            <div class="col-xs-2 pull-right text-right"><h3>Total: ${{ total }}</h3></div>
+                </thead>
+                <tbody>
+                    {% set total = 0 %}
+                    {% for cupon in cuponesPendientes %}
+                        {% set total = total +cupon.precioCobroLocal  %}
+                        <tr>
+                            <td>{{ cupon.fecha|date('d/m/Y') }}</td>
+                            <td>{{ cupon.codigo }}</td>
+                            <td>{{ cupon.programacion.promocion.tipoPromocion.descripcion }}</td>
+                            <td>{{ cupon.programacion.promocion.titulo }}</td>
+                            <td>${{ cupon.precioCobroLocal}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-xs-2 pull-right text-right"><h3>Total: ${{ total }}</h3></div>
+            </div>
         </div>
     </body>
 </html>

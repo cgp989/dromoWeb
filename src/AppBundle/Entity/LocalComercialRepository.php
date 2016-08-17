@@ -76,7 +76,7 @@ class LocalComercialRepository extends EntityRepository {
     public function getItemsPendientesCobro($idLocal) {
         $query = $this->getEntityManager()
                 ->createQuery(
-                        "select cup.id,loc.id as idLocal, loc.nombre, cup.fecha, prom.titulo, cup.precioCobroLocal, cup.codigo
+                        "select cup
                 from AppBundle:Cupon cup
                      join cup.programacion prog
                      join prog.promocion prom

@@ -165,4 +165,14 @@ class CobrosController extends Controller {
                 'cuponesCobrados' => $cuponesCobrados, 'cobro' => $cobro,
         ));
     }
+    
+    public function getPendientesLocalLogAction(){
+        $idLocalLog = $this->getUser()->getLocalComercial()->getId();
+        return $this->getPendientesLocalAction($idLocalLog);
+    }
+    
+    public function getCobradosLocalLogAction(){
+        $idLocalLog = $this->getUser()->getLocalComercial()->getId();
+        return $this->getCobradosLocalAction($idLocalLog);
+    }
 }

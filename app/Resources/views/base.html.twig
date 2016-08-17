@@ -100,6 +100,12 @@
                             <li class="{% if 'ventas' in name_route %}active{% endif %}">
                                 <a href="{{ path('ventas') }}">Historial ventas</a>
                             </li>
+                            <li class="{% if 'pendientes' in name_route %}active{% endif %}">
+                                <a href="{{ path('pagos_pendientes_local_log') }}">Pagos pendientes</a>
+                            </li>
+                            <li class="{% if 'realizados' in name_route %}active{% endif %}">
+                                <a href="{{ path('pagos_realizados_local_log') }}">Pagos realizados</a>
+                            </li>
                             <li class="{% if 'sucursales' in name_route %}active{% endif %}">
                                 <a href="{{ path('sucursales') }}">Sucursales</a>
                             </li>
