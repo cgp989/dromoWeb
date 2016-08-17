@@ -83,7 +83,11 @@ class CobrosController extends Controller {
             //finalizo la transaccion
             
             $em->flush();
-
+            
+            //sumo los totales a la tabla Totales
+            $repositoryTotales = $em->getRepository('AppBundle:Totales');
+            $repositoryTotales->sumarTotales($cobroEntity);
+            
             //mesaje flash que se muestra en la pagina
             $this->get('session')->getFlashBag()->set(
                 'success',
