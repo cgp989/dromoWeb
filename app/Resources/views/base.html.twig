@@ -20,6 +20,9 @@
             <script src="{{ asset('resources/js/highcharts.js')}}"></script>
             <script src="{{ asset('resources/js/exporting.js')}}"></script>           
             
+            <script src="{{ asset('resources/js/sweetalert/sweetalert.min.js')}}"></script>
+            <link rel="stylesheet" type="text/css" href="{{ asset('resources/js/sweetalert/sweetalert.css') }}">
+            
         {% endblock %}
     </head>
     <body class="{% if not is_granted('IS_AUTHENTICATED_FULLY') %} body-deslog {% endif %}">
@@ -151,3 +154,24 @@
         </div>
     </body>
 </html>
+
+<script type="text/javascript">
+    $(".swa-confirm").on("click", function(e) {
+        e.preventDefault();
+        var form = $(this).parents('form');
+        swal({
+            title: $(this).attr("swa-title"),
+            text: $(this).attr("swa-text"),
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#cc3f44",
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: $(this).attr("swa-btn-txt"),
+            closeOnConfirm: true,
+            html: true
+        }, function( confirmed ) {
+            if( confirmed )
+                form.submit();
+        });
+    });
+</script>
