@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Cobro;
 use AppBundle\Entity\EstadoCobroCupon;
 
 /**
@@ -55,16 +56,60 @@ class CobrosController extends Controller {
      * @param type $id
      * @param type $idCupon
      */
-    public function setCobroLocalAction($id, $idCupon) {
-        //setear estado "cobrado"
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:Cupon')->find($idCupon);
-        $estadoCobrado = $em->getRepository('AppBundle:EstadoCobroCupon')->findOneByNombre('cobrado');
-        $entity->setEstadoCobroCupon($estadoCobrado);
-        $em->persist($entity);
-        $em->flush();
-        //redirigir
-        return $this->getPendientesLocalAction($id);
+    public function setCobroLocalAction(Request $request) {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        //creo la entity cobro
+        try{
+            $cobroEntity = new Cobro();
+            $fechaHoy = new \DateTime('now');
+            $cobroEntity->setFecha($fechaHoy);
+            $localEntity = $em->getRepository('AppBundle:LocalComercial')->find($request->get('idLocal'));
+            $cobroEntity->setLocalComercial($localEntity);
+            $cobroEntity->setTotal($request->get('total'));
+            $cobroEntity->setUserAdmin($this->getUser());
+            $em->persist($cobroEntity);
+            $em->flush();
+            //seteo a cada cupon el objeto cobro y el estado "cobrado"
+            $repoCupon = $em->getRepository('AppBundle:Cupon');
+            $estadoCobrado = $em->getRepository('AppBundle:EstadoCobroCupon')->findOneByNombre('cobrado');
+            foreach ($request->get('cupon') as $idCupon) { 
+                $cupon = $repoCupon->find($idCupon);
+                $cupon->setEstadoCobroCupon($estadoCobrado);
+                $cupon->setCobro($cobroEntity);
+                $em->persist($cupon);
+            }
+
+            //finalizo la transaccion
+            
+            $em->flush();
+            
+            //sumo los totales a la tabla Totales
+            $repositoryTotales = $em->getRepository('AppBundle:Totales');
+            $repositoryTotales->sumarTotales($cobroEntity);
+            
+            //mesaje flash que se muestra en la pagina
+            $this->get('session')->getFlashBag()->set(
+                'success',
+                array(
+                    'title' => 'Cobro registrado',
+                    'message' => 'El cobro se registro exitosamente.'
+                )
+            );
+            
+        } catch (Exception $ex) {
+            //mesaje flash que se muestra en la pagina
+                        $this->get('session')->getFlashBag()->set(
+                            'warning',
+                            array(
+                                'title' => 'Ocurrio un error',
+                                'message' => 'Ocurrio un error inesperado. Vuelva a intentarlo'
+                            )
+            );
+        }
+        
+        //redirijo a la pagina de cupones pendientes
+        return $this->redirect($this->generateUrl('cobros_pendientes_detalle_local', array('id' => $request->get('idLocal'))));
     }
 
     /**
@@ -86,13 +131,11 @@ class CobrosController extends Controller {
      */
     public function getCobradosLocalAction($id) {
         $repositoryLocal = $this->getDoctrine()->getRepository('AppBundle:LocalComercial');
-        $cuponesCobrados = $repositoryLocal->getItemsCobradosCobro($id);
-        foreach ($cuponesCobrados as $e) {
-            $local = $e['nombre'];
-            break;
-        }
-        return $this->render('AppBundle:Cobros:listarCobradosLocal.html.twig', array(
-                    'cuponesCobrados' => $cuponesCobrados, 'nombreLocal' => $local,
+        $local = $repositoryLocal->find($id);
+        $repositoryCobro = $this->getDoctrine()->getRepository('AppBundle:Cobro');
+        $cobrosLocal = $repositoryCobro->getCobrosLocal($id);
+        return $this->render('AppBundle:Cobros:listarCobrosLocal.html.twig', array(
+                    'cobros' => $cobrosLocal, 'nombreLocal' => $local->getNombre(),
         ));
     }
     
@@ -111,5 +154,25 @@ class CobrosController extends Controller {
                'Content-Disposition' => sprintf('attachment; filename="%s"', 'cobros-pendientes-local'),
            ]
         );
+    }
+    
+    public function getDetalleCobroAction($id){
+        $repositoryCobro = $this->getDoctrine()->getRepository('AppBundle:Cobro');
+        $repositoryCupon = $this->getDoctrine()->getRepository('AppBundle:Cupon');
+        $cobro = $repositoryCobro->find($id);
+        $cuponesCobrados = $repositoryCupon->getCuponesCobro($id);
+        return $this->render('AppBundle:Cobros:listarDetalleCobro.html.twig', array(
+                'cuponesCobrados' => $cuponesCobrados, 'cobro' => $cobro,
+        ));
+    }
+    
+    public function getPendientesLocalLogAction(){
+        $idLocalLog = $this->getUser()->getLocalComercial()->getId();
+        return $this->getPendientesLocalAction($idLocalLog);
+    }
+    
+    public function getCobradosLocalLogAction(){
+        $idLocalLog = $this->getUser()->getLocalComercial()->getId();
+        return $this->getCobradosLocalAction($idLocalLog);
     }
 }

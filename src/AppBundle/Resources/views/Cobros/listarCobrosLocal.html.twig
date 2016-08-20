@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Cobros a {{ nombreLocal }}</h1>
+        <div class="row btn-action-top">
+            <div class="col-xs-1 pull-right">
+                <a title="volver" href="{{ path('cobros_cobrados_locales') }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            </div>
+        </div>
+    {% else %}
+        <h1>Pagos realizados</h1>
+    {% endif %}
+    <table class="table table-hover records_list">
+        <thead>
+            <tr>
+                <th class="col-xs-6">Fecha</th>
+                <th class="col-xs-5">Importe</th>
+                <th class="col-xs-1">Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cobro in cobros %}
+                <tr>
+                    <td>{{ cobro.fecha|date('d/m/Y') }}</td>
+                    <td>${{ cobro.total }}</td>
+    {% if is_granted('ROLE_ADMIN') %}
+                    <td><a title="ver detalle" href="{{ path('cobros_cobrados_detalle_cobro', { 'id': cobro.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+    {% else %}
+                    <td><a title="ver detalle" href="{{ path('pagos_realizados_detalle_local_log', { 'id': cobro.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

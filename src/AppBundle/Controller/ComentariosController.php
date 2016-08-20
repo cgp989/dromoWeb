@@ -199,9 +199,11 @@ class ComentariosController extends Controller {
                         ->setMethod('DELETE')
                         ->add('eliminar', 'submit', array('label' => ' ',
                             'attr' =>
-                            ['class' => 'glyphicon glyphicon-trash',
-                                'onclick' => 'return confirm("¿Esta seguro de eliminar este comentario?.',
-                                'title' => 'eliminar']
+                            ['class' => 'glyphicon glyphicon-trash swa-confirm',
+                                'title' => 'eliminar',
+                                'swa-title' => 'Está seguro de eliminar este comentario?',
+                                'swa-text' => ' ',
+                                'swa-btn-txt' => 'Eliminar']
                         ))
                         ->getForm()
         ;

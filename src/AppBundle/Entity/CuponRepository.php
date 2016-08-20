@@ -103,13 +103,18 @@ class CuponRepository extends EntityRepository
     
     public function calcPrecioCobroYPuntos(Cupon $cupon){
         $precioPromocion = $cupon->getProgramacion()->getPromocion()->getPrecio();
-        $idLocalComercial = $cupon->getProgramacion()->getPromocion()->getLocalComercial()->getId();
-        $localComercial = $this->getEntityManager()->getRepository('AppBundle:LocalComercial')->find($idLocalComercial);
-       
+        $localComercial = $cupon->getProgramacion()->getPromocion()->getLocalComercial();
+        $variables = $this->getEntityManager()->getRepository('AppBundle:Variables')->findAll();
         //se calcula el precio que se le cobra al local
-        $precioCobroLocal = $precioPromocion*($localComercial->getPorcentajeCobro());
+        //si el local tiene guardado un porcentaje de cobro y este es valido se usa ese. sino el valor por defecto que estq en variables
+        if(!is_null($localComercial->getPorcentajeCobro()) && $localComercial->getPorcentajeCobro() > 0 && $localComercial->getPorcentajeCobro() <= 100){
+            $porcentajeCobro = $localComercial->getPorcentajeCobro();
+        }else{
+            $porcentajeCobro = $variables[0]->getPorcCobroLocal();
+        }
+        $precioCobroLocal = $precioPromocion*($porcentajeCobro);
         //se calcula la cantidad de puntos del cupon
-        $puntosCupon = ($precioCobroLocal*(1-$variables->getPorcGanancia())*$variables->getValorPunto());
+        $puntosCupon = ($precioCobroLocal*(1-$variables[0]->getPorcGanancia())*$variables[0]->getValorPunto());
         $puntosCupon = round($puntosCupon, 0, PHP_ROUND_HALF_DOWN);
         $cupon->setPuntaje($puntosCupon);
         $cupon->setPrecioCobroLocal($precioCobroLocal);
@@ -147,5 +152,17 @@ class CuponRepository extends EntityRepository
         }
         
         return $arrayResult;
+    }
+    
+    public function getCuponesCobro($idCobro){
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "select cup
+                from AppBundle:Cupon cup
+                where cup.cobro=:paramCobro")
+            ->setParameter('paramCobro', $idCobro);
+        
+        //echo $query->getSQL();exit;
+        return $query->getResult();
     }
 }

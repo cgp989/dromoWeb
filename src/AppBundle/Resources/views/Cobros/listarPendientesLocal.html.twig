@@ -1,43 +1,127 @@
+
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Pendientes de cobro de {{ nombreLocal }} </h1>
-    <div class="row btn-action-top">
-        <div class="col-xs-4 pull-left">
-            <a class="text-info" href="{{ path('cobros_pendientes_detalle_local_exportar_pdf', { 'id': idLocal }) }}"><span class="glyphicon glyphicon-export"></span> Exportar a PDF</a>
-        </div>
-        <div class="col-xs-1 pull-right">
-            <a title="volver" href="{{ path('cobros_pendientes_locales') }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
-        </div>
-    </div>
-    <table class="table table-hover records_list">
-        <thead>
-            <tr>
-                <th class="col-xs-2">Fecha</th>
-                <th class="col-xs-2">C&oacute;digo</th>
-                <th class="col-xs-5">Promoci&oacute;n</th>
-                <th class="col-xs-2">Importe</th>
-                <th class="col-xs-1">Cobrado</th>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Pendientes de cobro de {{ nombreLocal }} </h1>
+        <form id="form-pendientes" method="post" action="{{ path('cobro_local') }}">
+            <div class="row btn-action-top">
+                <div class="col-xs-4 pull-left">
+                    <a class="text-info" href="{{ path('cobros_pendientes_detalle_local_exportar_pdf', { 'id': idLocal }) }}"><span class="glyphicon glyphicon-export"></span> Exportar a PDF</a>
+                </div>
+                <div class="col-xs-1 pull-right">
+                    <a title="volver" href="{{ path('cobros_pendientes_locales') }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                </div>
+            </div>
+    {% else%}
+            <h1>Cupones pendientes de pago</h1>
+    {% endif %}
+            <table class="table table-hover records_list cobros-pendientes">
+                <thead>
+                    <tr>
+                        <th class="col-xs-1">Fecha</th>
+                        <th class="col-xs-2">C&oacute;digo</th>
+                        <th class="col-xs-1">Tipo</th>
+                        <th class="col-xs-4">T&iacute;tulo</th>
+                        <th class="col-xs-2">Importe</th>
+    {% if is_granted('ROLE_ADMIN') %}
+                        <th class="col-xs-2">
+                            Cobrar <br>
+                            <input id="checkAll" type="checkbox" class="checkbox" value="sdfsdf" name="checAll"  data-off-label="false" data-on-label="false" data-off-icon-cls="glyphicon-thumbs-down" data-on-icon-cls="glyphicon-thumbs-up"> Todos
+                        </th>
+    {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set total = 0 %}
+                    {% for cupon in cuponesPendientes %}
+                        {% set total = total +cupon.precioCobroLocal  %}
+                        <tr>
+                            <td>{{ cupon.fecha|date('d/m/Y') }}</td>
+                            <td>{{ cupon.codigo }}</td>
+                            <td><image class="img-tipo" src="{{ asset('resources/images/iconos/tipo_promocion/') ~ 'ic_' ~ cupon.programacion.promocion.tipoPromocion.nombre ~ '.png' }}"></td>
+                            <td>{{ cupon.programacion.promocion.titulo }}</td>
+                            <td>${{ cupon.precioCobroLocal}}</td>
+    {% if is_granted('ROLE_ADMIN') %}
+                            <td>
+                                <input id="precio-cupon-{{ cupon.id }}" type="hidden" value="{{ cupon.precioCobroLocal }}">
+                                <input type="checkbox" class="checkbox" value="{{ cupon.id }}" name="cupon[]"  data-off-label="false" data-on-label="false" data-off-icon-cls="glyphicon-thumbs-down" data-on-icon-cls="glyphicon-thumbs-up">
+                            </td>
+    {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    {% if is_granted('ROLE_ADMIN') %}
+            <div class="row">
+                <input type="hidden" name="idLocal" id="idLocal" value="{{ idLocal }}" style="color:#000">
+                <input type="hidden" name="total" id="total" value="0" style="color:#000">
+                <div class="col-xs-3 pull-right text-right"><h3>Total: $<span id="show-total"></span></h3></div>
+            </div>
+            <div class="row">
+                <div class="pull-right">
+                    <button type="submit" id="cobrar" class="btn btn-primary btn">Cobrar</button>
+                </div>
+            </div>
+        </form>
+        <script src="{{ asset('resources/js/bootstrap-checkbox-1.4.0/dist/js/bootstrap-checkbox.min.js')}}"></script>
+        <script type="text/javascript">
+            $(':checkbox').checkboxpicker();
 
-            </tr>
-        </thead>
-        <tbody>
-            {% set total = 0 %}
-            {% for cupon in cuponesPendientes %}
-                {% set total = total +cupon.precioCobroLocal  %}
-                <tr>
-                    <td>{{ cupon.fecha|date('d/m/Y') }}</td>
-                    <td>{{ cupon.codigo }}</td>
-                    <td>{{ cupon.titulo }}</td>
-                    <td>${{ cupon.precioCobroLocal}}</td>
-                    <td>
-                        <a title="cobrado" href="{{ path('cobro_local', { 'id': cupon.idLocal, 'idCupon': cupon.id}) }}"><span class="glyphicon glyphicon-check"></span></a> 
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="row">
-        <div class="col-xs-2 pull-right text-right"><h3>Total: ${{ total }}</h3></div>
-    </div>
+            var banderaUnCheck = false;
+            //function que sirve para seleccionar todos o deseleccionar
+            $("#checkAll").change(function () {
+                if(!banderaUnCheck){
+                    $("input[name='cupon[]").prop('checked', $(this).prop('checked'));
+                }else{
+                    banderaUnCheck=false;
+                }
+               // calTotal();
+            });
+
+            total = 0;
+
+            $("input[name='cupon[]']").change(function(){
+                var checkbox = $(this);
+                var valCupon = parseFloat($('#precio-cupon-'+checkbox.val()).val());
+                if(checkbox.is(':checked')){
+                    setTotal(total+valCupon);
+                }else{
+                    if($("#checkAll").is(':checked')){
+                        banderaUnCheck=true;
+                        $("#checkAll").prop('checked', $(this).prop("checked"));
+                    }
+                    setTotal(total-valCupon);
+                }
+            });
+
+            function calTotal(){
+                var sumTot = 0;
+                $("input[name='cupon[]']:checked").each(function(){
+                    var checkbox = $(this);
+                    var valCupon = parseFloat($('#precio-cupon-'+checkbox.val()).val());
+                    sumTot+=valCupon;
+                });
+                setTotal(sumTot)
+                //total = sumTot;
+            }
+
+            function setTotal(t){
+                if(t===0)
+                    $('#cobrar').prop('disabled', true);
+                else
+                    $('#cobrar').prop('disabled', false);
+
+                total=t;
+                $("#total").val(total);
+                $("#show-total").html(total);
+            }
+
+            window.onload=calTotal;
+        </script>
+    {% else%}
+        <div class="row">
+            <div class="col-xs-3 pull-right text-right"><h3>Total: ${{ total }}</h3></div>
+        </div>
+    {% endif %}
 {% endblock %}

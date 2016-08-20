@@ -1,0 +1,11 @@
+pagos_pendientes_local_log:
+    path:     /pendientes
+    defaults: { _controller: "AppBundle:Cobros:getPendientesLocalLog" }
+    
+pagos_realizados_local_log:
+    path:     /realizados
+    defaults: { _controller: "AppBundle:Cobros:getCobradosLocalLog" }
+    
+pagos_realizados_detalle_local_log:
+    path: /realizados/{id}/pago
+    defaults: { _controller: "AppBundle:Cobros:getDetalleCobro" }

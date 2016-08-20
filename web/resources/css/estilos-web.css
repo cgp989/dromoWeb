@@ -83,8 +83,12 @@ body{
     color: #23527C;
 }
 
-body.pdf-export, .pdf-export h1, .pdf-export h3{
+.pdf-export-body{
     background-color: #FFF;
+    color: #FFF;
+}
+
+.pdf-export-content h1, .pdf-export-content h3, .pdf-export-content table{
     color: #000;
 }
 
@@ -140,3 +144,14 @@ body.body-deslog{
     width: 60px;
 }
 
+.cobros-pendientes .glyphicon{
+    font-size: 10px;
+}
+
+.cobros-pendientes .btn{
+    padding: 1px 7px;
+}
+
+.cobros-pendientes > thead > tr > th{
+    vertical-align: text-top;
+}

@@ -25,6 +25,9 @@ class TipoPromocion
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Expose
+     * @Groups({"serviceCupones"})
      */
     private $id;
 
@@ -33,9 +36,16 @@ class TipoPromocion
      *
      * @ORM\Column(name="nombre", type="string", length=50)
      * @Expose
-     * @Groups({"serviceUSS013"})
+     * @Groups({"serviceUSS013", "serviceCupones"})
      */
     private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=50)
+     */
+    private $descripcion;
 
     /**
      * ORM\OneToMany(targetEntity="Promocion", mappedBy="tipoPromocion")
@@ -80,6 +90,22 @@ class TipoPromocion
     }
     
     public function __toString() {
-        return $this->getNombre();
+        return $this->getDescripcion();
+    }
+    
+    function getDescripcion() {
+        return $this->descripcion;
+    }
+
+    function getPromociones() {
+        return $this->promociones;
+    }
+
+    function setDescripcion($descripcion) {
+        $this->descripcion = $descripcion;
+    }
+
+    function setPromociones($promociones) {
+        $this->promociones = $promociones;
     }
 }
