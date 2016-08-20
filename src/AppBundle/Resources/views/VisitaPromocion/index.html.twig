@@ -104,16 +104,21 @@
                         var data = new Array();
                         for (var i = 0; i < html.entities.length; i++) {
                             var numero = Math.trunc((html.entities[i].cant / html.suma) * 100);
-
-                            data.push(new Array(html.entities[i].titulo, numero));
+                            if (html.entities[i].titulo === 'f') {
+                                data.push(new Array('Femenino', numero));
+                            } else if (html.entities[i].titulo === 'm') {
+                                data.push(new Array('Masculino', numero));
+                            } else {
+                                data.push(new Array(html.entities[i].titulo, numero));
+                            }
                         }
         {#                        console.log(data);#}
                         cargaGrafico(data, 'Cambio');
                     }
                 });
             }
-            
-            $('.boton-resumen').click(function() {
+
+            $('.boton-resumen').click(function () {
                 $('.boton-resumen').removeClass('boton-resumen-selec');
                 $(this).addClass('boton-resumen-selec');
             })
