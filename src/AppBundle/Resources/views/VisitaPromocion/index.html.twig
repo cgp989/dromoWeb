@@ -93,14 +93,12 @@
 
     <script>
         function consulta(tipo) {
-        {# var data = $provincia.serialize();#}
                 var data = "tipo=" + tipo + "&desde=" + $("#ingreso1").val() + "&hasta=" + $("#ingreso2").val();
                 $.ajax({
                     url: "{{ path('visitaprom_ajax_grafico') }}",
                     type: 'post',
                     data: data,
                     success: function (html) {
-        {#console.log(html.entities[0].titulo);#}
                         var data = new Array();
                         for (var i = 0; i < html.entities.length; i++) {
                             var numero = Math.trunc((html.entities[i].cant / html.suma) * 100);
@@ -112,7 +110,6 @@
                                 data.push(new Array(html.entities[i].titulo, numero));
                             }
                         }
-        {#                        console.log(data);#}
                         cargaGrafico(data, 'Cambio');
                     }
                 });
