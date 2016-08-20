@@ -220,10 +220,11 @@ class PremioController extends Controller {
                         ->setMethod('DELETE')
                         ->add('eliminar', 'submit', array('label' => ' ',
                             'attr' =>
-                            ['class' => 'glyphicon glyphicon-trash',
-                                'onclick' => 'return confirm("¿Esta seguro de eliminar este premio?.'
-                                . ' Tenga en cuenta que tambien se eliminaran todas las programaciones del mismo.")',
-                                'title' => 'eliminar']
+                            ['class' => 'glyphicon glyphicon-trash swa-confirm',
+                                'title' => 'eliminar',
+                                'swa-title' => 'Está seguro de eliminar este premio?',
+                                'swa-text' => 'Tenga en cuenta que también se eliminarán todas las programaciones del mismo.',
+                                'swa-btn-txt' => 'Eliminar']
                         ))
                         ->getForm()
         ;

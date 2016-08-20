@@ -276,9 +276,11 @@ class ProgramacionController extends Controller {
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => ' ',
                             'attr' =>
-                            ['class' => 'glyphicon glyphicon-trash',
-                                'onclick' => 'return confirm("¿Esta seguro de eliminar esta programación?")',
-                                'title' => 'eliminar']
+                            ['class' => 'glyphicon glyphicon-trash swa-confirm',
+                                'title' => 'eliminar',
+                                'swa-title' => 'Está seguro de eliminar esta programación?',
+                                'swa-text' => '',
+                                'swa-btn-txt' => 'Eliminar']
                         ))
                         ->getForm()
         ;

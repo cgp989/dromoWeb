@@ -247,9 +247,11 @@ class LocalComercialController extends Controller {
                         ->setMethod('DELETE')
                         ->add('eliminar', 'submit', array('label' => ' ',
                             'attr' =>
-                            ['class' => 'glyphicon glyphicon-trash',
-                                'onclick' => 'return confirm("¿Esta seguro de eliminar este Local Comercial?")',
-                                'title' => 'eliminar']
+                            ['class' => 'glyphicon glyphicon-trash swa-confirm',
+                                'title' => 'eliminar',
+                                'swa-title' => 'Esta seguro de eliminar este Local?',
+                                'swa-text' => '',
+                                'swa-btn-txt' => 'Eliminar']
                         ))
                         ->getForm()
         ;
