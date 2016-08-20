@@ -155,3 +155,13 @@ body.body-deslog{
 .cobros-pendientes > thead > tr > th{
     vertical-align: text-top;
 }
+
+.boton-resumen{
+    background-color: #666;
+    color: #FFF;
+}
+
+.boton-resumen-selec{
+    background-color: #337AB7;
+    color: #FFF;
+}

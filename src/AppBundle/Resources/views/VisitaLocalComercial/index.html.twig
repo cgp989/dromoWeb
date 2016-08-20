@@ -7,11 +7,12 @@
     <script src="{{ asset('resources/js/calendar-setup.js')}}" type="text/javascript"></script>  
     <h1>Res&uacute;menes</h1>
     <form>
-        <input type="button" value="Usuarios Registrados por sexo" onClick="consulta(1)" class="btn btn-prymary btn"/>
-        <input type="button" value="Visitas a Locales" onClick="consulta(2)" class="btn btn-prymary btn"/>
-        <input type="button" value="Visitas a Premios" onClick="consulta(3)" class="btn btn-prymary btn"/>
-        <input type="button" value="Premios Canjeados" onClick="consulta(4)" class="btn btn-prymary btn"/>
-        <input type="button" value="Cobros por Local" onClick="consulta(5)" class="btn btn-prymary btn"/>
+        <input type="button" value="Usuarios Registrados por sexo" onClick="consulta(1)" class="btn btn-prymary btn boton-resumen"/>
+        <input type="button" value="Visitas a Locales" onClick="consulta(2)" class="btn btn-prymary btn boton-resumen"/>
+        <input type="button" value="Visitas a Premios" onClick="consulta(3)" class="btn btn-prymary btn boton-resumen"/>
+        <input type="button" value="Premios Canjeados" onClick="consulta(4)" class="btn btn-prymary btn boton-resumen"/>
+        <input type="button" value="Cobros por Local" onClick="consulta(5)" class="btn btn-prymary btn boton-resumen"/>
+
         <TABLE>
             <TR>
                 <TD><label>Fecha Desde:&nbsp;</label>
@@ -39,14 +40,15 @@
                         });</script>
                 </td>
             </TR>
-        </table>          
-
+        </table>  
+        
     </form>
 
     <div id="graficaCircular" style="width: 100%; height: 500px; margin: 0 auto">
     </div>
 
     <script type="text/javascript">
+
         function cargaGrafico(dato, nombre) {
             var chart;
             chart = new Highcharts.Chart({
@@ -95,6 +97,7 @@
     <script>
         function consulta(tipo) {
         {# var data = $provincia.serialize();#}
+                opcion = tipo;
                 var data = "tipo=" + tipo + "&desde=" + $("#ingreso1").val() + "&hasta=" + $("#ingreso2").val();
                 $.ajax({
                     url: "{{ path('visitalc_ajax_grafico') }}",
@@ -104,8 +107,8 @@
         {#console.log(html.entities[0].titulo);#}
                         var data = new Array();
                         for (var i = 0; i < html.entities.length; i++) {
-                            var numero = Math.trunc((html.entities[i].cant / html.suma)*100);
-                           
+                            var numero = Math.trunc((html.entities[i].cant / html.suma) * 100);
+
                             data.push(new Array(html.entities[i].titulo, numero));
                         }
         {#                        console.log(data);#}
@@ -113,5 +116,10 @@
                     }
                 });
             }
+
+            $('.boton-resumen').click(function () {
+                $('.boton-resumen').removeClass('boton-resumen-selec');
+                $(this).addClass('boton-resumen-selec');
+            })
     </script>
 {% endblock %}

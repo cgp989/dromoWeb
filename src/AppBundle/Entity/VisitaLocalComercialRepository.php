@@ -43,7 +43,7 @@ class VisitaLocalComercialRepository extends EntityRepository {
                         . ' JOIN r.localComercial l '
                         . ' JOIN r.tipoPromocion t'
                         . ' WHERE r.puntajePremio <> 0 and v.fecha > :desde and v.fecha < :hasta '
-                        . ' GROUP BY r.titulo ')
+                        . ' GROUP BY r.titulo, t.descripcion, l.nombre ')
                 ->setParameters(array(
                     'desde' => $desde,
                     'hasta' => $hasta))
@@ -60,7 +60,7 @@ class VisitaLocalComercialRepository extends EntityRepository {
                         . ' JOIN r.localComercial l'
                         . ' JOIN r.tipoPromocion t'
                         . ' WHERE r.puntajePremio <> 0 and c.fecha > :desde and c.fecha < :hasta '
-                        . ' GROUP BY r.titulo ')
+                        . ' GROUP BY t.descripcion,r.titulo, l.nombre ')
                 ->setParameters(array(
                     'desde' => $desde,
                     'hasta' => $hasta))
@@ -90,6 +90,20 @@ class VisitaLocalComercialRepository extends EntityRepository {
                         . ' JOIN p.promocion r '
                         . ' WHERE r.puntajePremio <> 0 '
                         . ' GROUP BY DATE_DIFF(CURRENT_DATE(), v.fecha)/1825 ')//1825=365*5
+                ->getResult();
+        return $visitas;
+    }
+    
+        //Montos de cobros por local
+    public function getCobrosLocal($desde, $hasta) {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT l.nombre as titulo, sum(c.total) as cant FROM AppBundle:Cobro c '
+                        . ' JOIN c.localComercial l'
+                        . ' WHERE c.fecha > :desde and c.fecha < :hasta '
+                        . ' GROUP BY l.nombre ')
+                ->setParameters(array(
+                    'desde' => $desde,
+                    'hasta' => $hasta))
                 ->getResult();
         return $visitas;
     }
