@@ -122,7 +122,7 @@ class UsuarioMovil
     /**
      * @ORM\OneToMany(targetEntity="Suscripcion", mappedBy="usuarioMovil")
      * @Expose
-     * @Groups({"serviceUSS02-login"})
+     * @Groups({"serviceUSS04-cuenta"})
      */
     private $suscripciones;
     

@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Detalle cobro a {{ cobro.localComercial.nombre }}</h1>
+        <div class="row btn-action-top">
+            <div class="col-xs-1 pull-right">
+                <a title="volver" href="{{ path('cobros_cobrados_detalle_local', { 'id': cobro.localComercial.id }) }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            </div>
+        </div>
+    {% else %}
+        <h1>Detalle de pago</h1>
+        <div class="row btn-action-top">
+            <div class="col-xs-1 pull-right">
+                <a title="volver" href="{{ path('pagos_realizados_local_log') }}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-xs-3">
+            <table class="table table-show">
+                <tbody>
+                    <tr>
+                        <th>Fecha</th>
+                        <td>{{ cobro.fecha|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>${{ cobro.total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+     </div>
+    <h2>Cupones</h2>
+    <table class="table table-hover records_list">
+        <thead>
+            <tr>
+                <th class="col-xs-2">Fecha</th>
+                <th class="col-xs-3">C&oacute;digo</th>
+                <th class="col-xs-2">Tipo</th>
+                <th class="col-xs-4">Titulo</th>
+                <th class="col-xs-1">Importe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cupon in cuponesCobrados %}
+                <tr>
+                    <td>{{ cupon.fecha|date('d/m/Y') }}</td>
+                    <td>{{ cupon.codigo }}</td>
+                    <td><image class="img-tipo" src="{{ asset('resources/images/iconos/tipo_promocion/') ~ 'ic_' ~ cupon.programacion.promocion.tipoPromocion.nombre ~ '.png' }}"></td>
+                    <td>{{ cupon.programacion.promocion.titulo }}</td>
+                    <td>${{ cupon.precioCobroLocal }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

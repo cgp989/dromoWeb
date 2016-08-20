@@ -211,8 +211,7 @@ class ProgramacionController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
-                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
+            if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
                 if ($entity->getCantidad() < 0) {
                     $entity->setCantidad($entity->getCantidad() * -1);
                 }
@@ -223,12 +222,9 @@ class ProgramacionController extends Controller {
                 else
                     $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
                 return $this->redirect($this->generateUrl('promocion'));
-//            return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
+//              return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
             }else {
-                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
-                }
-            } else {
-                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
+                $editForm->addError(new FormError('Fecha fin mayor a fecha inicio'));
             }
         }
 
@@ -280,9 +276,11 @@ class ProgramacionController extends Controller {
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => ' ',
                             'attr' =>
-                            ['class' => 'glyphicon glyphicon-trash',
-                                'onclick' => 'return confirm("¿Esta seguro de eliminar esta programación?")',
-                                'title' => 'eliminar']
+                            ['class' => 'glyphicon glyphicon-trash swa-confirm',
+                                'title' => 'eliminar',
+                                'swa-title' => 'Está seguro de eliminar esta programación?',
+                                'swa-text' => '',
+                                'swa-btn-txt' => 'Eliminar']
                         ))
                         ->getForm()
         ;

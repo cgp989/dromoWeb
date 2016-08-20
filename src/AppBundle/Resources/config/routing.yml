@@ -85,6 +85,10 @@ app_cobros:
 app_localcomercial_log:
     resource: "@AppBundle/Resources/config/routing/localcomercial-logueado.yml"
     prefix:   local/show
+    
+app_cobros_local:
+    resource: "@AppBundle/Resources/config/routing/pagos_local.yml"
+    prefix: local/pagos
 
 
 

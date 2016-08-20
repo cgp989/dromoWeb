@@ -20,6 +20,9 @@
             <script src="{{ asset('resources/js/highcharts.js')}}"></script>
             <script src="{{ asset('resources/js/exporting.js')}}"></script>           
             
+            <script src="{{ asset('resources/js/sweetalert/sweetalert.min.js')}}"></script>
+            <link rel="stylesheet" type="text/css" href="{{ asset('resources/js/sweetalert/sweetalert.css') }}">
+            
         {% endblock %}
     </head>
     <body class="{% if not is_granted('IS_AUTHENTICATED_FULLY') %} body-deslog {% endif %}">
@@ -100,6 +103,12 @@
                             <li class="{% if 'ventas' in name_route %}active{% endif %}">
                                 <a href="{{ path('ventas') }}">Historial ventas</a>
                             </li>
+                            <li class="{% if 'pendientes' in name_route %}active{% endif %}">
+                                <a href="{{ path('pagos_pendientes_local_log') }}">Pagos pendientes</a>
+                            </li>
+                            <li class="{% if 'realizados' in name_route %}active{% endif %}">
+                                <a href="{{ path('pagos_realizados_local_log') }}">Pagos realizados</a>
+                            </li>
                             <li class="{% if 'sucursales' in name_route %}active{% endif %}">
                                 <a href="{{ path('sucursales') }}">Sucursales</a>
                             </li>
@@ -145,3 +154,24 @@
         </div>
     </body>
 </html>
+
+<script type="text/javascript">
+    $(".swa-confirm").on("click", function(e) {
+        e.preventDefault();
+        var form = $(this).parents('form');
+        swal({
+            title: $(this).attr("swa-title"),
+            text: $(this).attr("swa-text"),
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#cc3f44",
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: $(this).attr("swa-btn-txt"),
+            closeOnConfirm: true,
+            html: true
+        }, function( confirmed ) {
+            if( confirmed )
+                form.submit();
+        });
+    });
+</script>
