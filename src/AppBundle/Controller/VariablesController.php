@@ -163,9 +163,14 @@ class VariablesController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $entity->setPorcCobroLocal($entity->getPorcCobroLocal() / 100);
-            $entity->setPorcGanancia($entity->getPorcGanancia() / 100);
-            $em->flush();
+            if ($entity->getPorcCobroLocal() > 0 && $entity->getPorcCobroLocal() < 100 &&
+                    $entity->getPorcGanancia() > 0 && $entity->getPorcGanancia()) {
+                $entity->setPorcCobroLocal($entity->getPorcCobroLocal() / 100);
+                $entity->setPorcGanancia($entity->getPorcGanancia() / 100);
+                $em->flush();
+            } else {
+                $editForm->addError(new FormError('Porcentaje debe ser entre 0 y 100!'));
+            }
 
             return $this->redirect($this->generateUrl('variables_edit', array('id' => $id)));
         }

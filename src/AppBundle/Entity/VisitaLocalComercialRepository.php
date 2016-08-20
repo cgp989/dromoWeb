@@ -12,11 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class VisitaLocalComercialRepository extends EntityRepository {
 
-    public function getVisitas() {
+    public function getVisitasLocal($desde, $hasta) {
         $visitas = $this->getEntityManager()
-                ->createQuery('SELECT l.id, l.nombre, count(v.id) as cant FROM AppBundle:VisitaLocalComercial v '
+                ->createQuery('SELECT l.nombre as titulo, count(v.id) as cant FROM AppBundle:VisitaLocalComercial v '
                         . ' JOIN v.localComercial l '
+                        . ' WHERE v.fecha > :desde and v.fecha < :hasta '
                         . ' GROUP BY l.id, l.nombre ')
+                ->setParameters(array(
+                    'desde' => $desde,
+                    'hasta' => $hasta))
                 ->getResult();
         return $visitas;
     }
@@ -24,8 +28,68 @@ class VisitaLocalComercialRepository extends EntityRepository {
     //Cantidad usuarios por sexo
     public function getUsuariosPorSexo() {
         $visitas = $this->getEntityManager()
-                ->createQuery('SELECT u.sexo as sexo, count(u.id) as cant FROM AppBundle:UsuarioMovil u '
+                ->createQuery('SELECT u.sexo as titulo, count(u.id) as cant FROM AppBundle:UsuarioMovil u '
                         . ' GROUP BY u.sexo ')
+                ->getResult();
+        return $visitas;
+    }
+
+    //Cantidad de visitas a cada premio
+    public function getVisitasPremios($desde, $hasta) {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT t.descripcion + - + r.titulo+ - + l.nombre as titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
+                        . ' JOIN v.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l '
+                        . ' JOIN r.tipoPromocion t'
+                        . ' WHERE r.puntajePremio <> 0 and v.fecha > :desde and v.fecha < :hasta '
+                        . ' GROUP BY r.titulo ')
+                ->setParameters(array(
+                    'desde' => $desde,
+                    'hasta' => $hasta))
+                ->getResult();
+        return $visitas;
+    }
+
+    //Cantidad de cupones canjeados por promocion
+    public function getCuponesPremio($desde, $hasta) {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT t.descripcion + - + r.titulo+ - + l.nombre as titulo, count(c.id) as cant FROM AppBundle:Cupon c '
+                        . ' JOIN c.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l'
+                        . ' JOIN r.tipoPromocion t'
+                        . ' WHERE r.puntajePremio <> 0 and c.fecha > :desde and c.fecha < :hasta '
+                        . ' GROUP BY r.titulo ')
+                ->setParameters(array(
+                    'desde' => $desde,
+                    'hasta' => $hasta))
+                ->getResult();
+        return $visitas;
+    }
+
+    //Cantidad de visitas a cada premio por sexo
+    public function getVisitasPorSexo() {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT u.sexo as sexo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
+                        . ' JOIN v.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l'
+                        . ' JOIN v.usuarioMovil u'
+                        . ' WHERE r.puntajePremio <> 0 '
+                        . ' GROUP BY u.sexo ')
+                ->getResult();
+        return $visitas;
+    }
+
+    //Cantidad de visitas a cada premio por edad
+    public function getVisitasPorEdad() {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT DATE_DIFF(CURRENT_DATE(), v.fecha)/1825 as edad, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
+                        . ' JOIN v.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' WHERE r.puntajePremio <> 0 '
+                        . ' GROUP BY DATE_DIFF(CURRENT_DATE(), v.fecha)/1825 ')//1825=365*5
                 ->getResult();
         return $visitas;
     }

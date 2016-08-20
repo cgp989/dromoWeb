@@ -28,3 +28,8 @@ visitalc_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:VisitaLocalComercial:delete" }
     methods:  [POST, DELETE]
+    
+visitalc_ajax_grafico:
+    path:     /ajax_grafico
+    defaults: { _controller: "AppBundle:VisitaLocalComercial:ajax" }
+    condition: "request.isXmlHttpRequest()"

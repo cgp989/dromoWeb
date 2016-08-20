@@ -1,21 +1,60 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    <link href="{{ asset('resources/css/calendario.css')}}" type="text/css" rel="stylesheet"> 
+    <script src="{{ asset('resources/js/calendar.js')}}" type="text/javascript"></script> 
+    <script src="{{ asset('resources/js/calendar-es.js')}}" type="text/javascript"></script> 
+    <script src="{{ asset('resources/js/calendar-setup.js')}}" type="text/javascript"></script>  
     <h1>Res&uacute;menes</h1>
+    <form>
+        <input type="button" value="Usuarios Registrados por sexo" onClick="consulta(1)" class="btn btn-prymary btn"/>
+        <input type="button" value="Visitas a Locales" onClick="consulta(2)" class="btn btn-prymary btn"/>
+        <input type="button" value="Visitas a Premios" onClick="consulta(3)" class="btn btn-prymary btn"/>
+        <input type="button" value="Premios Canjeados" onClick="consulta(4)" class="btn btn-prymary btn"/>
+        <input type="button" value="Cobros por Local" onClick="consulta(5)" class="btn btn-prymary btn"/>
+        <TABLE>
+            <TR>
+                <TD><label>Fecha Desde:&nbsp;</label>
+                    <input class="form-control" type="text"  name="ingreso1" id="ingreso1" value="01-01-2016" readonly="readonly" />
+                    <img src="{{ asset('resources/images/iconos/') ~ 'calendario.png' }}" width="16" height="16" border="0" title="Fecha Inicial" style="cursor: pointer" id="lanzador"> 
+                    <!-- script que define y configura el calendario--> 
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField: "ingreso1", // id del campo de texto 
+                            ifFormat: "%d-%m-%Y", // formato de la fecha que se escriba en el campo de texto 
+                            button: "lanzador" // el id del botón que lanzará el calendario 
+                        });</script>
+                </td>
+                <td>
+
+                    <label>Fecha Hasta:&nbsp;</label>
+                    <input class="form-control" type="text" name="ingreso2" id="ingreso2" value="31-12-2016" readonly="readonly" />
+                    <img src="{{ asset('resources/images/iconos/') ~ 'calendario.png' }}" width="16" height="16" style="cursor: pointer" border="0" title="Fecha Final" id="lanzador1"> 
+                    <!-- script que define y configura el calendario-->                    
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField: "ingreso2", // id del campo de texto 
+                            ifFormat: "%d-%m-%Y", // formato de la fecha que se escriba en el campo de texto 
+                            button: "lanzador1" // el id del botón que lanzará el calendario 
+                        });</script>
+                </td>
+            </TR>
+        </table>          
+
+    </form>
 
     <div id="graficaCircular" style="width: 100%; height: 500px; margin: 0 auto">
     </div>
-    <div id="graficaCircularUsuario" style="width: 100%; height: 500px; margin: 0 auto">
-    </div>
+
     <script type="text/javascript">
-        var chart;
-        $(document).ready(function () {
+        function cargaGrafico(dato, nombre) {
+            var chart;
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'graficaCircular'
                 },
                 title: {
-                    text: 'Porcentaje de Visitas a Locales'
+                    text: 'Resumen'
                 },
                 subtitle: {
                     text: 'Dromo'
@@ -47,67 +86,32 @@
                 series: [{
                         type: 'pie',
                         name: 'Browser share',
-                        data: [{% for entity in entities %}
-                            ['{{ entity.nombre }} - {{ entity.cant }}',{{ ((entity.cant/suma)*100) |round(2, 'floor') }} , ],
-        {% endfor %} 
-                        ]
+                        data: dato
                     }]
             });
-        });
-        </script>
+        }
+    </script>
 
-        <script type="text/javascript">
-            var chart;
-            $(document).ready(function () {
-                chart = new Highcharts.Chart({
-                    chart: {
-                        renderTo: 'graficaCircularUsuario'
-                    },
-                    title: {
-                        text: 'Usuarios por sexo registrados'
-                    },
-                    subtitle: {
-                        text: 'Dromo'
-                    },
-                    plotArea: {
-                        shadow: null,
-                        borderWidth: null,
-                        backgroundColor: null
-                    },
-                    tooltip: {
-                        formatter: function () {
-                            return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
+    <script>
+        function consulta(tipo) {
+        {# var data = $provincia.serialize();#}
+                var data = "tipo=" + tipo + "&desde=" + $("#ingreso1").val() + "&hasta=" + $("#ingreso2").val();
+                $.ajax({
+                    url: "{{ path('visitalc_ajax_grafico') }}",
+                    type: 'post',
+                    data: data,
+                    success: function (html) {
+        {#console.log(html.entities[0].titulo);#}
+                        var data = new Array();
+                        for (var i = 0; i < html.entities.length; i++) {
+                            var numero = Math.trunc((html.entities[i].cant / html.suma)*100);
+                           
+                            data.push(new Array(html.entities[i].titulo, numero));
                         }
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: true,
-                                color: '#000000',
-                                connectorColor: '#000000',
-                                formatter: function () {
-                                    return '<b>' + this.point.name + '</b>: ' + this.y + ' %';
-                                }
-                            }
-                        }
-                    },
-                    series: [{
-                            type: 'pie',
-                            name: 'Browser share',
-                            data: [{% for entity in visitasSexo %}
-                                {% if entity.sexo == 'm' %}
-     ['Masculino - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ], 
-{% elseif entity.sexo == 'f' %}
-    ['Femenino - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ],
-{% else %}
-    ['Sin Datos - {{ entity.cant }}',{{ ((entity.cant/sumaSexo)*100) |round(2, 'floor') }} , ],
-{% endif %}
-            {% endfor %} 
-                            ]
-                        }]
+        {#                        console.log(data);#}
+                        cargaGrafico(data, 'Cambio');
+                    }
                 });
-            });
-            </script>
-            {% endblock %}
+            }
+    </script>
+{% endblock %}

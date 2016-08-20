@@ -39,25 +39,29 @@ class LocalComercialController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity->setVersion(1);
-            $entity->setValoracion(0);
-            $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
-            //se crea el usuario del local
-            $userEntity = $entity->getUsuario();
-            $userManipulator = $this->get('fos_user.util.user_manipulator');
-            $usuario = $em->getRepository('AppBundle:Usuario')->findOneByusername($userEntity->getUsername());
-            if ($usuario == null) {
-                $userNew = $userManipulator->create($userEntity->getUsername(), $userEntity->getPlainPassword(), $userEntity->getEmail(), true, false);
-                $userManipulator->addRole($userEntity->getUsername(), 'ROLE_LOCAL');
-                $entity->setUsuario($userNew);
+            if ($entity->getPorcentajeCobro() > 0 && $entity->getPorcentajeCobro() < 100) {
+                $em = $this->getDoctrine()->getManager();
+                $entity->setVersion(1);
+                $entity->setValoracion(0);
+                $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
+                //se crea el usuario del local
+                $userEntity = $entity->getUsuario();
+                $userManipulator = $this->get('fos_user.util.user_manipulator');
+                $usuario = $em->getRepository('AppBundle:Usuario')->findOneByusername($userEntity->getUsername());
+                if ($usuario == null) {
+                    $userNew = $userManipulator->create($userEntity->getUsername(), $userEntity->getPlainPassword(), $userEntity->getEmail(), true, false);
+                    $userManipulator->addRole($userEntity->getUsername(), 'ROLE_LOCAL');
+                    $entity->setUsuario($userNew);
 
-                $em->persist($entity);
-                $em->flush();
+                    $em->persist($entity);
+                    $em->flush();
 
-                return $this->redirect($this->generateUrl('sucursal_new_local', array('idLocal' => $entity->getId())));
+                    return $this->redirect($this->generateUrl('sucursal_new_local', array('idLocal' => $entity->getId())));
+                } else {
+                    $form->addError(new FormError('Usuario ya existe!'));
+                }
             } else {
-                $form->addError(new FormError('Usuario ya existe!'));
+                $form->addError(new FormError('Porcentaje de cobro debe ser entre 0 y 100!'));
             }
         }
 //        
@@ -95,7 +99,7 @@ class LocalComercialController extends Controller {
         $repositoryVariable = $em->getRepository('AppBundle:Variables');
         $ArrayVariables = $repositoryVariable->findAll();
         $porcentajeCobro = $ArrayVariables[0]->getPorcCobroLocal();
-        $entity->setPorcentajeCobro($porcentajeCobro*100);
+        $entity->setPorcentajeCobro($porcentajeCobro * 100);
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:LocalComercial:new.html.twig', array(
@@ -190,18 +194,22 @@ class LocalComercialController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $version = $entity->getVersion();
-            $entity->setVersion($version + 1);
-            $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
-            $em->flush();
+            if ($entity->getPorcentajeCobro() > 0 && $entity->getPorcentajeCobro() < 100) {
+                $version = $entity->getVersion();
+                $entity->setVersion($version + 1);
+                $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
+                $em->flush();
 
-            $urlEdit = $this->generateUrl('localcomercial_show', array('id' => $id));
-            //Si el usuario es un local se cambia la url de actualizacion
-            if ($this->getUser()->hasRole('ROLE_LOCAL')) {
-                $urlEdit = $this->generateUrl('localcomercial_log_edit');
+                $urlEdit = $this->generateUrl('localcomercial_show', array('id' => $id));
+                //Si el usuario es un local se cambia la url de actualizacion
+                if ($this->getUser()->hasRole('ROLE_LOCAL')) {
+                    $urlEdit = $this->generateUrl('localcomercial_log_edit');
+                }
+
+                return $this->redirect($urlEdit);
+            } else {
+                $editForm->addError(new FormError('Porcentaje de cobro debe ser entre 0 y 100!'));
             }
-
-            return $this->redirect($urlEdit);
         }
 
         return $this->render('AppBundle:LocalComercial:edit.html.twig', array(

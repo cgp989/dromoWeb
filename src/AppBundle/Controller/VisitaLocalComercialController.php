@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\VisitaLocalComercial;
 use AppBundle\Form\VisitaLocalComercialType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * VisitaLocalComercial controller.
@@ -18,21 +19,32 @@ class VisitaLocalComercialController extends Controller {
      *
      */
     public function indexAction() {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entities = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitas();
+//        $suma = 0;
+//        foreach ($entities as $e) {
+//            $suma+= $e['cant'];
+//        }
+//        $usuariosSexo = $em->getRepository('AppBundle:VisitaLocalComercial')->getUsuariosPorSexo();
+//        $sumaSexo = 0;
+//        foreach ($usuariosSexo as $u) {
+//            $sumaSexo+= $u['cant'];
+//        }
+//        return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
+//                    'entities' => $entities, 'suma' => $suma, 'visitasSexo' => $usuariosSexo,
+//                    'sumaSexo' => $sumaSexo
+//        ));
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitas();
+        $entities = $em->getRepository('AppBundle:VisitaLocalComercial')->getUsuariosPorSexo();
         $suma = 0;
         foreach ($entities as $e) {
             $suma+= $e['cant'];
         }
-        $usuariosSexo = $em->getRepository('AppBundle:VisitaLocalComercial')->getUsuariosPorSexo();
-        $sumaSexo = 0;
-        foreach ($usuariosSexo as $u) {
-            $sumaSexo+= $u['cant'];
-        }
+
         return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
-                    'entities' => $entities, 'suma' => $suma, 'visitasSexo' => $usuariosSexo,
-            'sumaSexo'=> $sumaSexo
+                    'entities' => $entities, 'suma' => $suma,
         ));
     }
 
@@ -220,6 +232,52 @@ class VisitaLocalComercialController extends Controller {
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm()
         ;
+    }
+
+    public function ajaxAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+//        if($request->isXmlHttpRequest()){
+//            $tipo=$request->request->get('tipo');
+//            print_r($tipo);
+//        }
+
+        $tipo = $request->request->get('tipo');
+        $desde = $request->request->get('desde');
+        $hasta = $request->request->get('hasta');
+        //echo $tipo;exit;
+        $entity = null;
+        if ($tipo == 1) {
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getUsuariosPorSexo();
+        } else if ($tipo == 2) {
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitasLocal($desde, $hasta);
+        } else if ($tipo == 3) {
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitasPremios($desde, $hasta);
+        } else if ($tipo == 4) {
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getCuponesPremios($desde, $hasta);
+        } else if ($tipo == 5) {
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getCuponesPremios($desde, $hasta);
+        }
+        $total = 0;
+        if ($entity != null) {
+            foreach ($entity as $u) {
+                $total+= $u['cant'];
+            }
+        } else {
+            return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
+                        'tipo' => $tipo,
+                        'suma' => $total,
+            ));
+        }
+//        return $this->render('AppBundle:VisitaLocalComercial:index.html.twig', array(
+//                    'entities' => $entity,
+//                    'suma' => $total,
+//        ));
+        $response = new JsonResponse();
+        $response->setData(array(
+            'entities' => $entity,
+            'suma' => $total,
+        ));
+        return $response;
     }
 
 }
