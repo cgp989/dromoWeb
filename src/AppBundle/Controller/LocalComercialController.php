@@ -162,11 +162,13 @@ class LocalComercialController extends Controller {
     private function createEditForm(LocalComercial $entity) {
         $nameRouteUdpate = 'localcomercial_update';
         //Si el usuario es un local se cambia la url de actualizacion
+        $isAdmin = true;
         if ($this->getUser()->hasRole('ROLE_LOCAL')) {
             $nameRouteUdpate = 'localcomercial_log_update';
+            $isAdmin = false;
         }
 
-        $form = $this->createForm(new LocalComercialType(array('edit' => true)), $entity, array(
+        $form = $this->createForm(new LocalComercialType(array('edit' => true,'admin'=>$isAdmin)), $entity, array(
             'action' => $this->generateUrl($nameRouteUdpate, array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
