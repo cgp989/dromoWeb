@@ -77,14 +77,18 @@ class UsuariosRestController extends Controller {
                 $usuarioMovil->setUsuario($usuario);
             }
             if ($apellido != null && $apellido != "null" && $apellido != "") {
+                $apellidoDecode = urldecode($apellido);
+                $apellido = str_replace('€', '.', $apellidoDecode);
                 $usuarioMovil->setApellido($apellido);
             }
             if ($nombre != null && $nombre != "null" && $nombre != "") {
+                $nombreDecode = urldecode($nombre);
+                $nombre = str_replace('€', '.', $nombreDecode);
                 $usuarioMovil->setNombre($nombre);
             }
             if ($sexo != "f" || $sexo != "m") {
                 $usuarioMovil->setSexo($sexo);
-            }else{
+            } else {
                 $usuarioMovil->setSexo("o");
             }
             if ($fecha != null && $fecha != "null" && $fecha != "") {
@@ -108,7 +112,11 @@ class UsuariosRestController extends Controller {
             //setear datos a um
             $usuarioMovil->setUsuario($usuario);
             $usuarioMovil->setPassword($password);
+            $apellidoDecode = urldecode($apellido);
+            $apellido = str_replace('€', '.', $apellidoDecode);
             $usuarioMovil->setApellido($apellido);
+            $nombreDecode = urldecode($nombre);
+            $nombre = str_replace('€', '.', $nombreDecode);
             $usuarioMovil->setNombre($nombre);
             $usuarioMovil->setSexo($sexo);
             if ($fecha == "") {
@@ -153,7 +161,7 @@ class UsuariosRestController extends Controller {
 //            $usuarioMovil->setNombre("XX");
 //            $usuarioMovil->setApellido("XX");
             $comentarios = $usuarioMovil->getComentarios();
-            
+
             /* @var $comentario Entity\Comentario */
 //            foreach ($comentarios as $comentario) {
 //                $em->remove($comentario);
