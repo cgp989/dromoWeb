@@ -152,6 +152,13 @@ class Programacion {
      * @ORM\OneToMany(targetEntity="VisitaPromocion", mappedBy="programacion")
      */
     private $visitasPromocion;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cantidadTotal", type="integer", nullable=true)
+     */
+    private $cantidadTotal;
 
     public function __construct() {
         $this->fechaInicio = new \DateTime('now');
@@ -630,6 +637,27 @@ class Programacion {
      */
     public function getCupone() {
         return $this->cupones;
+    }
+    
+    /**
+     * Set cantidadTotal
+     *
+     * @param integer $cantidadTotal
+     * @return Programacion
+     */
+    public function setCantidadTotal($cantidadTotal) {
+        $this->cantidadTotal = $cantidadTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidadTotal
+     *
+     * @return integer 
+     */
+    public function getCantidadTotal() {
+        return $this->cantidadTotal;
     }
 
 }
