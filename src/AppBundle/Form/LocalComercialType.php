@@ -32,18 +32,20 @@ class LocalComercialType extends AbstractType {
                     'attr' => array(
                         'maxlength' => 13
                     )
-                ))
-                 ->add('porcentajeCobro')
-        ;
+        ));
+        if ($this->opciones['admin']) {
+            $builder->add('porcentajeCobro');
+        }
+
 
         if (!isset($this->opciones['edit'])) {
             $builder->add('usuario', new RegistrationFormType('AppBundle\Entity\Usuario'));
-        }else{
+        } else {
             $builder->add('imageFile', 'vich_image', array(
-                    'required'      => false,
-                    'allow_delete'  => false, // not mandatory, default is true
-                    'download_link' => false, // not mandatory, default is true
-                    'label' => 'Imagen'
+                'required' => false,
+                'allow_delete' => false, // not mandatory, default is true
+                'download_link' => false, // not mandatory, default is true
+                'label' => 'Imagen'
             ));
         }
     }

@@ -26,7 +26,7 @@
                 <td>{{ entity.estadoProgramacionEnDia.nombre }}</td>
                 <td>
                     <a href="{{ path('programacion_show', { 'id': entity.programacion.id }) }}"><span class="glyphicon glyphicon-eye-open"></a>
-                   {% if entity.programacion.promocion.tipoPromocion != 'premio' %}
+                   {% if entity.programacion.promocion.tipoPromocion.nombre != 'premio' %}
                        <a href="{{ path('programacion_edit', { 'id': entity.programacion.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                        {% endif %}
                 </td>
