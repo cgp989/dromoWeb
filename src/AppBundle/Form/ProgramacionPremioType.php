@@ -24,7 +24,9 @@ class ProgramacionPremioType extends AbstractType {
         $builder
                 ->add('fechaInicio')
                 ->add('fechaFin')
-                ->add('horaInicio')
+                ->add('horaInicio', 'time', array(
+                    'minutes' => array(0, 30)
+                ))
                 ->add('duracion', 'choice', array(
                     'choices' => array(
                         '1' => '0:30',
@@ -78,7 +80,9 @@ class ProgramacionPremioType extends AbstractType {
                     ),
                     'label' => 'Duración'
                 ))
-                ->add('cantidad')
+                ->add('cantidad', null, array(
+                    'label' => 'Cantidad diaria'
+                ))
                 ->add('esLunes', null, array(
                     'label' => 'Lunes',
                     'required' => false
@@ -123,25 +127,20 @@ class ProgramacionPremioType extends AbstractType {
                     'label' => 'Observaciones',
                     'required' => false
                 ))
-        ;
+                ->add('promocion', null, array('attr'=>array('style'=>'display:none;')));
         if (isset($this->opciones['edit']) && $this->opciones['edit']) {
             $builder
-                    ->add('promocion', 'entity', array(
-                        'class' => 'AppBundle:Promocion',
-                        'choices' => $repoPromocion->getPremios(),
-                        'label' => 'Premio',
-                        'empty_value' => '',
-                        'attr' => array('readonly' => true))
-            );
+                ->add('cantidadTotal', null, array(
+                    'label' => 'Cantidad total',
+                    'required' => true,
+                    'disabled' => true
+                ));
         } else {
             $builder
-                    ->add('promocion', 'entity', array(
-                        'class' => 'AppBundle:Promocion',
-                        'choices' => $repoPromocion->getPremios(),
-                        'label' => 'Premio',
-                        'empty_value' => '',
-                        'attr' => array('readonly' => true))
-            );
+                ->add('cantidadTotal', null, array(
+                    'label' => 'Cantidad total',
+                    'required' => true
+                ));
         }
     }
 

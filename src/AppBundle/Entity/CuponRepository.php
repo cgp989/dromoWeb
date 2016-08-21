@@ -66,6 +66,12 @@ class CuponRepository extends EntityRepository
                 $usuarioMovil->setPuntos($usuarioMovil->getPuntos()+$cupon->getPuntaje());
                 $this->getEntityManager()->persist($usuarioMovil);
             }
+            
+            if($cupon->getTipoCupon()->getNombre() == 'premio'){
+                $progPremio = $cupon->getProgramacion();
+                $repoProgramacion = $this->getEntityManager()->getRepository('AppBundle:Programacion');
+                $repoProgramacion->descontarTotalPremio($progPremio);
+            }
             $this->getEntityManager()->flush();
             return array('exito' => true, 'cupon' => $cupon);
         }else{

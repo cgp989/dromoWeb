@@ -171,5 +171,21 @@ class ProgramacionRepository extends EntityRepository {
             return false;
         }
     }
-
+       
+    function descontarTotalPremio(Programacion $progPremio){
+        $em = $this->getEntityManager();
+        $progPremio->setCantidadTotal($progPremio->getCantidadTotal()-1);
+        
+        if($progPremio->getCantidadTotal() < $progPremio->getCantidad()){
+            $progPremio->setCantidad($progPremio->getCantidadTotal());
+        }
+        
+        if($progPremio->getCantidadTotal() == 0){
+            $estadoEliminada = $em->getRepository('AppBundle:EstadoProgramacion')->findByNombre('eliminada');
+            $progPremio->setEstadoProgramacion($estadoEliminada);
+        }
+        
+        $em->persist($progPremio);
+        $em->flush();
+    }
 }

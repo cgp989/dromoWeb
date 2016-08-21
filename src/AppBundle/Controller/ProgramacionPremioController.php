@@ -52,7 +52,10 @@ class ProgramacionPremioController extends Controller {
         $entity = new Programacion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
+        
+        if($entity->getCantidad() > $entity->getCantidadTotal()){
+            $form->addError(new FormError('Cantidad total debe ser mayor o igual a cantidad diaria.'));
+        }
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
              if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
@@ -184,7 +187,7 @@ class ProgramacionPremioController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Programacion $entity) {
-        $form = $this->createForm(new ProgramacionPremioType(), $entity, array(
+        $form = $this->createForm(new ProgramacionPremioType(array('edit' => true)), $entity, array(
             'action' => $this->generateUrl('programacionPremio_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -210,10 +213,11 @@ class ProgramacionPremioController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+        if($entity->getCantidad() > $entity->getCantidadTotal()){
+            $editForm->addError(new FormError('Cantidad total debe ser mayor o igual a cantidad diaria.'));
+        }
         if ($editForm->isValid()) {
-            if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
-                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
+            if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
                 if ($entity->getCantidad() < 0) {
                     $entity->setCantidad($entity->getCantidad() * -1);
                 }
@@ -226,10 +230,7 @@ class ProgramacionPremioController extends Controller {
 
                 return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $id)));
             }else {
-                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
-                }
-            } else {
-                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
+                $editForm->addError(new FormError('Fecha fin mayor a fecha inicio'));
             }
         }
 

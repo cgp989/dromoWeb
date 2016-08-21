@@ -221,8 +221,8 @@ class ProgramacionController extends Controller {
                     $em->getRepository('AppBundle:ProgramacionEnDia')->verificarProgramacion($entity);
                 else
                     $em->getRepository('AppBundle:ProgramacionEnDia')->deleteProgramacion($entity);
-                return $this->redirect($this->generateUrl('promocion'));
-//              return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
+                    return $this->redirect($this->generateUrl('programacion_promocion', array('idPromocion'=>$entity->getPromocion()->getId())));
+    //              return $this->redirect($this->generateUrl('programacion_edit', array('id' => $id)));
             }else {
                 $editForm->addError(new FormError('Fecha fin mayor a fecha inicio'));
             }
