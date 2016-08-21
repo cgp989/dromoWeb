@@ -41,8 +41,8 @@ class PremioController extends Controller {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setEstaModerada(0);
-            $tipo = $em->getRepository('AppBundle:TipoPromocion')->findoneByNombre('Premio');
-            $entity - setTipoPromocion($tipoPromocion);
+            $tipoPromocion = $em->getRepository('AppBundle:TipoPromocion')->findoneByNombre('Premio');
+            $entity->setTipoPromocion($tipoPromocion);
             $em->persist($entity);
             $em->flush();
 
