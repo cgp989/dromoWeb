@@ -253,7 +253,7 @@ class VisitaLocalComercialController extends Controller {
         } else if ($tipo == 3) {
             $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getVisitasPremios($desde, $hasta);
         } else if ($tipo == 4) {
-            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getCuponesPremios($desde, $hasta);
+            $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getCuponesPremio($desde, $hasta);
         } else if ($tipo == 5) {
             $entity = $em->getRepository('AppBundle:VisitaLocalComercial')->getCobrosLocal($desde, $hasta);
         }

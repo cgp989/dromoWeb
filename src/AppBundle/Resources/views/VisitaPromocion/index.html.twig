@@ -93,13 +93,16 @@
 
     <script>
         function consulta(tipo) {
-                var data = "tipo=" + tipo + "&desde=" + $("#ingreso1").val() + "&hasta=" + $("#ingreso2").val();
-                $.ajax({
-                    url: "{{ path('visitaprom_ajax_grafico') }}",
-                    type: 'post',
-                    data: data,
-                    success: function (html) {
-                        var data = new Array();
+            var data = "tipo=" + tipo + "&desde=" + $("#ingreso1").val() + "&hasta=" + $("#ingreso2").val();
+            $.ajax({
+                url: "{{ path('visitaprom_ajax_grafico') }}",
+                type: 'post',
+                data: data,
+                success: function (html) {
+                    var data = new Array();
+                    if (html.entities === undefined) {
+                        data.push(new Array('Sin Datos', 100));
+                    } else {
                         for (var i = 0; i < html.entities.length; i++) {
                             var numero = Math.trunc((html.entities[i].cant / html.suma) * 100);
                             if (html.entities[i].titulo === 'f') {
@@ -110,14 +113,15 @@
                                 data.push(new Array(html.entities[i].titulo, numero));
                             }
                         }
-                        cargaGrafico(data, 'Cambio');
                     }
-                });
-            }
+                    cargaGrafico(data, 'Cambio');
+                }
+            });
+        }
 
-            $('.boton-resumen').click(function () {
-                $('.boton-resumen').removeClass('boton-resumen-selec');
-                $(this).addClass('boton-resumen-selec');
-            })
+        $('.boton-resumen').click(function () {
+            $('.boton-resumen').removeClass('boton-resumen-selec');
+            $(this).addClass('boton-resumen-selec');
+        })
     </script>
 {% endblock %}

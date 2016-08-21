@@ -41,7 +41,7 @@
                 </td>
             </TR>
         </table>  
-        
+
     </form>
 
     <div id="graficaCircular" style="width: 100%; height: 500px; margin: 0 auto">
@@ -95,33 +95,36 @@
     </script>
     <script>
         function consulta(tipo) {
-                opcion = tipo;
-                var data = "tipo=" + tipo + "&desde=" + $("#ingreso1").val() + "&hasta=" + $("#ingreso2").val();
-                $.ajax({
-                    url: "{{ path('visitalc_ajax_grafico') }}",
-                    type: 'post',
-                    data: data,
-                    success: function (html) {
-                        var data = new Array();
+            opcion = tipo;
+            var data = "tipo=" + tipo + "&desde=" + $("#ingreso1").val() + "&hasta=" + $("#ingreso2").val();
+            $.ajax({
+                url: "{{ path('visitalc_ajax_grafico') }}",
+                type: 'post',
+                data: data,
+                success: function (html) {
+                    var data = new Array();
+                    if (html.entities === undefined) {
+                        data.push(new Array('Sin Datos', 100));
+                    } else {
                         for (var i = 0; i < html.entities.length; i++) {
                             var numero = Math.trunc((html.entities[i].cant / html.suma) * 100);
-                            if(html.entities[i].titulo==='f'){
+                            if (html.entities[i].titulo === 'f') {
                                 data.push(new Array('Femenino', numero));
-                            }else if(html.entities[i].titulo==='m'){
+                            } else if (html.entities[i].titulo === 'm') {
                                 data.push(new Array('Masculino', numero));
-                            }else{
+                            } else {
                                 data.push(new Array(html.entities[i].titulo, numero));
                             }
-                            
                         }
-                        cargaGrafico(data, 'Cambio');
                     }
-                });
-            }
+                    cargaGrafico(data, 'Cambio');
+                }
+            });
+        }
 
-            $('.boton-resumen').click(function () {
-                $('.boton-resumen').removeClass('boton-resumen-selec');
-                $(this).addClass('boton-resumen-selec');
-            })
+        $('.boton-resumen').click(function () {
+            $('.boton-resumen').removeClass('boton-resumen-selec');
+            $(this).addClass('boton-resumen-selec');
+        })
     </script>
 {% endblock %}
