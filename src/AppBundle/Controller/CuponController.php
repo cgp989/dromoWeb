@@ -96,7 +96,7 @@ class CuponController extends Controller {
             ->add('canjear', 'submit', 
                     array('label' => 'Canjear',
                         'attr' => 
-                            ['class' => 'glyphicon glyphicon-trash swa-confirm',
+                            ['class' => 'btn btn-primary swa-confirm',
                                 'title' => 'eliminar',
                                 'swa-title' => 'Está seguro de canjear este cupón?',
                                 'swa-text' => '',

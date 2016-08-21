@@ -29,6 +29,11 @@ AppBundle\Entity\Programacion:
         duracion:
             - NotNull:
                 message: "Campo obligatorio"
+        cantidadTotal:
+            - Type:
+                type: integer
+                message: "El valor no es válido"
+            
     constraints:
         - Callback:
             methods:   [isValidDays]

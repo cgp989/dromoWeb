@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h2 class="sub-header">Editar programaci&oacute;n de premio</h2>
+    <h2 class="sub-header">Editar programaci&oacute;n de "{{ entity.promocion.titulo }}"</h2>
     <div class="row btn-action-top">
         <div class="col-xs-1 pull-right">{{ form(delete_form) }}</div>
         <div class="col-xs-1 pull-right">
@@ -14,10 +14,9 @@
         {{ form_start(edit_form) }}
         <div class="row error-count">{{ form_errors(edit_form) }}</div>
         <div class="row">
-            <div class="col-xs-6">
-                {{ form_row(edit_form.promocion) }}                
-            </div>
-            <div class="col-xs-3">{{ form_row(edit_form.cantidad) }}</div>
+            <div class="col-xs-2">{{ form_row(edit_form.cantidad) }}</div>
+            <div class="col-xs-2">{{ form_row(edit_form.cantidadTotal) }}</div>
+            <div class="col-xs-3 col-xs-offset-2">{{ form_row(edit_form.estadoProgramacion) }}</div>
         </div>
         <div class="row">
             <div class="col-xs-6">{{ form_row(edit_form.fechaInicio) }}</div>
@@ -46,14 +45,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-3">{{ form_row(edit_form.estadoProgramacion) }}</div>
-        </div>
-        <div class="row">
             <div class="col-xs-12">{{ form_row(edit_form.descripcion) }}</div>
         </div>
         <div class="row">
             <div class="col-xs-2 pull-right text-right">{{ form_row(edit_form.actualizar) }}</div>
         </div>
+        <div class="hidden">{{ form_row(edit_form.promocion) }} </div>
         {{ form_end(edit_form) }}
     </div>
 {% endblock %}

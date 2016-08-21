@@ -25,7 +25,9 @@ class ProgramacionType extends AbstractType
         $builder
             ->add('fechaInicio')
             ->add('fechaFin')
-            ->add('horaInicio')
+            ->add('horaInicio', 'time', array(
+                    'minutes' => array(0, 30)
+                ))
             ->add('duracion', 'choice', array(
                 'choices'  => array(
                     '1' => '0:30',
@@ -82,7 +84,8 @@ class ProgramacionType extends AbstractType
             ->add('cantidad', 'integer', array('attr' => array(
                         'min' => '1',
                         'max' => '1000',
-            )))
+            ),
+                'label' => 'Cantidad diaria'))
             ->add('esLunes', null, array(
                 'label' => 'Lunes',
                 'required' => false
