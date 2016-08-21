@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\VisitaPromocion;
 use AppBundle\Form\VisitaPromocionType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * VisitaPromocion controller.
