@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use AppBundle\Entity\VisitaPromocion;
 use AppBundle\Form\VisitaPromocionType;
 
@@ -12,43 +11,21 @@ use AppBundle\Form\VisitaPromocionType;
  * VisitaPromocion controller.
  *
  */
-class VisitaPromocionController extends Controller
-{
+class VisitaPromocionController extends Controller {
 
     /**
      * Lists all VisitaPromocion entities.
      *
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AppBundle:VisitaPromocion')->getVisitas($this->getUser()->getLocalComercial()->getId());
-        $suma = 0;
-        foreach ($entities as $e) {
-            $suma+= $e['cant'];
-        }
-        $cuponesCanjeados = $em->getRepository('AppBundle:VisitaPromocion')->getCuponesPromocion($this->getUser()->getLocalComercial()->getId());
-        $sumaCupones = 0;
-        foreach ($cuponesCanjeados as $c) {
-            $sumaCupones+= $c['cant'];
-        }
-        $visitasSexo = $em->getRepository('AppBundle:VisitaPromocion')->getVisitasPorSexo($this->getUser()->getLocalComercial()->getId());
-        $sumaSexo = 0;
-        foreach ($visitasSexo as $v) {
-            $sumaSexo+= $v['cant'];
-        }
-        return $this->render('AppBundle:VisitaPromocion:index.html.twig', array(
-            'entities' => $entities, 'suma' =>$suma, 'cuponesCanjeados' => $cuponesCanjeados,
-            'sumaCupones' => $sumaCupones, 'visitasSexo' => $visitasSexo, 'sumaSexo' => $sumaSexo
-        ));
+    public function indexAction() {
+        return $this->render('AppBundle:VisitaPromocion:index.html.twig');
     }
+
     /**
      * Creates a new VisitaPromocion entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new VisitaPromocion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -62,8 +39,8 @@ class VisitaPromocionController extends Controller
         }
 
         return $this->render('AppBundle:VisitaPromocion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -74,8 +51,7 @@ class VisitaPromocionController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(VisitaPromocion $entity)
-    {
+    private function createCreateForm(VisitaPromocion $entity) {
         $form = $this->createForm(new VisitaPromocionType(), $entity, array(
             'action' => $this->generateUrl('visitapromocion_create'),
             'method' => 'POST',
@@ -90,14 +66,13 @@ class VisitaPromocionController extends Controller
      * Displays a form to create a new VisitaPromocion entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new VisitaPromocion();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:VisitaPromocion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -105,8 +80,7 @@ class VisitaPromocionController extends Controller
      * Finds and displays a VisitaPromocion entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:VisitaPromocion')->find($id);
@@ -118,8 +92,8 @@ class VisitaPromocionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:VisitaPromocion:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -127,8 +101,7 @@ class VisitaPromocionController extends Controller
      * Displays a form to edit an existing VisitaPromocion entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:VisitaPromocion')->find($id);
@@ -141,21 +114,20 @@ class VisitaPromocionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AppBundle:VisitaPromocion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a VisitaPromocion entity.
-    *
-    * @param VisitaPromocion $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(VisitaPromocion $entity)
-    {
+     * Creates a form to edit a VisitaPromocion entity.
+     *
+     * @param VisitaPromocion $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(VisitaPromocion $entity) {
         $form = $this->createForm(new VisitaPromocionType(), $entity, array(
             'action' => $this->generateUrl('visitapromocion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -165,12 +137,12 @@ class VisitaPromocionController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing VisitaPromocion entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:VisitaPromocion')->find($id);
@@ -190,17 +162,17 @@ class VisitaPromocionController extends Controller
         }
 
         return $this->render('AppBundle:VisitaPromocion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a VisitaPromocion entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -226,13 +198,50 @@ class VisitaPromocionController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('visitapromocion_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('visitapromocion_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
+    public function ajaxAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $tipo = $request->request->get('tipo');
+        $desde = $request->request->get('desde');
+        $hasta = $request->request->get('hasta');
+        $idLocal = $this->getUser()->getLocalComercial()->getId();
+        //echo $tipo;exit;
+        $entity = null;
+        if ($tipo == 1) {
+            $entity = $em->getRepository('AppBundle:VisitaPromocion')->getVisitas($idLocal, $desde, $hasta);
+        } else if ($tipo == 2) {
+            $entity = $em->getRepository('AppBundle:VisitaPromocion')->getVisitasPorSexo($idLocal);
+        } else if ($tipo == 3) {
+            $entity = $em->getRepository('AppBundle:VisitaPromocion')->getCuponesPromocion($idLocal, $desde, $hasta);
+        } else if ($tipo == 4) {
+            $entity = $em->getRepository('AppBundle:VisitaPromocion')->getGananciaLocal($idLocal, $desde, $hasta);
+        }
+        $total = 0;
+        if ($entity != null) {
+            foreach ($entity as $u) {
+                $total+= $u['cant'];
+            }
+        } else {
+            return $this->render('AppBundle:VisitaPromocion:index.html.twig', array(
+                        'tipo' => $tipo,
+                        'suma' => $total,
+            ));
+        }
+        $response = new JsonResponse();
+        $response->setData(array(
+            'entities' => $entity,
+            'suma' => $total,
+        ));
+        return $response;
+    }
+
 }

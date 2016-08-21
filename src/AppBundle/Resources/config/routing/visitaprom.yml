@@ -28,3 +28,8 @@ visitaprom_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:VisitaPromocion:delete" }
     methods:  [POST, DELETE]
+    
+visitaprom_ajax_grafico:
+    path:     /ajax_grafico
+    defaults: { _controller: "AppBundle:VisitaPromocion:ajax" }
+    condition: "request.isXmlHttpRequest()"

@@ -13,37 +13,43 @@ use Doctrine\ORM\EntityRepository;
 class VisitaPromocionRepository extends EntityRepository {
 
     //Cantidad de visitas a cada promocion
-    public function getVisitas($idLocal) {
+    public function getVisitas($idLocal, $desde, $hasta) {
         $visitas = $this->getEntityManager()
-                ->createQuery('SELECT r.id, r.titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
+                ->createQuery('SELECT concat(t.descripcion, r.titulo) as titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
                         . ' JOIN v.programacion p '
                         . ' JOIN p.promocion r '
                         . ' JOIN r.localComercial l'
-                        . ' WHERE l.id = :idLocal '
-                        . ' GROUP BY r.id, r.titulo ')
+                        . ' JOIN r.tipoPromocion t'
+                        . ' WHERE l.id = :idLocal and v.fecha > :desde and v.fecha < :hasta '
+                        . ' GROUP BY t.descripcion, r.titulo ')
                 ->setParameters(array(
-                    'idLocal' => $idLocal
+                    'idLocal' => $idLocal,
+                    'desde' => $desde,
+                    'hasta' => $hasta,
                 ))
                 ->getResult();
         return $visitas;
     }
-    
+
     //Cantidad de cupones canjeados por promocion
-    public function getCuponesPromocion($idLocal) {
+    public function getCuponesPromocion($idLocal, $desde, $hasta) {
         $visitas = $this->getEntityManager()
-                ->createQuery('SELECT r.id, r.titulo, count(c.id) as cant FROM AppBundle:Cupon c '
+                ->createQuery('SELECT concat(t.descripcion, r.titulo) as titulo, count(c.id) as cant FROM AppBundle:Cupon c '
                         . ' JOIN c.programacion p '
                         . ' JOIN p.promocion r '
                         . ' JOIN r.localComercial l'
-                        . ' WHERE l.id = :idLocal '
-                        . ' GROUP BY r.id, r.titulo ')
+                        . ' JOIN r.tipoPromocion t'
+                        . ' WHERE l.id = :idLocal and c.fecha > :desde and c.fecha < :hasta '
+                        . ' GROUP BY t.descripcion,r.titulo ')
                 ->setParameters(array(
-                    'idLocal' => $idLocal
+                    'idLocal' => $idLocal,
+                    'desde' => $desde,
+                    'hasta' => $hasta,
                 ))
                 ->getResult();
         return $visitas;
     }
-    
+
     //Cantidad de visitas a cada promocion por sexo
     public function getVisitasPorSexo($idLocal) {
         $visitas = $this->getEntityManager()
@@ -60,4 +66,24 @@ class VisitaPromocionRepository extends EntityRepository {
                 ->getResult();
         return $visitas;
     }
+
+    //Cantidad de cupones canjeados por promocion
+    public function getGananciaLocal($idLocal, $desde, $hasta) {
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT concat(t.descripcion, r.titulo) as titulo, sum(r.precio-c.precioCobroLocal) as cant FROM AppBundle:Cupon c '
+                        . ' JOIN c.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l'
+                        . ' JOIN r.tipoPromocion t'
+                        . ' WHERE l.id = :idLocal and c.fecha > :desde and c.fecha < :hasta '
+                        . ' GROUP BY t.descripcion,r.titulo ')
+                ->setParameters(array(
+                    'idLocal' => $idLocal,
+                    'desde' => $desde,
+                    'hasta' => $hasta,
+                ))
+                ->getResult();
+        return $visitas;
+    }
+
 }
