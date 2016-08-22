@@ -135,8 +135,9 @@
                     {% endif %}
                 ">    
                     {#INICIO CODIGO PARA LOS MENSAJES FLASH CON INFORMACION QUE SE PASAN POR SESION#}
-                    {% for type, flashMessage in app.session.flashbag.all() %}
-                        <div class="alert  alert-{{ type }} fade in">
+                    {#{% for type, flashMessage in app.session.flashbag.all() %}
+                        {% if type != 'terminos_y_condiciones'%}
+                        <div class="alert  alert-success fade in">
                             <button class="close" data-dismiss="alert" type="button">×</button>
                             {% if flashMessage.title is defined %}
                                 <strong>{{ flashMessage.title }}</strong>
@@ -144,8 +145,15 @@
                             {% else %}
                                 {{ type }}
                             {% endif %}
+                        {% else %}
+                            <script type="text/javascript">
+                                $( document ).ready(function() {
+                                   mostrarTyC();
+                                });
+                            </script>
+                        {% endif %}
                         </div>
-                    {% endfor %}
+                    {% endfor %}#}
                     {# FIN CODIGO MENSAJE FLASH #}
                     {% block body %}
                     {% endblock %}
