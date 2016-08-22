@@ -14,6 +14,8 @@ class VisitaPromocionRepository extends EntityRepository {
 
     //Cantidad de visitas a cada promocion
     public function getVisitas($idLocal, $desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT concat(t.descripcion, r.titulo) as titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
                         . ' JOIN v.programacion p '
@@ -33,6 +35,8 @@ class VisitaPromocionRepository extends EntityRepository {
 
     //Cantidad de cupones canjeados por promocion
     public function getCuponesPromocion($idLocal, $desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT concat(t.descripcion, r.titulo) as titulo, count(c.id) as cant FROM AppBundle:Cupon c '
                         . ' JOIN c.programacion p '
@@ -69,6 +73,8 @@ class VisitaPromocionRepository extends EntityRepository {
 
     //Cantidad de cupones canjeados por promocion
     public function getGananciaLocal($idLocal, $desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT concat(t.descripcion, r.titulo) as titulo, sum(r.precio-c.precioCobroLocal) as cant FROM AppBundle:Cupon c '
                         . ' JOIN c.programacion p '
