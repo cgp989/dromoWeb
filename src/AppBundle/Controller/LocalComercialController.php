@@ -79,7 +79,7 @@ class LocalComercialController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(LocalComercial $entity) {
-        $form = $this->createForm(new LocalComercialType(), $entity, array(
+        $form = $this->createForm(new LocalComercialType(array('admin'=>true)), $entity, array(
             'action' => $this->generateUrl('localcomercial_create'),
             'method' => 'POST',
         ));
