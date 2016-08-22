@@ -19,7 +19,7 @@ class TotalesRepository extends EntityRepository
         $variables = $em->getRepository('AppBundle:Variables')->findAll();
         $valorPunto = $variables[0]->getValorPunto();
         
-        $totales = $em->getRepository('AppBundle:Totales')->findAll();
+        $totales = $this->findAll();
         $sumaCobroLocales = $totales[0]->getTotalCobroLocales();
         $sumaGanancia = $totales[0]->getTotalGanancia();
         $sumaParaPremios =  $totales[0]->getTotalParaPremios();
@@ -39,5 +39,11 @@ class TotalesRepository extends EntityRepository
         $totales[0]->setTotalParaPremios($sumaParaPremios);
         $em->persist($totales[0]);
         $em->flush();
+    }
+    
+    function getSaldoParaPremios(){
+        $totales = $this->findAll();
+        $saldo = $totales[0]->getTotalParaPremios()-$totales[0]->getTotalGastadoPremios();
+        return round($saldo, 2);
     }
 }
