@@ -13,9 +13,24 @@
         {{ form_start(form) }}
         <div class="row error-count">{{ form_errors(form) }}</div>
         <div class="row">
+            <div class="col-xs-5">
+                <div class="saldoPremio">
+                     Saldo disponible para premios: 
+                    <span {% if(saldoParaPemios<=0) %} class="saldoWarning" {% endif %}>
+                        ${{ saldoParaPemios }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-2">{{ form_row(form.cantidad) }}</div>
             <div class="col-xs-2">{{ form_row(form.cantidadTotal) }}</div>
-            <div class="col-xs-3 col-xs-offset-2">{{ form_row(form.estadoProgramacion) }}</div>
+            <div class="col-xs-2">
+                <span id="text-gasto" class="saldoPremio">
+                    Gasto: <span>$</span><span id="gasto">0</span>
+                </span>
+            </div>
+            <div class="col-xs-3">{{ form_row(form.estadoProgramacion) }}</div>
         </div>
         <div class="row">
             <div class="col-xs-6">{{ form_row(form.fechaInicio) }}</div>
@@ -55,4 +70,15 @@
         <div class="hidden">{{ form_row(form.promocion) }}</div>
         {{ form_end(form) }}
     </div>
+    <script type="text/javascript">
+        var valorPromo={{ valorPromocion }};
+        $('#appbundle_programacionPremio_cantidadTotal').change(function(){
+           var gasto= parseInt($(this).val()) * parseInt(valorPromo);
+           if(parseInt(gasto) >0){
+                $('#gasto').html(gasto);
+           }else{
+               $('#gasto').html(0);
+           }
+       });
+    </script>
 {% endblock %}
