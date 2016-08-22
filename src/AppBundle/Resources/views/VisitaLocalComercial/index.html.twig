@@ -49,17 +49,17 @@
 
     <script type="text/javascript">
 
-        function cargaGrafico(dato, nombre) {
+        function cargaGrafico(dato, nombre, descrip) {
             var chart;
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'graficaCircular'
                 },
                 title: {
-                    text: 'Resumen'
+                    text: nombre
                 },
                 subtitle: {
-                    text: 'Dromo'
+                    text: descrip
                 },
                 plotArea: {
                     shadow: null,
@@ -117,7 +117,25 @@
                             }
                         }
                     }
-                    cargaGrafico(data, 'Cambio');
+                    var nombre;
+                    var descrip;
+                    if (tipo === 1) {
+                        nombre = "Usuarios Registrados por sexo";
+                        descrip = "Porcentaje Usuarios Registrados en la aplicación por sexo";
+                    } else if (tipo === 2) {
+                        nombre = "Visitas a Locales";
+                        descrip = "Porcentaje de visitas al los perfiles de los Locales Comerciales";
+                    } else if (tipo === 3) {
+                        nombre = "Visitas a Premios";
+                        descrip = "Porcentaje de Visitas de los usuarios a Premios";
+                    } else if (tipo === 4) {
+                        nombre = "Premios Canjeados";
+                        descrip = "Porcentaje de Premios Canjeados por los usuarios";
+                    } else if (tipo === 5) {
+                        nombre = "Cobros por Local";
+                        descrip = "Porcentaje de Cobros por Local Comercial";
+                    }
+                    cargaGrafico(data, nombre, descrip);
                 }
             });
         }

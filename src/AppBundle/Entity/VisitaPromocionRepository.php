@@ -53,7 +53,7 @@ class VisitaPromocionRepository extends EntityRepository {
     //Cantidad de visitas a cada promocion por sexo
     public function getVisitasPorSexo($idLocal) {
         $visitas = $this->getEntityManager()
-                ->createQuery('SELECT u.sexo as sexo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
+                ->createQuery('SELECT u.sexo as titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
                         . ' JOIN v.programacion p '
                         . ' JOIN p.promocion r '
                         . ' JOIN r.localComercial l'
