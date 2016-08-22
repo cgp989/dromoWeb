@@ -188,4 +188,15 @@ class ProgramacionRepository extends EntityRepository {
         $em->persist($progPremio);
         $em->flush();
     }
+    
+    function sumTotalGastadoEnPremio(Programacion $progPremio){
+        $em = $this->getEntityManager();
+        $cantTotal = $progPremio->getCantidadTotal();
+        $gastoUnitario = $progPremio->getPromocion()->getPuntajePremioPlata($em);
+        $totalGastado = $cantTotal*$gastoUnitario;
+        $totales = $em->getRepository('AppBundle:Totales')->findAll();
+        $totales[0]->setTotalGastadoPremios($totales[0]->getTotalGastadoPremios()+$totalGastado);
+        $em->persist($totales[0]);
+        $em->flush();
+    }
 }

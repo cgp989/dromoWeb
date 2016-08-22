@@ -133,13 +133,14 @@ class ProgramacionPremioType extends AbstractType {
                 ->add('cantidadTotal', null, array(
                     'label' => 'Cantidad total',
                     'required' => true,
-                    'disabled' => true
+                    'disabled' => true,
                 ));
         } else {
             $builder
                 ->add('cantidadTotal', null, array(
                     'label' => 'Cantidad total',
-                    'required' => true
+                    'required' => true,
+                    'attr' => array('min' => '1', 'max' => '10000')
                 ));
         }
     }

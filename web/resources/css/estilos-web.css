@@ -165,3 +165,25 @@ body.body-deslog{
     background-color: #337AB7;
     color: #FFF;
 }
+
+.saldoPremio{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.saldoPremio span{
+    color: #337ab7;
+}
+
+.saldoPremio span.saldoWarning{
+    color: red;
+}
+
+select.form-control{
+    background-color: #262b2e;
+}
+
+#text-gasto{
+    display: block;
+    margin-top: 32px;
+}
