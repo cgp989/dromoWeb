@@ -187,3 +187,25 @@ select.form-control{
     display: block;
     margin-top: 32px;
 }
+
+.title-tyc{
+    color: #000;
+    font-size: 35px;
+}
+
+.content-tyc{
+    color: #000;
+    font-size: 15px;
+    overflow-y: scroll;
+    height: 200px;
+    text-align: left;
+}
+
+.content-tyc h3{
+    font-size: 18px;
+    color: #000;
+}
+
+.content-tyc p{
+    font-size: 15px;
+}

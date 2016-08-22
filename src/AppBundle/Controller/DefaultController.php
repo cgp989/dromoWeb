@@ -13,10 +13,10 @@ class DefaultController extends Controller
     {
         if(!is_null($this->getUser()) && $this->getUser()->hasRole('ROLE_LOCAL')){
             if($this->getUser()->getFirstLogin()){
-//               $user = $this->getUser();
-//               $user->setFirstLogin(false);
-//               $em = $this->getDoctrine()->getManager()->persist($user);
-//               $em = $this->getDoctrine()->getManager()->flush();
+               $user = $this->getUser();
+               $user->setFirstLogin(false);
+               $em = $this->getDoctrine()->getManager()->persist($user);
+               $em = $this->getDoctrine()->getManager()->flush();
                
                //mesaje flash que se muestra en la pagina
                 $this->get('session')->getFlashBag()->set(
