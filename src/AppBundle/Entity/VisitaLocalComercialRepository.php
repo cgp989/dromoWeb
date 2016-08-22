@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityRepository;
 class VisitaLocalComercialRepository extends EntityRepository {
 
     public function getVisitasLocal($desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT l.nombre as titulo, count(v.id) as cant FROM AppBundle:VisitaLocalComercial v '
                         . ' JOIN v.localComercial l '
@@ -36,6 +38,8 @@ class VisitaLocalComercialRepository extends EntityRepository {
 
     //Cantidad de visitas a cada premio
     public function getVisitasPremios($desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT concat(t.descripcion, r.titulo, l.nombre) as titulo, count(v.id) as cant FROM AppBundle:VisitaPromocion v '
                         . ' JOIN v.programacion p '
@@ -53,6 +57,8 @@ class VisitaLocalComercialRepository extends EntityRepository {
 
     //Cantidad de cupones canjeados por promocion
     public function getCuponesPremio($desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT concat(t.descripcion, r.titulo, l.nombre) as titulo, count(c.id) as cant FROM AppBundle:Cupon c '
                         . ' JOIN c.programacion p '
@@ -93,9 +99,11 @@ class VisitaLocalComercialRepository extends EntityRepository {
                 ->getResult();
         return $visitas;
     }
-    
-        //Montos de cobros por local
+
+    //Montos de cobros por local
     public function getCobrosLocal($desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
         $visitas = $this->getEntityManager()
                 ->createQuery('SELECT l.nombre as titulo, sum(c.total) as cant FROM AppBundle:Cobro c '
                         . ' JOIN c.localComercial l'

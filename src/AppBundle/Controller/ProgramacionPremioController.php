@@ -52,33 +52,39 @@ class ProgramacionPremioController extends Controller {
         $entity = new Programacion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $repoProgramacion = $em->getRepository('AppBundle:Programacion');
         
         if($entity->getCantidad() > $entity->getCantidadTotal()){
             $form->addError(new FormError('Cantidad total debe ser mayor o igual a cantidad diaria.'));
         }
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-             if ($em->getRepository('AppBundle:Programacion')->validaFechaInicio($entity)) {
-                if ($em->getRepository('AppBundle:Programacion')->validaFechaFin($entity)) {
-                if ($entity->getCantidad() < 0) {
-                    $entity->setCantidad($entity->getCantidad() * -1);
-                }
-                $em->persist($entity);
-                $em->flush();
-
-                if ($em->getRepository('AppBundle:Programacion')->estaEnDiaProgramacion($entity))
-                    $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
-
-                return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $entity->getId())));
-             }else {
-                    $form->addError(new FormError('Fecha fin mayor a fecha inicio'));
-                }
-            } else {
-                $form->addError(new FormError('Fecha de Inicio debe ser mayor a la actual.'));
-            }
+        
+        if (!$repoProgramacion->validaFechaInicio($entity)) {
+            $form->addError(new FormError('Fecha de Inicio debe ser mayor o igual a la actual.'));
         }
+        
+        if (!$repoProgramacion->validaFechaFin($entity)) {
+            $form->addError(new FormError('Fecha fin debe ser mayor o igual a fecha inicio'));
+        }
+        
+        if ($form->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            
+            $repoProgramacion->sumTotalGastadoEnPremio($entity);
 
+            if ($repoProgramacion->estaEnDiaProgramacion($entity)) {
+                $em->getRepository('AppBundle:ProgramacionEnDia')->insertProgramacion($entity);
+            }
+
+            return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $entity->getId())));               
+        }
+        
+        $saldoParaPremios = $em->getRepository('AppBundle:Totales')->getSaldoParaPremios();
+        $valorPromocion = $entity->getPromocion()->getPuntajePremioPlata($em);
         return $this->render('AppBundle:ProgramacionPremio:new.html.twig', array(
+                    'valorPromocion' => $valorPromocion,
+                    'saldoParaPemios' => $saldoParaPremios,
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -129,7 +135,11 @@ class ProgramacionPremioController extends Controller {
         $entity->setPromocion($promocion);
         $form = $this->createCreateForm($entity);
 
+        $saldoParaPremios = $em->getRepository('AppBundle:Totales')->getSaldoParaPremios();
+        $valorPromocion = $promocion->getPuntajePremioPlata($em);
         return $this->render('AppBundle:ProgramacionPremio:new.html.twig', array(
+                    'valorPromocion' => $valorPromocion,
+                    'saldoParaPemios' => $saldoParaPremios,
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -230,7 +240,7 @@ class ProgramacionPremioController extends Controller {
 
                 return $this->redirect($this->generateUrl('programacionPremio_show', array('id' => $id)));
             }else {
-                $editForm->addError(new FormError('Fecha fin mayor a fecha inicio'));
+                $editForm->addError(new FormError('Fecha fin debe ser mayor o igual a fecha inicio'));
             }
         }
 
