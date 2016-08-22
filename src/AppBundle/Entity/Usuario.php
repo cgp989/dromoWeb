@@ -33,6 +33,11 @@ class Usuario extends BaseUser
      */
     protected $rol;
     
+    /**
+     * @ORM\Column(name="firstLogin", type="boolean", nullable=true)
+     */
+    private $firstLogin;
+    
     public function __construct() {
         parent::__construct();
     }
@@ -141,5 +146,13 @@ class Usuario extends BaseUser
     
     public function __toString() {
       return $this->usuario;
+   }
+   
+   function getFirstLogin() {
+       return $this->firstLogin;
+   }
+
+   function setFirstLogin($firstLogin) {
+       $this->firstLogin = $firstLogin;
    }
 }

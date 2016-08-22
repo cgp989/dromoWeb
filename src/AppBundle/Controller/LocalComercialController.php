@@ -51,6 +51,7 @@ class LocalComercialController extends Controller {
                 if ($usuario == null) {
                     $userNew = $userManipulator->create($userEntity->getUsername(), $userEntity->getPlainPassword(), $userEntity->getEmail(), true, false);
                     $userManipulator->addRole($userEntity->getUsername(), 'ROLE_LOCAL');
+                    $userNew->setFirstLogin(true);
                     $entity->setUsuario($userNew);
 
                     $em->persist($entity);
@@ -58,7 +59,7 @@ class LocalComercialController extends Controller {
 
                     return $this->redirect($this->generateUrl('sucursal_new_local', array('idLocal' => $entity->getId())));
                 } else {
-                    $form->addError(new FormError('Usuario ya existe!'));
+                    $form->addError(new FormError('EL usuario ya existe!'));
                 }
             } else {
                 $form->addError(new FormError('Porcentaje de cobro debe ser entre 0 y 100!'));
@@ -79,7 +80,7 @@ class LocalComercialController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(LocalComercial $entity) {
-        $form = $this->createForm(new LocalComercialType(), $entity, array(
+        $form = $this->createForm(new LocalComercialType(array('admin'=>true)), $entity, array(
             'action' => $this->generateUrl('localcomercial_create'),
             'method' => 'POST',
         ));

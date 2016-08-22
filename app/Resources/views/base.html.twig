@@ -6,6 +6,7 @@
         {% block stylesheets %}
             <link href="{{ asset('resources/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('resources/css/dashboard.css')}}" type="text/css" rel="stylesheet" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('resources/js/sweetalert/sweetalert.css') }}">
             <link href="{{ asset('resources/css/estilos-web.css')}}" type="text/css" rel="stylesheet" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('resources/images/iconos/dromo_icon.png') }}" />
@@ -18,10 +19,9 @@
             <!-- JS para graficos -->
             <script src="{{ asset('resources/js/jquery-1.7.1.min.js')}}"></script>
             <script src="{{ asset('resources/js/highcharts.js')}}"></script>
-            <script src="{{ asset('resources/js/exporting.js')}}"></script>           
-            
+            <script src="{{ asset('resources/js/exporting.js')}}"></script>      
             <script src="{{ asset('resources/js/sweetalert/sweetalert.min.js')}}"></script>
-            <link rel="stylesheet" type="text/css" href="{{ asset('resources/js/sweetalert/sweetalert.css') }}">
+            
             
         {% endblock %}
     </head>
@@ -136,15 +136,24 @@
                 ">    
                     {#INICIO CODIGO PARA LOS MENSAJES FLASH CON INFORMACION QUE SE PASAN POR SESION#}
                     {% for type, flashMessage in app.session.flashbag.all() %}
-                        <div class="alert  alert-{{ type }} fade in">
-                            <button class="close" data-dismiss="alert" type="button">×</button>
-                            {% if flashMessage.title is defined %}
-                                <strong>{{ flashMessage.title }}</strong>
-                                {{ flashMessage.message }}
-                            {% else %}
-                                {{ type }}
-                            {% endif %}
-                        </div>
+                        {% if type != 'terminos_y_condiciones'%}
+                            <div class="alert  alert-success fade in">
+                                <button class="close" data-dismiss="alert" type="button">×</button>
+                                {% if flashMessage.title is defined %}
+                                    <strong>{{ flashMessage.title }}</strong>
+                                    {{ flashMessage.message }}
+                                {% else %}
+                                    {{ type }}
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <script type="text/javascript">
+                                $( document ).ready(function() {
+                                   mostrarTyC();
+                                });
+                            </script>
+                        {% endif %}
+                        
                     {% endfor %}
                     {# FIN CODIGO MENSAJE FLASH #}
                     {% block body %}
