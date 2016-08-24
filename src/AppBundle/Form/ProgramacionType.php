@@ -79,7 +79,7 @@ class ProgramacionType extends AbstractType
                     '47' => '23:30',
                     '48' => '24:00',
                 ),
-                'label' => 'Duración [hs]'
+                'label' => 'Duración [h]'
             ))
             ->add('cantidad', 'integer', array('attr' => array(
                         'min' => '1',
