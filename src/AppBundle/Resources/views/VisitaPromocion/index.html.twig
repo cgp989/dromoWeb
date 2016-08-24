@@ -10,7 +10,7 @@
         <input type="button" value="Visitas a Promociones" onClick="consulta(1)" class="btn btn-prymary btn boton-resumen"/>
         <input type="button" value="Visitas por Sexo" onClick="consulta(2)" class="btn btn-prymary btn boton-resumen"/>
         <input type="button" value="Cupones por Promoción" onClick="consulta(3)" class="btn btn-prymary btn boton-resumen"/>
-        <input type="button" value="Ganancia por Promoción" onClick="consulta(4)" class="btn btn-prymary btn boton-resumen"/>
+        <input type="button" value="Ingresos por Promoción" onClick="consulta(4)" class="btn btn-prymary btn boton-resumen"/>
         <TABLE>
             <TR>
                 <TD><label>Fecha Desde:&nbsp;</label>
@@ -121,13 +121,13 @@
                         descrip = "Porcentaje de visitas a Promociones";
                     } else if (tipo === 2) {
                         nombre = "Visitas por Sexo";
-                        descrip = "Porcentaje de visitas al perfil del local por sexo";
+                        descrip = "Porcentaje de visitas al perfil del local por sexo del usuario";
                     } else if (tipo === 3) {
                         nombre = "Cupones por Promoción";
                         descrip = "Porcentaje de Cupones generados por Promoción";
                     } else if (tipo === 4) {
-                        nombre = "Ganancia por Promoción";
-                        descrip = "Porcentaje de Ganancia obtenido por Promoción";
+                        nombre = "Ingresos por Promoción";
+                        descrip = "Porcentaje de ingresos obtenido por Promoción";
                     }
                     cargaGrafico(data, nombre, descrip);
                 }
