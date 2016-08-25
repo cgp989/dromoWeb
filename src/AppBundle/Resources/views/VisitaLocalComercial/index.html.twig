@@ -11,8 +11,8 @@
         <input type="button" value="Visitas a Locales" onClick="consulta(2)" class="btn btn-prymary btn boton-resumen"/>
         <input type="button" value="Visitas a Premios" onClick="consulta(3)" class="btn btn-prymary btn boton-resumen"/>
         <input type="button" value="Premios Canjeados" onClick="consulta(4)" class="btn btn-prymary btn boton-resumen"/>
-        <input type="button" value="Cobros por Local" onClick="consulta(5)" class="btn btn-prymary btn boton-resumen"/>
-
+        <input type="button" value="Monto cobrado por Local" onClick="consulta(5)" class="btn btn-prymary btn boton-resumen"/>
+        <input type="button" value="Monto a cobrar por Local" onClick="consulta(6)" class="btn btn-prymary btn boton-resumen"/>
         <TABLE>
             <TR>
                 <TD><label>Fecha Desde:&nbsp;</label>
@@ -132,8 +132,11 @@
                         nombre = "Premios Canjeados";
                         descrip = "Porcentaje de Premios Canjeados por los usuarios";
                     } else if (tipo === 5) {
-                        nombre = "Cobros por Local";
-                        descrip = "Porcentaje de Cobros por Local Comercial";
+                        nombre = "Monto cobrado por Local";
+                        descrip = "Porcentaje de montos cobrados por Local Comercial";
+                    } else if (tipo === 6) {
+                        nombre = "Monto a cobrar por Local";
+                        descrip = "Porcentaje de montos a cobrar por Local Comercial";
                     }
                     cargaGrafico(data, nombre, descrip);
                 }
