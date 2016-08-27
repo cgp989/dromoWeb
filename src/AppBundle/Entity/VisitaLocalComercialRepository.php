@@ -126,14 +126,12 @@ class VisitaLocalComercialRepository extends EntityRepository {
                         . ' JOIN p.promocion r '
                         . ' JOIN r.localComercial l'
                         . ' JOIN c.estadoCupon e'
-                        . ' JOIN c.estadoCobroCupon ec'
-                        . ' WHERE ec.nombre= :estadoCobro and e.nombre= :estado and c.fecha > :desde and c.fecha < :hasta '
+                        . ' WHERE e.nombre= :estado and c.fecha > :desde and c.fecha < :hasta '
                         . ' GROUP BY l.nombre ')
                 ->setParameters(array(
                     'desde' => $desde,
                     'hasta' => $hasta,
-                    'estado' => 'canjeado',
-                    'estadoCobro' => 'pendiente'))
+                    'estado' => 'canjeado'))
                 ->getResult();
         return $visitas;
     }
