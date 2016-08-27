@@ -200,7 +200,9 @@ class LocalComercialController extends Controller {
             if ($entity->getPorcentajeCobro() > 0 && $entity->getPorcentajeCobro() < 100) {
                 $version = $entity->getVersion();
                 $entity->setVersion($version + 1);
-                $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
+                if ($this->getUser()->hasRole('ROLE_ADMIN')) {
+                    $entity->setPorcentaje_Cobro($entity->getPorcentajeCobro());
+                }
                 $em->flush();
 
                 $urlEdit = $this->generateUrl('localcomercial_show', array('id' => $id));
