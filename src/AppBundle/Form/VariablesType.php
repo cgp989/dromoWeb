@@ -16,7 +16,7 @@ class VariablesType extends AbstractType
     {
         $builder
             ->add('porcCobroLocal', null, array(
-                    'label' => 'Porcentaje Cobro a Local'
+                    'label' => 'Porcentaje Comisión'
                 ))
             ->add('porcGanancia', null, array(
                     'label' => 'Porcentaje Ganancia'

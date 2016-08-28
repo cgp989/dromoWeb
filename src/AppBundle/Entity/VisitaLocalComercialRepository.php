@@ -116,4 +116,24 @@ class VisitaLocalComercialRepository extends EntityRepository {
         return $visitas;
     }
 
+    //Monto de cupones por cobrar por local
+    public function getCuponesPorCobrar($desde, $hasta) {
+        $desde = date("Y-m-d", strtotime($desde));
+        $hasta = date("Y-m-d", strtotime($hasta));
+        $visitas = $this->getEntityManager()
+                ->createQuery('SELECT l.nombre as titulo, sum(c.precioCobroLocal) as cant FROM AppBundle:Cupon c '
+                        . ' JOIN c.programacion p '
+                        . ' JOIN p.promocion r '
+                        . ' JOIN r.localComercial l'
+                        . ' JOIN c.estadoCupon e'
+                        . ' WHERE e.nombre= :estado and c.fecha > :desde and c.fecha < :hasta '
+                        . ' GROUP BY l.nombre ')
+                ->setParameters(array(
+                    'desde' => $desde,
+                    'hasta' => $hasta,
+                    'estado' => 'canjeado'))
+                ->getResult();
+        return $visitas;
+    }
+
 }

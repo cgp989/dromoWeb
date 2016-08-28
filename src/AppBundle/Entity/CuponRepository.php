@@ -113,7 +113,7 @@ class CuponRepository extends EntityRepository
         $variables = $this->getEntityManager()->getRepository('AppBundle:Variables')->findAll();
         //se calcula el precio que se le cobra al local
         //si el local tiene guardado un porcentaje de cobro y este es valido se usa ese. sino el valor por defecto que estq en variables
-        if(!is_null($localComercial->getPorcentajeCobro()) && $localComercial->getPorcentajeCobro() > 0 && $localComercial->getPorcentajeCobro() <= 100){
+        if(!is_null($localComercial->getPorcentajeCobro()) && $localComercial->getPorcentajeCobro() > 0 && $localComercial->getPorcentajeCobro() <= 1){
             $porcentajeCobro = $localComercial->getPorcentajeCobro();
         }else{
             $porcentajeCobro = $variables[0]->getPorcCobroLocal();

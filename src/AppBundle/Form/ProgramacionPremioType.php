@@ -78,7 +78,7 @@ class ProgramacionPremioType extends AbstractType {
                         '47' => '23:30',
                         '48' => '24:00',
                     ),
-                    'label' => 'Duración'
+                    'label' => 'Duración[h]'
                 ))
                 ->add('cantidad', null, array(
                     'label' => 'Cantidad diaria'
@@ -104,7 +104,7 @@ class ProgramacionPremioType extends AbstractType {
                     'required' => false
                 ))
                 ->add('esSabado', null, array(
-                    'label' => 'Sabado',
+                    'label' => 'Sábado',
                     'required' => false
                 ))
                 ->add('esDomingo', null, array(

@@ -29,8 +29,9 @@
                     <td>
                         <a title="ver" href="{{ path('premios_show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
                         <a title="editar" href="{{ path('premios_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a title="ver programaciones" href="{{ path('programacionPremio_premio', { 'idPromocion': entity.id }) }}"><span class="glyphicon glyphicon-time"></span></a>
                         <a title="nueva programacion" href="{{ path('programacionPremio_premio_new', { 'idPromocion': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span></a>
+                        <a title="ver programaciones" href="{{ path('programacionPremio_premio', { 'idPromocion': entity.id }) }}"><span class="glyphicon glyphicon-time"></span></a>
+                       
                     </td>
                 </tr>
             {% endfor %}
