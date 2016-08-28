@@ -52,7 +52,8 @@ class AddLocalidadFieldSubscriber implements EventSubscriberInterface{
             'query_builder' => function(EntityRepository $er) use ($provincia){
                 return $er->createQueryBuilder('localidad')
                     ->where('localidad.provincia = :provincia')
-                    ->setParameter('provincia', $provincia);
+                    ->setParameter('provincia', $provincia)
+                    ->orderBy('localidad.nombre', 'ASC');
             },
             'data' => $locSelected
         ));

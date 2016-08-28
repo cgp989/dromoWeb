@@ -35,7 +35,7 @@ class LocalComercialType extends AbstractType {
         ));
         if ($this->opciones['admin']) {
             $builder->add('porcentajeCobro', null, array(
-                'label' => 'Comisión'
+                'label' => 'Comisión (%)'
             ));
         }
 
