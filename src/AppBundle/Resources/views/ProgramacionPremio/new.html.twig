@@ -80,5 +80,15 @@
                $('#gasto').html(0);
            }
        });
+       
+       $( document ).ready(function() {
+           cantTotal =  $('#appbundle_programacionPremio_cantidadTotal');
+            var gasto= parseInt(cantTotal.val()) * parseInt(valorPromo);
+           if(parseInt(gasto) >0){
+                $('#gasto').html(gasto);
+           }else{
+               $('#gasto').html(0);
+           }
+        });
     </script>
 {% endblock %}
